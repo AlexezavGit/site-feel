@@ -18,30 +18,33 @@ const LOGOS = {
 const CONSORTIUM_ROLES_EN = [
   { 
     org: "COORDINATION", 
-    role: "Open Society Foundation (Ukraine)", 
-    logo: LOGOS.openSociety, 
-    website: "https://osf.org.ua/en",
+    partners: [
+      { name: "Open Society Foundation (Ukraine)", website: "https://osf.org.ua/en", logo: LOGOS.openSociety }
+    ],
     desc: "Open Society Foundation (Ukraine) specializes in policy analysis, public finance monitoring, and anti-corruption initiatives. In the FeeL Again program, OSF ensures strategic coordination, financial transparency, and alignment with international standards." 
   },
   { 
     org: "CLINICAL STACK", 
-    role: "GEHA (Israel) + USC ICT (VR Methodology) USA", 
-    logo: LOGOS.geha, 
-    website: "https://ict.usc.edu",
+    partners: [
+      { name: "GEHA (Israel)", website: "https://geha.clalit.co.il", logo: LOGOS.geha },
+      { name: "USC ICT (USA)", website: "https://ict.usc.edu", logo: LOGOS.usc }
+    ],
     desc: "Geha Mental Health Center (Israel) provides clinical expertise and supervision. USC ICT (USA) provides world-leading VR exposure therapy methodologies for PTSD treatment." 
   },
   { 
     org: "FINTECH STACK", 
-    role: "Quorum (HighCastle) & Enkidu P2P", 
-    logo: LOGOS.enkidu, 
-    website: "https://highcastle.co",
+    partners: [
+      { name: "Quorum (HighCastle)", website: "https://highcastle.co", logo: LOGOS.quorum },
+      { name: "Enkidu P2P", website: "https://enkidu.io", logo: LOGOS.enkidu }
+    ],
     desc: "Quorum (HighCastle) provides the DLT platform for transparent asset management. Enkidu P2P enables direct, peer-to-peer payment rails bypassing intermediaries." 
   },
   { 
     org: "ANALYTICS STACK", 
-    role: "Shevchenko University, Oxford & Groningen (negotiations)", 
-    logo: LOGOS.shevchenko, 
-    website: "https://knu.ua/en",
+    partners: [
+      { name: "Shevchenko University", website: "https://knu.ua/en", logo: LOGOS.shevchenko },
+      { name: "Oxford & Groningen (negotiations)" }
+    ],
     desc: "Academic partners providing data analysis, impact assessment, and economic modeling of mental health on national GDP." 
   },
 ];
@@ -49,30 +52,33 @@ const CONSORTIUM_ROLES_EN = [
 const CONSORTIUM_ROLES_UA = [
   { 
     org: "КООРДИНАЦІЯ", 
-    role: "Фундація Відкрите Суспільство (Україна)", 
-    logo: LOGOS.openSociety, 
-    website: "https://osf.org.ua/en",
+    partners: [
+      { name: "Фундація Відкрите Суспільство (Україна)", website: "https://osf.org.ua/en", logo: LOGOS.openSociety }
+    ],
     desc: "Фундація Відкрите Суспільство (Україна) спеціалізується на аналізі політики, моніторингу публічних фінансів та антикорупційних ініціативах. У програмі FeeL Again OSF забезпечує стратегічну координацію, фінансову прозорість та відповідність міжнародним стандартам." 
   },
   { 
     org: "КЛІНІЧНИЙ СТЕК", 
-    role: "GEHA (Ізраїль) + USC ICT (Методологія VR) США", 
-    logo: LOGOS.geha, 
-    website: "https://ict.usc.edu",
+    partners: [
+      { name: "GEHA (Ізраїль)", website: "https://geha.clalit.co.il", logo: LOGOS.geha },
+      { name: "USC ICT (США)", website: "https://ict.usc.edu", logo: LOGOS.usc }
+    ],
     desc: "Психіатричний центр Geha (Ізраїль) надає клінічну експертизу та супервізію. USC ICT (США) надає провідні світові методології VR-експозиційної терапії для лікування ПТСР." 
   },
   { 
     org: "ФІНТЕХ СТЕК", 
-    role: "Quorum (HighCastle) та Enkidu P2P", 
-    logo: LOGOS.enkidu, 
-    website: "https://highcastle.co",
+    partners: [
+      { name: "Quorum (HighCastle)", website: "https://highcastle.co", logo: LOGOS.quorum },
+      { name: "Enkidu P2P", website: "https://enkidu.io", logo: LOGOS.enkidu }
+    ],
     desc: "Quorum (HighCastle) надає платформу DLT для прозорого управління активами. Enkidu P2P забезпечує прямі платіжні канали P2P, минаючи посередників." 
   },
   { 
     org: "АНАЛІТИЧНИЙ СТЕК", 
-    role: "Університет Шевченка, Оксфорд та Гренінген (перемовини)", 
-    logo: LOGOS.shevchenko, 
-    website: "https://knu.ua/en",
+    partners: [
+      { name: "Університет Шевченка", website: "https://knu.ua/en", logo: LOGOS.shevchenko },
+      { name: "Оксфорд та Гренінген (перемовини)" }
+    ],
     desc: "Академічні партнери, що забезпечують аналіз даних, оцінку впливу та економічне моделювання ментального здоров'я на національний ВВП." 
   },
 ];
