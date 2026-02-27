@@ -37,12 +37,16 @@ export interface ReportPage {
   quote?: string;
 }
 
+export interface ConsortiumPartner {
+  name: string;
+  website?: string;
+  logo?: string;
+}
+
 export interface ConsortiumRole {
   org: string;
-  role: string;
-  logo: string;
+  partners: ConsortiumPartner[];
   desc?: string;
-  website?: string;
 }
 
 export interface DocumentContent {

@@ -306,21 +306,23 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
 
                     {/* Context Detail Box (Pops up when clicked) */}
                     {activeMindNode && (
-                        <div className="absolute bottom-4 md:bottom-10 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur shadow-2xl border border-gray-200 p-6 rounded-xl z-50 w-[calc(100vw-2rem)] max-w-sm md:w-96 animate-float text-center">
-                            <h4 className="text-lg font-bold uppercase text-gray-900 mb-2 flex items-center justify-center gap-2">
-                                {getImpactText()?.title} {lang === Language.UA ? 'Вплив' : 'Impact'}
-                            </h4>
-                            <p className="text-sm text-gray-600 mb-4">{getImpactText()?.desc}</p>
-                            <div className="bg-orange-50 text-orange-800 p-3 rounded text-xs font-bold border border-orange-100">
-                                {lang === Language.UA ? 'РЕЗУЛЬТАТ' : 'RESULT'}: {getImpactText()?.impact}
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={() => setActiveMindNode(null)}>
+                            <div className="bg-white shadow-2xl border border-gray-200 p-6 rounded-xl w-full max-w-sm animate-float relative" onClick={(e) => e.stopPropagation()}>
+                                <h4 className="text-lg font-bold uppercase text-gray-900 mb-2 flex items-center justify-center gap-2">
+                                    {getImpactText()?.title} {lang === Language.UA ? 'Вплив' : 'Impact'}
+                                </h4>
+                                <p className="text-sm text-gray-600 mb-4">{getImpactText()?.desc}</p>
+                                <div className="bg-orange-50 text-orange-800 p-3 rounded text-xs font-bold border border-orange-100">
+                                    {lang === Language.UA ? 'РЕЗУЛЬТАТ' : 'RESULT'}: {getImpactText()?.impact}
+                                </div>
+                                <button 
+                                    onClick={() => setActiveMindNode(null)} 
+                                    aria-label="Close details"
+                                    className="absolute top-4 right-4 text-gray-400 hover:text-black"
+                                >
+                                    <div className="w-6 h-6 rounded-full border flex items-center justify-center text-xl">×</div>
+                                </button>
                             </div>
-                            <button 
-                                onClick={() => setActiveMindNode(null)} 
-                                aria-label="Close details"
-                                className="absolute top-2 right-2 text-gray-400 hover:text-black"
-                            >
-                                <div className="w-5 h-5 rounded-full border flex items-center justify-center">×</div>
-                            </button>
                         </div>
                     )}
                     
@@ -345,39 +347,47 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
                     </h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {t.consortiumRoles?.map((role, idx) => {
-                        const CardContent = (
-                            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow h-full flex flex-col">
-                                <div className="text-[10px] font-bold uppercase text-orange-600 tracking-widest mb-2">{role.org}</div>
-                                <div className="text-sm font-medium text-gray-900 leading-tight mb-2">{role.role}</div>
-                                {role.desc && <div className="text-[11px] text-gray-500 leading-relaxed mb-4">{role.desc}</div>}
-                                <div className="mt-auto pt-4 border-t border-gray-50 flex items-center gap-2">
-                                    <div className="w-8 h-8 bg-gray-50 rounded flex items-center justify-center p-1">
-                                        <img 
-                                            src={`https://picsum.photos/seed/${role.logo}/40/40`} 
-                                            alt={role.org} 
-                                            className="w-full h-full object-contain opacity-50 grayscale"
-                                            referrerPolicy="no-referrer"
-                                        />
+                    {t.consortiumRoles?.map((role, idx) => (
+                        <div key={idx} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow h-full flex flex-col">
+                            <div className="text-[10px] font-bold uppercase text-orange-600 tracking-widest mb-2">{role.org}</div>
+                            <div className="space-y-2 mb-4">
+                                {role.partners.map((partner, pIdx) => (
+                                    <div key={pIdx} className="flex items-center justify-between gap-2">
+                                        <div className="text-sm font-medium text-gray-900 leading-tight">{partner.name}</div>
+                                        {partner.website && (
+                                            <a 
+                                                href={partner.website} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className="text-orange-500 hover:text-orange-700 transition-colors"
+                                            >
+                                                <Globe size={14} />
+                                            </a>
+                                        )}
                                     </div>
-                                    <div className="flex items-center gap-1" title="Verified Partner: This organization has undergone clinical and operational validation by the FeeL Again Consortium.">
-                                        <div className="w-1.5 h-1.5 bg-emerald-500" />
-                                        <span className="text-[9px] text-gray-400 uppercase tracking-tighter">Verified Partner</span>
-                                    </div>
+                                ))}
+                            </div>
+                            {role.desc && <div className="text-[11px] text-gray-500 leading-relaxed mb-4">{role.desc}</div>}
+                            <div className="mt-auto pt-4 border-t border-gray-50 flex items-center gap-2">
+                                <div className="flex -space-x-2 overflow-hidden">
+                                    {role.partners.map((partner, pIdx) => partner.logo && (
+                                        <div key={pIdx} className="w-8 h-8 bg-gray-50 rounded-full border-2 border-white flex items-center justify-center p-1 shadow-sm">
+                                            <img 
+                                                src={`https://picsum.photos/seed/${partner.logo}/40/40`} 
+                                                alt={partner.name} 
+                                                className="w-full h-full object-contain opacity-50 grayscale"
+                                                referrerPolicy="no-referrer"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="flex items-center gap-1" title="Verified Partner: This organization has undergone clinical and operational validation by the FeeL Again Consortium.">
+                                    <div className="w-1.5 h-1.5 bg-emerald-500" />
+                                    <span className="text-[9px] text-gray-400 uppercase tracking-tighter">Verified Partner</span>
                                 </div>
                             </div>
-                        );
-
-                        return role.website ? (
-                            <a key={idx} href={role.website} target="_blank" rel="noopener noreferrer" className="block h-full">
-                                {CardContent}
-                            </a>
-                        ) : (
-                            <div key={idx} className="h-full">
-                                {CardContent}
-                            </div>
-                        );
-                    })}
+                        </div>
+                    ))}
                 </div>
             </div>
 
@@ -502,20 +512,20 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
                           </h3>
                           
                           <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
-                              <div className="flex justify-between items-center mb-2 border-b border-gray-200 pb-2 gap-4">
-                                  <span className="text-sm text-gray-600 shrink-0">{t.request.funding.investment}</span>
+                              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 border-b border-gray-200 pb-2 gap-2 sm:gap-4">
+                                  <span className="text-sm text-gray-600">{t.request.funding.investment}</span>
                                   <span className="font-mono text-emerald-600 font-bold text-right">$5,000,000</span>
                               </div>
-                              <div className="flex justify-between items-center mb-2 border-b border-gray-200 pb-2 gap-4">
-                                  <span className="text-sm text-gray-600 shrink-0">{t.request.funding.source}</span>
-                                  <span className="font-mono text-emerald-600 font-bold text-[10px] text-right leading-tight max-w-[60%]">{t.request.funding.sourceVal}</span>
+                              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 border-b border-gray-200 pb-2 gap-2 sm:gap-4">
+                                  <span className="text-sm text-gray-600">{t.request.funding.source}</span>
+                                  <span className="font-mono text-emerald-600 font-bold text-[10px] text-right leading-tight sm:max-w-[60%]">{t.request.funding.sourceVal}</span>
                               </div>
-                              <div className="flex justify-between items-center mb-4 gap-4">
-                                  <span className="text-sm text-gray-600 shrink-0">{t.request.funding.mechanism}</span>
-                                  <span className="font-mono text-emerald-600 font-bold text-[10px] text-right leading-tight max-w-[60%]">{t.request.funding.mechanismVal}</span>
+                              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2 sm:gap-4">
+                                  <span className="text-sm text-gray-600">{t.request.funding.mechanism}</span>
+                                  <span className="font-mono text-emerald-600 font-bold text-[10px] text-right leading-tight sm:max-w-[60%]">{t.request.funding.mechanismVal}</span>
                               </div>
-                              <div className="flex justify-between items-center pt-4 border-t border-gray-300 gap-4">
-                                  <span className="font-bold uppercase tracking-wider text-gray-900 shrink-0">{t.request.funding.costToState}</span>
+                              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-4 border-t border-gray-300 gap-2 sm:gap-4">
+                                  <span className="font-bold uppercase tracking-wider text-gray-900">{t.request.funding.costToState}</span>
                                   <span className="font-mono text-xl font-bold text-emerald-600 text-right">$0.00</span>
                               </div>
                           </div>
