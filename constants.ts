@@ -5,12 +5,13 @@ import { Dictionary, Language, DocumentId } from './types';
 // Updated Logos to keys for SVG rendering
 const LOGOS = {
   feelAgain: "feelAgain",
-  enkidu: "solana",
-  quorum: "solana",
-  shevchenko: "shevchenko",
-  openSociety: "open_society",
-  usc: "usc",
-  geha: "geha",
+  enkidu: "/enkidu.png",
+  quorum: "/quorum.png",
+  shevchenko: "/kmu.png",
+  openSocietyUA: "/osf-ua.png",
+  openSocietyEN: "/osf-en.png",
+  usc: "/usc.svg",
+  geha: "/geha.png",
   kse: "shevchenko" // Using placeholder for now or mapping to shevchenko
 };
 
@@ -19,7 +20,7 @@ const CONSORTIUM_ROLES_EN = [
   { 
     org: "COORDINATION", 
     partners: [
-      { name: "Open Society Foundation (Ukraine)", website: "https://osf.org.ua/en", logo: LOGOS.openSociety }
+      { name: "Open Society Foundation (Ukraine)", website: "https://osf.org.ua/en", logo: LOGOS.openSocietyEN }
     ],
     desc: "Open Society Foundation (Ukraine) specializes in policy analysis, public finance monitoring, and anti-corruption initiatives. In the FeeL Again program, OSF ensures strategic coordination, financial transparency, and alignment with international standards." 
   },
@@ -53,7 +54,7 @@ const CONSORTIUM_ROLES_UA = [
   { 
     org: "КООРДИНАЦІЯ", 
     partners: [
-      { name: "Фундація Відкрите Суспільство (Україна)", website: "https://osf.org.ua/en", logo: LOGOS.openSociety }
+      { name: "Фундація Відкрите Суспільство (Україна)", website: "https://osf.org.ua/en", logo: LOGOS.openSocietyUA }
     ],
     desc: "Фундація Відкрите Суспільство (Україна) спеціалізується на аналізі політики, моніторингу публічних фінансів та антикорупційних ініціативах. У програмі FeeL Again OSF забезпечує стратегічну координацію, фінансову прозорість та відповідність міжнародним стандартам." 
   },

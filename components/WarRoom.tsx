@@ -368,22 +368,22 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
                                 ))}
                             </div>
                             {role.desc && <div className="text-[11px] text-gray-500 leading-relaxed mb-4">{role.desc}</div>}
-                            <div className="mt-auto pt-4 border-t border-gray-50 flex items-center gap-2">
-                                <div className="flex -space-x-2 overflow-hidden">
+                            <div className="mt-auto pt-4 border-t border-gray-50 flex flex-col gap-3">
+                                <div className="flex flex-wrap items-center gap-3">
                                     {role.partners.map((partner, pIdx) => partner.logo && (
-                                        <div key={pIdx} className="w-8 h-8 bg-gray-50 rounded-full border-2 border-white flex items-center justify-center p-1 shadow-sm">
+                                        <div key={pIdx} className="h-10 sm:h-12 min-w-[3rem] bg-white rounded border border-gray-100 flex items-center justify-center p-1.5 shadow-sm relative hover:shadow-md transition-all hover:-translate-y-0.5" title={partner.name}>
                                             <img 
-                                                src={`https://picsum.photos/seed/${partner.logo}/40/40`} 
+                                                src={partner.logo.startsWith('/') ? partner.logo : `https://picsum.photos/seed/${partner.logo}/40/40`} 
                                                 alt={partner.name} 
-                                                className="w-full h-full object-contain opacity-50 grayscale"
+                                                className={`h-full w-auto max-w-[120px] object-contain ${partner.logo.startsWith('/') ? '' : 'opacity-50 grayscale'}`}
                                                 referrerPolicy="no-referrer"
                                             />
                                         </div>
                                     ))}
                                 </div>
-                                <div className="flex items-center gap-1" title="Verified Partner: This organization has undergone clinical and operational validation by the FeeL Again Consortium.">
-                                    <div className="w-1.5 h-1.5 bg-emerald-500" />
-                                    <span className="text-[9px] text-gray-400 uppercase tracking-tighter">Verified Partner</span>
+                                <div className="flex items-center gap-1.5" title="Verified Partner: This organization has undergone clinical and operational validation by the FeeL Again Consortium.">
+                                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                                    <span className="text-[10px] text-gray-500 uppercase tracking-wider font-medium">Verified Partner</span>
                                 </div>
                             </div>
                         </div>
@@ -436,112 +436,6 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
             </div>
           )}
 
-          {/* SECTION 4: Embassy Request */}
-          <div className="bg-white rounded-xl shadow-2xl overflow-hidden mb-12">
-              <div className="bg-slate-900 p-8 text-center border-b-4 border-orange-500">
-                  <h2 className="text-2xl md:text-3xl font-light uppercase tracking-tight text-white mb-2">{t.request.title}</h2>
-                  <p className="text-slate-400 text-sm max-w-3xl mx-auto">
-                      {t.request.subtitle}
-                  </p>
-              </div>
-
-              <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-12">
-                  <div>
-                      <h3 className="text-sm font-bold uppercase text-orange-600 tracking-widest mb-6 flex items-center gap-2">
-                          <Building size={16} /> {t.request.impactTitle}
-                      </h3>
-                      <div className="space-y-3">
-                           {/* Item 0: NBU - EBRD */}
-                           <div className="flex gap-4 p-3 bg-orange-50 rounded border border-orange-100 hover:border-orange-300 transition-colors">
-                              <div className="text-2xl">🏦</div>
-                              <div>
-                                  <div className="font-bold text-gray-900">{t.request.items[0].title}</div>
-                                  <div className="text-xs text-gray-600 mt-1">
-                                    {t.request.items[0].body || t.request.items[0].subtitle}
-                                  </div>
-                              </div>
-                          </div>
-                          {/* Item 1: MOE */}
-                          <div className="flex gap-4 p-3 hover:bg-gray-50 rounded transition-colors">
-                              <div className="text-2xl">🎓</div>
-                              <div>
-                                  <div className="font-bold text-gray-900">{t.request.items[1].title}</div>
-                                  <div className="text-xs text-gray-600">{t.request.items[1].body || t.request.items[1].subtitle}</div>
-                              </div>
-                          </div>
-                          {/* Item 2: Ministry of Economy */}
-                          <div className="flex gap-4 p-3 hover:bg-gray-50 rounded transition-colors">
-                              <div className="text-2xl">📈</div>
-                              <div>
-                                  <div className="font-bold text-gray-900">{t.request.items[2].title}</div>
-                                  <div className="text-xs text-gray-600">{t.request.items[2].body || t.request.items[2].subtitle}</div>
-                              </div>
-                          </div>
-                          {/* Item 3: Cabinet of Ministers */}
-                          <div className="flex gap-4 p-3 hover:bg-gray-50 rounded transition-colors">
-                              <div className="text-2xl">🏛️</div>
-                              <div>
-                                  <div className="font-bold text-gray-900">{t.request.items[3].title}</div>
-                                  <div className="text-xs text-gray-600">{t.request.items[3].body || t.request.items[3].subtitle}</div>
-                              </div>
-                          </div>
-                          {/* Item 4: Grand Bargain */}
-                          <div className="flex gap-4 p-3 hover:bg-gray-50 rounded transition-colors">
-                              <div className="text-2xl">🤝</div>
-                              <div>
-                                  <div className="font-bold text-gray-900">{t.request.items[4].title}</div>
-                                  <div className="text-xs text-gray-600">{t.request.items[4].body || t.request.items[4].subtitle}</div>
-                              </div>
-                          </div>
-                          {/* Item 5: US DoD (New) */}
-                          <div className="flex gap-4 p-3 hover:bg-gray-50 rounded transition-colors">
-                              <div className="text-2xl">🇺🇸</div>
-                              <div>
-                                  <div className="font-bold text-gray-900">{t.request.items[5]?.title}</div>
-                                  <div className="text-xs text-gray-600">{t.request.items[5]?.body || t.request.items[5]?.subtitle}</div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-
-                  <div className="relative">
-                      <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-200 hidden md:block"></div>
-                      <div className="md:pl-12">
-                          <h3 className="text-sm font-bold uppercase text-emerald-600 tracking-widest mb-6 flex items-center gap-2">
-                              <DollarSign size={16} /> {t.request.fundingTitle}
-                          </h3>
-                          
-                          <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
-                              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 border-b border-gray-200 pb-2 gap-2 sm:gap-4">
-                                  <span className="text-sm text-gray-600">{t.request.funding.investment}</span>
-                                  <span className="font-mono text-emerald-600 font-bold text-right">$5,000,000</span>
-                              </div>
-                              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 border-b border-gray-200 pb-2 gap-2 sm:gap-4">
-                                  <span className="text-sm text-gray-600">{t.request.funding.source}</span>
-                                  <span className="font-mono text-emerald-600 font-bold text-[10px] text-right leading-tight sm:max-w-[60%]">{t.request.funding.sourceVal}</span>
-                              </div>
-                              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2 sm:gap-4">
-                                  <span className="text-sm text-gray-600">{t.request.funding.mechanism}</span>
-                                  <span className="font-mono text-emerald-600 font-bold text-[10px] text-right leading-tight sm:max-w-[60%]">{t.request.funding.mechanismVal}</span>
-                              </div>
-                              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-4 border-t border-gray-300 gap-2 sm:gap-4">
-                                  <span className="font-bold uppercase tracking-wider text-gray-900">{t.request.funding.costToState}</span>
-                                  <span className="font-mono text-xl font-bold text-emerald-600 text-right">$0.00</span>
-                              </div>
-                          </div>
-
-                          <div className="bg-emerald-50 border border-emerald-200 p-4 rounded text-center">
-                              <div className="text-[10px] font-bold uppercase text-emerald-600 tracking-widest mb-1">{t.request.funding.stateAsset}</div>
-                              <div className="text-3xl font-light text-emerald-800 mb-1">{t.request.funding.license}</div>
-                              <div className="text-xs text-emerald-700">{t.request.funding.licenseDesc}</div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          
-          {/* SECTION 6: GLOBAL VISION (Soft Power) - MOVED ABOVE */}
-          
           {/* SECTION 7: Contacts */}
           <div id="contacts" className="bg-slate-900 rounded-xl shadow-2xl p-8 text-white flex flex-col md:flex-row items-center justify-between gap-8 border border-white/10">
               <div>

@@ -67,7 +67,7 @@ const App: React.FC = () => {
         <div className="p-6 flex flex-col h-full">
             {/* Logo */}
             <div className="mb-8 flex items-center gap-3 cursor-pointer group" onClick={() => { setView(ViewMode.HERO); setMobileMenuOpen(false); }}>
-                <div className="w-10 h-10 bg-white rounded flex items-center justify-center text-black font-bold text-xl overflow-hidden shadow-lg p-1">
+                <div className="w-10 h-10 flex items-center justify-center text-black font-bold text-xl overflow-visible p-0">
                    <FeelAgainLogo fill="#ea580c" className="w-full h-full scale-[1.3]" />
                 </div>
                 <div className="flex flex-col">
@@ -160,7 +160,7 @@ const App: React.FC = () => {
       {/* Mobile Header Area */}
       <div className="md:hidden fixed top-0 left-0 w-full z-50 px-4 py-3 flex justify-between items-center bg-slate-950/80 backdrop-blur-md border-b border-white/5">
           <div className="flex items-center gap-2" onClick={() => setView(ViewMode.HERO)}>
-              <div className="w-8 h-8 bg-white rounded flex items-center justify-center p-1">
+              <div className="w-8 h-8 flex items-center justify-center p-0 overflow-visible">
                   <FeelAgainLogo fill="#ea580c" className="w-full h-full scale-[1.3]" />
               </div>
               <span className="font-bold text-white text-sm tracking-tight">FEEL AGAIN</span>
