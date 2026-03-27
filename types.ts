@@ -112,9 +112,7 @@ export interface LocalizedContent {
     title: string;
     body: string;
     subbody: string;
-    primaryCare: { title: string; subtitle: string; tag: string };
-    solution: { title: string; tag: string; items: string[] };
-    psychiatric: { title: string; subtitle: string; tag: string };
+    levels: { id: number; title: string; desc: string; sub: string }[];
   };
   docs: Record<DocumentId, DocumentContent>;
   charts: {

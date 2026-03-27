@@ -7,7 +7,7 @@ import FeelAgainLogo from './Logo';
 import { 
   Activity, CheckCircle, Shield, Building, Globe, Zap, DollarSign,
   TrendingUp, Scale, Users, FileText, BarChart3, PieChart, ArrowRight, Info,
-  Share2, Target, MessageCircle, Heart, Lock, Clock, Trophy, Crosshair
+  Share2, Target, MessageCircle, Heart, Lock, Clock, Trophy, Crosshair, AlertCircle
 } from 'lucide-react';
 
 interface WarRoomProps {
@@ -119,6 +119,7 @@ const GoalTile = ({ icon: Icon, value, label, sublabel, color }: any) => {
 
 const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
   const [activeMindNode, setActiveMindNode] = useState<string | null>(null);
+  const [selectedRole, setSelectedRole] = useState<any | null>(null);
   const t = CONTENT[lang].warRoom;
 
   const getImpactText = () => {
@@ -163,22 +164,26 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
   );
 
   return (
-    <div className="w-full min-h-screen pb-48 flex flex-col items-center bg-gray-50">
+    <div className="w-full min-h-screen pb-48 flex flex-col items-center bg-slate-900">
        
-       {/* SECTION 1: SYSTEM RISK ANALYSIS & CURRENT STATE (Merged) */}
+       {/* SECTION 1: STRUCTURAL BOTTLENECK (Moved to first place) */}
+       <StructuralBottleneck lang={lang} />
+
+       {/* SECTION 2: SYSTEM RISK ANALYSIS & CURRENT STATE (Moved to second place) */}
        <div className="w-full bg-slate-900 text-white pt-12 pb-16 px-4 md:px-8 shadow-2xl relative overflow-hidden">
             {/* Background Texture */}
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-500 to-transparent"></div>
             
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-white/10 pb-6">
-                   <div>
-                        <h3 className="text-xs font-bold text-orange-500 uppercase tracking-widest mb-2 flex items-center gap-2 animate-pulse">
-                            <Activity size={14} /> {lang === Language.UA ? 'Актуальний стан справ' : 'Current State of Affairs'}
-                        </h3>
-                        <h1 className="text-3xl md:text-5xl font-normal uppercase tracking-tight leading-none">
+                   <div className="space-y-6">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-bold uppercase tracking-widest">
+                            <AlertCircle size={12} />
+                            {lang === Language.UA ? 'Актуальний стан справ' : 'Current State of Affairs'}
+                        </div>
+                        <h2 className="text-4xl md:text-5xl font-normal text-white leading-tight tracking-tight uppercase">
                             {t.metrics.title}
-                        </h1>
+                        </h2>
                    </div>
                 </div>
 
@@ -240,20 +245,17 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
             </div>
        </div>
 
-       {/* SECTION 2: STRUCTURAL BOTTLENECK (Placed below Metrics) */}
-       <StructuralBottleneck lang={lang} />
-
        {/* SECTION 3: STRATEGIC MIND MAP */}
-       <div className="w-full bg-white border-b border-gray-200 py-12 px-4 relative overflow-visible">
+       <div className="w-full bg-slate-900 border-b border-white/10 py-12 px-4 relative overflow-visible">
             <div className="max-w-6xl mx-auto">
-                <h3 className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-12">{t.mindMap.title}</h3>
+                <h3 className="text-center text-xs font-bold text-slate-500 uppercase tracking-widest mb-12">{t.mindMap.title}</h3>
                 
                 <div className="relative h-[500px] w-full flex items-center justify-center">
                     
                     {/* Central Core */}
-                    <div className="w-40 h-40 bg-slate-900 rounded-full flex flex-col items-center justify-center z-30 shadow-2xl ring-8 ring-slate-100">
-                        <FeelAgainLogo fill="white" className="w-16 h-16 mb-2" />
-                        <span className="text-[10px] text-orange-400 font-bold uppercase tracking-widest">Feel Again</span>
+                    <div className="w-40 h-40 rounded-full flex flex-col items-center justify-center z-30">
+                        <FeelAgainLogo fill="white" className="w-24 h-24 mb-2" />
+                        <span className="text-[10px] text-orange-500 font-bold uppercase tracking-widest">Feel Again</span>
                     </div>
 
                     {/* Connecting Lines */}
@@ -306,28 +308,28 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
 
                     {/* Context Detail Box (Pops up when clicked) */}
                     {activeMindNode && (
-                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={() => setActiveMindNode(null)}>
-                            <div className="bg-white shadow-2xl border border-gray-200 p-6 rounded-xl w-full max-w-sm animate-float relative" onClick={(e) => e.stopPropagation()}>
-                                <h4 className="text-lg font-bold uppercase text-gray-900 mb-2 flex items-center justify-center gap-2">
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setActiveMindNode(null)}>
+                            <div className="bg-slate-800 shadow-2xl border border-white/10 p-6 rounded-xl w-full max-w-sm animate-float relative" onClick={(e) => e.stopPropagation()}>
+                                <h4 className="text-lg font-bold uppercase text-white mb-2 flex items-center justify-center gap-2">
                                     {getImpactText()?.title} {lang === Language.UA ? 'Вплив' : 'Impact'}
                                 </h4>
-                                <p className="text-sm text-gray-600 mb-4">{getImpactText()?.desc}</p>
-                                <div className="bg-orange-50 text-orange-800 p-3 rounded text-xs font-bold border border-orange-100">
+                                <p className="text-sm text-slate-300 mb-4">{getImpactText()?.desc}</p>
+                                <div className="bg-orange-500/10 text-orange-400 p-3 rounded text-xs font-bold border border-orange-500/20">
                                     {lang === Language.UA ? 'РЕЗУЛЬТАТ' : 'RESULT'}: {getImpactText()?.impact}
                                 </div>
                                 <button 
                                     onClick={() => setActiveMindNode(null)} 
                                     aria-label="Close details"
-                                    className="absolute top-4 right-4 text-gray-400 hover:text-black"
+                                    className="absolute top-4 right-4 text-slate-400 hover:text-white"
                                 >
-                                    <div className="w-6 h-6 rounded-full border flex items-center justify-center text-xl">×</div>
+                                    <div className="w-6 h-6 rounded-full border border-white/10 flex items-center justify-center text-xl">×</div>
                                 </button>
                             </div>
                         </div>
                     )}
                     
                     {!activeMindNode && (
-                         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-gray-900/10 backdrop-blur-sm text-gray-500 px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest animate-pulse">
+                         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-white/5 backdrop-blur-sm text-slate-400 px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest animate-pulse">
                             {t.mindMap.hint}
                         </div>
                     )}
@@ -336,89 +338,9 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
             </div>
        </div>
 
-       {/* SECTION 4: CONSORTIUM & GOVERNANCE */}
-       <div className="w-full max-w-7xl px-4 md:px-8 py-12">
-            
-            {/* Consortium Structure Section */}
-            <div>
-                <div className="flex items-center gap-3 mb-8 border-b border-gray-200 pb-4">
-                    <h3 className="text-xl md:text-3xl font-light uppercase text-gray-900 tracking-widest">
-                        {t.title}
-                    </h3>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {t.consortiumRoles?.map((role, idx) => (
-                        <div key={idx} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow h-full flex flex-col">
-                            <div className="text-[10px] font-bold uppercase text-orange-600 tracking-widest mb-2">{role.org}</div>
-                            <div className="space-y-2 mb-4">
-                                {role.partners.map((partner, pIdx) => (
-                                    <div key={pIdx} className="flex items-center justify-between gap-2">
-                                        <div className="text-sm font-medium text-gray-900 leading-tight">{partner.name}</div>
-                                        {partner.website && (
-                                            <a 
-                                                href={partner.website} 
-                                                target="_blank" 
-                                                rel="noopener noreferrer"
-                                                className="text-orange-500 hover:text-orange-700 transition-colors"
-                                            >
-                                                <Globe size={14} />
-                                            </a>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                            {role.desc && <div className="text-[11px] text-gray-500 leading-relaxed mb-4">{role.desc}</div>}
-                            <div className="mt-auto pt-4 border-t border-gray-50 flex flex-col gap-3">
-                                <div className="flex flex-wrap items-center gap-3">
-                                    {role.partners.map((partner, pIdx) => partner.logo && (
-                                        <div key={pIdx} className="h-10 sm:h-12 min-w-[3rem] bg-white rounded border border-gray-100 flex items-center justify-center p-1.5 shadow-sm relative hover:shadow-md transition-all hover:-translate-y-0.5" title={partner.name}>
-                                            <img 
-                                                src={partner.logo.startsWith('/') ? partner.logo : `https://picsum.photos/seed/${partner.logo}/40/40`} 
-                                                alt={partner.name} 
-                                                className={`h-full w-auto max-w-[120px] object-contain ${partner.logo.startsWith('/') ? '' : 'opacity-50 grayscale'}`}
-                                                referrerPolicy="no-referrer"
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="flex items-center gap-1.5" title="Verified Partner: This organization has undergone clinical and operational validation by the FeeL Again Consortium.">
-                                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                                    <span className="text-[10px] text-gray-500 uppercase tracking-wider font-medium">Verified Partner</span>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Efficiency Math */}
-            <div className="mt-6 bg-orange-50 rounded-xl border border-orange-200 p-6 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
-                <div className="absolute right-0 top-0 opacity-5 pointer-events-none">
-                    <div className="text-[120px] font-black leading-none font-mono text-orange-900">WHOLE</div>
-                </div>
-
-                <div className="md:w-1/2 z-10">
-                    <h4 className="text-sm font-bold uppercase text-orange-800 tracking-widest mb-2 flex items-center gap-2">
-                        {t.governance.title} <Info size={14} className="text-orange-400" />
-                    </h4>
-                    <p className="text-xs text-orange-700 leading-relaxed text-justify">
-                        {t.governance.body}
-                    </p>
-                </div>
-                <div className="flex-1 w-full flex justify-center z-10">
-                    <div className="bg-white p-4 rounded shadow-sm border border-emerald-200 ring-2 ring-emerald-50 w-full max-w-xs text-center">
-                            <div className="text-[10px] text-emerald-600 uppercase mb-1 font-bold">{t.governance.feelAgain}</div>
-                            <div className="text-2xl font-black text-emerald-600">100%</div>
-                            <div className="text-[9px] text-emerald-500">{t.governance.feelAgainDesc}</div>
-                    </div>
-                </div>
-            </div>
-       </div>
-
-       <div className="w-full max-w-7xl px-4 md:px-8 space-y-16 mt-8">
-          
-          {/* SECTION 6: GLOBAL VISION (Soft Power) - MOVED HERE */}
-          {t.globalVision && (
+       {/* SECTION 4: GLOBAL VISION (Soft Power) */}
+       {t.globalVision && (
+         <div className="w-full max-w-7xl px-4 md:px-8 mt-12">
             <div className="bg-slate-900 rounded-xl shadow-2xl overflow-hidden relative">
                 <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-orange-500 to-transparent"></div>
                 <div className="p-8 md:p-12 relative z-10 text-center">
@@ -434,8 +356,89 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
                     </p>
                 </div>
             </div>
-          )}
+         </div>
+       )}
 
+       {/* SECTION 5: CONSORTIUM & GOVERNANCE */}
+       <div className="w-full max-w-7xl px-4 md:px-8 py-12">
+            
+            {/* Consortium Structure Section */}
+            <div>
+                <div className="flex items-center gap-3 mb-8 border-b border-white/10 pb-4">
+                    <h3 className="text-xl md:text-3xl font-light uppercase text-white tracking-widest">
+                        {t.title}
+                    </h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {t.consortiumRoles?.map((role, idx) => (
+                        <div 
+                            key={idx} 
+                            className="bg-slate-800 p-6 rounded-xl shadow-sm border border-white/10 hover:shadow-md transition-shadow h-full flex flex-col cursor-pointer hover:border-orange-500/50"
+                            onClick={() => setSelectedRole(role)}
+                        >
+                            <div className="text-[10px] font-bold uppercase text-orange-500 tracking-widest mb-2">{role.org}</div>
+                            <div className="space-y-4 mb-4">
+                                {role.partners.map((partner, pIdx) => (
+                                    <div key={pIdx} className="flex items-center justify-between gap-3 bg-slate-900/50 p-2 rounded-lg border border-white/5">
+                                        <div className="flex items-center gap-3">
+                                            {partner.logo && (
+                                                <div className="h-16 w-16 sm:h-20 sm:w-20 bg-white rounded flex items-center justify-center p-2 shrink-0 shadow-sm" title={partner.name}>
+                                                    <img 
+                                                        src={partner.logo.startsWith('/') ? partner.logo : `https://picsum.photos/seed/${partner.logo}/80/80`} 
+                                                        alt={partner.name} 
+                                                        className="h-full w-full object-contain"
+                                                        referrerPolicy="no-referrer"
+                                                    />
+                                                </div>
+                                            )}
+                                            <div className="text-sm font-medium text-slate-200 leading-tight">{partner.name}</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            {role.desc && <div className="text-[11px] text-slate-400 leading-relaxed mb-4 line-clamp-3">{role.desc}</div>}
+                            <div className="mt-auto pt-4 border-t border-white/5 flex flex-col gap-3">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-1.5" title="Verified Partner: This organization has undergone clinical and operational validation by the FeeL Again Consortium.">
+                                        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                                        <span className="text-[10px] text-slate-500 uppercase tracking-wider font-medium">Verified Partner</span>
+                                    </div>
+                                    <div className="text-orange-500 text-[10px] uppercase font-bold tracking-widest flex items-center gap-1">
+                                        {lang === Language.UA ? 'Деталі' : 'Details'} <ArrowRight size={12} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Efficiency Math */}
+            <div className="mt-6 bg-slate-800 rounded-xl border border-white/10 p-6 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
+                <div className="absolute right-0 top-0 opacity-5 pointer-events-none">
+                    <div className="text-[120px] font-black leading-none font-mono text-white">WHOLE</div>
+                </div>
+
+                <div className="md:w-1/2 z-10">
+                    <h4 className="text-sm font-bold uppercase text-orange-500 tracking-widest mb-2 flex items-center gap-2">
+                        {t.governance.title} <Info size={14} className="text-orange-400" />
+                    </h4>
+                    <p className="text-xs text-slate-300 leading-relaxed text-justify">
+                        {t.governance.body}
+                    </p>
+                </div>
+                <div className="flex-1 w-full flex justify-center z-10">
+                    <div className="bg-slate-900 p-4 rounded shadow-sm border border-emerald-500/30 ring-2 ring-emerald-500/10 w-full max-w-xs text-center">
+                            <div className="text-[10px] text-emerald-400 uppercase mb-1 font-bold">{t.governance.feelAgain}</div>
+                            <div className="text-2xl font-black text-emerald-400">100%</div>
+                            <div className="text-[9px] text-emerald-500/80">{t.governance.feelAgainDesc}</div>
+                    </div>
+                </div>
+            </div>
+       </div>
+
+       <div className="w-full max-w-7xl px-4 md:px-8 space-y-16 mt-8">
+          
           {/* SECTION 7: Contacts */}
           <div id="contacts" className="bg-slate-900 rounded-xl shadow-2xl p-8 text-white flex flex-col md:flex-row items-center justify-between gap-8 border border-white/10">
               <div>
@@ -478,6 +481,69 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
           </div>
 
        </div>
+
+       {/* Role Details Modal */}
+       {selectedRole && (
+           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedRole(null)}>
+               <div className="bg-slate-800 shadow-2xl border border-white/10 p-6 md:p-8 rounded-xl w-full max-w-2xl animate-float relative max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+                   <div className="flex justify-between items-start mb-6">
+                       <h4 className="text-xl md:text-2xl font-light uppercase text-white tracking-widest">
+                           {selectedRole.org}
+                       </h4>
+                       <button 
+                           onClick={() => setSelectedRole(null)} 
+                           aria-label="Close details"
+                           className="text-slate-400 hover:text-white transition-colors"
+                       >
+                           <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-xl">×</div>
+                       </button>
+                   </div>
+                   
+                   {selectedRole.desc && (
+                       <div className="bg-slate-900/50 p-4 rounded-lg border border-white/5 mb-6">
+                           <p className="text-sm text-slate-300 leading-relaxed">{selectedRole.desc}</p>
+                       </div>
+                   )}
+
+                   <div className="space-y-4">
+                       <h5 className="text-xs font-bold uppercase text-slate-500 tracking-widest mb-4">
+                           {lang === Language.UA ? 'Партнери' : 'Partners'}
+                       </h5>
+                       {selectedRole.partners.map((partner: any, pIdx: number) => (
+                           <div key={pIdx} className="flex items-center justify-between gap-4 bg-slate-900 p-4 rounded-lg border border-white/5">
+                               <div className="flex items-center gap-4">
+                                   {partner.logo && (
+                                       <div className="h-20 w-20 sm:h-24 sm:w-24 rounded flex items-center justify-center p-2 shrink-0">
+                                           <img 
+                                               src={partner.logo.startsWith('/') ? partner.logo : `https://picsum.photos/seed/${partner.logo}/96/96`} 
+                                               alt={partner.name} 
+                                               className={`h-full w-full object-contain ${partner.logo.startsWith('/') ? 'invert mix-blend-screen' : 'opacity-50 grayscale'}`}
+                                               referrerPolicy="no-referrer"
+                                           />
+                                       </div>
+                                   )}
+                                   <div>
+                                       <div className="text-base font-medium text-white mb-1">{partner.name}</div>
+                                       {partner.desc && <div className="text-xs text-slate-400">{partner.desc}</div>}
+                                   </div>
+                               </div>
+                               {partner.website && (
+                                   <a 
+                                       href={partner.website} 
+                                       target="_blank" 
+                                       rel="noopener noreferrer"
+                                       className="text-orange-500 hover:text-orange-400 transition-colors shrink-0 p-2 bg-white/5 rounded-full hover:bg-white/10"
+                                   >
+                                       <Globe size={18} />
+                                   </a>
+                               )}
+                           </div>
+                       ))}
+                   </div>
+               </div>
+           </div>
+       )}
+
     </div>
   );
 };

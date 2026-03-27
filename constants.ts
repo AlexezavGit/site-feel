@@ -22,7 +22,7 @@ const CONSORTIUM_ROLES_EN = [
     partners: [
       { name: "Open Society Foundation (Ukraine)", website: "https://osf.org.ua/en", logo: LOGOS.openSocietyEN }
     ],
-    desc: "Open Society Foundation (Ukraine) specializes in policy analysis, public finance monitoring, and anti-corruption initiatives. In the FeeL Again program, OSF ensures strategic coordination, financial transparency, and alignment with international standards." 
+    desc: "Restoration of digital coordination of all participants in the humanitarian cycle." 
   },
   { 
     org: "CLINICAL STACK", 
@@ -30,7 +30,7 @@ const CONSORTIUM_ROLES_EN = [
       { name: "GEHA (Israel)", website: "https://geha.clalit.co.il", logo: LOGOS.geha },
       { name: "USC ICT (USA)", website: "https://ict.usc.edu", logo: LOGOS.usc }
     ],
-    desc: "Geha Mental Health Center (Israel) provides clinical expertise and supervision. USC ICT (USA) provides world-leading VR exposure therapy methodologies for PTSD treatment." 
+    desc: "EMDR & VR Bravemind methodologies that reduce the number of sessions, increase course completion rates, and reduce relapse rates." 
   },
   { 
     org: "FINTECH STACK", 
@@ -38,7 +38,7 @@ const CONSORTIUM_ROLES_EN = [
       { name: "Quorum (HighCastle)", website: "https://highcastle.co", logo: LOGOS.quorum },
       { name: "Enkidu P2P", website: "https://enkidu.io", logo: LOGOS.enkidu }
     ],
-    desc: "Quorum (HighCastle) provides the DLT platform for transparent asset management. Enkidu P2P enables direct, peer-to-peer payment rails bypassing intermediaries." 
+    desc: "Getting rid of human errors and preferences in aid distribution." 
   },
   { 
     org: "ANALYTICS STACK", 
@@ -46,7 +46,7 @@ const CONSORTIUM_ROLES_EN = [
       { name: "Shevchenko University", website: "https://knu.ua/en", logo: LOGOS.shevchenko },
       { name: "Oxford & Groningen (negotiations)" }
     ],
-    desc: "Academic partners providing data analysis, impact assessment, and economic modeling of mental health on national GDP." 
+    desc: "Creation of a set of open depersonalized data. This includes tracking symptom reduction rates, intervention efficacy across demographics, and long-term social integration metrics. This data will be crucial for evidence-based policy making, allowing governments and donors to allocate resources efficiently and scale proven methodologies." 
   },
 ];
 
@@ -56,7 +56,7 @@ const CONSORTIUM_ROLES_UA = [
     partners: [
       { name: "Фундація Відкрите Суспільство (Україна)", website: "https://osf.org.ua/en", logo: LOGOS.openSocietyUA }
     ],
-    desc: "Фундація Відкрите Суспільство (Україна) спеціалізується на аналізі політики, моніторингу публічних фінансів та антикорупційних ініціативах. У програмі FeeL Again OSF забезпечує стратегічну координацію, фінансову прозорість та відповідність міжнародним стандартам." 
+    desc: "Відтворення цифрової координації всіх учасників гуманітарного циклу." 
   },
   { 
     org: "КЛІНІЧНИЙ СТЕК", 
@@ -64,7 +64,7 @@ const CONSORTIUM_ROLES_UA = [
       { name: "GEHA (Ізраїль)", website: "https://geha.clalit.co.il", logo: LOGOS.geha },
       { name: "USC ICT (США)", website: "https://ict.usc.edu", logo: LOGOS.usc }
     ],
-    desc: "Психіатричний центр Geha (Ізраїль) надає клінічну експертизу та супервізію. USC ICT (США) надає провідні світові методології VR-експозиційної терапії для лікування ПТСР." 
+    desc: "Методології EMDR & VR Bravemind які знижують кількість сеансів та підвищують показники завершення курсу та знижують кількість рецидивів." 
   },
   { 
     org: "ФІНТЕХ СТЕК", 
@@ -72,7 +72,7 @@ const CONSORTIUM_ROLES_UA = [
       { name: "Quorum (HighCastle)", website: "https://highcastle.co", logo: LOGOS.quorum },
       { name: "Enkidu P2P", website: "https://enkidu.io", logo: LOGOS.enkidu }
     ],
-    desc: "Quorum (HighCastle) надає платформу DLT для прозорого управління активами. Enkidu P2P забезпечує прямі платіжні канали P2P, минаючи посередників." 
+    desc: "Позбавлення від людських помилок та преференцій у розподілі допомоги." 
   },
   { 
     org: "АНАЛІТИЧНИЙ СТЕК", 
@@ -80,7 +80,7 @@ const CONSORTIUM_ROLES_UA = [
       { name: "Університет Шевченка", website: "https://knu.ua/en", logo: LOGOS.shevchenko },
       { name: "Оксфорд та Гренінген (перемовини)" }
     ],
-    desc: "Академічні партнери, що забезпечують аналіз даних, оцінку впливу та економічне моделювання ментального здоров'я на національний ВВП." 
+    desc: "Створення набору відкритих деперсоніфікованих даних. Сюди входить відстеження показників зниження симптомів, ефективності втручань серед різних демографічних груп та метрик довгострокової соціальної інтеграції. Ці дані стануть основою для формування політики на основі доказів, дозволяючи урядам та донорам ефективно розподіляти ресурси та масштабувати перевірені методології." 
   },
 ];
 
@@ -103,34 +103,45 @@ export const CONTENT: Dictionary = {
       viewProblem: "Analysis",
       close: "Close",
       warRoom: "War Room",
-      enterSpace: "View Solution",
+      enterSpace: "View",
       contact: "Contact HQ"
     },
     hero: {
-      title: "DIGITAL INFRASTRUCTURE. CLINICAL PRECISION. FINANCIAL TRANSPARENCY.",
+      title: "DIGITAL PRECISION.\nCLINICAL EVIDENCE.\nFINANCIAL TRANSPARENCY.",
       subtitle: "Restoring Mental Well-being — Rebuilding the Country",
-      footer: "Aligning with Grand Bargain & National GDP Recovery"
+      footer: "Aligning with SDG 3, 8, 17"
     },
     bottleneck: {
-      label: "STRUCTURAL BOTTLENECK",
+      label: "STRUCTURAL CHALLENGE",
       title: "THE MISSING MIDDLE TIER",
-      body: "The current system lacks a middle tier of psychologists to receive patients from primary care (family doctors) before they require psychiatric hospitalization.",
-      subbody: "Forcing these informal practitioners into traditional licensing will drive them further into the shadows due to reporting and tax burdens.",
-      primaryCare: {
-        title: "Primary Care",
-        subtitle: "Family Doctors",
-        tag: "Overwhelmed"
-      },
-      solution: {
-        title: "Digital Infrastructure (The Solution)",
-        tag: "TRUSTED LAYER",
-        items: ["Private Practitioners", "Retrained Specialists", "Humanitarian Responders", "API-Integrated Clinics"]
-      },
-      psychiatric: {
-        title: "Psychiatric Care",
-        subtitle: "Hospitals & Institutions",
-        tag: "Last Resort"
-      }
+      body: "A significant portion of mental health support currently operates outside formal statistical frameworks. Integrating these practitioners into a unified system requires a balanced approach that encourages participation without imposing overwhelming administrative burdens.",
+      subbody: "As global humanitarian priorities naturally evolve, it is crucial to build a sustainable, self-reliant national infrastructure. Transitioning from emergency response to long-term systemic resilience ensures continuous care for those in need.",
+      levels: [
+        {
+          id: 1,
+          title: "Military Sector",
+          desc: "Dedicated military psychologists and professionals focusing on the armed forces. This sector operates independently to meet specific defense needs and is not included in general civil sector statistics.",
+          sub: ""
+        },
+        {
+          id: 2,
+          title: "Humanitarian Response & Primary Care",
+          desc: "Mobile groups and the Health Cluster, operating in coordination with WHO and the CMU Coordination Council. They provide vital acute interventions and foundational support.",
+          sub: "Includes primary care prescreening and short-term interventions by humanitarian organizations."
+        },
+        {
+          id: 3,
+          title: "Private Practice & Independent Initiatives",
+          desc: "A vast network of formalized and non-formalized practitioners, humanitarian and clinical initiatives, operating across specialized platforms and social networks (e.g., Instagram).",
+          sub: "This sector handles a massive volume of care but remains largely outside centralized tracking, making it difficult to measure symptom reduction, social integration, or economic impact systematically."
+        },
+        {
+          id: 4,
+          title: "Specialized Care (Last Resort)",
+          desc: "Clinical and specialized psychiatric care for severe cases requiring intensive, long-term medical intervention.",
+          sub: ""
+        }
+      ]
     },
     warRoom: {
       title: "Consortium Structure",
@@ -631,7 +642,7 @@ export const CONTENT: Dictionary = {
                id: 4,
                title: "Sustainable Development Stack",
                subtitle: "Data Partners & Analytics.",
-               body: "The analytics stack is built on the partnership between Shevchenko University and international academic institutions (Oxford, Groningen). This ensures that the data collected is not just stored, but analyzed to provide evidence-based policy recommendations for the state. <br/><br/>1. EMDR & VR Bravemind methodologies that reduce the number of sessions, increase course completion rates, and reduce relapse rates. <br/>2. Identification of effective practices among Ukrainian practitioners who have gathered experience over the last 10 years of war. <br/>3. Creation of a set of open depersonalized data. <br/>4. Restoration of digital coordination of all participants in the humanitarian cycle. <br/>5. Picking up specialists trained by humanitarian actors to prevent market collapse, as happened before. <br/>6. Rebuilding digital direction and support for beneficiaries, service providers, and donors. <br/>7. Getting rid of human errors and preferences in aid distribution. <br/>8. SLA (Service Level Agreement) support for the state and exporting the Ukrainian standard.",
+               body: "The analytics stack is built on the partnership between Shevchenko University and international academic institutions (Oxford, Groningen). This ensures that the data collected is not just stored, but analyzed to provide evidence-based policy recommendations for the state. <br/><br/>1. Identification of effective practices among Ukrainian practitioners who have gathered experience over the last 10 years of war. <br/>2. Picking up specialists trained by humanitarian actors to prevent market collapse, as happened before. <br/>3. Rebuilding digital direction and support for beneficiaries, service providers, and donors. <br/>4. SLA (Service Level Agreement) support for the state and exporting the Ukrainian standard.",
                bullets: ["KNU Shevchenko.", "EMDR & VR Methodologies.", "Evidence-Based Policy."]
             },
             {
@@ -660,34 +671,45 @@ export const CONTENT: Dictionary = {
       viewProblem: "Аналіз",
       close: "Закрити",
       warRoom: "War Room",
-      enterSpace: "Переглянути Рішення",
+      enterSpace: "Переглянути",
       contact: "Зв'язок"
     },
     hero: {
-      title: "ЦИФРОВА ІНФРАСТРУКТУРА. КЛІНІЧНА ТОЧНІСТЬ. ФІНАНСОВА ПРОЗОРІСТЬ.",
+      title: "ЦИФРОВА ТОЧНІСТЬ.\nКЛІНІЧНА ДОКАЗОВІСТЬ.\nФІНАНСОВА ПРОЗОРІСТЬ.",
       subtitle: "Відновлення Ментального Добробуту — Відбудова країни",
-      footer: "Узгодження з Grand Bargain та Відновленням ВВП"
+      footer: "Відповідність SDG 3, 8, 17"
     },
     bottleneck: {
-      label: "СТРУКТУРНЕ ВУЗЬКЕ МІСЦЕ",
+      label: "СТРУКТУРНИЙ ВИКЛИК",
       title: "ВІДСУТНЯ СЕРЕДНЯ ЛАНКА",
-      body: "Поточній системі не вистачає середньої ланки психологів для прийому пацієнтів від первинної ланки (сімейних лікарів) до того, як їм знадобиться психіатрична госпіталізація.",
-      subbody: "Примус цих неформальних практиків до традиційного ліцензування витіснить їх ще далі в тінь через тягар звітності та оподаткування.",
-      primaryCare: {
-        title: "Первинна допомога",
-        subtitle: "Сімейні лікарі",
-        tag: "Перевантажені"
-      },
-      solution: {
-        title: "Цифрова інфраструктура (Рішення)",
-        tag: "ДОВІРЕНИЙ ШАР",
-        items: ["Приватні практики", "Перепідготовлені фахівці", "Гуманітарні реагувальники", "API-інтегровані клініки"]
-      },
-      psychiatric: {
-        title: "Психіатрична допомога",
-        subtitle: "Лікарні та установи",
-        tag: "Остання інстанція"
-      }
+      body: "Значна частина психологічної підтримки наразі функціонує поза межами формальної статистики. Інтеграція цих фахівців у єдину систему потребує збалансованого підходу, який стимулюватиме участь без надмірного адміністративного навантаження.",
+      subbody: "Оскільки глобальні гуманітарні пріоритети природно змінюються, критично важливо розбудовувати стійку національну інфраструктуру. Перехід від екстреного реагування до довгострокової системної стійкості забезпечить безперервну допомогу тим, хто її потребує.",
+      levels: [
+        {
+          id: 1,
+          title: "Військова ланка",
+          desc: "Військові психологи та фахівці, зосереджені на потребах Збройних Сил. Цей сектор функціонує паралельно для виконання специфічних оборонних завдань і не враховується в загальній статистиці цивільного сектору.",
+          sub: ""
+        },
+        {
+          id: 2,
+          title: "Гуманітарне реагування та первинна ланка",
+          desc: "Мобільні групи та Health Cluster, що діють спільно з ВООЗ та Координаційною радою КМУ. Вони забезпечують життєво важливі гострі інтервенції та базову підтримку.",
+          sub: "Включає прескринінг на рівні первинної допомоги та короткострокові втручання гуманітарних організацій."
+        },
+        {
+          id: 3,
+          title: "Приватна практика та незалежні ініціативи",
+          desc: "Широка мережа формалізованих та неформалізованих фахівців, гуманітарних і клінічних ініціатив, що працюють на спеціалізованих платформах та в соціальних мережах (наприклад, Instagram).",
+          sub: "Цей сектор обробляє величезний обсяг запитів, але залишається переважно поза централізованим моніторингом, що ускладнює системне вимірювання зниження симптомів, соціальної інтеграції чи економічного ефекту."
+        },
+        {
+          id: 4,
+          title: "Спеціалізована допомога (Остання інстанція)",
+          desc: "Клінічна та спеціалізована психіатрична допомога для складних випадків, що потребують інтенсивного, довгострокового медичного втручання.",
+          sub: ""
+        }
+      ]
     },
     warRoom: {
       title: "Структура Консорціуму",
@@ -1188,7 +1210,7 @@ export const CONTENT: Dictionary = {
               id: 4,
               title: "Стек Сталого Розвитку",
               subtitle: "Партнери по даним та аналітика.",
-              body: "1. Методології EMDR & VR Bravemind які знижують кількість сеансів та підвищують показники завершення курсу та знижують кількість рецидивів. <br/>2. Визначення ефективних практик серед українських практиків що збирали досвід останніх 10 років війни. <br/>3. Створення набору відкритих деперсоніфікованих даних. <br/>4. Відтворення цифрової координації всіх учасників гуманітарного циклу. <br/>5. Підхоплення навчених гуманітарними акторами фахівців як попередження падіння ринку, як це було раніше. <br/>6. Відбудова цифрового спрямування та супроводу бенефіціарів, надавачів послуг та донорів. <br/>7. Позбавлення від людських помилок та преференцій у розподілі допомоги. <br/>8. Підтримка SLA (Service Level Agreement) для держави та експортуємо українське.",
+              body: "1. Визначення ефективних практик серед українських практиків що збирали досвід останніх 10 років війни. <br/>2. Підхоплення навчених гуманітарними акторами фахівців як попередження падіння ринку, як це було раніше. <br/>3. Відбудова цифрового спрямування та супроводу бенефіціарів, надавачів послуг та донорів. <br/>4. Підтримка SLA (Service Level Agreement) для держави та експортуємо українське.",
               bullets: ["КНУ Шевченка.", "Методології EMDR & VR.", "Політика на Основі Доказів."]
             },
             {

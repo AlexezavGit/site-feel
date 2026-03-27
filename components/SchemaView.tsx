@@ -36,24 +36,24 @@ const SchemaView: React.FC<SchemaViewProps> = ({ lang, docId, onNodeClick }) => 
         key={node.id}
         onClick={() => onNodeClick(node.targetPage)}
         aria-label={`${navT.readMore}: ${node.title} - ${node.highlight}`}
-        className="content-card p-4 md:p-8 text-left w-full flex flex-col group hover:scale-[1.03] transition-all duration-300 ease-out relative overflow-hidden min-h-[140px] md:min-h-[180px] justify-between z-10 hover:z-20 border-transparent hover:border-orange-500/50 shadow-md hover:shadow-[0_0_30px_rgba(234,88,12,0.15)]"
+        className="content-card p-3 sm:p-4 md:p-8 text-left w-full flex flex-col group hover:scale-[1.03] transition-all duration-300 ease-out relative overflow-hidden min-h-[120px] sm:min-h-[140px] md:min-h-[180px] justify-between z-10 hover:z-20 border-transparent hover:border-orange-500/50 shadow-md hover:shadow-[0_0_30px_rgba(234,88,12,0.15)]"
       >
         {/* Glow Effect on Hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 via-orange-500/0 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 via-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-        <div className="flex items-center justify-between w-full mb-2 md:mb-4 relative z-10">
-           <h3 className="font-medium text-gray-500 uppercase tracking-widest text-[9px] md:text-[10px] group-hover:text-black transition-colors">{node.title}</h3>
-           <Icon size={18} className={`${accentColor} opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 group-hover:text-orange-600 md:w-5 md:h-5`} />
+        <div className="flex items-start justify-between w-full mb-2 md:mb-4 relative z-10 gap-2">
+           <h3 className="font-medium text-slate-400 uppercase tracking-widest text-[8px] sm:text-[9px] md:text-[10px] group-hover:text-white transition-colors leading-tight">{node.title}</h3>
+           <Icon size={16} className={`${accentColor} opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 group-hover:text-orange-500 md:w-5 md:h-5 shrink-0`} />
         </div>
         
-        <div className="relative z-10">
-          <div className="text-xl md:text-2xl font-light text-black leading-tight tracking-tight group-hover:text-orange-700 transition-colors">
+        <div className="relative z-10 w-full">
+          <div className="text-base sm:text-xl md:text-2xl font-light text-white leading-tight tracking-tight group-hover:text-orange-400 transition-colors break-words" style={{ wordBreak: 'break-word', hyphens: 'auto' }}>
             {node.highlight}
           </div>
         </div>
         
-        <div className="mt-4 md:mt-6 flex items-center text-[8px] md:text-[9px] font-medium uppercase tracking-widest text-gray-400 group-hover:text-orange-600 transition-colors relative z-10">
-            {navT.readMore} <div className="ml-2 group-hover:translate-x-1 transition-transform">→</div>
+        <div className="mt-3 md:mt-6 flex items-center text-[8px] md:text-[9px] font-medium uppercase tracking-widest text-slate-500 group-hover:text-orange-500 transition-colors relative z-10">
+            {navT.readMore} <div className="ml-1 md:ml-2 group-hover:translate-x-1 transition-transform">→</div>
         </div>
       </button>
     );
@@ -69,17 +69,17 @@ const SchemaView: React.FC<SchemaViewProps> = ({ lang, docId, onNodeClick }) => 
         <button 
             onClick={() => onNodeClick(t.centerNode.targetPage || 1)} 
             aria-label={`${navT.enterSpace}: ${t.centerNode?.title}`}
-            className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-white/90 backdrop-blur-md flex flex-col items-center justify-center shadow-[0_0_50px_rgba(234,88,12,0.3)] z-10 hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden border border-white/50 hover:border-orange-500/50"
+            className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-slate-900/90 backdrop-blur-md flex flex-col items-center justify-center shadow-[0_0_50px_rgba(234,88,12,0.3)] z-10 hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden border border-white/10 hover:border-orange-500/50"
         >
-            <div className="mb-2 md:mb-4 p-3 md:p-4 bg-gray-50 rounded-full group-hover:bg-orange-50 transition-colors">
-                <Activity size={24} className="text-gray-400 group-hover:text-orange-600 transition-colors md:w-8 md:h-8" />
+            <div className="mb-2 md:mb-4 p-3 md:p-4 bg-slate-800 rounded-full group-hover:bg-orange-900/30 transition-colors">
+                <Activity size={24} className="text-slate-400 group-hover:text-orange-500 transition-colors md:w-8 md:h-8" />
             </div>
-            <h1 className="text-lg md:text-3xl font-light text-orange-600 leading-none mb-1 md:mb-2 px-2 tracking-tight uppercase group-hover:scale-105 transition-transform text-center">
+            <h1 className="text-lg md:text-3xl font-light text-orange-500 leading-none mb-1 md:mb-2 px-2 tracking-tight uppercase group-hover:scale-105 transition-transform text-center">
                 {t.centerNode?.title}
             </h1>
-            <p className="text-[8px] md:text-[10px] text-gray-500 font-medium uppercase tracking-widest group-hover:text-gray-700">{t.centerNode?.subtitle}</p>
+            <p className="text-[8px] md:text-[10px] text-slate-400 font-medium uppercase tracking-widest group-hover:text-slate-300">{t.centerNode?.subtitle}</p>
             
-            <div className="mt-2 md:mt-4 text-[8px] md:text-[9px] text-white font-medium uppercase tracking-widest bg-black px-3 py-1 md:px-4 md:py-2 rounded-full group-hover:bg-orange-600 transition-colors shadow-lg">
+            <div className="mt-2 md:mt-4 text-[8px] md:text-[9px] text-slate-900 font-medium uppercase tracking-widest bg-white px-3 py-1 md:px-4 md:py-2 rounded-full group-hover:bg-orange-500 group-hover:text-white transition-colors shadow-lg">
                 {navT.enterSpace}
             </div>
         </button>

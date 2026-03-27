@@ -3,6 +3,7 @@ import { ArrowRight, Globe } from 'lucide-react';
 import { CONTENT } from '../constants';
 import { Language } from '../types';
 import StructuralBottleneck from './StructuralBottleneck';
+import FeelAgainLogo from './Logo';
 
 interface HeroViewProps {
   lang: Language;
@@ -85,18 +86,30 @@ const Sdg3Svg = () => (
   </svg>
 );
 
+// SDG 17: Partnerships for the Goals (Navy Blue)
+const Sdg17Svg = () => (
+  <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+    <path d="m0-.02h1000v1000.03h-1000z" fill="#19486a"/>
+    <g fill="#fff">
+        <path d="M499.5,150 C306.5,150 150,306.5 150,499.5 C150,692.5 306.5,849 499.5,849 C692.5,849 849,692.5 849,499.5 C849,306.5 692.5,150 499.5,150 Z M499.5,780 C344.5,780 219,654.5 219,499.5 C219,344.5 344.5,219 499.5,219 C654.5,219 780,344.5 780,499.5 C780,654.5 654.5,780 499.5,780 Z" />
+        <path d="M499.5,280 C378.5,280 280,378.5 280,499.5 C280,620.5 378.5,719 499.5,719 C620.5,719 719,620.5 719,499.5 C719,378.5 620.5,280 499.5,280 Z M499.5,650 C416.5,650 349,582.5 349,499.5 C349,416.5 416.5,349 499.5,349 C582.5,349 650,416.5 650,499.5 C650,582.5 582.5,650 499.5,650 Z" />
+        <circle cx="499.5" cy="499.5" r="80" />
+    </g>
+  </svg>
+);
+
 const SDGTile = ({ title, children }: { title: string; children?: React.ReactNode }) => (
   <div 
-    className="group relative h-14 w-14 hover:w-60 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden rounded shadow-lg cursor-default hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 bg-white border border-gray-100"
+    className="group relative h-20 w-20 md:h-24 md:w-24 hover:w-64 md:hover:w-72 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden rounded shadow-lg cursor-default hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 bg-white border border-gray-100"
   >
      {/* Logo Block - Full Height */}
-     <div className="absolute left-0 top-0 h-14 w-14 z-10 flex items-center justify-center p-0">
+     <div className="absolute left-0 top-0 h-20 w-20 md:h-24 md:w-24 z-10 flex items-center justify-center p-0">
         {children}
      </div>
      
      {/* Text Content (Revealed on Hover) */}
-     <div className="absolute left-14 top-0 h-full w-48 flex items-center pl-2 pr-3 bg-slate-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
-        <span className="text-white text-[9px] font-bold uppercase leading-tight whitespace-normal">
+     <div className="absolute left-20 md:left-24 top-0 h-full w-44 md:w-48 flex items-center pl-3 pr-4 bg-slate-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
+        <span className="text-white text-[10px] md:text-xs font-bold uppercase leading-tight whitespace-normal">
           {title}
         </span>
      </div>
@@ -110,47 +123,54 @@ const HeroView: React.FC<HeroViewProps> = ({ lang, onStart, onToggleLang }) => {
   return (
     <div className="w-full min-h-screen bg-slate-900 relative overflow-x-hidden flex flex-col">
       {/* Hero Section */}
-      <div className="w-full h-screen relative flex flex-col items-center justify-center text-center px-6">
+      <div className="w-full min-h-[100dvh] relative flex flex-col items-center justify-center text-center px-6 pt-24 pb-12 md:py-24">
         {/* Background Overlay - Matching WarRoom Texture */}
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-500 to-transparent pointer-events-none"></div>
-        
-        {/* Language Toggle */}
-        <div className="absolute top-6 right-6 z-50">
-            <button 
-                onClick={onToggleLang}
-                aria-label={`Switch language. Current: ${lang}`}
-                className="px-4 py-2 text-white bg-white/5 hover:bg-white/10 rounded-full flex items-center gap-2 font-mono text-xs font-bold transition-all border border-white/10 backdrop-blur-md"
-            >
-                <Globe size={14} />
-                {lang}
-            </button>
-        </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
+        <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center mt-12 md:mt-0">
             
-            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-medium text-white leading-tight tracking-tighter mb-8 uppercase drop-shadow-2xl max-w-6xl px-4 whitespace-pre-line">
-              {heroT.title.replace(/\. /g, '.\n')}
+            <div className="mb-4 md:mb-12 w-32 h-32 md:w-64 md:h-64 flex items-center justify-center">
+                <FeelAgainLogo fill="white" className="w-full h-full drop-shadow-2xl" />
+            </div>
+
+            <h1 className="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-medium text-white leading-tight tracking-tighter mb-6 md:mb-8 uppercase drop-shadow-2xl max-w-6xl px-4 whitespace-pre-line">
+              {heroT.title}
             </h1>
             
-            <div className="w-16 h-1 bg-orange-600 mb-8 rounded-full"></div>
-            
-            <p className="text-lg md:text-2xl text-slate-300 font-light max-w-3xl leading-relaxed mb-12 drop-shadow-md px-4">
-              {heroT.subtitle}
-            </p>
+            <div className="w-16 h-1 bg-orange-600 mb-6 md:mb-8 rounded-full"></div>
             
             <button 
               onClick={onStart}
               aria-label={navT.startTour}
-              className="group relative px-8 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs uppercase tracking-[0.2em] rounded-full shadow-[0_10px_30px_rgba(234,88,12,0.3)] transition-all hover:-translate-y-1 active:scale-95 mt-4"
+              className="group relative px-6 py-3 md:px-8 bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs uppercase tracking-[0.2em] rounded-full shadow-[0_10px_30px_rgba(234,88,12,0.3)] transition-all hover:-translate-y-1 active:scale-95"
             >
               <span className="flex items-center gap-3">
                 {navT.startTour} <ArrowRight className="group-hover:translate-x-1 transition-transform" />
               </span>
             </button>
 
-            <div className="mt-24 flex flex-col items-center gap-6">
-               <div className="text-[10px] font-bold text-white/40 uppercase tracking-[0.3em] leading-relaxed">
+            <button 
+                onClick={onToggleLang}
+                className="mt-8 px-6 py-2 text-white/70 hover:text-white bg-white/5 hover:bg-white/10 rounded-full flex items-center gap-2 font-mono text-xs font-bold transition-all border border-white/10 backdrop-blur-md"
+            >
+                <Globe size={14} className="text-orange-500" />
+                {lang === 'EN' ? 'УКРАЇНСЬКА' : 'ENGLISH'}
+            </button>
+
+            <div className="mt-12 md:mt-16 flex flex-col items-center gap-4 md:gap-6">
+               <div className="text-[9px] md:text-[10px] font-bold text-white/40 uppercase tracking-[0.3em] leading-relaxed text-center px-4">
                  {heroT.footer}
+               </div>
+               <div className="flex gap-3 md:gap-4">
+                 <SDGTile title="SDG 3: Good Health and Well-being">
+                   <Sdg3Svg />
+                 </SDGTile>
+                 <SDGTile title="SDG 8: Decent Work and Economic Growth">
+                   <Sdg8Svg />
+                 </SDGTile>
+                 <SDGTile title="SDG 17: Partnerships for the Goals">
+                   <Sdg17Svg />
+                 </SDGTile>
                </div>
             </div>
         </div>
