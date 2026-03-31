@@ -8,6 +8,7 @@ export enum ViewMode {
   HERO = 'HERO',
   SCHEMA = 'SCHEMA',
   REPORT = 'REPORT',
+  STRATEGY = 'STRATEGY',
   WAR_ROOM = 'WAR_ROOM'
 }
 
@@ -98,6 +99,7 @@ export interface LocalizedContent {
     viewOpportunity: string;
     viewProblem: string;
     close: string;
+    strategyLabel: string;
     warRoom: string;
     enterSpace: string;
     contact: string;
@@ -113,6 +115,16 @@ export interface LocalizedContent {
     body: string;
     subbody: string;
     levels: { id: number; title: string; desc: string; sub: string }[];
+  };
+  strategy: {
+    title: string;
+    subtitle: string;
+    stormTitle: string;
+    failures: { id: number; title: string; desc: string; stats: { value: string; label: string; ref: string }[] }[];
+    tocTitle: string;
+    toc: { title: string; desc: string }[];
+    roadmapTitle: string;
+    roadmap: { phase: string; timeline: string; obj: string; kpi: string }[];
   };
   docs: Record<DocumentId, DocumentContent>;
   charts: {

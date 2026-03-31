@@ -3,89 +3,15 @@ import React, { useState, useEffect } from 'react';
 import { CONTENT } from '../constants';
 import { Language } from '../types';
 import StructuralBottleneck from './StructuralBottleneck';
-import FeelAgainLogo from './Logo';
 import { 
-  Activity, CheckCircle, Shield, Building, Globe, Zap, DollarSign,
-  TrendingUp, Scale, Users, FileText, BarChart3, PieChart, ArrowRight, Info,
-  Share2, Target, MessageCircle, Heart, Lock, Clock, Trophy, Crosshair, AlertCircle
+  Activity, Shield, Globe, DollarSign,
+  Users, PieChart, ArrowRight, Info,
+  Share2, AlertCircle
 } from 'lucide-react';
 
 interface WarRoomProps {
   lang: Language;
 }
-
-// Custom Hook for counting animation
-const useCountUp = (end: number, duration: number = 2000, start: number = 0) => {
-  const [count, setCount] = useState(start);
-  
-  useEffect(() => {
-    let startTime: number | null = null;
-    const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      setCount(progress * (end - start) + start);
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      }
-    };
-    window.requestAnimationFrame(step);
-  }, [end, duration, start]);
-
-  return count;
-};
-
-const CountUpAnimation: React.FC<{ value: number, suffix?: string, prefix?: string, decimals?: number }> = ({ value, suffix = "", prefix = "", decimals = 0 }) => {
-    const count = useCountUp(value);
-    const formatted = count.toFixed(decimals);
-    return <span>{prefix}{formatted}{suffix}</span>;
-};
-
-// --- MIND MAP COMPONENTS ---
-
-interface MindMapNodeProps {
-    title: string;
-    icon: any;
-    isActive: boolean;
-    onClick: () => void;
-    position: string;
-    color: string;
-}
-
-// Updated MindMapNode to use warm gray/orange palette instead of random colors if needed, 
-// but sticking to props for now, just ensuring borders are consistent.
-const MindMapNode: React.FC<MindMapNodeProps> = ({ title, icon: Icon, isActive, onClick, position, color }) => (
-    <button 
-        onClick={onClick}
-        aria-label={`View impact of ${title}`}
-        aria-pressed={isActive}
-        className={`absolute w-24 h-24 md:w-32 md:h-32 rounded-full flex flex-col items-center justify-center p-2 shadow-lg transition-all duration-500 z-20 border-2 group ${position}
-        ${isActive ? `scale-110 bg-white border-orange-500 ring-4 ring-orange-100 shadow-[0_0_30px_rgba(234,88,12,0.4)]` : `bg-gray-50 border-gray-200 hover:border-orange-400 hover:scale-110 hover:-translate-y-2 hover:shadow-[0_10px_25px_rgba(234,88,12,0.25)] hover:bg-white`}`}
-    >
-        <Icon size={24} className={`mb-2 transition-colors duration-300 ${isActive ? `text-orange-600` : 'text-gray-400 group-hover:text-orange-500'}`} />
-        <span className={`text-[10px] md:text-xs font-bold uppercase tracking-wider text-center leading-tight transition-colors duration-300 ${isActive ? 'text-black' : 'text-gray-500 group-hover:text-gray-900'}`}>
-            {title}
-        </span>
-    </button>
-);
-
-const ConnectionLine: React.FC<{ angle: number, length: string, isActive: boolean }> = ({ angle, length, isActive }) => (
-    <div 
-        className={`absolute top-1/2 left-1/2 h-[1px] origin-left z-0 transition-all duration-700 ${isActive ? 'opacity-100' : 'opacity-30'}`}
-        style={{ 
-            width: length, 
-            transform: `translateY(-50%) rotate(${angle}deg)`,
-            background: isActive 
-                ? 'linear-gradient(90deg, rgba(234,88,12,1) 0%, rgba(234,88,12,0.4) 50%, rgba(234,88,12,0) 100%)' 
-                : 'linear-gradient(90deg, rgba(203,213,225,1) 0%, rgba(203,213,225,0.2) 100%)',
-            boxShadow: isActive ? '0 0 15px rgba(234,88,12,0.5)' : 'none'
-        }}
-    >
-        {isActive && (
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-orange-500 rounded-full blur-[2px] animate-pulse"></div>
-        )}
-    </div>
-);
 
 // --- GOAL TILE COMPONENT ---
 // Updated to match the dark header aesthetic properly
@@ -118,50 +44,8 @@ const GoalTile = ({ icon: Icon, value, label, sublabel, color }: any) => {
 };
 
 const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
-  const [activeMindNode, setActiveMindNode] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<any | null>(null);
   const t = CONTENT[lang].warRoom;
-
-  const getImpactText = () => {
-      if (!activeMindNode) return null;
-      const node = t.mindMap.nodes[activeMindNode];
-      return node ? { title: node.title, desc: node.desc, impact: node.impact } : null;
-  };
-
-  // Reusable Card Component - STANDARDIZED to 'Pilot & Deployment Strategy' Design (Slate Header + White Body + Orange Accent)
-  const DashboardCard = ({ title, icon: Icon, children, accentColor = "orange" }: any) => (
-      <div className="bg-white rounded-lg border border-gray-200 shadow-lg overflow-hidden flex flex-col h-full hover:shadow-xl transition-shadow duration-300">
-           {/* Header styled like PhaseCard */}
-           <div className={`bg-slate-900 text-white p-4 border-b-4 flex items-center gap-2 border-${accentColor}-500`}>
-                <Icon size={16} className={`text-${accentColor}-500`} />
-                <h4 className={`text-xs font-bold uppercase tracking-widest text-${accentColor}-400`}>{title}</h4>
-           </div>
-           <div className="p-4 flex-grow flex flex-col justify-center bg-white">
-               {children}
-           </div>
-      </div>
-  );
-
-  const PhaseCard = ({ phase, year, items }: { phase: string, year: string, items: { title: string, subtitle: string, icon: any }[] }) => (
-      <div className="bg-white rounded-lg border border-gray-200 shadow-lg overflow-hidden flex flex-col h-full hover:shadow-xl transition-shadow duration-300 group">
-          <div className="bg-slate-900 text-white p-4 border-b border-orange-500 border-b-4 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
-              <div className="text-[10px] font-bold uppercase tracking-widest text-orange-400 mb-1 relative z-10">{phase}</div>
-              <div className="text-2xl font-light relative z-10">{year}</div>
-          </div>
-          <div className="p-4 space-y-4 flex-grow bg-gradient-to-b from-white to-gray-50/50">
-              {items.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-3 p-3 bg-white rounded border border-gray-100 hover:bg-orange-50 hover:border-orange-200 transition-all duration-300 group/item shadow-sm hover:shadow-md">
-                      <div className="mt-1 text-orange-600 group-hover/item:scale-110 transition-transform"><item.icon size={18} /></div>
-                      <div>
-                          <div className="text-sm font-bold text-gray-900 uppercase tracking-tight">{item.title}</div>
-                          <div className="text-xs text-gray-600 leading-relaxed mt-1 font-medium">{item.subtitle}</div>
-                      </div>
-                  </div>
-              ))}
-          </div>
-      </div>
-  );
 
   return (
     <div className="w-full min-h-screen pb-48 flex flex-col items-center bg-slate-900">
@@ -241,99 +125,6 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
                         sublabel={t.goals[3].sublabel} 
                         color="red"
                     />
-                </div>
-            </div>
-       </div>
-
-       {/* SECTION 3: STRATEGIC MIND MAP */}
-       <div className="w-full bg-slate-900 border-b border-white/10 py-12 px-4 relative overflow-visible">
-            <div className="max-w-6xl mx-auto">
-                <h3 className="text-center text-xs font-bold text-slate-500 uppercase tracking-widest mb-12">{t.mindMap.title}</h3>
-                
-                <div className="relative h-[500px] w-full flex items-center justify-center">
-                    
-                    {/* Central Core */}
-                    <div className="w-40 h-40 rounded-full flex flex-col items-center justify-center z-30">
-                        <FeelAgainLogo fill="white" className="w-24 h-24 mb-2" />
-                        <span className="text-[10px] text-orange-500 font-bold uppercase tracking-widest">Feel Again</span>
-                    </div>
-
-                    {/* Connecting Lines */}
-                    <ConnectionLine angle={214} length="260px" isActive={activeMindNode === 'speed'} />
-                    <ConnectionLine angle={180} length="280px" isActive={activeMindNode === 'cost'} />
-                    <ConnectionLine angle={146} length="260px" isActive={activeMindNode === 'quality'} />
-                    <ConnectionLine angle={-34} length="260px" isActive={activeMindNode === 'trust'} />
-                    <ConnectionLine angle={0} length="280px" isActive={activeMindNode === 'dignity'} />
-                    <ConnectionLine angle={34} length="260px" isActive={activeMindNode === 'data'} />
-
-                    {/* Priorities Nodes (Left) - Using Warm/Neutral Colors */}
-                    <MindMapNode 
-                        title={t.mindMap.nodes.speed.title} icon={Zap} color="orange"
-                        position="left-[5%] top-[20%]" 
-                        isActive={activeMindNode === 'speed'} 
-                        onClick={() => setActiveMindNode('speed')} 
-                    />
-                    <MindMapNode 
-                        title={t.mindMap.nodes.cost.title} icon={DollarSign} color="orange"
-                        position="left-[0%] top-[50%] -translate-y-1/2" 
-                        isActive={activeMindNode === 'cost'} 
-                        onClick={() => setActiveMindNode('cost')} 
-                    />
-                    <MindMapNode 
-                        title={t.mindMap.nodes.quality.title} icon={CheckCircle} color="orange"
-                        position="left-[5%] bottom-[20%]" 
-                        isActive={activeMindNode === 'quality'} 
-                        onClick={() => setActiveMindNode('quality')} 
-                    />
-
-                    {/* Communication Nodes (Right) - Using Warm/Neutral Colors */}
-                    <MindMapNode 
-                        title={t.mindMap.nodes.trust.title} icon={Shield} color="orange"
-                        position="right-[5%] top-[20%]" 
-                        isActive={activeMindNode === 'trust'} 
-                        onClick={() => setActiveMindNode('trust')} 
-                    />
-                    <MindMapNode 
-                        title={t.mindMap.nodes.dignity.title} icon={Heart} color="orange"
-                        position="right-[0%] top-[50%] -translate-y-1/2" 
-                        isActive={activeMindNode === 'dignity'} 
-                        onClick={() => setActiveMindNode('dignity')} 
-                    />
-                    <MindMapNode 
-                        title={t.mindMap.nodes.data.title} icon={Activity} color="orange"
-                        position="right-[5%] bottom-[20%]" 
-                        isActive={activeMindNode === 'data'} 
-                        onClick={() => setActiveMindNode('data')} 
-                    />
-
-                    {/* Context Detail Box (Pops up when clicked) */}
-                    {activeMindNode && (
-                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setActiveMindNode(null)}>
-                            <div className="bg-slate-800 shadow-2xl border border-white/10 p-6 rounded-xl w-full max-w-sm animate-float relative" onClick={(e) => e.stopPropagation()}>
-                                <h4 className="text-lg font-bold uppercase text-white mb-2 flex items-center justify-center gap-2">
-                                    {getImpactText()?.title} {lang === Language.UA ? 'Вплив' : 'Impact'}
-                                </h4>
-                                <p className="text-sm text-slate-300 mb-4">{getImpactText()?.desc}</p>
-                                <div className="bg-orange-500/10 text-orange-400 p-3 rounded text-xs font-bold border border-orange-500/20">
-                                    {lang === Language.UA ? 'РЕЗУЛЬТАТ' : 'RESULT'}: {getImpactText()?.impact}
-                                </div>
-                                <button 
-                                    onClick={() => setActiveMindNode(null)} 
-                                    aria-label="Close details"
-                                    className="absolute top-4 right-4 text-slate-400 hover:text-white"
-                                >
-                                    <div className="w-6 h-6 rounded-full border border-white/10 flex items-center justify-center text-xl">×</div>
-                                </button>
-                            </div>
-                        </div>
-                    )}
-                    
-                    {!activeMindNode && (
-                         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-white/5 backdrop-blur-sm text-slate-400 px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest animate-pulse">
-                            {t.mindMap.hint}
-                        </div>
-                    )}
-
                 </div>
             </div>
        </div>
@@ -548,5 +339,4 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
   );
 };
 
-// Helper for FeelAgainLogo in MindMap (can't import component inside component easily)
 export default WarRoom;

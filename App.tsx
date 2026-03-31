@@ -6,6 +6,7 @@ import SchemaView from './components/SchemaView';
 import ReportView from './components/ReportView';
 import WarRoom from './components/WarRoom';
 import HeroView from './components/HeroView';
+import StrategyView from './components/StrategyView';
 import FeelAgainLogo from './components/Logo';
 import { Globe, ChevronRight, ChevronLeft, Menu, X, ShieldAlert } from 'lucide-react';
 
@@ -22,6 +23,7 @@ const App: React.FC = () => {
   // Navigation Sequence including Hero and War Room
   const navSequence = [
     'HERO',
+    'STRATEGY',
     'WAR_ROOM',
     DocumentId.RESEARCH, 
     DocumentId.INFRASTRUCTURE,
@@ -34,8 +36,10 @@ const App: React.FC = () => {
     let currentIndex = -1;
     if (view === ViewMode.HERO) {
       currentIndex = 0;
-    } else if (view === ViewMode.WAR_ROOM) {
+    } else if (view === ViewMode.STRATEGY) {
       currentIndex = 1;
+    } else if (view === ViewMode.WAR_ROOM) {
+      currentIndex = 2;
     } else {
       currentIndex = navSequence.indexOf(activeDoc);
     }
@@ -50,6 +54,8 @@ const App: React.FC = () => {
 
     if (target === 'HERO') {
       setView(ViewMode.HERO);
+    } else if (target === 'STRATEGY') {
+      setView(ViewMode.STRATEGY);
     } else if (target === 'WAR_ROOM') {
       setView(ViewMode.WAR_ROOM);
     } else {
@@ -85,6 +91,21 @@ const App: React.FC = () => {
             <nav className="flex-grow space-y-1" role="navigation" aria-label="Main Navigation">
                 {navSequence.map((item) => {
                   if (item === 'HERO') return null;
+                  if (item === 'STRATEGY') {
+                    const isStrategyActive = view === ViewMode.STRATEGY;
+                    return (
+                       <button
+                          key="STRATEGY"
+                          onClick={() => { setView(ViewMode.STRATEGY); setMobileMenuOpen(false); window.scrollTo(0, 0); }}
+                          aria-current={isStrategyActive ? 'page' : undefined}
+                          aria-label={appT.strategyLabel}
+                          className={`w-full text-left px-4 py-3 rounded text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center gap-2 border-l-4 whitespace-nowrap overflow-hidden text-ellipsis ${isStrategyActive ? 'bg-teal-900/20 text-teal-100 border-teal-500' : 'border-transparent text-slate-400 hover:text-white hover:bg-white/5'}`}
+                       >
+                          <ShieldAlert size={14} className={isStrategyActive ? "text-teal-400" : "text-slate-500"} />
+                          {appT.strategyLabel}
+                       </button>
+                    );
+                  }
                   if (item === 'WAR_ROOM') {
                     // War Room Item - Updated to Warm Palette (Orange/Red)
                     const isWarRoomActive = view === ViewMode.WAR_ROOM;
@@ -104,7 +125,7 @@ const App: React.FC = () => {
                   
                   // Regular Docs
                   const doc = item as DocumentId;
-                  const isActive = activeDoc === doc && view !== ViewMode.WAR_ROOM && view !== ViewMode.HERO;
+                  const isActive = activeDoc === doc && view !== ViewMode.WAR_ROOM && view !== ViewMode.STRATEGY && view !== ViewMode.HERO;
                   return (
                     <button
                         key={doc}
@@ -191,6 +212,8 @@ const App: React.FC = () => {
                 onStart={() => switchDoc('next')}
                 onToggleLang={toggleLang}
              />
+        ) : view === ViewMode.STRATEGY ? (
+             <StrategyView content={CONTENT[lang]} />
         ) : view === ViewMode.WAR_ROOM ? (
              <WarRoom lang={lang} />
         ) : view === ViewMode.SCHEMA ? (
@@ -209,7 +232,7 @@ const App: React.FC = () => {
       </main>
 
       {/* Footer Nav */}
-      {(view === ViewMode.SCHEMA || view === ViewMode.WAR_ROOM) && (
+      {(view === ViewMode.SCHEMA || view === ViewMode.WAR_ROOM || view === ViewMode.STRATEGY) && (
         <div className={`fixed bottom-0 right-0 w-full ${view !== ViewMode.HERO ? 'md:w-[calc(100%-16rem)]' : ''} bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent pt-12 pb-6 px-6 z-40 pointer-events-none`} role="navigation" aria-label="Section Navigation">
           <div className="max-w-6xl mx-auto flex justify-between items-center pointer-events-auto">
              
@@ -223,10 +246,10 @@ const App: React.FC = () => {
              
              <div className="flex flex-col items-center text-center">
                 <span className="text-[10px] font-bold uppercase text-orange-500 tracking-[0.2em] mb-1">
-                    {view === ViewMode.WAR_ROOM ? 'STRATEGIC OVERVIEW' : `SECTION ${navSequence.indexOf(activeDoc) + 1} / ${navSequence.length}`}
+                    {view === ViewMode.WAR_ROOM ? 'STRATEGIC OVERVIEW' : view === ViewMode.STRATEGY ? 'THE PERFECT STORM' : `SECTION ${navSequence.indexOf(activeDoc) + 1} / ${navSequence.length}`}
                 </span>
                 <h2 className="text-lg md:text-2xl font-light text-white uppercase tracking-tight leading-none">
-                    {view === ViewMode.WAR_ROOM ? 'WAR ROOM' : CONTENT[lang].docs[activeDoc].navTitle}
+                    {view === ViewMode.WAR_ROOM ? 'WAR ROOM' : view === ViewMode.STRATEGY ? 'STRATEGY' : CONTENT[lang].docs[activeDoc].navTitle}
                 </h2>
              </div>
 

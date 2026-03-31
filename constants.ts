@@ -102,6 +102,7 @@ export const CONTENT: Dictionary = {
       viewOpportunity: "Opportunity",
       viewProblem: "Analysis",
       close: "Close",
+      strategyLabel: "Strategy",
       warRoom: "War Room",
       enterSpace: "View",
       contact: "Contact HQ"
@@ -141,6 +142,76 @@ export const CONTENT: Dictionary = {
           desc: "Clinical and specialized psychiatric care for severe cases requiring intensive, long-term medical intervention.",
           sub: ""
         }
+      ]
+    },
+    strategy: {
+      title: "The Perfect Storm",
+      subtitle: "Narrative Architecture for FEEL Again's Crisis-to-Infrastructure Argument",
+      stormTitle: "Five Converging Failures",
+      failures: [
+        {
+          id: 1,
+          title: "The Demand Abyss",
+          desc: "Of the 71% of Ukrainians who report needing mental health support, only 17% have sought help — a demand-action gap of 54 percentage points. This is not a supply problem alone: it is a system design failure. People do not seek help because the existing system offers either Soviet-era psychiatric institutions (stigma), humanitarian one-off sessions (no continuity), or shadow-sector private practitioners (no accountability, no insurance, no quality guarantee).",
+          stats: [
+            { value: "9.6M", label: "At elevated risk", ref: "WHO, 2025" },
+            { value: "3.9M", label: "Clinical need", ref: "Lancet 2023" },
+            { value: "54%", label: "Demand-action gap", ref: "Gradus 2024" },
+            { value: "74%", label: "Treatment gap (IDPs)", ref: "IOM/UNHCR 2023" }
+          ]
+        },
+        {
+          id: 2,
+          title: "The Workforce Impossibility",
+          desc: "Ukraine has approximately 4,000 registered mental health professionals for a clinical need of 3.9 million people. At a sustainable rate of 1,500 clinical hours per year, these 4,000 professionals generate 6 million hours of capacity annually. The need is 62.4 million hours. The backlog: 10.4 years — assuming zero population growth, zero new trauma, and zero burnout.",
+          stats: [
+            { value: "62.4M", label: "Hours needed", ref: "Calculated" },
+            { value: "6M", label: "Hours capacity", ref: "Calculated" },
+            { value: "10.4", label: "Years backlog", ref: "Calculated" }
+          ]
+        },
+        {
+          id: 3,
+          title: "The Formalization Trap",
+          desc: "The shadow sector — an estimated $900M private mental health market — exists not because practitioners choose illegality, but because formalization imposes a 65% income penalty. A practitioner earning €1,500/month net in the shadow sector would retain €521/month after formalization costs. The rational economic decision is to remain invisible.",
+          stats: [
+            { value: "65%", label: "Income penalty", ref: "Calculated" },
+            { value: "110x", label: "Private/Humanitarian ratio", ref: "Calculated" }
+          ]
+        },
+        {
+          id: 4,
+          title: "The Middleware Gap",
+          desc: "Two World Bank programmes — HEAL ($500M IPF) and THRIVE ($454M PforR) — represent $954M in combined investment. HEAL has delivered 624,464 mental health services through 118 mobile teams. But these services were recorded in humanitarian systems (CommCare/Kobo), not in ESOZ (Ukraine's national eHealth system). THRIVE measures outcomes through ESOZ. The middleware gap: HEAL outputs ≠ THRIVE inputs.",
+          stats: [
+            { value: "624K", label: "HEAL services", ref: "ISR #6" },
+            { value: "0/400", label: "Facilities upgraded", ref: "ISR #6" },
+            { value: "$41M", label: "Unallocated IT budget", ref: "ISR #6" }
+          ]
+        },
+        {
+          id: 5,
+          title: "The Budget Inversion",
+          desc: "Ukraine's mental health budget for 2026 is ₴6.47 billion. Of this, 89% goes to inpatient psychiatric care (bed-based Soviet-era institutions) while 64-71% of patients seek outpatient care. The budget ratio of inpatient to outpatient spending is 8.1:1 — meaning the system spends 8 times more on the delivery model that serves the minority of patients.",
+          stats: [
+            { value: "89%", label: "Inpatient spend", ref: "Budget 2026" },
+            { value: "71%", label: "Outpatient need", ref: "Calculated" },
+            { value: "8.1:1", label: "Inversion ratio", ref: "Calculated" }
+          ]
+        }
+      ],
+      tocTitle: "Theory of Change",
+      toc: [
+        { title: "Context → Inputs", desc: "Digital matching + stepped care triage reduces barrier: findable, affordable, private." },
+        { title: "Activities → Outputs", desc: "Provider onboarding, session metering, VR deployment, Open dataset publication, ESOZ integration." },
+        { title: "Outputs → Outcomes → Impact", desc: "Shadow sector practitioners formalize. Session outcome data demonstrates measurable symptom reduction. Donor coordination improves." }
+      ],
+      roadmapTitle: "Three-Year Strategic Roadmap",
+      roadmap: [
+        { phase: "1. Foundation", timeline: "M1–M6", obj: "Legal setup, pilot launch, first providers", kpi: "≥50 providers, ≥1,000 sessions metered" },
+        { phase: "2. Validation", timeline: "M7–M12", obj: "Prove model, first outcome data, open dataset", kpi: "≥60% PCL-5 improvement rate, dataset public" },
+        { phase: "3. Scale", timeline: "M13–M24", obj: "Multi-city expansion, ESOZ pilot integration", kpi: "≥550 providers, ≥30K sessions" },
+        { phase: "4. Integration", timeline: "M25–M36", obj: "National coverage pathway, state subscription", kpi: "≥1,150 providers, state subscription contract" }
       ]
     },
     warRoom: {
@@ -670,6 +741,7 @@ export const CONTENT: Dictionary = {
       viewOpportunity: "Можливість",
       viewProblem: "Аналіз",
       close: "Закрити",
+      strategyLabel: "Стратегія",
       warRoom: "War Room",
       enterSpace: "Переглянути",
       contact: "Зв'язок"
@@ -711,6 +783,76 @@ export const CONTENT: Dictionary = {
         }
       ]
     },
+    strategy: {
+      title: "Ідеальний шторм",
+      subtitle: "Наративна архітектура для аргументу FEEL Again: від кризи до інфраструктури",
+      stormTitle: "П'ять збоїв, що конвергують",
+      failures: [
+        {
+          id: 1,
+          title: "Безодня попиту",
+          desc: "Із 71% українців, які повідомляють про потребу в підтримці психічного здоров'я, лише 17% звернулися за допомогою — розрив попит-дія у 54 відсоткових пункти. Це не лише проблема пропозиції: це збій дизайну системи. Люди не звертаються по допомогу, тому що існуюча система пропонує або радянські психіатричні заклади (стигма), або гуманітарні разові сесії (без безперервності), або тіньових приватних практиків (без підзвітності, без страховки, без гарантії якості).",
+          stats: [
+            { value: "9.6M", label: "З підвищеним ризиком", ref: "ВООЗ, 2025" },
+            { value: "3.9M", label: "Клінічна потреба", ref: "Lancet 2023" },
+            { value: "54%", label: "Розрив попит-дія", ref: "Gradus 2024" },
+            { value: "74%", label: "Treatment gap (ВПО)", ref: "IOM/UNHCR 2023" }
+          ]
+        },
+        {
+          id: 2,
+          title: "Кадрова неможливість",
+          desc: "Україна має приблизно 4 000 зареєстрованих фахівців з психічного здоров'я на клінічну потребу 3,9 мільйона людей. При стійкій нормі 1 500 клінічних годин на рік, ці 4 000 фахівців генерують 6 мільйонів годин потужності щорічно. Потреба — 62,4 мільйона годин. Бекlog: 10,4 роки — за умови нульового зростання населення, нульових нових травм і нульового вигорання.",
+          stats: [
+            { value: "62.4M", label: "Потреба в годинах", ref: "Розрахунок" },
+            { value: "6M", label: "Потужність в годинах", ref: "Розрахунок" },
+            { value: "10.4", label: "Років бекlog", ref: "Розрахунок" }
+          ]
+        },
+        {
+          id: 3,
+          title: "Пастка формалізації",
+          desc: "Тіньовий сектор — оцінюваний у $900M ринок приватного психічного здоров'я — існує не тому, що практики обирають нелегальність, а тому що формалізація накладає 65% штраф на дохід. Практик, що заробляє €1 500/міс нетто в тіні, отримуватиме €521/міс після витрат на формалізацію. Раціональне економічне рішення — залишатися невидимим.",
+          stats: [
+            { value: "65%", label: "Штраф на дохід", ref: "Розрахунок" },
+            { value: "110x", label: "Співвідношення приватний/гуманітарний", ref: "Розрахунок" }
+          ]
+        },
+        {
+          id: 4,
+          title: "Прогалина мідлвари",
+          desc: "Дві програми Світового банку — HEAL ($500M IPF) та THRIVE ($454M PforR) — становлять $954M комбінованих інвестицій. HEAL надав 624 464 послуги з психічного здоров'я через 118 мобільних команд. Але ці послуги записані в гуманітарних системах (CommCare/Kobo), не в ЕСОЗ (національна система eHealth). THRIVE вимірює результати через ЕСОЗ. Прогалина мідлвари: виходи HEAL ≠ входи THRIVE.",
+          stats: [
+            { value: "624K", label: "Послуги HEAL", ref: "ISR #6" },
+            { value: "0/400", label: "Модернізовано закладів", ref: "ISR #6" },
+            { value: "$41M", label: "Нерозподілений ІТ-бюджет", ref: "ISR #6" }
+          ]
+        },
+        {
+          id: 5,
+          title: "Бюджетна інверсія",
+          desc: "Бюджет психічного здоров'я України на 2026 рік — ₴6,47 мільярда. З цього 89% іде на стаціонарну психіатричну допомогу (ліжкові заклади радянського типу), тоді як 64-71% пацієнтів звертаються за амбулаторною допомогою. Бюджетне співвідношення стаціонарних та амбулаторних витрат — 8,1:1 — тобто система витрачає у 8 разів більше на модель надання послуг, що обслуговує меншість пацієнтів.",
+          stats: [
+            { value: "89%", label: "Витрати на стаціонар", ref: "Бюджет 2026" },
+            { value: "71%", label: "Потреба в амбулаторії", ref: "Розрахунок" },
+            { value: "8.1:1", label: "Співвідношення інверсії", ref: "Розрахунок" }
+          ]
+        }
+      ],
+      tocTitle: "Теорія змін",
+      toc: [
+        { title: "Контекст → Ресурси", desc: "Цифровий матчинг + тріаж ступеневої допомоги зменшує бар'єр: доступний для пошуку, фінансово доступний, приватний." },
+        { title: "Діяльність → Продукти", desc: "Онбординг надавачів, метрування сесій, розгортання VR, публікація відкритого датасету, інтеграція ЕСОЗ." },
+        { title: "Продукти → Наслідки → Вплив", desc: "Тіньові фахівці формалізуються. Дані результатів сесій демонструють вимірюване зменшення симптомів. Координація донорів покращується." }
+      ],
+      roadmapTitle: "Трирічна стратегічна дорожня карта",
+      roadmap: [
+        { phase: "1. Фундамент", timeline: "M1–M6", obj: "Юридичне оформлення, запуск пілоту, перші надавачі", kpi: "≥50 надавачів, ≥1 000 сесій заметровано" },
+        { phase: "2. Валідація", timeline: "M7–M12", obj: "Довести модель, перші дані результатів, відкритий датасет", kpi: "≥60% покращення PCL-5, датасет публічний" },
+        { phase: "3. Масштаб", timeline: "M13–M24", obj: "Багатоміський розвиток, пілотна інтеграція ЕСОЗ", kpi: "≥550 надавачів, ≥30K сесій" },
+        { phase: "4. Інтеграція", timeline: "M25–M36", obj: "Шлях національного покриття, державна підписка", kpi: "≥1 150 надавачів, контракт державної підписки" }
+      ]
+    },
     warRoom: {
       title: "Структура Консорціуму",
       subtitle: "Відкрита Архітектура з Найкращими Партнерами",
@@ -730,47 +872,6 @@ export const CONTENT: Dictionary = {
         { label: "Неефективність", sublabel: "Бюджету в стаціонарах (Потреба: 71% амбулаторно)" },
         { label: "Клінічна Потреба", sublabel: "3 900 000 українців потребують допомоги (Lancet 2023)" }
       ],
-      mindMap: {
-        title: "Що зміниться з програмою FeeL Again (Відчувай Знов)",
-        hint: "Натисніть на вузли, щоб побачити вплив",
-        nodes: {
-          vision: {
-            title: "Бачення",
-            desc: "Нова м'яка сила - створюємо план для майбутнього допомоги — прозору, ефективну, цифрову модель, яку можна експортувати в інші постконфліктні зони, проектуючи м'яку силу через технологічну досконалість.",
-            impact: "Стратегічний Експорт"
-          },
-          speed: {
-            title: "Швидкість",
-            desc: "P2P платіжні шляхи в обхід бюрократії.",
-            impact: "Миттєва Допомога"
-          },
-          cost: {
-            title: "Вартість",
-            desc: "Зменшення адміністративних витрат на 40%.",
-            impact: "Ефективність"
-          },
-          quality: {
-            title: "Якість",
-            desc: "Клінічна верифікація кожної сесії.",
-            impact: "Точність"
-          },
-          trust: {
-            title: "Довіра",
-            desc: "Прозорість для донорів через леджер.",
-            impact: "Підзвітність"
-          },
-          dignity: {
-            title: "Гідність",
-            desc: "Приватний, безпечний доступ для кожного громадянина.",
-            impact: "Розширення Можливостей"
-          },
-          data: {
-            title: "Дані",
-            desc: "Результати в реальному часі для державного планування.",
-            impact: "Суверенітет"
-          }
-        }
-      },
       consortiumRoles: CONSORTIUM_ROLES_UA,
       metrics: {
         title: "Аналіз Ризиків Системи",
