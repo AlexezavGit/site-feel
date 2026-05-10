@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowRight, Globe } from 'lucide-react';
 import { CONTENT } from '../constants';
 import { Language } from '../types';
-import StructuralBottleneck from './StructuralBottleneck';
 import FeelAgainLogo from './Logo';
 
 interface HeroViewProps {
@@ -10,6 +9,41 @@ interface HeroViewProps {
   onStart: () => void;
   onToggleLang: () => void;
 }
+
+// SDG 3: Good Health and Well-being (Green)
+const Sdg3Svg = () => (
+  <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+    <path d="m0-.02h1000v1000.03h-1000z" fill="#4c9f38"/>
+    <g fill="#fff">
+        <path d="m142.7 288.14c34.21 0 49.08-18.15 49.08-46.1v-29.73c0-18.44-8-30.34-25-34.2 14-4.46 23.19-15.77 23.19-32.71v-17.55c0-28.55-13.68-46.09-44.9-46.09-35.1 0-47.3 20.8-47.3 50.55v17.84h30.93v-20.52c0-12.49 3.88-19.62 14.58-19.62s14.56 7.13 14.56 18.13v21.71c0 10.71-7.13 16.35-18.12 16.35h-12.8v25.89h14.28c11.89 0 16.64 5.64 16.64 16.35v33.31c0 10.7-4.75 18.15-15.16 18.15-11.59 0-15.76-7.75-15.76-19.64v-28.84h-30.92v26.46c0 30.64 12.18 50.26 46.67 50.26"/>
+        <path d="m835.26 625c0-28.14-18-51-45.4-51-13.67 0-30.17 15-39.13 24.19-9-9.23-24.36-24.21-38-24.21-27.34 0-46.51 22.81-46.51 51a51.51 51.51 0 0 0 14.51 36l70.1 70.23 70-70.15-.06-.05a51.55 51.55 0 0 0 14.49-36.01z"/>
+        <path d="m536.81 845.88h-.72a11.48 11.48 0 0 1 -10.63-9.54l-35.61-207.41-53.94 100a11.51 11.51 0 0 1 -21.52-3.83l-22.9-160.05-41.89 94.1a11.54 11.54 0 0 1 -10.52 6.85h-162.83a11.52 11.52 0 0 1 0-23h155.35l55.11-123.77a11.51 11.51 0 0 1 21.91 3l23.61 165 53.19-98.63a11.52 11.52 0 0 1 21.48 3.52l33 192.07 120.15-399.19a11.52 11.52 0 0 1 21.4-1.68l63.23 131.09a11.51 11.51 0 1 1 -20.73 10l-50.38-104.41-125.75 417.68a11.5 11.5 0 0 1 -11.01 8.2z"/>
+        <path d="m306.23 121.79h19.54v43.65h-9.89v-8.93c-1.81 6.15-5.67 9.89-13.14 9.89-11.82 0-17.24-9.4-17.24-22.06v-39.55c0-12.78 6.15-22.06 20.61-22.06 15.19 0 19.66 8.44 19.66 20.5v7.23h-12.54v-8.32c0-5.06-1.93-8-6.87-8s-7.12 3.5-7.12 8.44v43.89c0 4.94 2.05 8.44 6.75 8.44 4.46 0 6.76-2.53 6.76-7.84v-14.43h-6.52z"/>
+        <path d="m334.8 144.34v-39.55c0-12.78 6.27-22.06 20.74-22.06s20.86 9.27 20.86 22.06v39.55c0 12.66-6.27 22.06-20.86 22.06s-20.74-9.4-20.74-22.06zm27.85 2.17v-43.89c0-4.94-2.17-8.44-7.11-8.44s-7 3.5-7 8.44v43.89c0 4.94 2.17 8.44 7 8.44s7.11-3.5 7.11-8.44z"/>
+        <path d="m385.44 144.34v-39.55c0-12.78 6.27-22.06 20.74-22.06s20.82 9.27 20.82 22.06v39.55c0 12.66-6.27 22.06-20.85 22.06s-20.71-9.4-20.71-22.06zm27.85 2.17v-43.89c0-4.94-2.17-8.44-7.11-8.44s-7 3.5-7 8.44v43.89c0 4.94 2.17 8.44 7 8.44s7.11-3.5 7.11-8.44z"/>
+        <path d="m477.18 105.64v37.85c0 12.54-5.18 21.95-19.89 21.95h-21.22v-81.74h21.22c14.71 0 19.89 9.3 19.89 21.94zm-21.58 48.58c5.67 0 7.84-3.37 7.84-8.32v-42.79c0-4.83-2.17-8.2-7.84-8.2h-5.78v59.31z"/>
+        <path d="m531.92 129.39h-13.26v36.05h-13.75v-81.74h13.75v34.6h13.26v-34.6h13.86v81.74h-13.86z"/>
+        <path d="m554.82 83.7h32.8v11.21h-19v23.39h13.62v11.09h-13.67v24.83h19v11.22h-32.8z"/>
+        <path d="m594 165.44 15.44-81.74h15.67l15.55 81.74h-14.11l-2.55-14.95h-14.56l-2.44 14.95zm17.24-25.92h11l-5.42-32.8h-.12z"/>
+        <path d="m647.53 83.7h13.74v70.52h16.4v11.22h-30.14z"/>
+        <path d="m675.74 83.7h36.53v11.21h-11.33v70.53h-13.87v-70.53h-11.33z"/>
+        <path d="m746.87 129.39h-13.26v36.05h-13.74v-81.74h13.74v34.6h13.26v-34.6h13.86v81.74h-13.86z"/>
+        <path d="m283.43 285.29 15.43-81.74h15.67l15.55 81.74h-14.08l-2.53-15h-14.61l-2.41 15zm17.24-25.92h11l-5.43-32.79h-.12z"/>
+        <path d="m348.53 233.93v51.36h-11.53v-81.74h13.51l14.82 46.9v-46.9h11.46v81.74h-12.11z"/>
+        <path d="m426.89 225.5v37.85c0 12.54-5.18 21.94-19.89 21.94h-21.22v-81.74h21.22c14.71 0 19.89 9.29 19.89 21.95zm-21.58 48.58c5.67 0 7.84-3.37 7.84-8.32v-42.76c0-4.82-2.17-8.19-7.84-8.19h-5.79v59.31z"/>
+        <path d="m479.45 234.78-7.71 50.51h-12.9l-11-81.74h13.26l6.39 51.84h.12l6.87-51.84h11.21l7.6 51.84h.12l6.27-51.84h11.57l-10.61 81.74h-13l-8.08-50.51z"/>
+        <path d="m518.39 203.55h32.79v11.22h-19v23.38h13.62v11.1h-13.66v24.83h19v11.21h-32.75z"/>
+        <path d="m559.74 203.55h13.75v70.53h16.39v11.21h-30.14z"/>
+        <path d="m597.36 203.55h13.74v70.53h16.4v11.21h-30.14z"/>
+        <path d="m625.69 237h19.31v11h-19.31z"/>
+        <path d="m653.18 203.55h19.89c13.74 0 18.32 6.39 18.32 18v8.32c0 6.87-2.53 11.21-8.19 13 6.87 1.56 10.24 6.14 10.24 13.62v10.85c0 11.57-5.18 18-18.92 18h-21.34zm13.74 34.45h4.82c4.46 0 6.51-2.29 6.51-6.63v-10c0-4.46-2-6.63-6.63-6.63h-4.7zm0 10.49v25.56h6c4.58 0 6.75-2.29 6.75-6.63v-12.3c0-4.34-2.05-6.63-6.87-6.63z"/>
+        <path d="m701.52 203.55h32.79v11.22h-19v23.38h13.63v11.1h-13.68v24.83h19v11.21h-32.74z"/>
+        <path d="m742.87 203.55h13.74v81.74h-13.74z"/>
+        <path d="m777.35 233.93v51.36h-11.57v-81.74h13.5l14.83 46.9v-46.9h11.45v81.74h-12z"/>
+        <path d="m835.34 241.65h19.53v43.64h-9.87v-8.92c-1.81 6.15-5.66 9.89-13.14 9.89-11.81 0-17.24-9.41-17.24-22.07v-39.54c0-12.78 6.15-22.06 20.62-22.06 15.19 0 19.65 8.44 19.65 20.49v7.24h-12.56v-8.32c0-5.06-1.93-8-6.87-8s-7.12 3.5-7.12 8.44v43.89c0 4.94 2 8.43 6.76 8.43 4.46 0 6.75-2.53 6.75-7.83v-14.43h-6.51z"/>
+    </g>
+  </svg>
+);
 
 // SDG 8: Decent Work and Economic Growth (Pink)
 const Sdg8Svg = () => (
@@ -51,41 +85,6 @@ const Sdg8Svg = () => (
   </svg>
 );
 
-// SDG 3: Good Health and Well-being (Green)
-const Sdg3Svg = () => (
-  <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <path d="m0-.02h1000v1000.03h-1000z" fill="#4c9f38"/>
-    <g fill="#fff">
-        <path d="m142.7 288.14c34.21 0 49.08-18.15 49.08-46.1v-29.73c0-18.44-8-30.34-25-34.2 14-4.46 23.19-15.77 23.19-32.71v-17.55c0-28.55-13.68-46.09-44.9-46.09-35.1 0-47.3 20.8-47.3 50.55v17.84h30.93v-20.52c0-12.49 3.88-19.62 14.58-19.62s14.56 7.13 14.56 18.13v21.71c0 10.71-7.13 16.35-18.12 16.35h-12.8v25.89h14.28c11.89 0 16.64 5.64 16.64 16.35v33.31c0 10.7-4.75 18.15-15.16 18.15-11.59 0-15.76-7.75-15.76-19.64v-28.84h-30.92v26.46c0 30.64 12.18 50.26 46.67 50.26"/>
-        <path d="m835.26 625c0-28.14-18-51-45.4-51-13.67 0-30.17 15-39.13 24.19-9-9.23-24.36-24.21-38-24.21-27.34 0-46.51 22.81-46.51 51a51.51 51.51 0 0 0 14.51 36l70.1 70.23 70-70.15-.06-.05a51.55 51.55 0 0 0 14.49-36.01z"/>
-        <path d="m536.81 845.88h-.72a11.48 11.48 0 0 1 -10.63-9.54l-35.61-207.41-53.94 100a11.51 11.51 0 0 1 -21.52-3.83l-22.9-160.05-41.89 94.1a11.54 11.54 0 0 1 -10.52 6.85h-162.83a11.52 11.52 0 0 1 0-23h155.35l55.11-123.77a11.51 11.51 0 0 1 21.91 3l23.61 165 53.19-98.63a11.52 11.52 0 0 1 21.48 3.52l33 192.07 120.15-399.19a11.52 11.52 0 0 1 21.4-1.68l63.23 131.09a11.51 11.51 0 1 1 -20.73 10l-50.38-104.41-125.75 417.68a11.5 11.5 0 0 1 -11.01 8.2z"/>
-        <path d="m306.23 121.79h19.54v43.65h-9.89v-8.93c-1.81 6.15-5.67 9.89-13.14 9.89-11.82 0-17.24-9.4-17.24-22.06v-39.55c0-12.78 6.15-22.06 20.61-22.06 15.19 0 19.66 8.44 19.66 20.5v7.23h-12.54v-8.32c0-5.06-1.93-8-6.87-8s-7.12 3.5-7.12 8.44v43.89c0 4.94 2.05 8.44 6.75 8.44 4.46 0 6.76-2.53 6.76-7.84v-14.43h-6.52z"/>
-        <path d="m334.8 144.34v-39.55c0-12.78 6.27-22.06 20.74-22.06s20.86 9.27 20.86 22.06v39.55c0 12.66-6.27 22.06-20.86 22.06s-20.74-9.4-20.74-22.06zm27.85 2.17v-43.89c0-4.94-2.17-8.44-7.11-8.44s-7 3.5-7 8.44v43.89c0 4.94 2.17 8.44 7 8.44s7.11-3.5 7.11-8.44z"/>
-        <path d="m385.44 144.34v-39.55c0-12.78 6.27-22.06 20.74-22.06s20.82 9.27 20.82 22.06v39.55c0 12.66-6.27 22.06-20.85 22.06s-20.71-9.4-20.71-22.06zm27.85 2.17v-43.89c0-4.94-2.17-8.44-7.11-8.44s-7 3.5-7 8.44v43.89c0 4.94 2.17 8.44 7 8.44s7.11-3.5 7.11-8.44z"/>
-        <path d="m477.18 105.64v37.85c0 12.54-5.18 21.95-19.89 21.95h-21.22v-81.74h21.22c14.71 0 19.89 9.3 19.89 21.94zm-21.58 48.58c5.67 0 7.84-3.37 7.84-8.32v-42.79c0-4.83-2.17-8.2-7.84-8.2h-5.78v59.31z"/>
-        <path d="m531.92 129.39h-13.26v36.05h-13.75v-81.74h13.75v34.6h13.26v-34.6h13.86v81.74h-13.86z"/>
-        <path d="m554.82 83.7h32.8v11.21h-19v23.39h13.62v11.09h-13.67v24.83h19v11.22h-32.8z"/>
-        <path d="m594 165.44 15.44-81.74h15.67l15.55 81.74h-14.11l-2.55-14.95h-14.56l-2.44 14.95zm17.24-25.92h11l-5.42-32.8h-.12z"/>
-        <path d="m647.53 83.7h13.74v70.52h16.4v11.22h-30.14z"/>
-        <path d="m675.74 83.7h36.53v11.21h-11.33v70.53h-13.87v-70.53h-11.33z"/>
-        <path d="m746.87 129.39h-13.26v36.05h-13.74v-81.74h13.74v34.6h13.26v-34.6h13.86v81.74h-13.86z"/>
-        <path d="m283.43 285.29 15.43-81.74h15.67l15.55 81.74h-14.08l-2.53-15h-14.61l-2.41 15zm17.24-25.92h11l-5.43-32.79h-.12z"/>
-        <path d="m348.53 233.93v51.36h-11.53v-81.74h13.51l14.82 46.9v-46.9h11.46v81.74h-12.11z"/>
-        <path d="m426.89 225.5v37.85c0 12.54-5.18 21.94-19.89 21.94h-21.22v-81.74h21.22c14.71 0 19.89 9.29 19.89 21.95zm-21.58 48.58c5.67 0 7.84-3.37 7.84-8.32v-42.76c0-4.82-2.17-8.19-7.84-8.19h-5.79v59.31z"/>
-        <path d="m479.45 234.78-7.71 50.51h-12.9l-11-81.74h13.26l6.39 51.84h.12l6.87-51.84h11.21l7.6 51.84h.12l6.27-51.84h11.57l-10.61 81.74h-13l-8.08-50.51z"/>
-        <path d="m518.39 203.55h32.79v11.22h-19v23.38h13.62v11.1h-13.66v24.83h19v11.21h-32.75z"/>
-        <path d="m559.74 203.55h13.75v70.53h16.39v11.21h-30.14z"/>
-        <path d="m597.36 203.55h13.74v70.53h16.4v11.21h-30.14z"/>
-        <path d="m625.69 237h19.31v11h-19.31z"/>
-        <path d="m653.18 203.55h19.89c13.74 0 18.32 6.39 18.32 18v8.32c0 6.87-2.53 11.21-8.19 13 6.87 1.56 10.24 6.14 10.24 13.62v10.85c0 11.57-5.18 18-18.92 18h-21.34zm13.74 34.45h4.82c4.46 0 6.51-2.29 6.51-6.63v-10c0-4.46-2-6.63-6.63-6.63h-4.7zm0 10.49v25.56h6c4.58 0 6.75-2.29 6.75-6.63v-12.3c0-4.34-2.05-6.63-6.87-6.63z"/>
-        <path d="m701.52 203.55h32.79v11.22h-19v23.38h13.63v11.1h-13.68v24.83h19v11.21h-32.74z"/>
-        <path d="m742.87 203.55h13.74v81.74h-13.74z"/>
-        <path d="m777.35 233.93v51.36h-11.57v-81.74h13.5l14.83 46.9v-46.9h11.45v81.74h-12z"/>
-        <path d="m835.34 241.65h19.53v43.64h-9.87v-8.92c-1.81 6.15-5.66 9.89-13.14 9.89-11.81 0-17.24-9.41-17.24-22.07v-39.54c0-12.78 6.15-22.06 20.62-22.06 15.19 0 19.65 8.44 19.65 20.49v7.24h-12.56v-8.32c0-5.06-1.93-8-6.87-8s-7.12 3.5-7.12 8.44v43.89c0 4.94 2 8.43 6.76 8.43 4.46 0 6.75-2.53 6.75-7.83v-14.43h-6.51z"/>
-    </g>
-  </svg>
-);
-
 // SDG 17: Partnerships for the Goals (Navy Blue)
 const Sdg17Svg = () => (
   <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
@@ -121,47 +120,42 @@ const HeroView: React.FC<HeroViewProps> = ({ lang, onStart, onToggleLang }) => {
   const navT = CONTENT[lang].appNav;
 
   return (
-    <div className="w-full min-h-screen bg-slate-900 relative overflow-x-hidden flex flex-col">
-      {/* Hero Section */}
-      <div className="w-full min-h-[100dvh] relative flex flex-col items-center justify-center text-center px-6 pt-24 pb-12 md:py-24">
-        {/* Background Overlay - Matching WarRoom Texture */}
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-500 to-transparent pointer-events-none"></div>
+    <div className="w-full min-h-[100dvh] hero-bg-canonical relative overflow-x-hidden flex flex-col justify-center">
+      {/* Top Border Glow */}
+      <div className="hero-top-border"></div>
+      {/* Bottom Central Glow */}
+      <div className="hero-glow"></div>
 
-        <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center mt-12 md:mt-0">
+      {/* Hero Section Content */}
+      <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center mt-12 md:mt-0 text-center px-6 pt-24 pb-12 md:py-24 h-full my-auto">
             
             <div className="mb-4 md:mb-12 w-32 h-32 md:w-64 md:h-64 flex items-center justify-center">
                 <FeelAgainLogo fill="white" className="w-full h-full drop-shadow-2xl" />
             </div>
 
-            <h1 className="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-medium text-white leading-tight tracking-tighter mb-6 md:mb-8 uppercase drop-shadow-2xl max-w-6xl px-4 whitespace-pre-line">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display font-medium text-white leading-tight tracking-tighter mb-6 md:mb-8 uppercase drop-shadow-2xl max-w-6xl px-4 whitespace-pre-line">
               {heroT.title}
             </h1>
             
-            <div className="w-16 h-1 bg-orange-600 mb-6 md:mb-8 rounded-full"></div>
+            <div className="w-16 h-1 bg-[--teal-bright] mb-6 md:mb-8 rounded-full shadow-[0_0_15px_rgba(46,196,182,0.8)]"></div>
             
             <button 
               onClick={onStart}
               aria-label={navT.startTour}
-              className="group relative px-6 py-3 md:px-8 bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs uppercase tracking-[0.2em] rounded-full shadow-[0_10px_30px_rgba(234,88,12,0.3)] transition-all hover:-translate-y-1 active:scale-95"
+              className="group relative px-6 py-3 md:px-8 bg-[--teal-bright] hover:bg-[--teal] text-[--bg-dark] font-display font-bold text-sm uppercase tracking-[0.2em] rounded-full shadow-[0_10px_30px_rgba(46,196,182,0.3)] transition-all hover:-translate-y-1 active:scale-95"
             >
               <span className="flex items-center gap-3">
                 {navT.startTour} <ArrowRight className="group-hover:translate-x-1 transition-transform" />
               </span>
             </button>
 
-            <button 
-                onClick={onToggleLang}
-                className="mt-8 px-6 py-2 text-white/70 hover:text-white bg-white/5 hover:bg-white/10 rounded-full flex items-center gap-2 font-mono text-xs font-bold transition-all border border-white/10 backdrop-blur-md"
-            >
-                <Globe size={14} className="text-orange-500" />
-                {lang === 'EN' ? 'УКРАЇНСЬКА' : 'ENGLISH'}
-            </button>
+            {/* We remove onToggleLang from here since it will be in the top right permanently! */}
 
             <div className="mt-12 md:mt-16 flex flex-col items-center gap-4 md:gap-6">
-               <div className="text-[9px] md:text-[10px] font-bold text-white/40 uppercase tracking-[0.3em] leading-relaxed text-center px-4">
+               <div className="text-[9px] md:text-[10px] font-sans font-bold text-white/50 uppercase tracking-[0.3em] leading-relaxed text-center px-4">
                  {heroT.footer}
                </div>
-               <div className="flex gap-3 md:gap-4">
+               <div className="flex gap-3 md:gap-4 pb-10">
                  <SDGTile title="SDG 3: Good Health and Well-being">
                    <Sdg3Svg />
                  </SDGTile>
@@ -174,7 +168,6 @@ const HeroView: React.FC<HeroViewProps> = ({ lang, onStart, onToggleLang }) => {
                </div>
             </div>
         </div>
-      </div>
     </div>
   );
 };
