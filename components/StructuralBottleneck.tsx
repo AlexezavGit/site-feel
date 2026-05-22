@@ -13,33 +13,10 @@ const StructuralBottleneck: React.FC<StructuralBottleneckProps> = ({ lang }) => 
 
   return (
     <div className="w-full bg-slate-950 py-16 px-4 md:px-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <div className="max-w-4xl mx-auto flex flex-col items-center gap-16">
           
-          {/* Left Column: Text Content */}
-          <div className="space-y-6 sticky top-[60px] lg:top-24 z-30 py-6 -mx-4 px-4 lg:mx-0 lg:px-0 lg:py-0 bg-slate-950/85 backdrop-blur-lg lg:bg-transparent lg:backdrop-blur-none transition-all border-b border-white/10 lg:border-none shadow-xl lg:shadow-none mb-8 lg:mb-0">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-bold uppercase tracking-widest">
-              <AlertCircle size={12} />
-              {t.label}
-            </div>
-            
-            <h2 className="text-4xl md:text-5xl font-normal text-white leading-tight tracking-tight uppercase">
-              {t.title}
-            </h2>
-            
-            <p className="text-lg text-slate-300 leading-relaxed max-w-xl">
-              {t.body}
-            </p>
-
-            <div className="p-4 bg-white/5 border-l-4 border-orange-500 rounded-r-lg mt-8 max-w-xl">
-              <p className="text-sm text-slate-400 italic leading-relaxed">
-                {t.subbody}
-              </p>
-            </div>
-          </div>
-
-          {/* Right Column: Diagram */}
-          <div className="relative flex flex-col items-center space-y-4">
+          {/* Top Column: Diagram */}
+          <div className="relative flex flex-col items-center space-y-4 w-full">
             
             {t.levels.map((level: any, index: number) => (
               <React.Fragment key={level.id}>
@@ -82,7 +59,28 @@ const StructuralBottleneck: React.FC<StructuralBottleneckProps> = ({ lang }) => 
             ))}
 
           </div>
-        </div>
+
+          {/* Bottom Column: Text Content */}
+          <div className="space-y-6 text-center max-w-2xl mx-auto flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-bold uppercase tracking-widest">
+              <AlertCircle size={12} />
+              {t.label}
+            </div>
+            
+            <h2 className="text-4xl md:text-5xl font-normal text-white leading-tight tracking-tight uppercase">
+              {t.title}
+            </h2>
+            
+            <p className="text-lg text-slate-300 leading-relaxed">
+              {t.body}
+            </p>
+
+            <div className="p-4 bg-white/5 border-t-2 border-orange-500 rounded-b-lg mt-8 inline-block">
+              <p className="text-sm text-slate-400 italic leading-relaxed text-center">
+                {t.subbody}
+              </p>
+            </div>
+          </div>
       </div>
     </div>
   );

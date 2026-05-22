@@ -123,8 +123,6 @@ export interface LocalizedContent {
     failures: { id: number; title: string; desc: string; stats: { value: string; label: string; ref: string }[] }[];
     tocTitle: string;
     toc: { title: string; desc: string }[];
-    roadmapTitle: string;
-    roadmap: { phase: string; timeline: string; obj: string; kpi: string }[];
   };
   docs: Record<DocumentId, DocumentContent>;
   charts: {
@@ -134,6 +132,15 @@ export interface LocalizedContent {
     title: string;
     subtitle: string;
     matrixTitle: string;
+    whyExists: {
+      title: string;
+      subtitle: string;
+      items: { id: string; title: string; desc: string; icon: string }[];
+    };
+    launchTimeline: {
+      title: string;
+      steps: { phase: string; timeline: string; desc: string }[];
+    };
     scoring: {
       title: string;
       subtitle: string;

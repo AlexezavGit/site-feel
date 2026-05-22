@@ -114,9 +114,9 @@ export const CONTENT: Dictionary = {
     },
     bottleneck: {
       label: "STRUCTURAL CHALLENGE",
-      title: "THE MISSING MIDDLE TIER",
-      body: "A significant portion of mental health support currently operates outside formal statistical frameworks. Integrating these practitioners into a unified system requires a balanced approach that encourages participation without imposing overwhelming administrative burdens.",
-      subbody: "As global humanitarian priorities naturally evolve, it is crucial to build a sustainable, self-reliant national infrastructure. Transitioning from emergency response to long-term systemic resilience ensures continuous care for those in need.",
+      title: "THE STRUCTURAL GAP",
+      body: "Much of the support operates outside official statistics. Integrating these practitioners requires a balanced approach to encourage participation without excessive bureaucracy.",
+      subbody: "As global priorities evolve, building a resilient national infrastructure is crucial. Transitioning from emergency response to systemic resilience ensures long-term continuous care.",
       levels: [
         {
           id: 1,
@@ -181,12 +181,12 @@ export const CONTENT: Dictionary = {
         },
         {
           id: 4,
-          title: "The Middleware Gap",
-          desc: "Two World Bank programmes — HEAL ($500M IPF) and THRIVE ($454M PforR) — represent $954M in combined investment. HEAL has delivered 624,464 mental health services through 118 mobile teams. But these services were recorded in humanitarian systems (CommCare/Kobo), not in ESOZ (Ukraine's national eHealth system). THRIVE measures outcomes through ESOZ. The middleware gap: HEAL outputs ≠ THRIVE inputs.",
+          title: "The Time Escalation Trap",
+          desc: "If early intervention is delayed, the required number of sessions multiplies. Mild symptoms escalate into severe somatization, exponentially increasing treatment costs and leading to long-term disability. This risk of cumulative and secondary trauma threatens to collapse the national budget. Meanwhile, because humanitarian PM+ interventions are not integrated into eHealth, the state cannot verify them to claim World Bank DLI/PBC reimbursements. The result: lost time and lost funding.",
           stats: [
-            { value: "624K", label: "HEAL services", ref: "ISR #6" },
-            { value: "0/400", label: "Facilities upgraded", ref: "ISR #6" },
-            { value: "$41M", label: "Unallocated IT budget", ref: "ISR #6" }
+            { value: "5", label: "Sessions (PM+)", ref: "WHO Standard" },
+            { value: "$120M", label: "WB Tranches paid", ref: "Out of $160M PBCs" },
+            { value: "Unclaimed", label: "NGO Data in eHealth", ref: "Lost Budget" }
           ]
         },
         {
@@ -205,19 +205,32 @@ export const CONTENT: Dictionary = {
         { title: "Context → Inputs", desc: "Digital matching + stepped care triage reduces barrier: findable, affordable, private." },
         { title: "Activities → Outputs", desc: "Provider onboarding, session metering, VR deployment, Open dataset publication, ESOZ integration." },
         { title: "Outputs → Outcomes → Impact", desc: "Shadow sector practitioners formalize. Session outcome data demonstrates measurable symptom reduction. Donor coordination improves." }
-      ],
-      roadmapTitle: "Three-Year Strategic Roadmap",
-      roadmap: [
-        { phase: "1. Foundation", timeline: "M1–M6", obj: "Legal setup, pilot launch, first providers", kpi: "≥50 providers, ≥1,000 sessions metered" },
-        { phase: "2. Validation", timeline: "M7–M12", obj: "Prove model, first outcome data, open dataset", kpi: "≥60% PCL-5 improvement rate, dataset public" },
-        { phase: "3. Scale", timeline: "M13–M24", obj: "Multi-city expansion, ESOZ pilot integration", kpi: "≥550 providers, ≥30K sessions" },
-        { phase: "4. Integration", timeline: "M25–M36", obj: "National coverage pathway, state subscription", kpi: "≥1,150 providers, state subscription contract" }
       ]
     },
     warRoom: {
       title: "Consortium Structure",
       subtitle: "Open Architecture with Best Partners",
       matrixTitle: "Strategic Deployment Matrix",
+      whyExists: {
+        title: "Why This Program Exists",
+        subtitle: "The sector sits at the intersection of humanitarian response, clinical practice, and sustainable development. Tech convergence makes possible what used to be manual and fragmented.",
+        items: [
+          { id: "01", title: "Sectoral Challenge of War", desc: "The 'Perfect Storm' report: simultaneous peak of needs, burnout of personnel, fragmentation of funding.", icon: "storm" },
+          { id: "02", title: "Gradual Global Digitalization", desc: "Technologization of evidence-based clinical methodologies (VR, AR), digital aggregation of private practice, digitalization of the beneficiary → client → patient path and data flows.", icon: "digital" },
+          { id: "03", title: "Digital Readiness", desc: "The population, banking system, and state registries are ready for integration — the window for implementation is open.", icon: "ready" },
+          { id: "04", title: "Legislative Regulation", desc: "Fresh legislation highlights and regulates the sector; there are no formal conditions for private practice to emerge from the shadows yet.", icon: "law" },
+          { id: "05", title: "Humanitarian Amplification", desc: "Humanitarian resources and standards of good practice can be a launching pad — but without a digital backbone, they cannot scale.", icon: "aid" }
+        ]
+      },
+      launchTimeline: {
+        title: "Deployment & Integration Timeline",
+        steps: [
+          { phase: "Phase 1: Pilot", timeline: "2-4 Months", desc: "Pilot integrations, launch of digital bus interoperability between humanitarian and clinical sectors." },
+          { phase: "Phase 2: White Label", timeline: "6-12 Months", desc: "Series of White Label projects: with humanitarian actors, health cluster, businesses, and communities." },
+          { phase: "Phase 3: Scale", timeline: "12-24 Months", desc: "Multiplication and coverage: regions and economic sectors. Integration with national programs & unified approaches." },
+          { phase: "Phase 4: Sustainability", timeline: "12+ Months", desc: "Transformation to sustainable development: SaaS solutions, PPP. Creating a model program to export Ukrainian resilience." }
+        ]
+      },
       scoring: {
         title: "",
         subtitle: "",
@@ -334,7 +347,7 @@ export const CONTENT: Dictionary = {
       globalVision: {
          title: "Global Vision: Soft Power",
          subtitle: "Export Model",
-         body: "This is a strategic contribution to the future of aid — a transparent, efficient, digital model that can be exported to other post-conflict zones, projecting soft power through technological excellence."
+         body: "Forged in war, this system will work anywhere. Created by Ukrainians for Ukrainians and the World. This is a strategic contribution to the future of aid — a transparent, efficient, digital model that can be exported to other post-conflict zones, projecting soft power through technological excellence."
       },
       contacts: {
         title: "Contacts",
@@ -409,6 +422,13 @@ export const CONTENT: Dictionary = {
         },
         report: {
           pages: [
+            {
+              id: 0,
+              title: "KEY FACTS: Clinical Evidence & Financing",
+              subtitle: "Comprehensive status report before deep analysis.",
+              body: "<b>Clinical Confirmation (PM+ / 5 sessions)</b><br/>Problem Management Plus (PM+), developed by WHO, is clinically proven to treat mild to moderate psychological disorders. It is highly cost-effective, utilizing trained peers ('para-professionals') who complete an intensive 8-day training.<br/><br/><b>Evidence Base (RCTs)</b><br/>• <b>Pakistan:</b> Significant reduction in anxiety and depression symptoms.<br/>• <b>Kenya:</b> 88.0% retention rate after 3 months.<br/>• <b>Nepal:</b> Unprecedented 97.5% retention in cluster group format.<br/>• <b>Europe (STRENGTHS):</b> Reached over 2600 refugees, confirming full distress reduction by the 4th session.<br/><br/><b>World Bank Projects Status (HEAL Ukraine)</b><br/>The $500M budget relies on Disbursement-Linked Indicators (DLIs). The state must verify services through eHealth to receive funds. Out of $160M allocated for PBCs, $120M has been reimbursed ($52M of which is for mental health). A massive volume of NGO services remains unpaid due to lack of integration.<br/><br/><b>Systemic Paradox & API</b><br/>eHealth requires strict security compliance and licensed facilities, while NGOs operate under anonymity protocols. Political will is needed to establish a 'Humanitarian Gateway' (API Gateway: <span class='font-mono text-[10.5px]'>api-preprod.ehealth.gov.ua</span>) to digitally legalize para-professionals.",
+              bullets: ["5 Sessions PM+ (WHO Proven)", "$52M Reimbursed via DLI", "API Gateway & Legalization"]
+            },
             {
               id: 1,
               title: "The Funnel of Failure: 154k Trained vs 1k Active",
@@ -753,9 +773,9 @@ export const CONTENT: Dictionary = {
     },
     bottleneck: {
       label: "СТРУКТУРНИЙ ВИКЛИК",
-      title: "ВІДСУТНЯ СЕРЕДНЯ ЛАНКА",
-      body: "Значна частина психологічної підтримки наразі функціонує поза межами формальної статистики. Інтеграція цих фахівців у єдину систему потребує збалансованого підходу, який стимулюватиме участь без надмірного адміністративного навантаження.",
-      subbody: "Оскільки глобальні гуманітарні пріоритети природно змінюються, критично важливо розбудовувати стійку національну інфраструктуру. Перехід від екстреного реагування до довгострокової системної стійкості забезпечить безперервну допомогу тим, хто її потребує.",
+      title: "СТРУКТУРНА ПРОГАЛИНА",
+      body: "Значна частина підтримки функціонує поза офіційною статистикою. Інтеграція цих фахівців у систему вимагає балансу — стимулювати участь без зайвої бюрократії.",
+      subbody: "Оскільки пріоритети змінюються, критично важливо будувати стійку національну інфраструктуру. Перехід до системної стійкості забезпечить довгострокову допомогу.",
       levels: [
         {
           id: 1,
@@ -820,12 +840,12 @@ export const CONTENT: Dictionary = {
         },
         {
           id: 4,
-          title: "Прогалина мідлвари",
-          desc: "Дві програми Світового банку — HEAL ($500M IPF) та THRIVE ($454M PforR) — становлять $954M комбінованих інвестицій. HEAL надав 624 464 послуги з психічного здоров'я через 118 мобільних команд. Але ці послуги записані в гуманітарних системах (CommCare/Kobo), не в ЕСОЗ (національна система eHealth). THRIVE вимірює результати через ЕСОЗ. Прогалина мідлвари: виходи HEAL ≠ входи THRIVE.",
+          title: "Ескалація Вартості Часу",
+          desc: "Якщо змарнувати час на стадії первинної допомоги, необхідна кількість сесій кратно зростає. Легкі розлади перетворюються на складну соматизацію, що експоненційно здорожчує лікування, веде до інвалідизації та становить небезпеку кумулятивної травми (накладеної на вторинне травмування). Яким тоді стане дефіцит держбюджету? Водночас, через розрив між неурядовими організаціями та ЕСОЗ, величезний масив наданих послуг (PM+) не верифікується, а мільйони доларів траншів Світового банку (DLI/PBC) залишаються невідшкодованими.",
           stats: [
-            { value: "624K", label: "Послуги HEAL", ref: "ISR #6" },
-            { value: "0/400", label: "Модернізовано закладів", ref: "ISR #6" },
-            { value: "$41M", label: "Нерозподілений ІТ-бюджет", ref: "ISR #6" }
+            { value: "5", label: "Сесій (PM+)", ref: "Стандарт ВООЗ" },
+            { value: "$120M", label: "Виплати Світового банку", ref: "З $160M PBC" },
+            { value: "Без відшкодувань", label: "Дані NGO в ЕСОЗ", ref: "Втрата Бюджету" }
           ]
         },
         {
@@ -844,19 +864,32 @@ export const CONTENT: Dictionary = {
         { title: "Контекст → Ресурси", desc: "Цифровий матчинг + тріаж ступеневої допомоги зменшує бар'єр: доступний для пошуку, фінансово доступний, приватний." },
         { title: "Діяльність → Продукти", desc: "Онбординг надавачів, метрування сесій, розгортання VR, публікація відкритого датасету, інтеграція ЕСОЗ." },
         { title: "Продукти → Наслідки → Вплив", desc: "Тіньові фахівці формалізуються. Дані результатів сесій демонструють вимірюване зменшення симптомів. Координація донорів покращується." }
-      ],
-      roadmapTitle: "Трирічна стратегічна дорожня карта",
-      roadmap: [
-        { phase: "1. Фундамент", timeline: "M1–M6", obj: "Юридичне оформлення, запуск пілоту, перші надавачі", kpi: "≥50 надавачів, ≥1 000 сесій заметровано" },
-        { phase: "2. Валідація", timeline: "M7–M12", obj: "Довести модель, перші дані результатів, відкритий датасет", kpi: "≥60% покращення PCL-5, датасет публічний" },
-        { phase: "3. Масштаб", timeline: "M13–M24", obj: "Багатоміський розвиток, пілотна інтеграція ЕСОЗ", kpi: "≥550 надавачів, ≥30K сесій" },
-        { phase: "4. Інтеграція", timeline: "M25–M36", obj: "Шлях національного покриття, державна підписка", kpi: "≥1 150 надавачів, контракт державної підписки" }
       ]
     },
     warRoom: {
       title: "Структура Консорціуму",
       subtitle: "Відкрита Архітектура з Найкращими Партнерами",
       matrixTitle: "Матриця Стратегічного Розгортання",
+      whyExists: {
+        title: "Чому існує ця програма",
+        subtitle: "Сектор знаходиться на перетині гуманітарного реагування, клінічної практики та сталого розвитку. Технологічна конвергенція робить можливим те, що раніше було ручним та фрагментованим.",
+        items: [
+          { id: "01", title: "Секторальний виклик війни", desc: "Звіт «Ідеальний шторм»: одночасний пік потреб, виснаження кадрів, фрагментація фінансування.", icon: "storm" },
+          { id: "02", title: "Поступова цифровізація сектору в світі", desc: "Технологізація доказових клінічних методологій (VR, AR), цифрова агрегація приватної практики, цифровізація шляху бенефіціар → клієнт → пацієнт і потоків даних.", icon: "digital" },
+          { id: "03", title: "Цифрова готовність", desc: "Населення, банківська система та державні реєстри готові до інтеграції — вікно для впровадження відкрите.", icon: "ready" },
+          { id: "04", title: "Законодавча врегульованість", desc: "Свіже законодавство виділяє та регулює сектор; формальних умов для виходу приватної практики з тіні поки немає.", icon: "law" },
+          { id: "05", title: "Плече гуманітарного підсилення", desc: "Гуманітарні ресурси та стандарти добрих практик можуть бути плечем для запуску — але без digital-плеча вони не масштабуються.", icon: "aid" }
+        ]
+      },
+      launchTimeline: {
+        title: "Таймлайн Розгортання та Інтеграції",
+        steps: [
+          { phase: "Етап 1: Пілот", timeline: "2-4 Місяці", desc: "Пілотні інтеграції, запуск шини (digital bus) інтероперабельності між гуманітарним і клінічним сектором надання допомоги." },
+          { phase: "Етап 2: White Label", timeline: "6-12 Місяців", desc: "Серія проектів White label рішення: з гуманітарними акторами, хелс кластером, з бізнесом, з громадами." },
+          { phase: "Етап 3: Масштабування", timeline: "12-24 Місяці", desc: "Мультиплікація та охоплення: область, сектор економіки. Інтеграція з національними програмами та уніфікація підходів, запуск єдиного дата сету та цифрової координації." },
+          { phase: "Етап 4: Сталий Розвиток", timeline: "12+ Місяців", desc: "Трансформація до сталого розвитку: SaaS рішення, ДПП. Створення модельної програми для експорту української резільєнтності та цифрових технологій." }
+        ]
+      },
       scoring: {
         title: "",
         subtitle: "",
@@ -973,7 +1006,7 @@ export const CONTENT: Dictionary = {
       globalVision: {
          title: "Глобальне Бачення: Soft Power",
          subtitle: "Експорт Моделі",
-         body: "Це стратегічний внесок у майбутнє допомоги — прозору, ефективну, цифрову модель, яку можна експортувати в інші постконфліктні зони, проєктуючи м'яку силу через технологічну досконалість."
+         body: "Оскільки система загартована у війні, вона буде працювати всюди. Створено українцями для українців і Світу. Це стратегічний внесок у майбутнє допомоги — прозору, ефективну, цифрову модель, яку можна експортувати в інші постконфліктні зони, проєктуючи м'яку силу через технологічну досконалість."
       },
       contacts: {
         title: "Контакти",
@@ -1048,6 +1081,13 @@ export const CONTENT: Dictionary = {
         },
         report: {
           pages: [
+            {
+              id: 0,
+              title: "КЛЮЧОВІ ФАКТИ: Клініка та Фінанси",
+              subtitle: "Вичерпний статусовий репорт перед поглибленим аналізом.",
+              body: "<b>Клінічне підтвердження (PM+ / 5 сесій)</b><br/>Програма Problem Management Plus (PM+) від ВООЗ клінічно доведена для лікування психологічних розладів легкого та середнього ступеня тяжкості. Вона є надзвичайно ефективною (cost-effective) завдяки залученню пір-супортерів ('парапрофесіоналів'), які пройшли 8-денний тренінг.<br/><br/><b>Доказова база (РКД)</b><br/>• <b>Пакистан:</b> зниження симптомів тривоги та депресії (GHQ-12, WHODAS 2.0).<br/>• <b>Кенія:</b> рівень утримання 88.0% через 3 місяці.<br/>• <b>Непал:</b> безпрецедентне утримання 97.5% у кластерному форматі.<br/>• <b>Європа (STRENGTHS):</b> охоплено понад 2600 біженців, підтверджено повне зниження дистресу на 4 з 5 сесій.<br/><br/><b>Статус проєктів Світового банку (HEAL Ukraine)</b><br/>Загальний бюджет ($500 млн) використовує механізм виплати за результат (DLI / PBCs). Держава повинна верифікувати послуги через ЕСОЗ. Зі $160 млн відшкодовано $120 млн ($52 млн з яких — на психічне здоров'я). Величезний масив послуг NGO залишається неоплаченим.<br/><br/><b>Системний парадокс та API</b><br/>ЕСОЗ вимагає КСЗІ та ліцензованих закладів, а NGO працюють за протоколами анонімності. Потрібна політична воля для створення 'Гуманітарного шлюзу' (API Gateway: <span class='font-mono text-[10.5px]'>api-preprod.ehealth.gov.ua</span>) та легкої інтеграції парапрофесіоналів.",
+              bullets: ["5 Сесій PM+ (Доведено ВООЗ)", "$52M Відшкодовано через DLI", "API Gateway & Цифрова легалізація"]
+            },
             {
               id: 1,
               title: "Воронка Провалу: 154 тис Навчених vs 1 тис Активних",

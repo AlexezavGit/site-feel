@@ -374,3 +374,101 @@ export const PsychologistDistributionChart: React.FC = () => {
       </ResponsiveContainer>
     );
 };
+
+export const EscalationTimelineChart: React.FC<{ lang?: 'EN' | 'UK' }> = ({ lang = 'EN' }) => {
+  const isUk = lang === 'UK';
+
+  return (
+    <div className="w-full bg-slate-900 border border-white/10 rounded-xl p-6 relative overflow-hidden mt-6 shadow-[0_0_40px_rgba(234,88,12,0.1)]">
+      <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-red-500/5 to-purple-500/5"></div>
+      
+      <div className="relative z-10">
+        <div className="flex items-center gap-4 mb-12">
+          <div className="w-12 h-12 rounded-full bg-orange-500/20 border border-orange-500/50 flex flex-col items-center justify-center animate-pulse">
+             <div className="text-orange-400">
+               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3L2 6"/><path d="M19 3l3 3"/><path d="M12 1v2"/></svg>
+             </div>
+          </div>
+          <div>
+             <div className="text-2xl font-bold font-mono text-orange-400">3.9 {isUk ? 'Млн' : 'M'}</div>
+             <div className="text-[10px] text-slate-400 uppercase tracking-widest">{isUk ? 'Потреба (Кількість людей)' : 'Clinical Need (People)'}</div>
+          </div>
+        </div>
+
+        {/* Timeline container */}
+        <div className="relative w-full overflow-x-auto pb-4 custom-scrollbar">
+           <div className="min-w-[700px] relative">
+              {/* Top Axis: Hours / Escalation */}
+              <div className="flex justify-between items-end mb-2 text-slate-400 font-mono text-xs px-4">
+                 <div className="w-1/5 text-left text-emerald-400">
+                    <div className="text-[10px] opacity-70 mb-1">{isUk ? 'Обсяг годин' : 'Volume of Hours'}</div>
+                    ~29 {isUk ? 'млн год' : 'M hrs'}
+                 </div>
+                 <div className="w-1/5 text-center text-yellow-400">
+                    ~46 {isUk ? 'млн год' : 'M hrs'}
+                 </div>
+                 <div className="w-1/5 text-center text-orange-400">
+                    ~93 {isUk ? 'млн год' : 'M hrs'}
+                 </div>
+                 <div className="w-1/5 text-center text-red-500 font-bold text-sm">
+                    {isUk ? 'Експоненційні витрати' : 'Exponential Cost'}
+                 </div>
+                 <div className="w-1/5 text-right text-purple-400 font-bold text-sm">
+                    {isUk ? 'Бюджетний колапс' : 'Budget Collapse'}
+                 </div>
+              </div>
+
+              {/* Central Line */}
+              <div className="relative h-4 flex items-center mb-8">
+                 {/* The line itself */}
+                 <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-yellow-500 to-purple-600 rounded-full"></div>
+                 {/* Nodes */}
+                 <div className="absolute left-[5%] w-3 h-3 bg-emerald-500 rounded-full border-2 border-slate-900 z-10 shadow-[0_0_10px_rgba(16,185,129,0.8)]"></div>
+                 <div className="absolute left-[25%] w-4 h-4 bg-yellow-500 rounded-full border-2 border-slate-900 z-10"></div>
+                 <div className="absolute left-[50%] w-5 h-5 bg-orange-500 rounded-full border-2 border-slate-900 z-10 shadow-[0_0_15px_rgba(249,115,22,0.8)]"></div>
+                 <div className="absolute left-[75%] w-6 h-6 bg-red-500 rounded-full border-2 border-slate-900 z-10 shadow-[0_0_20px_rgba(239,68,68,0.8)]"></div>
+                 <div className="absolute left-[95%] w-8 h-8 bg-purple-600 rounded-lg rotate-45 border-2 border-slate-900 z-10 shadow-[0_0_25px_rgba(147,51,234,0.8)] flex items-center justify-center">
+                    <div className="w-2 h-2 bg-slate-900 rounded-full"></div>
+                 </div>
+              </div>
+
+              {/* Bottom Axis: Sessions / Stages */}
+              <div className="flex justify-between items-start text-xs font-sans mt-4">
+                 <div className="w-[15%] relative -left-4">
+                    <div className="bg-emerald-900/30 border border-emerald-500/20 rounded p-2 text-center text-emerald-100">
+                       <div className="font-bold text-emerald-400 font-mono mb-1">5 {isUk ? 'сеансів' : 'sessions'}</div>
+                       <div className="text-[9px] uppercase tracking-wider">PM+ ({isUk ? 'ВООЗ' : 'WHO'})</div>
+                    </div>
+                 </div>
+                 <div className="w-[20%] text-center">
+                     <div className="bg-yellow-900/30 border border-yellow-500/20 rounded p-2 text-center text-yellow-100 inline-block">
+                        <div className="font-bold text-yellow-400 font-mono mb-1">12 {isUk ? 'сеансів' : 'sessions'}</div>
+                        <div className="text-[9px] uppercase tracking-wider">{isUk ? 'Стандарт ВООЗ' : 'WHO Standard'}</div>
+                     </div>
+                 </div>
+                 <div className="w-[20%] text-center">
+                    <div className="bg-orange-900/30 border border-orange-500/20 rounded p-2 text-center text-orange-100 inline-block">
+                       <div className="font-bold text-orange-400 font-mono mb-1">20-28 {isUk ? 'сеансів' : 'sessions'}</div>
+                       <div className="text-[9px] uppercase tracking-wider">{isUk ? 'Стандарт НСЗУ' : 'NHSU Standard'}</div>
+                    </div>
+                 </div>
+                 <div className="w-[25%] text-center px-2">
+                    <div className="bg-red-900/30 border border-red-500/20 rounded p-2 text-center text-red-100">
+                       <div className="font-bold text-red-500 uppercase tracking-widest mb-1 text-[11px]">{isUk ? 'Соматизація' : 'Somatization'}</div>
+                       <div className="text-[9px] opacity-80">{isUk ? 'Лікування лікарями' : 'Medical intervention'}</div>
+                    </div>
+                 </div>
+                 <div className="w-[20%] text-right relative left-4">
+                    <div className="bg-purple-900/30 border border-purple-500/20 rounded p-2 text-center text-purple-100 inline-block">
+                       <div className="font-bold text-purple-400 uppercase tracking-widest mb-1 text-[11px]">{isUk ? 'Інвалідизація' : 'Invalidization'}</div>
+                       <div className="text-[9px] opacity-80">{isUk ? 'Втрата працездатності' : 'Loss of capability'}</div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+      </div>
+
+    </div>
+  );
+};

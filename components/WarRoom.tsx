@@ -6,7 +6,8 @@ import StructuralBottleneck from './StructuralBottleneck';
 import { 
   Activity, Shield, Globe, DollarSign,
   Users, PieChart, ArrowRight, Info,
-  Share2, AlertCircle
+  Share2, AlertCircle,
+  CloudLightning, MonitorSmartphone, Zap, Scale, HeartHandshake
 } from 'lucide-react';
 
 interface WarRoomProps {
@@ -211,6 +212,78 @@ const WarRoom: React.FC<WarRoomProps> = ({ lang }) => {
 
        <div className="w-full max-w-7xl px-4 md:px-8 space-y-16 mt-8">
           
+          {/* SECTION: WHY THIS PROGRAM EXISTS */}
+          {t.whyExists && (
+            <div className="w-full group/why">
+               <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                 <span className="w-8 h-1 bg-yellow-500 block"></span>
+                 {t.whyExists.title}
+               </h2>
+               <p className="text-slate-400 mb-8 max-w-4xl text-lg">{t.whyExists.subtitle}</p>
+               
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                 {t.whyExists.items.map((item, idx) => {
+                    const icons: Record<string, React.ElementType> = {
+                       "storm": CloudLightning,
+                       "digital": MonitorSmartphone,
+                       "ready": Zap,
+                       "law": Scale,
+                       "aid": HeartHandshake
+                    };
+                    const Icon = icons[item.icon] || Info;
+                    return (
+                        <div key={idx} className="bg-slate-900 border border-white/10 rounded-xl p-6 hover:border-yellow-500/30 hover:bg-slate-800/80 transition-all group/card flex flex-col items-start gap-4 h-full relative overflow-hidden">
+                           <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/5 rounded-bl-full translate-x-16 -translate-y-16 group-hover/card:bg-yellow-500/10 transition-colors"></div>
+                           <div className="flex items-center gap-4 w-full justify-between">
+                               <div className="w-12 h-12 bg-black/40 rounded-lg flex items-center justify-center border border-white/5 group-hover/card:border-yellow-500/30 group-hover/card:bg-yellow-500/10 transition-colors">
+                                   <Icon className="text-slate-300 group-hover/card:text-yellow-400 w-6 h-6" />
+                               </div>
+                               <div className="text-4xl font-display font-medium text-slate-800 group-hover/card:text-yellow-500/20">{item.id}</div>
+                           </div>
+                           <div className="mt-2 relative z-10">
+                               <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
+                               <p className="text-sm text-slate-400 leading-relaxed font-sans">{item.desc}</p>
+                           </div>
+                        </div>
+                    );
+                 })}
+               </div>
+            </div>
+          )}
+
+          {/* SECTION: LAUNCH TIMELINE */}
+          {t.launchTimeline && (
+            <div className="w-full">
+              <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                <span className="w-8 h-1 bg-blue-500 block"></span>
+                {t.launchTimeline.title}
+              </h2>
+              
+              <div className="bg-slate-900 border border-white/10 rounded-xl overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="bg-black/40 border-b border-white/10">
+                        <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider font-sans w-1/4">Phase</th>
+                        <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider font-sans w-1/4">Timeline</th>
+                        <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider font-sans w-2/4">Objective</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      {t.launchTimeline.steps.map((item, idx) => (
+                        <tr key={idx} className="hover:bg-white/5 transition-colors">
+                          <td className="p-4 text-sm font-bold text-white font-sans align-top">{item.phase}</td>
+                          <td className="p-4 text-sm font-mono text-blue-400 align-top">{item.timeline}</td>
+                          <td className="p-4 text-sm text-slate-300 font-sans leading-relaxed align-top">{item.desc}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* SECTION 4 (Moved): GLOBAL VISION (Soft Power) */}
           {t.globalVision && (
             <div className="w-full">

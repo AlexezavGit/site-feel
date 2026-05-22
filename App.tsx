@@ -238,7 +238,7 @@ const App: React.FC = () => {
                 onToggleTheme={toggleTheme}
              />
         ) : view === ViewMode.STRATEGY ? (
-             <StrategyView content={CONTENT[lang]} />
+             <StrategyView content={CONTENT[lang]} lang={lang} />
         ) : view === ViewMode.WAR_ROOM ? (
              <WarRoom lang={lang} />
         ) : view === ViewMode.SCHEMA ? (

@@ -1,12 +1,14 @@
 import React from 'react';
 import { LocalizedContent } from '../types';
 import { Activity, Users, TrendingDown, EyeOff, AlertTriangle } from 'lucide-react';
+import { EscalationTimelineChart } from './Charts';
 
 interface StrategyViewProps {
   content: LocalizedContent;
+  lang?: 'EN' | 'UK';
 }
 
-const StrategyView: React.FC<StrategyViewProps> = ({ content }) => {
+const StrategyView: React.FC<StrategyViewProps> = ({ content, lang = 'EN' }) => {
   const t = content.strategy;
 
   const getIcon = (id: number) => {
@@ -65,6 +67,9 @@ const StrategyView: React.FC<StrategyViewProps> = ({ content }) => {
                     </div>
                   ))}
                 </div>
+                {failure.id === 4 && (
+                   <EscalationTimelineChart lang={lang} />
+                )}
               </div>
             ))}
           </div>
@@ -85,39 +90,6 @@ const StrategyView: React.FC<StrategyViewProps> = ({ content }) => {
                 <p className="text-slate-300 text-sm leading-relaxed font-sans">{item.desc}</p>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Strategic Roadmap */}
-        <div>
-          <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-            <span className="w-8 h-1 bg-blue-500 block"></span>
-            {t.roadmapTitle}
-          </h2>
-          
-          <div className="bg-slate-900 border border-white/10 rounded-xl overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-black/40 border-b border-white/10">
-                    <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider font-sans">Phase</th>
-                    <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider font-sans">Timeline</th>
-                    <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider font-sans">Objective</th>
-                    <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider font-sans">KPI</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {t.roadmap.map((item, idx) => (
-                    <tr key={idx} className="hover:bg-white/5 transition-colors">
-                      <td className="p-4 text-sm font-bold text-white whitespace-nowrap font-sans">{item.phase}</td>
-                      <td className="p-4 text-sm font-mono text-blue-400 whitespace-nowrap">{item.timeline}</td>
-                      <td className="p-4 text-sm text-slate-300 font-sans">{item.obj}</td>
-                      <td className="p-4 text-sm text-slate-400 font-mono">{item.kpi}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
           </div>
         </div>
 

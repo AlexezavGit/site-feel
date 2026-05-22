@@ -142,6 +142,17 @@ const HeroView: React.FC<HeroViewProps> = ({ lang, isDark, onStart, onToggleLang
 
             {/* MIDDLE AREA: Title */}
             <div className="flex flex-col items-center justify-center text-center flex-grow py-4 md:py-8 min-h-0">
+                <div className="flex flex-wrap justify-center gap-2 mb-6">
+                    <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-mono tracking-widest uppercase text-slate-300 backdrop-blur-md">
+                        {lang === 'EN' ? 'Analytical Report' : 'Аналітичний звіт'}
+                    </span>
+                    <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-mono tracking-widest uppercase text-slate-300 backdrop-blur-md">
+                        MHPSS Sector
+                    </span>
+                    <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-mono tracking-widest uppercase text-slate-300 backdrop-blur-md">
+                        {lang === 'EN' ? 'Humanitarian & Professional Challenge' : 'Гуманітарний та Професійний виклик'}
+                    </span>
+                </div>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-medium leading-tight tracking-tighter uppercase drop-shadow-2xl max-w-4xl whitespace-pre-line text-white">
                   {heroT.title}
                 </h1>
@@ -190,13 +201,15 @@ const HeroView: React.FC<HeroViewProps> = ({ lang, isDark, onStart, onToggleLang
                     </div>
                 </div>
 
-                {/* SDG Targets Right */}
-                <div className="hidden md:flex flex-col items-end shrink-0 w-32">
-                   <div className="text-[var(--gold-light)] font-display text-[9px] tracking-widest font-bold opacity-80 mb-2">SDG TARGETS</div>
-                   <div className="flex gap-1.5 opacity-90">
-                       <div className="w-7 h-7 rounded-sm shadow-md overflow-hidden hover:opacity-100 transition-opacity"><Sdg3Svg /></div>
-                       <div className="w-7 h-7 rounded-sm shadow-md overflow-hidden hover:opacity-100 transition-opacity"><Sdg8Svg /></div>
-                       <div className="w-7 h-7 rounded-sm shadow-md overflow-hidden hover:opacity-100 transition-opacity"><Sdg17Svg /></div>
+                {/* Nexus Text Right */}
+                <div className="hidden md:flex flex-col items-end shrink-0 w-64 text-right">
+                   <div className="text-[var(--gold-light)] font-display text-[9px] tracking-widest font-bold opacity-80 mb-1.5 uppercase leading-tight">
+                     Humanitarian Reset — Sustainable development — Digital Tech. Nexus
+                   </div>
+                   <div className="text-white/50 font-sans text-[10px] leading-snug">
+                     {lang === 'EN' 
+                        ? 'Infrastructure for digital coordination of efforts and resource mobilization.' 
+                        : 'Інфраструктура для цифрової координації зусиль та мобілізації ресурсів.'}
                    </div>
                 </div>
             </div>
