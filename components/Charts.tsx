@@ -100,7 +100,7 @@ export const GlobalLocalFlowChart: React.FC<{ label: string }> = ({ label }) => 
 
 export const GDPChart: React.FC<{ label: string }> = ({ label }) => {
   const data = [
-    { name: 'Inpatient (Walls)', value: 89, fill: '#EF4444' }, // 89% Waste
+    { name: 'Inpatient (Walls)', value: 55, fill: '#EF4444' }, // 55% Waste
     { name: 'Outpatient (Care)', value: 11, fill: '#10B981' }, // 11% Effective
   ];
 
@@ -139,7 +139,7 @@ export const ShadowEconomyChart: React.FC<{ label: string }> = ({ label }) => {
          {/* Bar 1: Certificates (The Paper Army) */}
          <div className="flex flex-col items-center w-1/3 z-10 group relative">
              <div className="absolute -top-8 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] bg-blue-600 text-white px-2 py-1 rounded shadow-lg whitespace-nowrap">
-                Trained: 117,000
+                Trained: 154,000
              </div>
              <div className="w-full bg-blue-500 rounded-t-lg relative overflow-hidden shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all hover:scale-[1.02]" style={{ height: '140px' }}>
                 <div className="absolute inset-0 flex flex-col items-center justify-center opacity-30 gap-1 p-1">
@@ -147,7 +147,7 @@ export const ShadowEconomyChart: React.FC<{ label: string }> = ({ label }) => {
                 </div>
              </div>
              <div className="absolute -bottom-12 text-center w-full">
-                 <div className="text-xl font-black text-blue-600 leading-none">117k</div>
+                 <div className="text-xl font-black text-blue-600 leading-none">154k</div>
                  <div className="text-[10px] font-bold uppercase text-blue-600 bg-blue-50 px-2 py-0.5 rounded mt-1 inline-block">Trained</div>
              </div>
          </div>

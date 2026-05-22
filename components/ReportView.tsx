@@ -85,11 +85,11 @@ const ReportView: React.FC<ReportViewProps> = ({ lang, docId, initialPage = 1, o
   };
 
   const NavigationBar = ({ position }: { position: 'top' | 'bottom' }) => (
-      <div className={`flex justify-between items-center bg-surface-light/90 dark:bg-surface-dark/90 border border-black/10 dark:border-white/10 p-2 md:p-4 rounded shadow-sm ${position === 'top' ? 'mb-4' : 'mt-4'}`} role="navigation" aria-label={`${position === 'top' ? 'Top' : 'Bottom'} Report Navigation`}>
+      <div className={`flex justify-between items-center bg-slate-900/90 border border-white/10 p-2 md:p-4 rounded shadow-sm ${position === 'top' ? 'mb-4' : 'mt-4'}`} role="navigation" aria-label={`${position === 'top' ? 'Top' : 'Bottom'} Report Navigation`}>
         <button 
             onClick={onBackToSchema} 
             aria-label={navLabels.backToSchema}
-            className="flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-wider text-textsec-light dark:text-textsec-dark hover:text-textcolor-light dark:hover:text-textcolor-dark transition-colors"
+            className="flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400 hover:text-white transition-colors"
         >
              <CornerUpLeft size={16} />
              <span className="hidden md:inline">{navLabels.backToSchema}</span>
@@ -100,14 +100,14 @@ const ReportView: React.FC<ReportViewProps> = ({ lang, docId, initialPage = 1, o
           <button 
             onClick={prev} 
             aria-label="Previous Page"
-            className="w-8 h-8 flex items-center justify-center rounded border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/10 text-textsec-light dark:text-textsec-dark hover:text-textcolor-light dark:hover:text-textcolor-dark transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded border border-white/10 hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
           >
             <ChevronLeft size={18} />
           </button>
           
           <div className="flex gap-1" aria-hidden="true">
              {t.pages.map(p => (
-                 <div key={p.id} className={`w-1.5 h-1.5 rounded-full ${pageId === p.id ? 'bg-orange-600' : 'bg-black/30 dark:bg-slate-600'}`} />
+                 <div key={p.id} className={`w-1.5 h-1.5 rounded-full ${pageId === p.id ? 'bg-orange-600' : 'bg-slate-600'}`} />
              ))}
           </div>
 
@@ -127,11 +127,11 @@ const ReportView: React.FC<ReportViewProps> = ({ lang, docId, initialPage = 1, o
   );
 
   return (
-    <div className="max-w-6xl mx-auto p-2 md:p-8 pb-32">
+    <div className="max-w-6xl mx-auto min-h-screen p-2 md:p-8 pb-32">
       <NavigationBar position="top" />
 
       {/* Main Report Card - Compact */}
-      <div className="bg-surface-light dark:bg-surface-dark rounded shadow-sm relative overflow-hidden flex flex-col border border-black/10 dark:border-white/10">
+      <div className="content-card rounded shadow-2xl relative overflow-hidden flex flex-col">
         
         {/* Accent Top Bar - Orange */}
         <div className={`w-full h-1 ${isCenterPage ? 'bg-emerald-500' : 'bg-orange-600'}`}></div>
@@ -139,12 +139,12 @@ const ReportView: React.FC<ReportViewProps> = ({ lang, docId, initialPage = 1, o
         <div className="p-4 md:p-12 relative z-10">
             
             {/* Page Title Section */}
-            <div className="border-b border-black/10 dark:border-white/10 pb-4 mb-6">
-              <h1 className="text-2xl md:text-4xl font-light text-textcolor-light dark:text-textcolor-dark mb-2 uppercase tracking-tight leading-none">
+            <div className="border-b border-white/10 pb-4 mb-6">
+              <h1 className="text-2xl md:text-4xl font-light text-white mb-2 uppercase tracking-tight leading-none">
                 {currentPage.title}
               </h1>
               
-              <p className="text-sm md:text-xl text-textsec-light dark:text-textsec-dark font-light leading-snug">
+              <p className="text-sm md:text-xl text-slate-400 font-light leading-snug">
                 {currentPage.subtitle}
               </p>
             </div>
@@ -152,20 +152,20 @@ const ReportView: React.FC<ReportViewProps> = ({ lang, docId, initialPage = 1, o
             {/* Body Content */}
             <div className="flex flex-col lg:flex-row gap-8">
                <div className="flex-1">
-                 <p className="text-sm md:text-base text-textcolor-light dark:text-textcolor-dark leading-relaxed text-justify mb-6 font-light">
+                 <p className="text-sm md:text-base text-slate-300 leading-relaxed text-justify mb-6 font-light">
                     {parseText(currentPage.body)}
                  </p>
                  
                  {currentPage.quote && (
-                   <div className="border-l-4 border-orange-600 pl-4 py-3 mb-6 italic text-textsec-light dark:text-textsec-dark text-sm md:text-base bg-black/5 dark:bg-slate-800 rounded-r font-serif">
+                   <div className="border-l-4 border-orange-600 pl-4 py-3 mb-6 italic text-slate-400 text-sm md:text-base bg-slate-800 rounded-r font-serif">
                      "{currentPage.quote}"
                    </div>
                  )}
 
                  <div className="space-y-3">
-                    <h4 className="text-[10px] font-bold uppercase text-black/50 dark:text-slate-500 tracking-widest border-b border-black/10 dark:border-white/10 pb-2 mb-2">Key Takeaways</h4>
+                    <h4 className="text-[10px] font-bold uppercase text-slate-500 tracking-widest border-b border-white/10 pb-2 mb-2">Key Takeaways</h4>
                     {currentPage.bullets.map((b, i) => (
-                      <div key={i} className="flex gap-2 text-sm text-textsec-light dark:text-textsec-dark items-start font-medium">
+                      <div key={i} className="flex gap-2 text-sm text-slate-300 items-start font-medium">
                         <span className={`w-1.5 h-1.5 rounded-sm mt-1.5 shrink-0 ${isCenterPage ? 'bg-emerald-500' : 'bg-orange-600'}`} />
                         {b}
                       </div>
@@ -173,15 +173,15 @@ const ReportView: React.FC<ReportViewProps> = ({ lang, docId, initialPage = 1, o
                  </div>
                  
                  {isCenterPage && tCenter.consortiumRoles && (
-                     <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10">
-                         <h4 className="text-[10px] font-bold uppercase text-black/50 dark:text-slate-500 tracking-widest mb-4">Consortium Partners</h4>
+                     <div className="mt-8 pt-6 border-t border-white/10">
+                         <h4 className="text-[10px] font-bold uppercase text-slate-500 tracking-widest mb-4">Consortium Partners</h4>
                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                             {tCenter.consortiumRoles.map((role, idx) => (
-                                <div key={idx} className="p-3 border border-black/10 dark:border-white/10 bg-black/5 dark:bg-slate-800 rounded text-center hover:bg-black/10 dark:hover:bg-slate-700 hover:shadow-md transition-all flex flex-col items-center justify-between">
-                                    <div className="h-10 w-full flex items-center justify-center mb-2 text-textcolor-light dark:text-textcolor-dark">
+                                <div key={idx} className="p-3 border border-white/10 bg-slate-800 rounded text-center hover:bg-slate-700 hover:shadow-md transition-all flex flex-col items-center justify-between">
+                                    <div className="h-10 w-full flex items-center justify-center mb-2 text-white">
                                         <PartnerLogo variant={role.logo} className="h-full w-full" />
                                     </div>
-                                    <div className="text-[8px] font-bold text-textsec-light dark:text-textsec-dark uppercase tracking-wider">{role.org}</div>
+                                    <div className="text-[8px] font-bold text-slate-400 uppercase tracking-wider">{role.org}</div>
                                 </div>
                             ))}
                          </div>
@@ -194,13 +194,13 @@ const ReportView: React.FC<ReportViewProps> = ({ lang, docId, initialPage = 1, o
                {currentPage.chartId && (
                  <div className="flex-1 lg:max-w-md">
                     <div className="sticky top-6">
-                        <div className="bg-black/5 dark:bg-slate-800 p-1 shadow-sm rounded border border-black/10 dark:border-white/10">
+                        <div className="bg-slate-800 p-1 shadow-xl rounded border border-white/10">
                             {renderChart(currentPage.chartId)}
                         </div>
                         {CONTENT[lang].charts[currentPage.chartId] && (
-                            <div className="mt-2 flex items-center justify-between border-t border-black/10 dark:border-white/10 pt-2 px-1">
-                                <span className="text-[9px] text-black/50 dark:text-slate-500 uppercase font-bold tracking-wider">Fig {pageId}.1</span>
-                                <span className="text-[9px] text-orange-600 dark:text-orange-500 font-bold">{CONTENT[lang].charts[currentPage.chartId]}</span>
+                            <div className="mt-2 flex items-center justify-between border-t border-white/10 pt-2 px-1">
+                                <span className="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Fig {pageId}.1</span>
+                                <span className="text-[9px] text-orange-500 font-bold">{CONTENT[lang].charts[currentPage.chartId]}</span>
                             </div>
                         )}
                     </div>

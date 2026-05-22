@@ -42,17 +42,17 @@ const SchemaView: React.FC<SchemaViewProps> = ({ lang, docId, onNodeClick }) => 
         <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 via-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
         <div className="flex items-start justify-between w-full mb-2 md:mb-4 relative z-10 gap-2">
-           <h3 className="font-medium text-textsec-light dark:text-textsec-dark uppercase tracking-widest text-[8px] sm:text-[9px] md:text-[10px] group-hover:text-textcolor-light dark:group-hover:text-textcolor-dark transition-colors leading-tight">{node.title}</h3>
-           <Icon size={16} className={`${accentColor} opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 group-hover:text-orange-600 dark:group-hover:text-orange-500 md:w-5 md:h-5 shrink-0`} />
+           <h3 className="font-medium text-slate-400 uppercase tracking-widest text-[8px] sm:text-[9px] md:text-[10px] group-hover:text-white transition-colors leading-tight">{node.title}</h3>
+           <Icon size={16} className={`${accentColor} opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 group-hover:text-orange-500 md:w-5 md:h-5 shrink-0`} />
         </div>
         
         <div className="relative z-10 w-full">
-          <div className="text-base sm:text-xl md:text-2xl font-light text-textcolor-light dark:text-textcolor-dark leading-tight tracking-tight group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors break-words" style={{ wordBreak: 'break-word', hyphens: 'auto' }}>
+          <div className="text-base sm:text-xl md:text-2xl font-light text-white leading-tight tracking-tight group-hover:text-orange-400 transition-colors break-words" style={{ wordBreak: 'break-word', hyphens: 'auto' }}>
             {node.highlight}
           </div>
         </div>
         
-        <div className="mt-3 md:mt-6 flex items-center text-[8px] md:text-[9px] font-medium uppercase tracking-widest text-textsec-light dark:text-textsec-dark group-hover:text-orange-600 dark:group-hover:text-orange-500 transition-colors relative z-10">
+        <div className="mt-3 md:mt-6 flex items-center text-[8px] md:text-[9px] font-medium uppercase tracking-widest text-slate-500 group-hover:text-orange-500 transition-colors relative z-10">
             {navT.readMore} <div className="ml-1 md:ml-2 group-hover:translate-x-1 transition-transform">→</div>
         </div>
       </button>
@@ -69,17 +69,17 @@ const SchemaView: React.FC<SchemaViewProps> = ({ lang, docId, onNodeClick }) => 
         <button 
             onClick={() => onNodeClick(t.centerNode.targetPage || 1)} 
             aria-label={`${navT.enterSpace}: ${t.centerNode?.title}`}
-            className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md flex flex-col items-center justify-center shadow-[0_0_50px_rgba(234,88,12,0.15)] dark:shadow-[0_0_50px_rgba(234,88,12,0.3)] z-10 hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden border border-black/10 dark:border-white/10 hover:border-orange-500/50"
+            className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-slate-900/90 backdrop-blur-md flex flex-col items-center justify-center shadow-[0_0_50px_rgba(234,88,12,0.3)] z-10 hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden border border-white/10 hover:border-orange-500/50"
         >
-            <div className="mb-2 md:mb-4 p-3 md:p-4 bg-black/5 dark:bg-slate-800 rounded-full group-hover:bg-orange-500/20 dark:group-hover:bg-orange-900/30 transition-colors">
-                <Activity size={24} className="text-textsec-light dark:text-textsec-dark group-hover:text-orange-600 dark:group-hover:text-orange-500 transition-colors md:w-8 md:h-8" />
+            <div className="mb-2 md:mb-4 p-3 md:p-4 bg-slate-800 rounded-full group-hover:bg-orange-900/30 transition-colors">
+                <Activity size={24} className="text-slate-400 group-hover:text-orange-500 transition-colors md:w-8 md:h-8" />
             </div>
-            <h1 className="text-lg md:text-3xl font-light text-orange-600 dark:text-orange-500 leading-none mb-1 md:mb-2 px-2 tracking-tight uppercase group-hover:scale-105 transition-transform text-center">
+            <h1 className="text-lg md:text-3xl font-light text-orange-500 leading-none mb-1 md:mb-2 px-2 tracking-tight uppercase group-hover:scale-105 transition-transform text-center">
                 {t.centerNode?.title}
             </h1>
-            <p className="text-[8px] md:text-[10px] text-textsec-light dark:text-textsec-dark font-medium uppercase tracking-widest group-hover:text-textcolor-light dark:group-hover:text-textcolor-dark">{t.centerNode?.subtitle}</p>
+            <p className="text-[8px] md:text-[10px] text-slate-400 font-medium uppercase tracking-widest group-hover:text-slate-300">{t.centerNode?.subtitle}</p>
             
-            <div className="mt-2 md:mt-4 text-[8px] md:text-[9px] text-surface-light dark:text-surface-dark font-medium uppercase tracking-widest bg-textcolor-light dark:bg-textcolor-dark px-3 py-1 md:px-4 md:py-2 rounded-full group-hover:bg-orange-600 dark:group-hover:bg-orange-500 group-hover:text-white transition-colors shadow-sm">
+            <div className="mt-2 md:mt-4 text-[8px] md:text-[9px] text-slate-900 font-medium uppercase tracking-widest bg-white px-3 py-1 md:px-4 md:py-2 rounded-full group-hover:bg-orange-500 group-hover:text-white transition-colors shadow-lg">
                 {navT.enterSpace}
             </div>
         </button>

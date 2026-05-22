@@ -1,13 +1,15 @@
 import React from 'react';
-import { ArrowRight, Globe } from 'lucide-react';
+import { ArrowRight, Globe, Moon, Sun } from 'lucide-react';
 import { CONTENT } from '../constants';
 import { Language } from '../types';
 import FeelAgainLogo from './Logo';
 
 interface HeroViewProps {
   lang: Language;
+  isDark: boolean;
   onStart: () => void;
   onToggleLang: () => void;
+  onToggleTheme: () => void;
 }
 
 // SDG 3: Good Health and Well-being (Green)
@@ -97,77 +99,109 @@ const Sdg17Svg = () => (
   </svg>
 );
 
-const SDGTile = ({ title, children }: { title: string; children?: React.ReactNode }) => (
-  <div 
-    className="group relative h-20 w-20 md:h-24 md:w-24 hover:w-64 md:hover:w-72 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden rounded shadow-lg cursor-default hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 bg-white border border-gray-100"
-  >
-     {/* Logo Block - Full Height */}
-     <div className="absolute left-0 top-0 h-20 w-20 md:h-24 md:w-24 z-10 flex items-center justify-center p-0">
-        {children}
-     </div>
-     
-     {/* Text Content (Revealed on Hover) */}
-     <div className="absolute left-20 md:left-24 top-0 h-full w-44 md:w-48 flex items-center pl-3 pr-4 bg-slate-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
-        <span className="text-white text-[10px] md:text-xs font-bold uppercase leading-tight whitespace-normal">
-          {title}
-        </span>
-     </div>
-  </div>
-);
-
-const HeroView: React.FC<HeroViewProps> = ({ lang, onStart, onToggleLang }) => {
+const HeroView: React.FC<HeroViewProps> = ({ lang, isDark, onStart, onToggleLang, onToggleTheme }) => {
   const heroT = CONTENT[lang].hero;
   const navT = CONTENT[lang].appNav;
 
   return (
-    <div className="w-full min-h-[100dvh] hero-bg-canonical relative overflow-x-hidden flex flex-col justify-center">
+    <div className="w-full min-h-[100dvh] hero-bg-canonical relative overflow-hidden flex flex-col pt-10 md:pt-16 pb-8 text-white">
       {/* Top Border Glow */}
       <div className="hero-top-border"></div>
+      
       {/* Bottom Central Glow */}
       <div className="hero-glow"></div>
 
-      {/* Hero Section Content */}
-      <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center mt-12 md:mt-0 text-center px-6 pt-24 pb-12 md:py-24 h-full my-auto">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 md:px-8 flex flex-col justify-between h-full flex-grow py-4">
             
-            <div className="mb-4 md:mb-12 w-32 h-32 md:w-64 md:h-64 flex items-center justify-center">
-                <FeelAgainLogo fill="white" className="w-full h-full drop-shadow-2xl" />
+            {/* TOP AREA: Logo + Toggles */}
+            <div className="flex justify-between items-start w-full shrink-0">
+                <div className="w-14 h-14 md:w-20 md:h-20 flex items-center justify-center">
+                    <FeelAgainLogo forceTheme="dark" className="w-full h-full drop-shadow-2xl" />
+                </div>
+                
+                <div className="flex items-center gap-2">
+                    <button 
+                        onClick={onToggleTheme}
+                        className="p-2 md:px-4 md:py-2 text-[var(--gold-light)] hover:text-white bg-white/5 hover:bg-white/10 rounded-full flex items-center justify-center gap-2 font-display text-xs font-bold transition-all border border-white/10 backdrop-blur-md"
+                        aria-label="Toggle theme"
+                    >
+                        {isDark ? <Sun size={14} /> : <Moon size={14} />}
+                        <span className="hidden sm:inline">{isDark ? 'LIGHT' : 'DARK'}</span>
+                    </button>
+                    
+                    <button 
+                        onClick={onToggleLang}
+                        className="px-4 py-2 md:px-5 md:py-2 text-white/70 hover:text-white bg-white/5 hover:bg-white/10 rounded-full flex items-center gap-2 font-display text-xs font-bold transition-all border border-white/10 backdrop-blur-md"
+                    >
+                        <Globe size={14} className="text-[var(--teal-bright)]" />
+                        <span className="hidden sm:inline">{lang === 'EN' ? 'УКРАЇНСЬКА' : 'ENGLISH'}</span>
+                        <span className="sm:hidden">{lang === 'EN' ? 'UA' : 'EN'}</span>
+                    </button>
+                </div>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display font-medium text-white leading-tight tracking-tighter mb-6 md:mb-8 uppercase drop-shadow-2xl max-w-6xl px-4 whitespace-pre-line">
-              {heroT.title}
-            </h1>
-            
-            <div className="w-16 h-1 bg-[--teal-bright] mb-6 md:mb-8 rounded-full shadow-[0_0_15px_rgba(46,196,182,0.8)]"></div>
-            
-            <button 
-              onClick={onStart}
-              aria-label={navT.startTour}
-              className="group relative px-6 py-3 md:px-8 bg-[--teal-bright] hover:bg-[--teal] text-[--bg-dark] font-display font-bold text-sm uppercase tracking-[0.2em] rounded-full shadow-[0_10px_30px_rgba(46,196,182,0.3)] transition-all hover:-translate-y-1 active:scale-95"
-            >
-              <span className="flex items-center gap-3">
-                {navT.startTour} <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-              </span>
-            </button>
-
-            {/* We remove onToggleLang from here since it will be in the top right permanently! */}
-
-            <div className="mt-12 md:mt-16 flex flex-col items-center gap-4 md:gap-6">
-               <div className="text-[9px] md:text-[10px] font-sans font-bold text-white/50 uppercase tracking-[0.3em] leading-relaxed text-center px-4">
-                 {heroT.footer}
-               </div>
-               <div className="flex gap-3 md:gap-4 pb-10">
-                 <SDGTile title="SDG 3: Good Health and Well-being">
-                   <Sdg3Svg />
-                 </SDGTile>
-                 <SDGTile title="SDG 8: Decent Work and Economic Growth">
-                   <Sdg8Svg />
-                 </SDGTile>
-                 <SDGTile title="SDG 17: Partnerships for the Goals">
-                   <Sdg17Svg />
-                 </SDGTile>
-               </div>
+            {/* MIDDLE AREA: Title */}
+            <div className="flex flex-col items-center justify-center text-center flex-grow py-4 md:py-8 min-h-0">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-medium leading-tight tracking-tighter uppercase drop-shadow-2xl max-w-4xl whitespace-pre-line text-white">
+                  {heroT.title}
+                </h1>
             </div>
-        </div>
+
+            {/* METRIC CARDS GRID */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 lg:gap-6 w-full max-w-4xl mx-auto mb-4 md:mb-8 shrink-0 px-2 lg:px-0">
+                {/* Metric 1 - Red */}
+                <div className="canonical-card metric-card-1 p-3 lg:p-5 rounded-xl flex flex-col items-center text-center justify-center backdrop-blur-sm h-full">
+                    <div className="section-label mb-1 text-[8px] lg:text-[8.5px]">{lang === 'EN' ? 'Affected Population' : 'Уражене населення'}</div>
+                    <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display metric-text-1 font-medium leading-none">62.4M</div>
+                </div>
+
+                {/* Metric 2 - Emerald (DOMINANT) */}
+                <div className="canonical-card metric-card-2 p-4 lg:p-6 rounded-xl flex flex-col items-center text-center justify-center transform md:-translate-y-2 backdrop-blur-sm shadow-[0_10px_40px_rgba(0,212,170,0.15)] relative z-10 border-[rgba(0,210,170,0.4)]">
+                    <div className="section-label mb-1 text-[var(--teal-bright)] text-[8px] lg:text-[8.5px]">{lang === 'EN' ? 'Suicides / 100k' : 'Суїциди / 100тис'}</div>
+                    <div className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-display metric-text-2 font-bold leading-none">12.5</div>
+                </div>
+
+                {/* Metric 3 - Gold */}
+                <div className="canonical-card metric-card-3 p-3 lg:p-5 rounded-xl flex flex-col items-center text-center justify-center backdrop-blur-sm h-full">
+                    <div className="section-label mb-1 text-[8px] lg:text-[8.5px]">{lang === 'EN' ? 'Economic Loss' : 'Економічні втрати'}</div>
+                    <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display metric-text-3 font-medium leading-none">€2.5B</div>
+                </div>
+            </div>
+            
+            {/* BOTTOM AREA: CTA + Footer */}
+            <div className="flex flex-col md:flex-row items-center justify-between w-full mt-auto shrink-0 gap-4 lg:gap-6 pb-2">
+                
+                {/* Visual Balance Left (Empty) */}
+                <div className="w-32 hidden md:block shrink-0"></div>
+
+                <div className="flex flex-col items-center text-center flex-grow">
+                    <button 
+                      onClick={onStart}
+                      aria-label={navT.startTour}
+                      className="group relative px-6 py-3 lg:px-8 bg-[var(--teal-bright)] hover:bg-[var(--teal)] text-[var(--bg-dark)] font-display font-bold text-xs uppercase tracking-[0.2em] rounded-full shadow-[0_10px_30px_rgba(46,196,182,0.3)] transition-all hover:-translate-y-0.5 active:scale-95 mb-4 lg:mb-6"
+                    >
+                      <span className="flex items-center gap-3">
+                        {navT.startTour} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </button>
+                    
+                    <div className="text-[9px] md:text-[10px] font-bold text-white/40 md:text-[var(--text-sec-dark)] uppercase tracking-[0.3em] font-sans mx-auto max-w-sm lg:max-w-md w-full">
+                        {heroT.footer}
+                    </div>
+                </div>
+
+                {/* SDG Targets Right */}
+                <div className="hidden md:flex flex-col items-end shrink-0 w-32">
+                   <div className="text-[var(--gold-light)] font-display text-[9px] tracking-widest font-bold opacity-80 mb-2">SDG TARGETS</div>
+                   <div className="flex gap-1.5 opacity-90">
+                       <div className="w-7 h-7 rounded-sm shadow-md overflow-hidden hover:opacity-100 transition-opacity"><Sdg3Svg /></div>
+                       <div className="w-7 h-7 rounded-sm shadow-md overflow-hidden hover:opacity-100 transition-opacity"><Sdg8Svg /></div>
+                       <div className="w-7 h-7 rounded-sm shadow-md overflow-hidden hover:opacity-100 transition-opacity"><Sdg17Svg /></div>
+                   </div>
+                </div>
+            </div>
+
+      </div>
     </div>
   );
 };

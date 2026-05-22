@@ -103,7 +103,7 @@ export const CONTENT: Dictionary = {
       viewProblem: "Analysis",
       close: "Close",
       strategyLabel: "Strategy",
-      warRoom: "War Room",
+      warRoom: "Operational Room",
       enterSpace: "View",
       contact: "Contact HQ"
     },
@@ -192,9 +192,9 @@ export const CONTENT: Dictionary = {
         {
           id: 5,
           title: "The Budget Inversion",
-          desc: "Ukraine's mental health budget for 2026 is ₴6.47 billion. Of this, 89% goes to inpatient psychiatric care (bed-based Soviet-era institutions) while 64-71% of patients seek outpatient care. The budget ratio of inpatient to outpatient spending is 8.1:1 — meaning the system spends 8 times more on the delivery model that serves the minority of patients.",
+          desc: "Ukraine's mental health budget for 2026 is ₴6.47 billion. Of this, 55% goes to inpatient psychiatric care (bed-based Soviet-era institutions) while 64-71% of patients seek outpatient care. The budget ratio of inpatient to outpatient spending is 8.1:1 — meaning the system spends 8 times more on the delivery model that serves the minority of patients.",
           stats: [
-            { value: "89%", label: "Inpatient spend", ref: "Budget 2026" },
+            { value: "55%", label: "Inpatient spend", ref: "Budget 2026" },
             { value: "71%", label: "Outpatient need", ref: "Calculated" },
             { value: "8.1:1", label: "Inversion ratio", ref: "Calculated" }
           ]
@@ -343,8 +343,8 @@ export const CONTENT: Dictionary = {
       items: [] 
     },
     charts: {
-      shadowVsCluster: "The Funnel of Failure: 117k Trained vs 1k Active",
-      fundingGap: "Budget Mismatch: 89% Inpatient vs 70% Outpatient Need",
+      shadowVsCluster: "The Funnel of Failure: 154k Trained vs 1k Active",
+      fundingGap: "Budget Mismatch: 55% Inpatient vs 70% Outpatient Need",
       techStack: "Infrastructure Efficiency",
       adminCost: "Operational Friction vs Digital Efficiency",
       donorDashboard: "Live Humanitarian Control Center",
@@ -376,10 +376,10 @@ export const CONTENT: Dictionary = {
             {
               id: "gap",
               title: "The Paradox",
-              highlight: "117k vs 1k",
+              highlight: "154k vs 1k",
               icon: "Users",
               targetPage: 1, 
-              points: ["117,000 Certificates Issued", "Only 1,000 Clinics Active", "Efficiency < 1.5%"]
+              points: ["154,000 Certificates Issued", "Only 1,000 Clinics Active", "Efficiency < 1.0%"]
             },
             {
               id: "scale",
@@ -395,7 +395,7 @@ export const CONTENT: Dictionary = {
               highlight: "Inpatient Spend",
               icon: "TrendingDown",
               targetPage: 3, 
-              points: ["89% Budget to Inpatient", "70% Need Outpatient", "Allocative Inefficiency"]
+              points: ["55% Budget to Inpatient", "70% Need Outpatient", "Allocative Inefficiency"]
             },
             {
               id: "integrity",
@@ -411,10 +411,10 @@ export const CONTENT: Dictionary = {
           pages: [
             {
               id: 1,
-              title: "The Funnel of Failure: 117k Trained vs 1k Active",
+              title: "The Funnel of Failure: 154k Trained vs 1k Active",
               subtitle: "The Paradox of Certification without Activation.",
-              body: "While <b>117,000 certificates</b> have been issued for mental health training, only <b>1,000 clinics</b> are actively providing services within the state system. This represents an efficiency of less than 1.5%. <br/><br/>The current model focuses on training (input) rather than service delivery (output). We are creating a 'trained' workforce that remains inactive or invisible to the state monitoring system.",
-              bullets: ["117,000 Certificates Issued.", "1,000 Active Clinics.", "Efficiency < 1.5%."],
+              body: "While <b>154,000 certificates</b> have been issued for mental health training, only <b>1,000 clinics</b> are actively providing services within the state system. This represents an efficiency of less than 1.5%. <br/><br/>The current model focuses on training (input) rather than service delivery (output). We are creating a 'trained' workforce that remains inactive or invisible to the state monitoring system.",
+              bullets: ["154,000 Certificates Issued.", "1,000 Active Clinics.", "Efficiency < 1.5%."],
               chartId: "shadowVsCluster"
             },
             {
@@ -429,8 +429,8 @@ export const CONTENT: Dictionary = {
               id: 3,
               title: "Paradox: Walls vs. Patients",
               subtitle: "Allocative Inefficiency of the Budget.",
-              body: "<b>89% of the state mental health budget</b> is spent on inpatient care (maintaining beds and buildings). Yet, <b>70% of patients</b> require outpatient care.<br/><br/>Money is following the infrastructure, not the patient. This blocks the development of mobile teams and community centers. We are funding walls while patients are left outside.",
-              bullets: ["89% Inpatient Spend.", "70% Outpatient Need.", "Structural Mismatch."],
+              body: "<b>55% of the state mental health budget</b> is spent on inpatient care (maintaining beds and buildings). Yet, <b>70% of patients</b> require outpatient care.<br/><br/>Money is following the infrastructure, not the patient. This blocks the development of mobile teams and community centers. We are funding walls while patients are left outside.",
+              bullets: ["55% Inpatient Spend.", "70% Outpatient Need.", "Structural Mismatch."],
               chartId: "fundingGap"
             },
             {
@@ -742,7 +742,7 @@ export const CONTENT: Dictionary = {
       viewProblem: "Аналіз",
       close: "Закрити",
       strategyLabel: "Стратегія",
-      warRoom: "War Room",
+      warRoom: "Операційна Кімната",
       enterSpace: "Переглянути",
       contact: "Зв'язок"
     },
@@ -831,9 +831,9 @@ export const CONTENT: Dictionary = {
         {
           id: 5,
           title: "Бюджетна інверсія",
-          desc: "Бюджет психічного здоров'я України на 2026 рік — ₴6,47 мільярда. З цього 89% іде на стаціонарну психіатричну допомогу (ліжкові заклади радянського типу), тоді як 64-71% пацієнтів звертаються за амбулаторною допомогою. Бюджетне співвідношення стаціонарних та амбулаторних витрат — 8,1:1 — тобто система витрачає у 8 разів більше на модель надання послуг, що обслуговує меншість пацієнтів.",
+          desc: "Бюджет психічного здоров'я України на 2026 рік — ₴6,47 мільярда. З цього 55% іде на стаціонарну психіатричну допомогу (ліжкові заклади радянського типу), тоді як 64-71% пацієнтів звертаються за амбулаторною допомогою. Бюджетне співвідношення стаціонарних та амбулаторних витрат — 8,1:1 — тобто система витрачає у 8 разів більше на модель надання послуг, що обслуговує меншість пацієнтів.",
           stats: [
-            { value: "89%", label: "Витрати на стаціонар", ref: "Бюджет 2026" },
+            { value: "55%", label: "Витрати на стаціонар", ref: "Бюджет 2026" },
             { value: "71%", label: "Потреба в амбулаторії", ref: "Розрахунок" },
             { value: "8.1:1", label: "Співвідношення інверсії", ref: "Розрахунок" }
           ]
@@ -872,6 +872,47 @@ export const CONTENT: Dictionary = {
         { label: "Неефективність", sublabel: "Бюджету в стаціонарах (Потреба: 71% амбулаторно)" },
         { label: "Клінічна Потреба", sublabel: "3 900 000 українців потребують допомоги (Lancet 2023)" }
       ],
+      mindMap: {
+        title: "Що зміниться з FeeL Again",
+        hint: "Натисніть на вузол, щоб побачити вплив",
+        nodes: {
+          vision: {
+            title: "Бачення",
+            desc: "Нова м'яка сила - створення шаблону майбутньої допомоги: прозорої, ефективної цифрової моделі, яку можна експортувати в інші зони конфлікту.",
+            impact: "Стратегічний Експорт"
+          },
+          speed: {
+            title: "Швидкість",
+            desc: "Співфінансування: 40% НСЗУ / 40% Донор / 20% Місцеві бюджети. P2P платежі, що оминають бюрократію.",
+            impact: "Миттєва Допомога"
+          },
+          cost: {
+            title: "Вартість",
+            desc: "Зниження адміністративних витрат на 40%.",
+            impact: "Ефективність"
+          },
+          quality: {
+            title: "Якість",
+            desc: "Клінічна верифікація кожної сесії.",
+            impact: "Точність"
+          },
+          trust: {
+            title: "Довіра",
+            desc: "Мультиплікатор: 1 грн бюджету залучає 3 грн зовні. Прозорість для донорів через реєстр.",
+            impact: "Підзвітність"
+          },
+          dignity: {
+            title: "Гідність",
+            desc: "Приватний, безпечний доступ для кожного громадянина.",
+            impact: "Розширення Можливостей"
+          },
+          data: {
+            title: "Дані",
+            desc: "Якір eHealth: Медичні дані залишаються в FHIR, Фінтех-шина лише ініціює платіж.",
+            impact: "Суверенітет"
+          }
+        }
+      },
       consortiumRoles: CONSORTIUM_ROLES_UA,
       metrics: {
         title: "Аналіз Ризиків Системи",
@@ -941,8 +982,8 @@ export const CONTENT: Dictionary = {
       items: []
     },
     charts: {
-      shadowVsCluster: "Воронка Невдачі: 117k Навчених vs 1k Активних",
-      fundingGap: "Бюджетний Дисбаланс: 89% Стаціонар vs 70% Амбулаторна Потреба",
+      shadowVsCluster: "Воронка Невдачі: 154k Навчених vs 1k Активних",
+      fundingGap: "Бюджетний Дисбаланс: 55% Стаціонар vs 70% Амбулаторна Потреба",
       techStack: "Ефективність Інфраструктури",
       adminCost: "Операційне Тертя vs Цифрова Ефективність",
       donorDashboard: "Живий Центр Управління Гуманітарною Допомогою",
@@ -974,10 +1015,10 @@ export const CONTENT: Dictionary = {
             {
               id: "gap",
               title: "Парадокс",
-              highlight: "117 тис vs 1 тис",
+              highlight: "154 тис vs 1 тис",
               icon: "Users",
               targetPage: 1,
-              points: ["117,000 Виданих Сертифікатів", "Лише 1,000 Активних Закладів", "Ефективність < 1.5%"]
+              points: ["154,000 Виданих Сертифікатів", "Лише 1,000 Активних Закладів", "Ефективність < 1.0%"]
             },
             {
               id: "scale",
@@ -990,10 +1031,10 @@ export const CONTENT: Dictionary = {
             {
               id: "cost",
               title: "Бюджетна Стіна",
-              highlight: "89% Витрат на диспансери",
+              highlight: "55% Витрат на диспансери",
               icon: "TrendingDown",
               targetPage: 3,
-              points: ["89% Бюджету на Стаціонар", "70% Потребують Амбулаторного", "Алокаційна Неефективність"]
+              points: ["55% Бюджету на Стаціонар", "70% Потребують Амбулаторного", "Алокаційна Неефективність"]
             },
             {
               id: "integrity",
@@ -1009,10 +1050,10 @@ export const CONTENT: Dictionary = {
           pages: [
             {
               id: 1,
-              title: "Воронка Провалу: 117 тис Навчених vs 1 тис Активних",
+              title: "Воронка Провалу: 154 тис Навчених vs 1 тис Активних",
               subtitle: "Парадокс сертифікації без активації.",
               body: "Поточна модель зосереджена на процессних результиатах (outputs) а не на клінічних (outcomes) зниження симптомів, завершена реабілітація, чи економічних: повернення до соціального та економічного життя, вплив на ВВП вимірах результатів. Створюючі 'навчену' робочу силу, яка залишається неактивною або невидимою для державної системи моніторингу таких результатів сягнути неможливо.",
-              bullets: ["117,000 Виданих Сертифікатів.", "1,000 Активних Закладів.", "Ефективність < 1.5%."],
+              bullets: ["154,000 Виданих Сертифікатів.", "1,000 Активних Закладів.", "Ефективність < 1.5%."],
               chartId: "shadowVsCluster"
             },
             {
@@ -1027,8 +1068,8 @@ export const CONTENT: Dictionary = {
               id: 3,
               title: "Парадокс: Стіни проти Пацієнтів",
               subtitle: "Алокаційна Неефективність Бюджету.",
-              body: "<b>89% державного бюджету на ментальне здоров'я</b> витрачається на стаціонарне лікування (утримання ліжок та будівель). Проте, <b>70% пацієнтів</b> потребують амбулаторної допомоги.<br/><br/>Гроші йдуть за інфраструктурою, а не за пацієнтом. Це блокує розвиток мобільних бригад та громадських центрів. Ми фінансуємо стіни, поки пацієнти залишаються зовні.",
-              bullets: ["89% Витрат на Стаціонар.", "70% Потреба в Амбулаторному.", "Структурна Невідповідність."],
+              body: "<b>55% державного бюджету на ментальне здоров'я</b> витрачається на стаціонарне лікування (утримання ліжок та будівель). Проте, <b>70% пацієнтів</b> потребують амбулаторної допомоги.<br/><br/>Гроші йдуть за інфраструктурою, а не за пацієнтом. Це блокує розвиток мобільних бригад та громадських центрів. Ми фінансуємо стіни, поки пацієнти залишаються зовні.",
+              bullets: ["55% Витрат на Стаціонар.", "70% Потреба в Амбулаторному.", "Структурна Невідповідність."],
               chartId: "fundingGap"
             },
             {

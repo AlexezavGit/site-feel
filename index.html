@@ -23,7 +23,6 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
-        darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
@@ -31,15 +30,6 @@
               display: ['"Space Grotesk"', 'sans-serif'],
             },
             colors: {
-              gold: { DEFAULT: '#8b6914', light: '#c8a45c' },
-              teal: { DEFAULT: '#1a8a7e', bright: '#2ec4b6' },
-              red: { DEFAULT: '#b5331f', bright: '#e05545' },
-              green: '#2a7a50',
-              navy: '#0a1628',
-              bg: { light: '#f2f0eb', dark: '#080f1c' },
-              surface: { light: '#ffffff', dark: '#0f1826' },
-              textcolor: { light: '#1f2430', dark: '#c8cdd8' },
-              textsec: { light: '#5a6375', dark: '#6e7a90' },
               primary: '#000000', 
               'bloomberg-orange': '#ea580c',
               'bloomberg-gold': '#A37E2C', 
@@ -98,6 +88,8 @@
 
       body {
         font-family: 'DM Sans', sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text-dark);
         overflow-x: hidden;
       }
 
