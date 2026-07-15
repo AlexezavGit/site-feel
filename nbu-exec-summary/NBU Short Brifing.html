@@ -64,8 +64,10 @@ body::before{
 section{position:relative;z-index:1;padding:72px 48px;}
 section+section{border-top:1px solid var(--bd);}
 .sec-label{
-  font-family:'Space Mono',monospace;font-size:9px;
-  letter-spacing:.18em;color:var(--t3);text-transform:uppercase;margin-bottom:28px;
+  font-family:'Space Mono',monospace;font-size:10px;
+  letter-spacing:.15em;color:var(--t1);text-transform:uppercase;margin-bottom:28px;
+  background:var(--bg2);border:1px solid var(--bd);padding:6px 14px;border-radius:4px;
+  display:inline-block;
 }
 h1.headline{
   font-family:'Barlow Condensed',sans-serif;
@@ -85,9 +87,9 @@ h2.section-h{
 
 /* BLOOMBERG METRICS ROW */
 .metrics-row{
-  display:grid;grid-template-columns:repeat(3,1fr);
+  display:grid;grid-template-columns:repeat(4,1fr);
   gap:1px;background:var(--bd);border:1px solid var(--bd);
-  max-width:920px;margin-bottom:40px;
+  max-width:1200px;margin-bottom:40px;
 }
 .mc{background:var(--bg1);padding:24px 28px;position:relative;cursor:default;}
 .mc-arrow{
@@ -158,7 +160,7 @@ h2.section-h{
 }
 
 /* panel */
-.fpanel{padding:24px;background:var(--bg1);border:1px solid var(--bd);position:sticky;top:50px;}
+.fpanel{padding:24px;background:var(--bg1);border:1px solid var(--bd);}
 .fpanel h3{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:600;color:var(--gl);margin-bottom:20px;}
 .pm{padding:14px 0;border-bottom:1px solid var(--bg2);}
 .pm:last-child{border-bottom:none;}
@@ -204,17 +206,17 @@ h2.section-h{
   display:grid;grid-template-columns:repeat(3,1fr);
   gap:1px;background:var(--bd);border:1px solid var(--bd);margin:32px 0;
 }
-.nc{background:var(--bg2);padding:28px 24px;}
-.nc-num{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;color:var(--gl);line-height:1;margin-bottom:12px;}
-.nc h4{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:var(--t1);margin-bottom:10px;}
-.nc p{font-size:12px;color:var(--t2);line-height:1.65;}
+.nc{background:var(--bg2);padding:32px 28px;}
+.nc-num{font-family:'Barlow Condensed',sans-serif;font-size:60px;font-weight:900;color:var(--gl);line-height:1;margin-bottom:14px;}
+.nc h4{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;color:var(--t1);margin-bottom:12px;}
+.nc p{font-size:14px;color:var(--t2);line-height:1.7;}
 
 /* CTA */
 .cta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);}
 .cta-btn{background:var(--bg1);padding:20px 22px;text-decoration:none;display:block;transition:background .2s;}
 .cta-btn:hover{background:var(--bg3);}
-.cta-type{font-family:'Space Mono',monospace;font-size:8px;color:var(--t3);letter-spacing:.14em;display:block;margin-bottom:8px;}
-.cta-lbl{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:600;color:var(--gl);}
+.cta-type{font-family:'Space Mono',monospace;font-size:10px;color:var(--t3);letter-spacing:.14em;display:block;margin-bottom:8px;}
+.cta-lbl{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:600;color:var(--gl);}
 
 /* TIMELINE */
 .tl{display:flex;flex-direction:column;max-width:680px;position:relative;margin-top:24px;}
@@ -257,6 +259,7 @@ h2.section-h{
 @media(min-width:768px){section,.sbar{padding-right:62px;}}
 @media(max-width:767px){
   .metrics-row,.sol-grid,.nbu-grid,.cta-row{grid-template-columns:1fr;}
+  .metrics-row{grid-template-columns:repeat(2,1fr);}
   .funnel-wrap{grid-template-columns:1fr;}
   .bflow{flex-direction:column;}
   .sidebar{display:none;}
@@ -344,6 +347,24 @@ HEAL Deadline: 23.12.2026 · THRIVE trigger: запис у НСЗУ/ЄСОЗ
 ⚠️ $1.8B — загальний обсяг MHPSS витрат України за 2025 рік (всі джерела), НЕ є DLI. Виправлено 2026-07-15.</div>
     </div>
 
+    <div class="mc">
+      <span class="mc-arrow up">≡ <span class="uk">УСІ ДЖЕРЕЛА · MHPSS 2025</span><span class="en">ALL SOURCES · MHPSS 2025</span></span>
+      <div class="mc-value">$1.8<span class="u">B</span></div>
+      <div class="mc-label"><span class="uk">загальний обсяг MHPSS витрат України 2025 (бюджет + донори + приватні)</span><span class="en">total Ukraine MHPSS spending 2025 (budget + donors + private)</span></div>
+      <div class="mc-src">MHPSS Cluster Ukraine 2025 + WB ISR #6 · Верифіковано</div>
+      <div class="mc-tip">ДЖЕРЕЛА: MHPSS Cluster Ukraine фінансовий трекінг 2025 · WB ISR #6 кошторис
+СКЛАД: держбюджет + світові банки + гуманітарні донори + приватні витрати
+ПРИЗНАЧЕННЯ: зарплати лікарів, ліки, реабілітація, соціальна підтримка
+→ Адресований залишок FEEL Again: $175.1M (HEAL Comp.4 $41.1M + THRIVE $134M)</div>
+    </div>
+
+  </div>
+
+  <div style="font-family:'Space Mono',monospace;font-size:8px;color:var(--t3);line-height:1.7;margin-bottom:24px;border:1px solid var(--bd);background:var(--bg1);padding:12px 16px;max-width:920px;">
+    <span class="uk"><strong style="color:var(--t2);">ДЖЕРЕЛА ЧОТИРЬОХ ПОКАЗНИКІВ:</strong><br>
+    <strong>3.9M</strong> — КМУ/ВООЗ 2023, prevalence-based оцінка · <strong>$13.94B/рік</strong> — $170B (IMF 2025) × 8.2% (WB RDNA3) · <strong>$175.1M</strong> — HEAL Comp.4 ($41.1M, WB White Paper §4) + THRIVE ($134M, WB ISR #6) · <strong>$1.8B</strong> — MHPSS Cluster Ukraine 2025, всі джерела фінансування MHPSS</span>
+    <span class="en"><strong style="color:var(--t2);">FOUR METRICS — SOURCE BREAKDOWN:</strong><br>
+    <strong>3.9M</strong> — CMU/WHO 2023, prevalence-based estimate · <strong>$13.94B/yr</strong> — $170B (IMF 2025) × 8.2% (WB RDNA3) · <strong>$175.1M</strong> — HEAL Comp.4 ($41.1M, WB White Paper §4) + THRIVE ($134M, WB ISR #6) · <strong>$1.8B</strong> — MHPSS Cluster Ukraine 2025, all MHPSS funding sources</span>
   </div>
 
   <p style="font-size:13px;color:var(--t2);max-width:680px;line-height:1.65;">
@@ -362,8 +383,8 @@ HEAL Deadline: 23.12.2026 · THRIVE trigger: запис у НСЗУ/ЄСОЗ
   <div class="sec-label">§2 / <span class="uk">ЦІНА БЕЗДІЯЛЬНОСТІ</span><span class="en">COST OF INACTION</span></div>
 
   <h2 class="section-h">
-    <span class="uk">Кожен непокритий випадок стає витратою бюджету — не сьогодні, але через 12–18 місяців.</span>
-    <span class="en">Every unserved case becomes a budget cost — not today, but in 12–18 months.</span>
+    <span class="uk">Кожен не діагностований випадок, через 12–18 міс. стає бюджетними витратами.</span>
+    <span class="en">Every undiagnosed case becomes a budget expenditure in 12–18 months.</span>
   </h2>
 
   <div class="funnel-wrap">
@@ -381,15 +402,6 @@ HEAL Deadline: 23.12.2026 · THRIVE trigger: запис у НСЗУ/ЄСОЗ
         </div>
 
         <div class="fb" style="padding-left:20px;">
-          <div class="fb-fill" style="width:6.7%;min-width:6px;background:var(--gl);opacity:.8;"></div>
-          <span class="fb-label">
-            <span class="uk">ЄСОЗ capacity:</span><span class="en">ЄСОЗ capacity:</span>
-            <span class="n"> 260,000</span>
-            <span class="pct">(6.7%) · Explanatory Note §1</span>
-          </span>
-        </div>
-
-        <div class="fb" style="padding-left:20px;">
           <div class="fb-fill" style="width:12.8%;min-width:6px;background:var(--gl);opacity:.5;"></div>
           <span class="fb-label">
             <span class="uk">Гуманітарний сектор:</span><span class="en">Humanitarian sector:</span>
@@ -401,10 +413,10 @@ HEAL Deadline: 23.12.2026 · THRIVE trigger: запис у НСЗУ/ЄСОЗ
         <div class="fb">
           <div class="fb-fill" style="width:100%;background:transparent;border:1px dashed rgba(208,106,32,.4);">
             <span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;color:var(--t2);">
-              <span class="uk">Потрібно (WHO low-intensity 12–20 сесій/особа):</span>
-              <span class="en">Required (WHO low-intensity 12–20 ses/person):</span>
-              <span style="color:var(--svc);font-weight:700;"> 50,000,000</span>
-              <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--t3);"> сесій/рік</span>
+              <span class="uk">Потрібно (WHO 5-12-20):</span>
+              <span class="en">Required (WHO 5-12-20):</span>
+              <span style="color:var(--svc);font-weight:700;"> 19.5–78M</span>
+              <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--t3);"> сесій</span>
             </span>
           </div>
         </div>
@@ -412,8 +424,8 @@ HEAL Deadline: 23.12.2026 · THRIVE trigger: запис у НСЗУ/ЄСОЗ
         <div class="fb">
           <div class="fb-fill" style="width:88.5%;background:var(--svc);opacity:.75;">
             <span style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--bg0);white-space:nowrap;">
-              <span class="uk">ДЕФІЦИТ: ~44.74M сесій/рік</span>
-              <span class="en">GAP: ~44.74M sessions/yr</span>
+              <span class="uk">ДЕФІЦИТ: ~14.5–73M сесій</span>
+              <span class="en">GAP: ~14.5–73M sessions</span>
             </span>
           </div>
         </div>
@@ -437,7 +449,8 @@ HEAL Deadline: 23.12.2026 · THRIVE trigger: запис у НСЗУ/ЄСОЗ
             <span class="uk">Соматизація</span><span class="en">Somatization</span>
           </div>
           <div class="cn-sub">
-            <span class="uk">фізичні симптоми</span><span class="en">physical symptoms</span>
+            <span class="uk">фізичні симптоми</span><span class="en">physical symptoms</span><br>
+            +<strong style="color:var(--svc);">$1,200</strong> <span class="uk">/особу доп. витрати ОЗ</span><span class="en">/person extra healthcare</span>
           </div>
         </div>
         <div class="c-arr">→</div>
@@ -463,12 +476,11 @@ HEAL Deadline: 23.12.2026 · THRIVE trigger: запис у НСЗУ/ЄСОЗ
       <!-- 8 CHANNELS -->
       <div style="margin-top:36px;border-top:1px solid var(--bd);padding-top:24px;">
         <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:.1em;margin-bottom:14px;">
-          <span class="uk">НАЯВНИЙ РЕСУРС — 8 КАНАЛІВ FEEL Again Platform</span>
-          <span class="en">AVAILABLE SUPPLY — 8 CHANNELS FEEL Again Platform</span>
+          <span class="uk">НАЯВНИЙ РЕСУРС — 7 КАНАЛІВ FEEL Again Platform</span>
+          <span class="en">AVAILABLE SUPPLY — 7 CHANNELS FEEL Again Platform</span>
         </div>
         <div class="stags">
           <div class="stag"><span class="stag-val">1,486</span><span class="stag-name">НСЗУ ФОП<br>L3_DAT_03 ✓</span></div>
-          <div class="stag"><span class="stag-val">4,130</span><span class="stag-name">Гуман. пул<br>L3_DAT_04 ✓</span></div>
           <div class="stag"><span class="stag-val">3,300</span><span class="stag-name">Приватна практ.<br>⚠️ Assumption</span></div>
           <div class="stag"><span class="stag-val">3,500</span><span class="stag-name">ЗСУ пул<br>L3_DAT_05 ⚠️</span></div>
           <div class="stag"><span class="stag-val">4,000</span><span class="stag-name">УПРА психіатри<br>L3_DAT_06 ✓</span></div>
@@ -477,10 +489,10 @@ HEAL Deadline: 23.12.2026 · THRIVE trigger: запис у НСЗУ/ЄСОЗ
           <div class="stag"><span class="stag-val">mhGAP</span><span class="stag-name">Сімейні лікарі<br>НСЗУ інтеграція</span></div>
         </div>
         <div class="stag-total">
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:700;color:var(--gl);">16,416</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:700;color:var(--gl);">13,806</span>
           <div>
             <span style="font-size:13px;color:var(--t2);"><span class="uk">фахівців на платформі</span><span class="en">specialists on platform</span></span>
-            <div style="font-family:'Space Mono',monospace;font-size:8px;color:var(--t3);margin-top:4px;">L3_DAT_08: =1486+4130+3300+3500+4000 (Calculated)</div>
+            <div style="font-family:'Space Mono',monospace;font-size:8px;color:var(--t3);margin-top:4px;">=1486+3300+3500+4000+1500+20 (без гуман. пулу — даних ActivityInfo OCHA)</div>
           </div>
         </div>
       </div>
@@ -493,7 +505,7 @@ HEAL Deadline: 23.12.2026 · THRIVE trigger: запис у НСЗУ/ЄСОЗ
       <div class="pm">
         <div class="pm-val">€260M</div>
         <div class="pm-lbl"><span class="uk">тіньовий ринок/рік</span><span class="en">shadow market/yr</span></div>
-        <div class="pm-form">Explanatory Note §1<br>5–8K незареєстрованих практиків<br>⚠️ CONFLICT: L3_DAT_12=$380M (НБУ)<br>↳ L3_DAT_12 canonical per L3 protocol</div>
+        <div class="pm-form">Explanatory Note §1<br>5–8K незареєстрованих практиків</div>
       </div>
 
       <div class="pm">
@@ -537,8 +549,12 @@ HEAL Deadline: 23.12.2026 · THRIVE trigger: запис у НСЗУ/ЄСОЗ
       <div class="sc-num">01 / DIGITAL BUS</div>
       <h3>FEEL API Bus</h3>
       <p>
-        <span class="uk">HL7 FHIR R4. KoBoToolbox / CommCare → Трембіта → ЄСОЗ → НСЗУ. 624K+ послуг стають видимими. Triple Verification Oracle: 20% (Дія.ID) → 30% → 50% (PCL-5/PHQ-9). Кожна транзакція = верифікований outcome + оплата фахівцю.</span>
-        <span class="en">HL7 FHIR R4. KoBoToolbox / CommCare → Trembita → ЄСОЗ → НСЗУ. 624K+ services become visible. Triple Verification Oracle: 20% (Diia ID) → 30% → 50% (PCL-5/PHQ-9). Each transaction = verified outcome + specialist payment.</span>
+        <span class="uk">HL7 FHIR R4. KoBoToolbox / CommCare → Трембіта → ЄСОЗ → НСЗУ.<br>
+        624K+ послуг стають видимими.<br>
+        Triple Verification Oracle: 20% (Дія.ID) → 30% → 50% (PCL-5/PHQ-9) = верифікований клінічний результат.</span>
+        <span class="en">HL7 FHIR R4. KoBoToolbox / CommCare → Trembita → ЄСОЗ → НСЗУ.<br>
+        624K+ services become visible.<br>
+        Triple Verification Oracle: 20% (Diia ID) → 30% → 50% (PCL-5/PHQ-9) = verified clinical outcome.</span>
       </p>
       <div class="sc-unlock">
         <div class="uval">$41.1M</div>
@@ -685,12 +701,7 @@ HEAL Deadline: 23.12.2026 · THRIVE trigger: запис у НСЗУ/ЄСОЗ
       <span class="wc-lbl uk">днів до закриття HEAL P180245 (23.12.2026)</span>
       <span class="wc-lbl en">days until HEAL P180245 closes (23.12.2026)</span>
     </div>
-    <div style="max-width:420px;padding-top:8px;">
-      <p style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:400;color:var(--t2);line-height:1.35;">
-        <span class="uk">Якщо middleware не стане eligible витратою — $41.1M нерозподілених коштів не будуть розподілені. Без Digital Bus — THRIVE DLI залишаються приторможеними.</span>
-        <span class="en">If middleware is not classified as eligible expenditure — $41.1M in undisbursed funds will not be disbursed. Without Digital Bus — THRIVE DLI remains stalled.</span>
-      </p>
-    </div>
+
   </div>
 
   <div class="tl">
@@ -738,13 +749,15 @@ HEAL Deadline: 23.12.2026 · THRIVE trigger: запис у НСЗУ/ЄСОЗ
     </div>
   </div>
 
-  <div class="fn">
-    <span class="uk">Підготовлено: Alex Ezav, Programme Architect · alexezav@gmail.com · ГО «Фундація Відкрите суспільство» з 2001 р.<br>
-Верифіковані дані: WB ISR #6 (Sep 2025) · Lancet 2023 · Lancet Psychiatry Commission (Oct 2024) · WHO SIMH 2024 · IMF WEO 2025 · WB RDNA3 2024 · MHPSS Cluster Ukraine 2025<br>
-L3 Canonical Data Set v0.6 · заблоковано 2026-06-05 · зміна тільки через conflict protocol</span>
-    <span class="en">Prepared by: Alex Ezav, Programme Architect · alexezav@gmail.com · NGO "Open Society Foundation" since 2001<br>
-Verified data: WB ISR #6 (Sep 2025) · Lancet 2023 · Lancet Psychiatry Commission (Oct 2024) · WHO SIMH 2024 · IMF WEO 2025 · WB RDNA3 2024 · MHPSS Cluster Ukraine 2025<br>
-L3 Canonical Data Set v0.6 · locked 2026-06-05 · change only via conflict protocol</span>
+  <div class="fn" style="color:var(--t1);">
+    <span class="uk"><strong>Підготовлено:</strong> Фундація Відкрите Суспільство · Програма FEEL Again<br>
+<strong>Дані:</strong> НБУ · НСЗУ · ВООЗ · WB ISR #6 · ActivityInfo 4,130 · Закон №4223-IX · Закон №12030<br>
+Верифіковані дані за протоколом L3 (2+ перехресних джерела). Інформаційний документ.<br>
+<span style="background:var(--svc);color:var(--bg0);padding:2px 8px;font-weight:700;">КОНФІДЕНЦІЙНО</span></span>
+    <span class="en"><strong>Prepared by:</strong> Open Society Foundation · FEEL Again Programme<br>
+<strong>Data:</strong> NBU · NSZU · WHO · WB ISR #6 · ActivityInfo 4,130 · Law No.4223-IX · Law No.12030<br>
+Verified data under L3 protocol (2+ cross-referenced sources). Information document.<br>
+<span style="background:var(--svc);color:var(--bg0);padding:2px 8px;font-weight:700;">CONFIDENTIAL</span></span>
   </div>
 </section>
 
