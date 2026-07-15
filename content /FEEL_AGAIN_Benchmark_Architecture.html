@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FEEL Again — Бенчмарк документального пакету</title>
+<style>
+:root { --primary: #1B4F72; --secondary: #2E86C1; --green: #27ae60; --yellow: #f39c12; --red: #e74c3c; --bg: #f8f9fa; }
+body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 1400px; margin: 0 auto; padding: 20px; background: var(--bg); }
+h1 { color: var(--primary); text-align: center; font-size: 1.8em; border-bottom: 3px solid var(--secondary); padding-bottom: 15px; }
+h2 { color: var(--primary); font-size: 1.4em; margin-top: 40px; border-left: 4px solid var(--secondary); padding-left: 12px; }
+h3 { color: var(--secondary); font-size: 1.15em; margin-top: 25px; }
+.summary-box { background: white; border: 2px solid var(--primary); border-radius: 10px; padding: 25px; margin: 20px 0; }
+.summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 15px 0; }
+.stat-card { background: white; border-radius: 8px; padding: 15px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.stat-card .number { font-size: 2.2em; font-weight: bold; }
+.stat-card .label { font-size: 0.9em; color: #666; }
+.green .number { color: var(--green); }
+.yellow .number { color: var(--yellow); }
+.red .number { color: var(--red); }
+table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9em; }
+th { background: var(--primary); color: white; padding: 10px 8px; text-align: left; font-weight: 600; }
+td { padding: 8px; border-bottom: 1px solid #ddd; vertical-align: top; }
+tr:hover { background: #e8f4f8; }
+.status-have { background: #d4edda; color: #155724; padding: 2px 8px; border-radius: 12px; font-size: 0.85em; white-space: nowrap; }
+.status-partial { background: #fff3cd; color: #856404; padding: 2px 8px; border-radius: 12px; font-size: 0.85em; white-space: nowrap; }
+.status-missing { background: #f8d7da; color: #721c24; padding: 2px 8px; border-radius: 12px; font-size: 0.85em; white-space: nowrap; }
+.status-scattered { background: #d1ecf1; color: #0c5460; padding: 2px 8px; border-radius: 12px; font-size: 0.85em; white-space: nowrap; }
+.doc-card { background: white; border-radius: 10px; padding: 25px; margin: 15px 0; box-shadow: 0 3px 10px rgba(0,0,0,0.08); border-left: 5px solid var(--secondary); }
+.doc-card h3 { margin-top: 0; color: var(--primary); }
+.source-tag { display: inline-block; background: #e8e8e8; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin: 2px; }
+.source-tag.primary { background: var(--secondary); color: white; }
+.critical { border-left-color: var(--red) !important; }
+.note { background: #fff8e1; border: 1px solid #ffecb3; border-radius: 8px; padding: 15px; margin: 15px 0; }
+.note strong { color: var(--red); }
+.layers-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 15px 0; }
+.layer-box { background: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+.layer-box h4 { margin-top: 0; color: var(--primary); }
+.answer { background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 8px; padding: 15px; margin: 15px 0; }
+.answer strong { color: var(--green); }
+</style>
+</head>
+<body>
+
+<h1>FEEL Again — Бенчмарк документального пакету</h1>
+<p style="text-align:center; color:#666;">Аудит наявного контенту × Стандарт документального пакету програми масштабу $2B+<br>Березень 2026 | Робочий документ</p>
+
+<div class="summary-box">
+<h3 style="margin-top:0;">Загальна картина</h3>
+<div class="summary-grid">
+<div class="stat-card green"><div class="number">58</div><div class="label">компонентів є (повністю або частково)</div></div>
+<div class="stat-card yellow"><div class="number">24</div><div class="label">розкидані по 20+ файлах — потребують консолідації</div></div>
+<div class="stat-card red"><div class="number">3</div><div class="label">відсутні критично — потрібно створити</div></div>
+</div>
+<p>Головна проблема — не відсутність контенту, а його фрагментація по ~30 файлах у 8+ форматах. v2.7 (20.03.2026): прочитано 20+ нових джерел (батчі 5-7): uploaded файли + GDrive docs + pasted text + PDFs + PPTX. Загалом оброблено ~67+ джерел. NOT-FETCHABLE: 0 (ВСІ ЗАКРИТО — раніше unfetchable файли конвертовані в PDF користувачем). <strong>Chemonics $15M CORRECTION:</strong> реальне фінансування підтверджено дослідженням у GDrive (НЕ $51-100M, НЕ $340M). Батч 7 знахідки: Blockchain Pitchdeck HTML (945 рядків, 17 слайдів — показує архітектурну ЕВОЛЮЦІЮ: Stellar→London Exchange Core→Solana; 9 user categories; HIGHCASTLE escrow/KYC/API specs; 4-етапний інтеграційний план); Chatbot GDoc (2.7K — 5 core functions: PHQ-9/GAD-7/PCL-5 скринінг, WHO protocols PFA/SH+/PM+, Safety Monitoring з 15-хв ескалацією, blockchain milestones, N8N workflow engine, mobile-first). Попередні батчі: «The Missing Middle» HTML (226K — МАЙСТЕР-ПРЕЗЕНТАЦІЯ: 12 слайдів, повна двомовна UA+EN, лютий 2026); Communication Strategy HTML (22K, €169K бюджет); USC ICT Partnership (stepped care, BRAVEMIND $12.50/session); KMU Resolution 506 (ПРАВОВА ОСНОВА); Functional Spec (MVP €123K/Full €339K); Tech &amp; Integration TZ (41K, API endpoints, blockchain, Data Lake, ML); Donor Coordination Protocol (mhGAP, DHIS2); Tom Fletcher (3 hooks, 3 paths, UHF→IASC). Прогалини: 3 критичні (Logframe, Клірингова архітектура, Міжпроєктні залежності).</p>
+</div>
+
+<!-- ==================== ВІДПОВІДІ НА ПИТАННЯ ==================== -->
+
+<h2>Відповіді на твої питання</h2>
+
+<div class="answer">
+<strong>FOS .pages файл</strong> — це односторінковий організаційний профіль ГО «Фундація Відкрите Суспільство» (2018, англійська). Містить: місію (think tank з 2001 р., прозорість публічних фінансів), ключові компетенції (governance, anti-corruption, budget transparency), афіліації (Coalition for Effective Governance, Reanimation Package of Reforms), партнерів (IRF, EU Delegation, NED, USAID, Coca-Cola Foundation, Omidyar Network, Charles Steward Mott Foundation), 70+ реалізованих проєктів, контакт — Lesya Shevchenko, President. Це потрібно для розділу партнерів у Мастер-документі — повний опис FOS як імплементатора.
+</div>
+
+<div class="answer">
+<strong>Missing Middle</strong> — так, це саме висновок з даних, не архітектурний елемент. Логіка: дані показують 9.6M потреб → 1.3/100K фахівців → 74% treatment gap → відсутня середня ланка між Primary Care (family doctors, overwhelmed) та Psychiatric Care (hospitals, last resort). Висновок: Missing Middle = FEEL Again як Trusted Digital Layer. Це йде в Документ 4 (Дані) як висновок із Canonical Dataset, і коротко резюмується в Мастер-документі.
+</div>
+
+<div class="answer">
+<strong>"Джерела" — Lancet, CSIS, WHO</strong> — так, це canonical data sources. Вони повинні бути задокументовані в Документі 4 (Дані) як: джерело → дата → що підтверджує → статус верифікації. Кожна цифра в інших документах посилається на Документ 4 як єдине джерело правди. Це усуває проблему розбіжностей (як mhGAP 96K vs 117K).
+</div>
+
+<div class="answer">
+<strong>6 шарів програми vs 5 шарів платформи</strong> — це два різних рівня абстракції, і вони ПРАВИЛЬНО не збігаються. Пропоную так:
+</div>
+
+<div class="layers-compare">
+<div class="layer-box">
+<h4>6 шарів ПРОГРАМИ (стратегічний рівень)</h4>
+<p>Кожен проєкт та дія прошивається через ці шари — це горизонтальні "зрізи" усієї діяльності:</p>
+<p>1. FinTech / Blended Finance<br>2. Цифровізація<br>3. Клінічний<br>4. Сталий розвиток<br>5. Дані та координація<br>6. Регуляторний</p>
+<p><em>Документ: Мастер (як описує програму)</em></p>
+</div>
+<div class="layer-box">
+<h4>5 шарів ПЛАТФОРМИ (технічний рівень)</h4>
+<p>Це конкретна цифрова архітектура продукту — вертикальний стек:</p>
+<p>1. Фіскальний (BankID, KYC, ФОП)<br>2. Фінансовий (clearing, escrow, split-pay)<br>3. Цифровий (API, HL7 FHIR, CRM)<br>4. Клінічний (Stepped Care, outcome tracking)<br>5. Регуляторний (compliance, IATI, mhGAP)</p>
+<p><em>Документ: Операційний (ТЗ для HighCastle)</em></p>
+</div>
+</div>
+
+<div class="answer">
+<strong>UNIFIED_PROGRAM_MATRIX $1,945K vs WHO $350K</strong> — правильно, різний scope. $1,945K = повний портфель з 17 проєктів. $350K = тільки кастомізація платформи під WHO координацію (Q1 з чотириквадрантної архітектури). Обидва бюджети валідні для своїх контекстів.
+</div>
+
+<div class="answer">
+<strong>Програма як система vs методології/навчання</strong> — ключове розмежування. FEEL Again = інфраструктура (рейки, а не потяг). Навчання (Train for Care, GEHA EMDR, VR Bravemind) = вимушені дії через дефіцит capacity. Формулювання: "Програма створює фінансову та цифрову інфраструктуру. Навчальний компонент є тимчасовим мостом через нестачу кваліфікованих кадрів — як тільки ринок формує достатній capacity, навчання передається спеціалізованим інституціям (КНУ, GEHA, UPRA)." Це принципово — інакше програма виглядає як ще один тренінговий проєкт.
+</div>
+
+<div class="answer">
+<strong>Lovable.app формулювання GAPs</strong> — так, 6 GAPs з lovable мають найчіткіші формулювання "Парадокс → Рішення". Вони підуть у Документ 4 (Дані) як canonical gap analysis, та будуть зцитовані в Стратегічному документі для прив'язки до ланцюгів ToC.
+</div>
+
+<!-- ==================== БЕНЧМАРК ТАБЛИЦЯ ==================== -->
+
+<h2>Документ 1: МАСТЕР-ДОКУМЕНТ (Програмний опис)</h2>
+<p>Призначення: описати ЩО таке FEEL Again — для будь-якого нового стейкхолдера за 30 хвилин читання.</p>
+
+<div class="doc-card">
+<table>
+<tr><th style="width:30%">Компонент</th><th style="width:12%">Статус</th><th style="width:28%">Де зараз знаходиться</th><th style="width:30%">Що потрібно зробити</th></tr>
+
+<tr><td>Конвергентне ядро (canonical pitch)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §1.2</span> <span class="source-tag">Session Extract</span></td><td>Консолідувати 2 версії в одну canonical</td></tr>
+
+<tr><td>Три дескриптори для аудиторій</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §1.2</span></td><td>Перенести as-is</td></tr>
+
+<tr><td>Метафрейм (7 граней)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §1.2</span> <span class="source-tag">Session Extract Part 4</span></td><td>Консолідувати 7 Facets</td></tr>
+
+<tr><td>Digital BUS пояснення</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §1.5</span></td><td>Перенести</td></tr>
+
+<tr><td>Missing Middle (як висновок)</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Audit v2.1 §1.7</span> <span class="source-tag">Session Extract</span> <span class="source-tag">Lovable</span></td><td>Резюме 1 абзац, повний аналіз → Док.4</td></tr>
+
+<tr><td>AS IS / TO BE діагностика</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §2</span></td><td>Перенести повністю</td></tr>
+
+<tr><td>4 стики компетенцій</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §2 (Heading 3/4)</span></td><td>Перенести з деталями</td></tr>
+
+<tr><td>6 шарів програми з проєктами</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §2</span> <span class="source-tag">Lovable</span></td><td>Lovable має кращу деталізацію — мерджити</td></tr>
+
+<tr><td>Архітектура платформи (5 шарів)</td><td><span class="status-partial">Частково</span></td><td><span class="source-tag">Audit v2.1 §6</span> <span class="source-tag">Session Extract</span></td><td>Відновити КЛІРИНГОВУ архітектуру (загублена в v5.0!)</td></tr>
+
+<tr><td>Gateway + Service Bus</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">English v4.2.3</span></td><td>Перекласти з англійської</td></tr>
+
+<tr><td>Clinical Proof-of-Stake</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Audit v2.1 §6</span> <span class="source-tag">Lovable</span></td><td>Lovable має кращий опис</td></tr>
+
+<tr><td>Reverse Waterfall</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §9</span> <span class="source-tag">Lovable</span></td><td>Lovable має візуал ланцюжка</td></tr>
+
+<tr><td>Консорціум та Governance</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Audit v2.1 §7</span> <span class="source-tag">Session Extract</span> <span class="source-tag">Comprehensive Launch Plan EN §Consortium</span> <span class="source-tag">Grand Bargain Proposal §12</span></td><td>Comprehensive Launch Plan має повний список учасників консорціуму (7 категорій). GB Proposal: multi-stakeholder oversight board, neutral governance, open source commitment. Очистити та консолідувати.</td></tr>
+
+<tr><td>Партнери з повними описами</td><td><span class="status-scattered">Розкидано</span></td><td><span class="source-tag">Audit v2.1 §14.4+</span> <span class="source-tag">FOS .pages</span> <span class="source-tag">English v4.2.3</span></td><td>Зібрати: FOS, Enkidu, Quoroom, USC/Rizzo, GEHA/CLALIT, КНУ</td></tr>
+
+<tr><td>Цикл підзвітності</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §1.6</span></td><td>Перенести</td></tr>
+
+<tr><td>Гуманітарна цінність (Рівність та Досяжність)</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Твій останній меседж</span> <span class="source-tag">Comprehensive Launch Plan EN §Humanitarian Impact</span> <span class="source-tag">Grand Bargain Proposal §1.3</span></td><td>Comprehensive Launch Plan має повний опис Humanitarian Impact (рівність, спрощення, цільова ефективність, місткість). GB Proposal: Tom Fletcher's 3 imperatives. Сформулювати як окремий розділ «Цінності».</td></tr>
+
+<tr><td>Місія програми</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Твій останній меседж</span> <span class="source-tag">GDrive Positioning</span></td><td>Фіналізувати canonical формулювання</td></tr>
+
+<tr><td>Розмежування: інфраструктура vs навчання</td><td><span class="status-missing">Відсутній</span></td><td>—</td><td><strong>СТВОРИТИ:</strong> чітке пояснення що навчальний компонент тимчасовий</td></tr>
+
+<tr><td>Три осі з'єднання</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Audit v2.1 §6</span> <span class="source-tag">Lovable</span></td><td>Перенести</td></tr>
+
+<tr><td>SaaS модель (State buys service not servers)</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Session Extract</span></td><td>Інтегрувати в архітектуру</td></tr>
+</table>
+</div>
+
+<h2>Документ 2: СТРАТЕГІЧНИЙ ДОКУМЕНТ</h2>
+<p>Призначення: Theory of Change, стратегічне обґрунтування, ризики, валідаційні гейти — для donor review та expert evaluation.</p>
+
+<div class="doc-card">
+<table>
+<tr><th style="width:30%">Компонент</th><th style="width:12%">Статус</th><th style="width:28%">Де зараз знаходиться</th><th style="width:30%">Що потрібно зробити</th></tr>
+
+<tr><td>Theory of Change — 5 каузальних ланцюгів</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">English v4.2.3 §14</span></td><td>Перекласти українською з повною деталізацією</td></tr>
+
+<tr><td>6 Intersection KPIs</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">English v4.2.3 §14</span></td><td>Перекласти</td></tr>
+
+<tr><td>Competency Framework</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">English v4.2.3 §14</span></td><td>Перекласти</td></tr>
+
+<tr><td>Traceability Matrix GAP×Chain</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">English v4.2.3 §14</span></td><td>Перекласти</td></tr>
+
+<tr><td>8 Hypothesis Validation Gates (H1-H8)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">English v4.2.3 §14</span></td><td>Перекласти</td></tr>
+
+<tr><td>Grand Bargain Alignment Strategy</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">GDrive: Дороговказ інтеграції GB</span> <span class="source-tag primary">Grand Bargain Strategic Proposal (12K)</span></td><td>ТЕПЕР ДВА ДЖЕРЕЛА: 1) Дороговказ 20-стор. (implementation steps), 2) Strategic Proposal (12K) — повний пітч Tom Fletcher/UN з §3 GB 3.0 Compliance (27% localization, quality funding, AAP), §4 Humanitarian Reset (lighter/faster/less bureaucratic), §7 Stakeholder Benefits. §5 ВІДСУТНІЙ у документі. §9 Implementation Roadmap Q4 2025-2027. Дати Sept 2025 — потребують оновлення.</td></tr>
+
+<tr><td>Complementarity Strategy</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">GDrive: Complementarity Strategy (21.7K)</span> <span class="source-tag">English v4.2.3</span></td><td>ПОВНІСТЮ ПЕРЕКРИТО. 10 секцій: role distribution ТИ ЯК? (public) vs FEEL (tech), Chemonics savings $34M/year, WHO role split, UPRA/Helsi/shadow integration, Visa metaphor, non-complementarity risks + mitigation, 3-phase implementation, metrics (50→500 orgs), communication messages per audience, FORBIDDEN phrases list, stakeholder matrix appendix. Canonical source для Стратегічного.</td></tr>
+
+<tr><td>Tom Fletcher $2B MOU контекст</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Audit v2.1</span> <span class="source-tag">GDrive GB doc</span></td><td>Консолідувати</td></tr>
+
+<tr><td>Ризики та мітигація (повний реєстр)</td><td><span class="status-scattered">Розкидано</span></td><td><span class="source-tag">Audit v2.1 §14</span> <span class="source-tag">Program Directions HTML</span> <span class="source-tag">WHO pptx</span> <span class="source-tag">Fin Model v2 §7</span> <span class="source-tag">FEEL×ТИ ЯК? §exit</span> <span class="source-tag">Grand Bargain Proposal §8</span> <span class="source-tag">Comprehensive Launch Plan §Legal Strategy</span></td><td>ТЕПЕР 7+ ДЖЕРЕЛ. GB Proposal §8 додає: political risk (govt resistance to transparency), technical risk (blockchain scalability → hybrid architecture), adoption risk (partner resistance → gradual rollout), sustainability risk (donor fatigue → multiple revenue streams). Comprehensive Launch Plan додає: collaboration laws risk (occupied territories), FOP reclassification risk (hidden employment), international sanctions (OFAC screening), transfer pricing (arm's length). Зібрати у єдиний risk register.</td></tr>
+
+<tr><td>Крос-секторальний аналіз</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §14.3</span></td><td>Перенести</td></tr>
+
+<tr><td>Cost-Effectiveness бенчмарки</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §4.5</span></td><td>Перенести з крос-верифікацією</td></tr>
+
+<tr><td>Прецеденти (WFP, UNHCR, Oxfam, Dutch Alliance, IAPT UK)</td><td><span class="status-scattered">Розкидано</span></td><td><span class="source-tag">WHO pptx slide 5</span> <span class="source-tag">Lovable</span></td><td>Консолідувати в таблицю прецедентів</td></tr>
+
+<tr><td>Ланцюг трансформації (Input→Impact)</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Lovable</span></td><td>Хороше формулювання, перенести</td></tr>
+
+<tr><td>$8B GDP benchmark</td><td><span class="status-have">Є</span></td><td><span class="source-tag">English v4.2.3</span> <span class="source-tag">Session Extract</span></td><td>Перенести з формулою</td></tr>
+
+<tr><td>M&E Framework (повний)</td><td><span class="status-partial">Частково</span></td><td><span class="source-tag">Parametric Model HTML</span> <span class="source-tag">Donor Scoring XLSX</span></td><td>ТЕПЕР ЧАСТКОВЕ ПОКРИТТЯ: Parametric Model має operational KPIs з baselines/targets (87→100 psych, 412→500 benef/mo, 78→80% completion, 36→48hr time-to-therapy, NPS 72→70+, 42→40% symptom reduction, 25→20% recidivism, 85→85% retention) + alert thresholds + sensitivity analysis. Donor Scoring має GB compliance metrics + 5-param scoring. <strong>ЗАЛИШАЄТЬСЯ:</strong> формалізувати в donor-standard M&E Framework (indicator × baseline × target × frequency × responsible × data source). Parametric Model = excellent foundation.</td></tr>
+
+<tr><td>Stakeholder Mapping (повна матриця)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">GDrive: Complementarity Strategy Appendix A</span> <span class="source-tag">GDrive GB doc §4</span> <span class="source-tag">«*2» аналітичний (blind spots)</span></td><td>ТЕПЕР 3 ДЖЕРЕЛА: 1) Complementarity Strategy Appendix A має повну stakeholder matrix (influence × interest): First Lady (high/critical/public leadership), WHO (high/high/technical partnership), Chemonics (high/high/operational integration), UPRA (medium/medium/professional standards), Private psychologists (high/low/economic incentives). 2) GB doc — GB-specific. 3) «*2» — blind spots для 3 секторів. Залишається: мерджити в єдину canonical матрицю.</td></tr>
+
+<tr><td>Logical Framework (logframe)</td><td><span class="status-missing">Відсутній</span></td><td>—</td><td><strong>СТВОРИТИ:</strong> Goal→Purpose→Outputs→Activities з індикаторами</td></tr>
+
+<tr><td>Exit Strategy / Sustainability Plan</td><td><span class="status-partial">Частково</span></td><td><span class="source-tag">FEEL×ТИ ЯК? §9</span> <span class="source-tag">Fin Model v2 §8</span> <span class="source-tag">Financial Model HTML</span> <span class="source-tag">Parametric Model HTML</span></td><td>ТЕПЕР 4 ДЖЕРЕЛА: 1) FEEL×ТИ ЯК? має per-partnership exit (30 днів). 2) Fin Model v2: breakeven 18-24 міс, 711 psych. 3) Financial Model HTML: 3-Phase Market Transition (Incubation 90-100% grants → Hybridization 50% → Maturity 3-5% commission), breakeven Q3 2026, self-sustaining by Y3 ($3.5M EBITDA $1.2M). 4) Parametric Model: operational alert system (burn &gt;budget+20% → freeze, &lt;500 psych за 12 міс → stop). <strong>ЗАЛИШАЄТЬСЯ:</strong> цілісний transition plan document (not just per-partnership exit or financial projections, but full institutional handoff strategy).</td></tr>
+</table>
+</div>
+
+<h2>Документ 3: ОПЕРАЦІЙНИЙ / ПОРТФЕЛЬ ПРОЄКТІВ</h2>
+<p>Призначення: конкретні проєкти, бюджети, фази, залежності, Ганта — для project management та donor reporting.</p>
+
+<div class="doc-card">
+<table>
+<tr><th style="width:30%">Компонент</th><th style="width:12%">Статус</th><th style="width:28%">Де зараз знаходиться</th><th style="width:30%">Що потрібно зробити</th></tr>
+
+<tr><td><strong>НБУ як якірний проєкт №1</strong></td><td><span class="status-partial">Частково</span></td><td><span class="source-tag">Audit v2.1 §11 (Лужанський)</span> <span class="source-tag">English v4.2.3</span></td><td>Виділити окремим першим розділом з повним описом sandbox входу</td></tr>
+
+<tr><td>17 проєктів з бюджетами та таймлайнами</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">UNIFIED_PROGRAM_MATRIX</span> <span class="source-tag primary">Pilot Projects Roadmap.md</span></td><td>ОБА джерела підтверджують $1,945K та 4 групи (А/Б/В/Г). Roadmap має детальніший breakdown витрат по кожному проєкту. Перенести з перехресною верифікацією.</td></tr>
+
+<tr><td>3 кластери (Фундамент/Масштабування/Інтеграція)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">English v4.2.3</span></td><td>Замапити 17 проєктів на 3 кластери</td></tr>
+
+<tr><td>7 моделей партнерського розгортання</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">UNIFIED_PROGRAM_MATRIX Layer 3</span></td><td>Перенести з деталями</td></tr>
+
+<tr><td>Фази RAILS → CONNECT → SCALE</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Strategic Architecture v3.1</span> <span class="source-tag">Lovable</span></td><td>Консолідувати з 3 фазами з Lovable</td></tr>
+
+<tr><td>Діаграма Ганта</td><td><span class="status-partial">Частково</span></td><td><span class="source-tag">GDrive Tech: Platform Deployment (9 етапів)</span> <span class="source-tag">GDrive Tech: Operational Plan (3 фази)</span> <span class="source-tag">Comprehensive Launch Plan §Gantt (6 міс)</span> <span class="source-tag">Комплексний План Запуску §Mermaid Gantt</span></td><td>ТЕПЕР 4 ЧАСТКОВИХ ГАНТА: 1) Platform Deployment (9 етапів), 2) Operational Plan ТИ ЯК? (3 фази), 3) Comprehensive Launch Plan EN (6-місяців, 5 категорій: Management, Technology, Clinical, Finance, Communications — color-coded bars), 4) Комплексний План Запуску (Mermaid 6-8 міс з hypothesis gates). ВСІ OUTDATED з попередньою проєктною сіткою. Потрібно: побудувати ЄДИНИЙ Гант для 17 проєктів з залежностями.</td></tr>
+
+<tr><td>Міжпроєктні залежності</td><td><span class="status-missing">Відсутній</span></td><td>—</td><td><strong>СТВОРИТИ:</strong> dependency matrix між 17 проєктами</td></tr>
+
+<tr><td>Train for Care економіка</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">English v4.2.3</span> <span class="source-tag primary">Master Data XLSX</span> <span class="source-tag">Train for Care CSR Pitch</span></td><td>ТЕПЕР 3 ДЖЕРЕЛА: v4.2.3 (€75,605/когорта, ROI 2.22x), Master Data XLSX (GEHA €39K/20 psych — €26K EMDR 66hrs + €13K VR 33hrs = 99hrs total, €1,300/psych; 4 scenarios Pilot→Oblast; efficiency 0.86x→16.84x vs WHO; pro-bono 120hrs/year), CSR Pitch ($200K→60 specialists, 200% SROI). Master Data = canonical source з повними калькуляторами.</td></tr>
+
+<tr><td>8 потоків формування фахівців</td><td><span class="status-partial">Потребує корекції</span></td><td><span class="source-tag primary">English v4.2.3 (8 потоків)</span> <span class="source-tag">Lovable (6, завищені конверсії)</span></td><td>Canonical = 8 потоків з v4.2.3. Lovable має тільки 6 і ЗАВИЩЕНІ конверсії. Потрібно: повний список 8 потоків з КОНСЕРВАТИВНИМИ estimates.</td></tr>
+
+<tr><td>Банківський сектор (EBRD, 38 банків)</td><td><span class="status-have">Є</span></td><td><span class="source-tag">English v4.2.3</span> <span class="source-tag">Lovable</span></td><td>Консолідувати</td></tr>
+
+<tr><td>Трицінова архітектура (€70/€30-60/€50)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">English v4.2.3</span></td><td>Перенести</td></tr>
+
+<tr><td>FOP Group 3 модель</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">English v4.2.3</span></td><td>Перенести</td></tr>
+
+<tr><td>6 операційних протоколів</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Operational Protocols HTML</span></td><td>Перенести або зреференсити</td></tr>
+
+<tr><td>Golden Scenario (Beneficiary Journey)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Lovable</span> <span class="source-tag primary">Comprehensive Launch Plan §Interaction Flow</span></td><td>ТЕПЕР ДВА ДЖЕРЕЛА: Lovable (5 кроків abstract), Comprehensive Launch Plan має ПОВНИЙ 8-крокову journey map у 4-колонковій таблиці (Beneficiary × Psychologist × Platform Automation × Donor/Partner). Кожен крок деталізовано з triggers (після 3-ї сесії → можливість банки, після 30% → co-financing). Це НАЙПОВНІШИЙ journey map. Мерджити.</td></tr>
+
+<tr><td>ТЗ для HighCastle / Quoroom</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">GDrive Tech: ТЗ на скриншоти HighCastle</span> <span class="source-tag">Blockchain SOW</span></td><td>ТЗ знайдено: 5 блоків (DvP Ledger, Escrow Dashboard, Smart Contract Viewer, Payment UI, FCA Compliance). Архітектура зміщена з Stellar на London Exchange Core + DvP. Blockchain SOW: $200K HighCastle, 20 тижнів. Потрібно: об'єднати в єдине ТЗ з клірінговою архітектурою.</td></tr>
+
+<tr><td>ТЗ для Enkidu (P2P/crowdfunding)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">GDrive Tech: Crowdfunding Campaign SOW</span> <span class="source-tag">GDrive Tech: Blockchain SOW</span></td><td>Combined budget $350K (HighCastle $200K + Enkidu $100K + audit/legal $50K). Crowdfunding target $500K. 24 тижні. Потрібно: оновити до поточного scope (Quoroom замість HighCastle, актуальні таймлайни).</td></tr>
+
+<tr><td>Unit Economics per project</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Financial Model HTML</span> <span class="source-tag primary">Financial Master v3 XLSX</span> <span class="source-tag">Master Data XLSX</span> <span class="source-tag">Parametric Model HTML</span></td><td>ТЕПЕР ПОВНІСТЮ ПЕРЕКРИТО. Financial Model HTML: Psych CAC $150, annual revenue $1,800, LTV $7,200, LTV/CAC 48:1, churn 15%, payback 2mo. Beneficiary: acquisition $25, course $500, platform $15. Financial Master v3: freed hours/psych, economic value per admin reduction, 3-stream calculations. Master Data: €1,300/psych training, 456hrs/year freed, efficiency vs WHO 0.86x→16.84x. Parametric Model: ₴850/session, $42K/mo burn. Залишається: консолідувати в єдину unit economics таблицю з cross-reference.</td></tr>
+
+<tr><td>Procurement Plan</td><td><span class="status-missing">Відсутній</span></td><td>—</td><td><strong>СТВОРИТИ:</strong> що купується, від кого, коли</td></tr>
+
+<tr><td>Scoring Matrix смарт-контракту</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Audit v2.1 §5</span> <span class="source-tag">Lovable</span></td><td>Lovable має кращу вагову матрицю</td></tr>
+</table>
+</div>
+
+<h2>Документ 4: ВІДКРИТІ ДАНІ (ukraine_mhpss_dashboard)</h2>
+<p>Призначення: canonical dataset + gaps + висновки. Єдине джерело правди для всіх цифр. Стартова точка програми.</p>
+
+<div class="doc-card">
+<table>
+<tr><th style="width:30%">Компонент</th><th style="width:12%">Статус</th><th style="width:28%">Де зараз знаходиться</th><th style="width:30%">Що потрібно зробити</th></tr>
+
+<tr><td>Canonical Dataset: популяція</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §4.1</span></td><td>Перенести з джерелами</td></tr>
+
+<tr><td>Killer Table (навчання vs практика)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §4.2</span> <span class="source-tag">Session Extract Part 3</span></td><td>Session Extract має точніші цифри</td></tr>
+
+<tr><td>Бюджет (фінансові потоки)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §4.3</span> <span class="source-tag">Session Extract</span></td><td>Консолідувати: State ~$50M, HC $77M, UNICEF ~$5M, USAID $5M</td></tr>
+
+<tr><td>Метрики FEEL</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §4.4</span></td><td>Перенести</td></tr>
+
+<tr><td>Свіжі дані ринку 2025</td><td><span class="status-partial">Потребує верифікації</span></td><td><span class="source-tag">Audit v2.1 §5</span> <span class="source-tag">Lovable</span></td><td>Кожна цифра потребує джерела та статусу верифікації</td></tr>
+
+<tr><td>6 GAPs (canonical gap analysis)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Lovable (найкраще)</span> <span class="source-tag">Audit v2.1</span></td><td>Lovable формулювання "Парадокс → Рішення" як canonical</td></tr>
+
+<tr><td>Missing Middle (як висновок з даних)</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Session Extract</span> <span class="source-tag">Lovable</span></td><td>Оформити як ВИСНОВОК секції GAPs</td></tr>
+
+<tr><td>6 розірваних ланок (Supply Chain)</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Audit v2.1 §6</span> <span class="source-tag">Session Extract</span></td><td>Перенести з індикаторами</td></tr>
+
+<tr><td>Pipeline фахівців (8 потоків з конверсіями)</td><td><span class="status-partial">Потребує корекції</span></td><td><span class="source-tag">Lovable (6 потоків)</span> <span class="source-tag primary">English v4.2.3 (8 потоків)</span></td><td>УВАГА: Lovable має 6 потоків з ЗАВИЩЕНИМИ конверсіями. Canonical = 8 потоків: shadow sector, UPRA, veterans-psychologists, university, diaspora repatriation, diaspora supervision, humanitarian transition, psychiatry conversion. Конверсії потребують консервативного перерахунку.</td></tr>
+
+<tr><td>Координаційний ландшафт (Ti Yak, MHPSS TWG)</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Session Extract Part 3</span> <span class="source-tag">GDrive Tech: Operational Plan</span></td><td>Перенести. УВАГА: ТИ ЯК? — ТІЛЬКИ комплементарне формулювання. FEEL = інфраструктурний партнер. Operational Plan має 3-фазну інтеграцію з ТИ ЯК? ($350K-$2M).</td></tr>
+
+<tr><td>Data Discrepancies register</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Session Extract Part 7</span></td><td>Canonical versions для кожної розбіжності</td></tr>
+
+<tr><td>Демографічні дані (IMF, shrinking population)</td><td><span class="status-have">Є</span></td><td><span class="source-tag">GDrive: Ukraine shrinking doc</span></td><td>Інтегрувати: 34M до 2030, контекст для потреб</td></tr>
+
+<tr><td>Зсув алокації ресурсів (поточна → цільова)</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Lovable</span></td><td>89% диспансери → 40% приватна + 25% клінічні</td></tr>
+
+<tr><td>EMDR training ecosystem</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Audit v2.1 §2</span></td><td>Перенести</td></tr>
+
+<tr><td>Європейська статистика користування</td><td><span class="status-have">Є</span></td><td><span class="source-tag">Audit v2.1 §2</span></td><td>Перенести для порівняння</td></tr>
+</table>
+</div>
+
+<h2>Документ 5: КОМУНІКАЦІЙНИЙ ДОКУМЕНТ</h2>
+<p>Призначення: готові наративи, фрази, стратегії для кожної аудиторії + кризовий протокол.</p>
+
+<div class="doc-card">
+<table>
+<tr><th style="width:30%">Компонент</th><th style="width:12%">Статус</th><th style="width:28%">Де зараз знаходиться</th><th style="width:30%">Що потрібно зробити</th></tr>
+
+<tr><td>Наративні активи (2 core narrative lines)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §7</span> <span class="source-tag">Session Extract Part 11</span></td><td>Консолідувати</td></tr>
+
+<tr><td>Killer Quotes (15+)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Session Extract Part 5</span> <span class="source-tag">Audit v2.1 §7.2</span></td><td>Дедуплікувати, відібрати TOP-15</td></tr>
+
+<tr><td>Opening Lines по аудиторіях (7)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Session Extract Part 6</span> <span class="source-tag">Audit v2.1 §9</span></td><td>Перенести</td></tr>
+
+<tr><td>Blacklist (що НІКОЛИ не казати)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §10</span></td><td>Перенести</td></tr>
+
+<tr><td>Advocacy 5 треків</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §11</span></td><td>Перенести</td></tr>
+
+<tr><td>Editorial Calendar Q2-Q4 2026</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §12</span></td><td>Перенести та оновити</td></tr>
+
+<tr><td>Crisis Protocol</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Audit v2.1 §13</span></td><td>Перенести</td></tr>
+
+<tr><td>Messaging Matrix (audience × message × format)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">«*2» аналітичний (3 аудиторії)</span> <span class="source-tag primary">Complementarity Strategy §9</span> <span class="source-tag">GDrive GB doc §6.2</span> <span class="source-tag">Audit §9</span></td><td>ТЕПЕР 4 ДЖЕРЕЛА: 1) «*2» — 3 аудиторії у форматі «Їхня мова → Ваша відповідь» + 3×3 blind spots. 2) Complementarity Strategy §9 — communication messages per 5 audiences (Govt: «tech tool making state programs effective», Donors: «25% localization + 35% savings», NGOs: «simplifies work, direct fund access», Psychologists: «legal practice, guaranteed payment», Public: «every hryvnia reaches those who need it»). PLUS: FORBIDDEN phrases list (5 items: never say "better alternative", "replace inefficient", "only solution", "partners can't cope", "we control"). Формалізувати в єдину матрицю + blacklist extension.</td></tr>
+
+<tr><td>Комунікаційна стратегія для психологів</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">GDrive: Комунікаційна стратегія залучення</span></td><td>Інтегрувати</td></tr>
+
+<tr><td>Positioning Statements (canonical)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">GDrive: Official Positioning Statements</span></td><td>Перенести як canonical</td></tr>
+
+<tr><td>Financial Model messaging</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Fin Model v2</span> <span class="source-tag primary">FEEL×ТИ ЯК?</span> <span class="source-tag">GDrive Positioning</span></td><td>ТЕПЕР 5 ДЖЕРЕЛ (додано Financial Model HTML + Donor Scoring XLSX). Messaging по аудиторіях: Donors: ROI 430%, IRR 67%, NPV $12.3M, LTV/CAC 48:1, breakeven Q3 2026. Grand Bargain: Localization 100% PASS, Admin 8.5% PASS (vs 30% target), Quality Funding PASS. Commission: 2.5-3.5% tiered + 7→3% degressive (resolved). P2P 8.5-9x. Chemonics ROI 520%. 3-Phase Market Transition (grants→hybrid→self-sustaining). Donor Scoring 37.875/100 (2 params TBD). CRITICAL: don't use Financial Model HTML numbers (some aspirational) — use Financial Master v3 + Parametric Model for validated numbers.</td></tr>
+
+<tr><td>WHO Partnership Pitch</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">Координаційний pptx (13 slides)</span></td><td>Key messages з pitch deck</td></tr>
+
+<tr><td>Сценарій переговорів (Tom Fletcher)</td><td><span class="status-have">Є</span></td><td><span class="source-tag primary">GDrive GB doc §9</span></td><td>Перенести</td></tr>
+
+<tr><td>Visual Identity Guidelines</td><td><span class="status-missing">Відсутній</span></td><td>—</td><td><strong>СТВОРИТИ:</strong> кольори, шрифти, тон, логотип usage</td></tr>
+
+<tr><td>Stakeholder-specific One-Pagers</td><td><span class="status-missing">Відсутній</span></td><td>—</td><td><strong>СТВОРИТИ:</strong> 1-стор. для кожної з 7 аудиторій</td></tr>
+</table>
+</div>
+
+<!-- ==================== КРИТИЧНІ ПРОГАЛИНИ ==================== -->
+
+<h2>8→3 критичні прогалини (що залишилося створити)</h2>
+
+<div class="doc-card critical">
+<table>
+<tr><th style="width:5%">#</th><th style="width:25%">Компонент</th><th style="width:12%">Документ</th><th style="width:15%">Пріоритет</th><th style="width:43%">Статус / Чому критичний</th></tr>
+
+<tr><td>1</td><td>M&E Framework — STRONG PARTIAL</td><td>Стратегічний</td><td><span class="status-partial">СЕРЕДНІЙ</span></td><td>Parametric Model дає KPIs з baselines/targets + alert system. Donor Scoring дає GB metrics. Donor Coordination Protocol додає mhGAP indicators + DHIS2 sync + 4-phase Gantt. ЗАЛИШАЄТЬСЯ: формалізувати donor-standard framework (indicator × baseline × target × frequency × responsible × data source). Основа міцна — потрібна лише формалізація.</td></tr>
+
+<tr><td>2</td><td>Logical Framework (logframe)</td><td>Стратегічний</td><td><span class="status-missing">КРИТИЧНИЙ</span></td><td>Стандартний вхідний документ для EU та UN грантів. Goal→Purpose→Outputs→Activities→Indicators. Дані для наповнення ЄС — потрібно зверстати.</td></tr>
+
+<tr><td>3</td><td>Exit Strategy — ЧАСТКОВО</td><td>Стратегічний</td><td><span class="status-partial">СЕРЕДНІЙ</span></td><td>FEEL×ТИ ЯК? має per-partnership exit. Fin Model v2: BE 18-24 міс, 711 psych. 7→3% degressive. «The Missing Middle» shows state SaaS as exit path. Залишається: цілісний план переходу.</td></tr>
+
+<tr><td>4</td><td>Діаграма Ганта — ЧАСТКОВО</td><td>Операційний</td><td><span class="status-partial">СЕРЕДНІЙ</span></td><td>Знайдено Gantts в GDrive + Pilot Roadmap + Donor Coordination (4-phase Gantt). Залишається: створити ЄДИНИЙ Гант для 17 проєктів з залежностями.</td></tr>
+
+<tr><td>5</td><td>Міжпроєктні залежності</td><td>Операційний</td><td><span class="status-missing">ВИСОКИЙ</span></td><td>НБУ sandbox → clearing → payment for result. Без dependency map неможливо визначити critical path.</td></tr>
+
+<tr><td>6</td><td>ТЗ для HighCastle — ЗАКРИТО</td><td>Операційний</td><td><span class="status-have">ЗАКРИТО</span></td><td>GDrive ТЗ + Tech &amp; Integration HTML (41K) + Functional Spec HTML (29K) + Solana MVP Plan. Достатньо джерел для canonical ТЗ.</td></tr>
+
+<tr><td>7</td><td>Procurement Plan</td><td>Операційний</td><td><span class="status-partial">СЕРЕДНІЙ</span></td><td>Functional Spec дає cost breakdown (€123K MVP, €216K Full). Pilot Roadmap дає per-package budgets. Залишається: consolidated procurement timeline.</td></tr>
+
+<tr><td>8</td><td>Розмежування інфраструктура vs навчання — ЧАСТКОВО</td><td>Мастер</td><td><span class="status-partial">СЕРЕДНІЙ</span></td><td>«The Missing Middle» slide 5 чітко фреймить «coordination and accountability layer — not a healthcare provider, not a startup, not a marketplace». USC ICT PDF: «scientific anchor, not vendor». Training Arm окремо виділений. Контент ЄС — потрібна лише консолідація.</td></tr>
+
+<tr><td>9</td><td>Visual Identity Guidelines</td><td>Комунікаційний</td><td><span class="status-partial">НИЗЬКИЙ</span></td><td>«The Missing Middle» HTML має повний CSS design system (navy/gold palette, Playfair Display + Source Sans 3 typography). Може бути основою для guidelines.</td></tr>
+
+<tr><td>10</td><td>Stakeholder One-Pagers (7 шт.)</td><td>Комунікаційний</td><td><span class="status-partial">СЕРЕДНІЙ</span></td><td>Communication Strategy HTML має key messages per 3 audiences. Tom Fletcher text + GB Proposal дають per-stakeholder hooks. Залишається: оформити 7 one-pagers.</td></tr>
+
+<tr><td>11</td><td>Full Stakeholder Mapping — ЗАКРИТО</td><td>Стратегічний</td><td><span class="status-have">ЗАКРИТО</span></td><td>Complementarity Appendix A + Communication Strategy stakeholder matrix (8 rows) + Tom Fletcher landscape analysis. 4+ джерела.</td></tr>
+
+<tr><td>12</td><td>Клірингова архітектура (відновлення)</td><td>Мастер</td><td><span class="status-missing">КРИТИЧНИЙ</span></td><td>Загублена в v5.0. Payment for Result → Escrow → 3-stage milestone. Solana MVP Plan має CofinancingPool Rust struct. Smart Contract structures exist. Потрібна консолідація в canonical clearing architecture.</td></tr>
+
+<tr style="background:#e8f5e9;"><td colspan="5" style="padding:10px; font-weight:bold; color:#155724;">НОВІ ЗАКРИТТЯ (батч 5+6): Communication Strategy → ЗАКРИТО (04_Communication_Strategy.html = повна 9-секційна стратегія з бюджетом). Розмежування інфраструктура/навчання → downgraded (Missing Middle + USC PDF дають контент). Visual Identity → partial (CSS design system in Missing Middle HTML).</td></tr>
+</table>
+</div>
+
+<!-- ==================== КАРТА ДЖЕРЕЛ ==================== -->
+
+<h2>Карта джерел: звідки що брати</h2>
+
+<div class="doc-card">
+<table>
+<tr><th>Джерело</th><th>Пріоритет</th><th>Що витягуємо</th></tr>
+<tr><td><strong>Ecosystem Audit v2.1</strong> (твої правки)</td><td><span class="status-have">PRIMARY</span></td><td>Ідентичність, AS IS/TO BE, 4 стики, 6 шарів, архітектура, наративи, advocacy, blacklist, партнери. ОСНОВНЕ ДЖЕРЕЛО для Мастер та Комунікаційного.</td></tr>
+<tr><td><strong>English v4.2.3</strong></td><td><span class="status-have">PRIMARY</span></td><td>Theory of Change (5 chains, KPIs, competency framework, traceability), Train for Care, 3-price architecture, Gateway+Service Bus, 8 streams. ОСНОВНЕ ДЖЕРЕЛО для Стратегічного.</td></tr>
+<tr><td><strong>Lovable.app content</strong> (вставлено в чат)</td><td><span class="status-have">PRIMARY</span></td><td>6 GAPs (найкращі формулювання!), pipeline фахівців з конверсіями, 4-квадрантна архітектура, Golden Scenario, Scoring Matrix, Reverse Waterfall візуал, фінансова модель, зсув алокації.</td></tr>
+<tr><td><strong>UNIFIED_PROGRAM_MATRIX</strong></td><td><span class="status-have">PRIMARY</span></td><td>17 проєктів з бюджетами/таймлайнами, 7 моделей розгортання. ОСНОВНЕ ДЖЕРЕЛО для Операційного.</td></tr>
+<tr><td><strong>Session Extraction.md</strong></td><td><span class="status-have">SECONDARY</span></td><td>Killer quotes, opening lines, data discrepancies, corrections, War Room data, product architecture (не плутати!)</td></tr>
+<tr><td><strong>GDrive: Grand Bargain Дороговказ</strong></td><td><span class="status-have">SECONDARY</span></td><td>20-стор. GB alignment з конкретними кроками, стейкхолдерами, сценарієм переговорів. Для Стратегічного.</td></tr>
+<tr><td><strong>GDrive: Positioning Statements</strong></td><td><span class="status-have">SECONDARY</span></td><td>Canonical формулювання, financial model 2.5-3.5%, integration capabilities, impact metrics. Для Комунікаційного.</td></tr>
+<tr><td><strong>Координаційний pptx</strong></td><td><span class="status-partial">SUPPORTING</span></td><td>WHO pitch: ROI 2.3:1, conservative estimates, 3 phases. Для Стратегічного (прецеденти) та Комунікаційного (WHO messaging).</td></tr>
+<tr><td><strong>Operational Protocols HTML</strong></td><td><span class="status-partial">SUPPORTING</span></td><td>6 протоколів з SLA. Для Операційного (референс або інтеграція).</td></tr>
+<tr><td><strong>Program Directions HTML</strong></td><td><span class="status-partial">SUPPORTING</span></td><td>5 напрямів з гіпотезами та ризиками. Для Операційного та Стратегічного (ризики).</td></tr>
+<tr><td><strong>FOS .pages</strong></td><td><span class="status-partial">SUPPORTING</span></td><td>Профіль ГО ФВС: 2001, 70+ проєктів, компетенції, партнери. Для Мастер (партнери).</td></tr>
+
+<tr style="background:#e8f4f8;"><td colspan="3" style="padding:10px; font-weight:bold; color:var(--primary);">НОВІ ДЖЕРЕЛА (знайдені 18.03.2026 при обстеженні GDrive)</td></tr>
+
+<tr><td><strong>GDrive Tech: TRD (126K)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Повні API specs: WHO/MHPSS TWG (mhGAP indicators, DHIS2), FTS/IATI, Chemonics/USAID (beneficiary management, reconciliation), ТИ ЯК? (data sharing, ZK proofs, coordination), eHealth (OAuth, episodes, sync), Helsi (booking). Performance: 10K req/sec, 500ms, 50K concurrent. Scalability: auto-scaling 1-100 nodes. КРИТИЧНЕ ДЖЕРЕЛО для Операційного та Стратегічного.</td></tr>
+
+<tr><td><strong>GDrive Tech: ТЗ на скриншоти HighCastle</strong></td><td><span class="status-have">PRIMARY</span></td><td>5 блоків: DvP Ledger, Escrow субрахунки, Smart Contract Viewer з timeline, Monobank-style Payment UI, FCA Compliance Dashboard. Зміна архітектури: Stellar→London Exchange Core + DvP. Multi-currency (UAH/USD/EUR). Для Операційного (ТЗ HighCastle).</td></tr>
+
+<tr><td><strong>GDrive Tech: Blockchain SOW + Crowdfunding SOW</strong></td><td><span class="status-have">SECONDARY</span></td><td>MVP scope Nov 2024: $350K combined. Blockchain: $200K/20 тижнів (smart contracts, escrow, multi-sig, Ethereum L2). Crowdfunding: $100K/24 тижнів (target $500K). Partners: HighCastle + Enkidu. Success criteria: 300 psychologists, 3,000 beneficiaries.</td></tr>
+
+<tr><td><strong>GDrive Tech: 03_Operational_Plan</strong></td><td><span class="status-have">SECONDARY</span></td><td>Операційний план для ТИ ЯК?: Фаза 1 ($350-450K, 1.5-3 міс), Фаза 2 ($400-500K, 6-8 міс, 10K beneficiaries), Фаза 3 ($1-2M, 12 міс, 150K+ beneficiaries). Exit strategy per phase. Risk register.</td></tr>
+
+<tr><td><strong>GDrive Tech: Оцінка бюджету платформи</strong></td><td><span class="status-have">SECONDARY</span></td><td>Повна деталізація: $950K-$1.54M (core), $1.1-$1.8M з AI. Breakdown: ядро $300-450K, AI/ML $150-250K, blockchain $100-180K, QA $70-120K, DevOps $40-70K. AI ROI: -20-30% OpEx, 95-97% accuracy.</td></tr>
+
+<tr><td><strong>GDrive Tech: ТЗ демо MHPSS TWG</strong></td><td><span class="status-have">SECONDARY</span></td><td>30-хвилинний сценарій демо для Enkidu: 5 блоків (Dashboard координації, mhGAP автоматизація, blockchain дедуплікація, інтеграції UA+international, live Q&A). Тестові дані: 50 org, 500 psychologists, 10K sessions.</td></tr>
+
+<tr><td><strong>GDrive Tech: Chatbot spec</strong></td><td><span class="status-partial">SUPPORTING</span></td><td>Chatbot ТЗ: PHQ-9/GAD-7/PCL-5 інтеграція, WHO protocols (PFA, Self-Help Plus, PM+), crisis detection, sentiment analysis. Для Операційного (digital components).</td></tr>
+
+<tr><td><strong>GDrive Tech: Platform deployment doc</strong></td><td><span class="status-partial">SUPPORTING</span></td><td>Комплексний документ: технології (AI/ML, blockchain, cloud, ERP), штатний розклад (16 осіб), Ганта (9 етапів), стейкхолдер mapping, комунікаційний план. Містить діаграму Ганта — потенційне джерело для Операційного.</td></tr>
+
+<tr><td><strong>GDrive Fin Model: ProtoFund Parametric Program</strong></td><td><span class="status-have">SECONDARY</span></td><td>77K doc "National psychological recovery parametric program" (2022-2025). Milestone-Based Funding, Digital Tools, Core Architecture. Для Стратегічного (parametric model обґрунтування).</td></tr>
+
+<tr><td><strong>GDrive Fin Model: Grant Agreement ALC-OSF</strong></td><td><span class="status-partial">SUPPORTING</span></td><td>200K doc, 2023. Грантова угода з Open Society. Занадто великий для прямого читання. Може містити procurement terms та budget templates.</td></tr>
+
+<tr style="background:#fff3cd;"><td colspan="3" style="padding:10px; font-weight:bold; color:#856404;">НОВІ ДЖЕРЕЛА (знайдені 19.03.2026, батч 1)</td></tr>
+
+<tr><td><strong>GDrive: Fin Model v2 Corrected (fin mod 2)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Повна фінмодель v2.0 (Nov 2025). Опрац витрати €800K/рік (10 позицій: CEO €120K, COO €80K, CTO €70K etc.). Розробка €350K (blockchain €120K, web/mobile €80K, VR €60K, APIs €40K, security €50K). Комісія 2.5-3.5% tiered (базова/стандартна/преміум). Breakeven: 711 психологів при 2.5%. 3 сценарії: песимістичний (€1.265M грантів, BE 36+ міс), реалістичний (€812.5K, BE 18-24 міс), оптимістичний (€475K, BE 12-15 міс). ROI для донорів 15-35x. Funding pipeline: Wellcome Trust £3-7M, SEED SPOT $100K, UNICEF Venture $100K crypto, Lever for Change $500K-2M, EU/DG ECHO €500K-2M, Horizon €3M, Grand Bargain $2-5M. <strong>УВАГА:</strong> Комісія 2.5-3.5% = рівні обслуговування (tiered). Дегресивна 7→3% = зниження з часом. Це різні речі — обидві валідні.</td></tr>
+
+<tr><td><strong>GDrive: Fin.Mod. FEEL×ТИ ЯК? (Oct 2025)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Детальна модель cooperации з ТИ ЯК?. Breakeven €32M обігу = 711 психологів × €45K/рік × 2.5% комісія. Структура витрат: платформа €500K (одноразово), операційні €800K-1.07M/рік, капаситет €270-630K/рік. 3-річний прогноз: Y1 500 psych / €15M / -€375K; Y2 1,500 / €56M / +€716K; Y3 3,000 / €135M / +€2.7M. ROI 520% на Chemonics 15% ($51M through FEEL → $6.63M savings). P2P мультиплікатор 8.5-9x. Exit strategy: &lt;500 psych за 12 міс → припинення. <strong>ЧУТЛИВІСТЬ:</strong> цей документ ФРЕЙМИТЬ ТИ ЯК? як партнера, не клієнта.</td></tr>
+
+<tr><td><strong>Uploaded: Pilot Projects Roadmap.md</strong></td><td><span class="status-have">PRIMARY</span></td><td>Повний план 17 пілотних проєктів у 4 групах: А — Стартові для психологів (4 проєкти, $270K: A1 «Ставай гум. актором» $52K, A2 «Отримуй гідну оплату» $78K, A3 «Поширюй досвід» $95K, A4 Законодавчі $45K); Б — Пілоти гум. реагування (7 проєктів, $1.055M: Б1 Ветерани+бізнес $125K, Б2 Діагностика $95K, Б3 Де-ризик фінансування $180K, Б4 Best practices $110K, Б5 Data coordination $140K, Б6 VR реабілітація $220K, Б7 Міноборони $85K); В — Інфраструктурні (2 проєкти, $140K: В1 Grand Bargain $65K, В2 ТИ ЯК?/USAID $75K); Г — Технологічні (3 проєкти, $480K: Г1 Краудфандинг $160K, Г2 KYC/банки $120K, Г3 Глобальні інтеграції $200K). ВСЬОГО $1,945K. Timeline: 0-6 MVP, 7-12 масштабування, 13-18 повна екосистема, 19-24 інституціоналізація. <strong>MATCH:</strong> Повністю відповідає UNIFIED_PROGRAM_MATRIX. Детальніші breakdown витрат по кожному проєкту.</td></tr>
+
+<tr><td><strong>Uploaded: Mermaid Gantt SVG (Jul 2025)</strong></td><td><span class="status-partial">OUTDATED</span></td><td>Ганта-діаграма з 16 задачами у 4 секціях: Пакет 1 (Capacity), Системні елементи, Пакет 2 (Гуманітарне реагування), Інфраструктура фінансування. Період Aug-Oct 2025. <strong>СТАТУС:</strong> Побудована на попередній проєктній сітці — ПОТРЕБУЄ ПОВНОЇ ПЕРЕБУДОВИ (підтверджено користувачем). Цінність: логіка секвенування задач може бути використана як відправна точка.</td></tr>
+
+<tr><td><strong>GDrive: REORGANIZATION_LOG_2026-02-25</strong></td><td><span class="status-partial">UTILITY</span></td><td>Лог реорганізації архіву Feel: 901 файлів, 29 операцій (20 успішних, 8 умовних, 1 невдала). Перейменування: Metodology→Methodology, fundrising→Fundraising, Steakholders→Stakeholders. Структура: Partners/BGV/, Communication/, Concept/, _PENDING_REVIEW/. Корисно для навігації по файловій системі.</td></tr>
+
+<tr style="background:#d4edda;"><td colspan="3" style="padding:10px; font-weight:bold; color:#155724;">НОВІ ДЖЕРЕЛА (завантажені та прочитані 19.03.2026, батч 4) — ВСІ NOT-FETCHABLE ЗАКРИТО</td></tr>
+
+<tr><td><strong>Uploaded: feel-again-financial-model.html (25K)</strong></td><td><span class="status-have">UPLOADED & READ</span></td><td>5-річний P&L: Revenue $500K(2025)→$9.5M(2029). EBITDA -$330K→$5M. 4 monetization streams: grants (40%→10%), commissions (0%→40%, 0→3%), premium subs (Free/Pro $50/Expert $200/Corp $5K), additional services (API $0.01/req, analytics $500-5K, white-label $50K+). 2025 budget $830K: Personnel $200K, Tech $150K, Pilots $350K, Marketing $50K, Ops $80K. Unit Economics: Psych CAC $150, LTV $7,200, LTV/CAC 48:1, churn 15%, payback 2mo. Investment ROI 430%, IRR 67%, NPV@15% $12.3M, breakeven Q3 2026. 3 scenarios: pessimistic (180% ROI), base (430%), optimistic (850%). User: «верній ход місли». Для Операційного (unit economics), Стратегічного (financial sustainability), Комунікаційного (ROI messaging).</td></tr>
+
+<tr><td><strong>Uploaded: feel-again-parametric-model.html (28K)</strong></td><td><span class="status-have">UPLOADED & READ</span></td><td>Parametric formula: E = (B × CR × QI) / (AC × T). Current params: 87 psychologists (target 100), 412 beneficiaries/mo (target 500), 78% completion (target 80%), 36hr time-to-therapy (target 48hr). Financial: ₴850/session, $42K/mo burn, 18% P2P, 8.5% admin (target ≤10%). Quality: NPS 72, 42% symptom reduction, 25% recidivism, 85% retention. 2 scenarios: Fast scaling (500 psych, 7,500 benef/mo, $3M needed, BE Q3 2026), Quality focus (200 psych, NPS 85+, 15% recidivism). Alert system: completion &lt;60% → audit; time &gt;72hr → escalation; burn &gt;budget+20% → freeze. API endpoints documented. User: «архітектурно вірна». Для Стратегічного (parametric M&E framework), Операційного (alert thresholds, KPI targets).</td></tr>
+
+<tr><td><strong>Uploaded: FEEL_Again_Financial_Master_v3.xlsx (4 sheets)</strong></td><td><span class="status-have">UPLOADED & READ</span></td><td>Date 24.10.2025. 00_ЗВЕДЕНА_ПАНЕЛЬ: 3 streams (Official NPA 2,644 psychologists, Shadow 11,700 Y1, API integrations 5,000). CRITICAL: excluded 114K mhGAP workers (family doctors NOT psychologists). Admin burden 25%→10% (NOT 5%). 01_Базові_дані: validated base data with sources — 15M MHPSS need (WHO/UNDP/MoH), 3.3M moderate/severe (22%), 2,644 NPA, 11,700 shadow (8K-15K range), 14,344 total, 232 cluster partners, 142 actively reporting, 90 CMHT, 5,000 digital, 200 workdays/year, 1,600 hrs/year, €40/hr, €30-60/session, 12-20 sessions/course WHO. 02_Офіційні_НПА: Flow 1 calculations (freed hours, additional sessions, economic value EUR, beneficiaries). 03_Тіньові_психологи: Flow 2 (10%→20%→30% adoption over 3 years, 50% humanitarian capacity). <strong>УВАГА:</strong> формули в 02/03 не resolved при reading — structure captured, computed values in summary panel. Для Документа 4 (canonical base data), Операційного (3-stream model), Стратегічного (workforce sizing).</td></tr>
+
+<tr><td><strong>Uploaded: FEEL_Again_Master_Data.xlsx (7 sheets)</strong></td><td><span class="status-have">UPLOADED & READ</span></td><td>ПРОЕКТ СВІТИ (Train for Care) specific calculations. Input Data: 4,500 ATB veterans, 25% PTSD (Rizzo 12.9-30%), 15% with adolescents 12-16. GEHA training: €39K for 20 psych (€26K EMDR 66hrs + €13K VR Bravemind 33hrs = 99hrs total), cost €1,300/psychologist. Pro-bono 120hrs/year/psychologist. Executive Summary: 4 deployment scenarios — Pilot (126 benef, 20 psych, €140K), Expansion (445, 20, €120K), All ATB (558, 20, €100K), Oblast (3,808, 60, €216K). Efficiency vs WHO: 0.86x→16.84x. Freed time 456hrs/year/psych = 430 courses/year for 20. Калькулятор сценаріїв: 4-stage with training costs, pro-bono tracking. Калькулятор ефективності: €70 project = 70% of EU €100. VR equipment: rental €225/mo, middleware €35K, VR contest €100K option. Donor scoring params: Localization 100%, Efficiency 91.5%, Transparency 100%. Для Операційного (Train for Care project cards), Документа 4 (validated base numbers).</td></tr>
+
+<tr><td><strong>Uploaded: Donor Scoring (Copy).xlsx (8 sheets)</strong></td><td><span class="status-have">UPLOADED & READ</span></td><td>LIVE HUMANITARIAN CONTROL CENTER. Grand Bargain metrics: Localization 100% PASS (vs 25% target), Quality Funding 12mo PASS (vs 24mo), Participation 87% PASS (vs 80%), Admin 8.5% PASS (vs 30%). Scoring: 5 weighted params — Local 25%/100pts, Efficiency 25%/91.5pts, Impact 20%/TBD, Transparency 15%/100pts, Community 15%/TBD. Current composite: 37.875 (REVIEW zone, 2 params TBD). Thresholds: &gt;75 auto-invest, 50-74 review, &lt;50 reject. Queue: СВІТИ Pilot/Expansion/Oblast all at 37.875 pending Impact+Community scores. Contains same base data as Master Data file. Для Стратегічного (GB compliance evidence), Операційного (donor scoring mechanism), Комунікаційного (GB metrics messaging).</td></tr>
+
+<tr><td><strong>GDrive: Complementarity Strategy (21.7K)</strong></td><td><span class="status-have">FETCHED & READ</span></td><td>Full complementarity framework, 10 sections + appendices. §1: ТИ ЯК? role distribution table (ТИ ЯК?: public leadership, policy, fundraising; FEEL: technical backend, automation, blockchain, data). Win-win: First Lady gets credit + transparency; FEEL gets legitimacy + scale. §2: Chemonics/USAID — current admin $102M (30%), with FEEL $68M (20%), savings $34M/year, ROI 25-35x. §3: WHO Clusters — MHPSS TWG role split (WHO: standards; FEEL: implementation). §4: Private Sector — UPRA, Helsi (15M+ users), shadow legalization. §5: Unique Value — Visa metaphor (30% lost per level vs 2-3% FEEL). §6: Non-complementarity RISKS — blocking, rejection, trust loss, fragmentation. Communication strategy: always infrastructure, never leadership, constantly credit partners. §7: Implementation 3 phases (Q4 2025→Q2 2026+). §8: Metrics (50→300→500 orgs, $5M→$75M savings, 15K→500K beneficiaries). §9: Communication messages per audience + FORBIDDEN phrases ("better alternative", "replace inefficient", "only solution", "partners can't cope", "we control"). §10: Formula = Technical Excellence + Institutional Humility = Partner Trust. Appendix A: Stakeholder matrix (influence × interest). Для Стратегічного (PRIMARY complementarity), Комунікаційного (forbidden phrases, audience messages), Мастер (positioning).</td></tr>
+
+<tr style="background:#d4edda;"><td colspan="3" style="padding:10px; font-weight:bold; color:#155724;">НОВІ ДЖЕРЕЛА (прочитані 19.03.2026, батч 5) — uploaded + GDrive + pasted text</td></tr>
+
+<tr><td><strong>Uploaded: 04_Communication_Strategy.html (22K)</strong></td><td><span class="status-have">PRIMARY</span></td><td>КОМПЛЕКСНА КОМУНІКАЦІЙНА СТРАТЕГІЯ FEEL Again × ТИ ЯК?. 9 секцій: 3-фазна стратегія (stealth→pilot→public launch), стейкхолдер-матриця (8 рядків), ключові меседжі для 3 аудиторій, 6 каналів комунікації, кризовий протокол (5 типів криз, 3 рівні ескалації), матриця затвердження (3 рівні), 7-місячний таймлайн, 6 KPIs, бюджет €169K. <strong>КРИТИЧНЕ ДЛЯ ДОКУМЕНТА 5.</strong></td></tr>
+
+<tr><td><strong>Uploaded: FEEL_Again_Pilot_Projects_Roadmap.html (27K)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Детальний план пілотних проєктів. 4 пакети: A ($270K, 500+ psych — A1 верифікація $52K, A2 smart contracts $78K, A3 VR оператори $140K), B ($155K, гуманітарне — B1 P2P $85K, B2 IDP $70K), C ($220K, координація — C1 dataset $120K, C2 Centre of Excellence $100K), D ($65K, законодавчі). Модель доходів Y1-Y3, M&E targets: 10K beneficiaries, 1K psych, 25%+ localization. <strong>УВАГА:</strong> БЮДЖЕТНА РОЗБІЖНІСТЬ: executive summary каже $510K, сума 4 пакетів = $710K. Для Операційного.</td></tr>
+
+<tr><td><strong>GDrive: Donor_Coordination_Unified_Dataset_Protocol (28K)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Повний операційний протокол координації донорів. Python/JS код: DonorDeduplication class, MHGAPIndicatorCalculator (6 груп індикаторів), DHIS2Synchronizer, DataAnonymizer (k-anonymity check). 4-фазний Gantt (Q4 2025 — Q2 2026). <strong>КРИТИЧНЕ ДЛЯ ДОКУМЕНТА 3</strong> (координація) та <strong>ДОКУМЕНТА 2</strong> (M&E).</td></tr>
+
+<tr><td><strong>GDrive: КМУ Постанова №506 від 02.05.2025 (35K)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Постанова КМУ «Про затвердження Порядку функціонування інформаційної платформи громадського здоров'я». Підпис Шмигаля. Визначає: датасети, індикатори, групи користувачів, права доступу, шаблони звітності, інтеграція DHIS2. <strong>МОЖНА І ТРЕБА ПОСИЛАТИСЯ НАПРЯМУ</strong> — легальна основа для єдиної інформаційної інфраструктури. Для Стратегічного (regulatory basis) та Мастер.</td></tr>
+
+<tr><td><strong>GDrive: Solana MVP Technical Plan (21K)</strong></td><td><span class="status-have">SECONDARY</span></td><td>Повна MVP архітектура: 4 портали → API Gateway → Business Logic → Solana. Rust smart contracts: CofinancingPool (повний код), TokenRewards. Python AI matching engine (зважений: specialization 35%, language 25%, experience 20%, availability 15%, success 5%). TherapyOutcomePrediction ML model. Security: AES-256-GCM, k-anonymity. Real-time analytics dashboard. Для Операційного.</td></tr>
+
+<tr><td><strong>Pasted: Tom Fletcher humanitarian text (~5K)</strong></td><td><span class="status-have">PRIMARY</span></td><td>МАСИВНИЙ стратегічний документ: Problem (9.6M, 3.6M moderate/severe), Solution (FEEL = tech bridge), Window of opportunity (Humanitarian Reset), Double ROI. 3 Strategic Hooks (#1 model for export, #2 missing digital bus — 7-10 unsynchronized systems, #3 Grand Bargain 3.0). 3 Alternative Paths: A (associations+E&Y), B (Centre of Excellence→MinEcon), C (diaspora). Ukrainian Humanitarian Fund → IASC pathway. <strong>УВАГА:</strong> стверджує Chemonics "$51-100M real" — СКОРИГОВАНО КОРИСТУВАЧЕМ ДО $15M (підтверджено дослідженням у GDrive). Для Стратегічного та Комунікаційного.</td></tr>
+
+<tr><td><strong>Uploaded: 03_Financial_Model_Corrected.html (21K)</strong></td><td><span class="status-partial">DUPLICATE</span></td><td>Дублікат раніше прочитаного Fin.Mod. FEEL×ТИ ЯК? (Oct 2025). Той самий контент: breakeven 711 psych, €50/hr, €800K opex, 3 scenarios, Chemonics ROI 520%.</td></tr>
+
+<tr style="background:#d4edda;"><td colspan="3" style="padding:10px; font-weight:bold; color:#155724;">НОВІ ДЖЕРЕЛА (прочитані 19.03.2026, батч 6) — фінальний технологічний батч</td></tr>
+
+<tr><td><strong>Uploaded: The missing middle.html (226K)</strong></td><td><span class="status-have">CRITICAL PRIMARY</span></td><td>НАЙВАЖЛИВІШИЙ ДОКУМЕНТ БАТЧУ. Повна 12-слайдова двомовна (UA+EN) презентація «The Missing Middle», лютий 2026, A4 landscape. Слайди: 1)Cover, 2)CRISIS: Evidence Base (9.6M, 46% decline, 12-20% PTSD, ~4,000 workforce), 3)Provider Pipeline (shadow 8-15K, humanitarian, psychiatric ~2,700/4,000, online 1,600+), 4)Digital Bridge (3 осі: providers↔beneficiaries, providers↔state, global↔local; 7 функцій мосту), 5)What the Infrastructure Is (6-layer arch: Provider, Session, Payment, Audit, P2P, Open API; 3-tier mgmt: Operator FOS, Scientific USC, Supervisory Board; Training Arm: 10 років war-zone evaluation), 6)Governance (Operator=FOS+Enkidu+Quoroom, Scientific=USC ICT, Board=int'l anchor, Training=GEHA+USC+KNU; Dr. Rizzo legacy), 7)State Integration (4 фази: Parallel/Stealth→eHealth→SaaS→National Standard; 3 legal: Law on Psychosocial Support 2024, EU Investment Framework €5.7B, Budget Code blended finance), 8)Stepped Care (Tier 1 55% 1:200+ VR, Tier 2 25% 1:50-80 BRAVEMIND, Tier 3 15%, Tier 4 5%; WHO alignment), 9)Accountability Cycle &amp; Dashboard, 10)Three-Tier Outcome Metrics, 11)Financial Architecture v5 (revenue: session commission 3.5%, SaaS license, subscription €5/month; Y1 €23K→Y3 €95K vs OPEX €300-450K), 12)Provider Pipeline table (Y1 140-300→Y3 1,150-2,200). <strong>ВИКОРИСТОВУВАТИ ДЛЯ ВСІХ 5 ДОКУМЕНТІВ як візуальний/наративний anchor.</strong></td></tr>
+
+<tr><td><strong>Uploaded: FEEL_AGAIN_Executive_Presentation.pdf.pptx (11 слайдів)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Executive PPTX presentation, Feb 2026. 11 slides: Crisis, Solution (Digital Infrastructure), Governance &amp; State Integration, Stepped Care Model, Accountability Cycle, Provider Pipeline table, Financial Architecture (VR revenue split $12.50, partnership terms USC phases), Consortium Partners (USC ICT, GEHA, FOS, KNU + tech partners), Deployment Roadmap (2026 Hot Start→2027 Regional→2027+ National+Export), Closing. <strong>УВАГА:</strong> Complementary to «The Missing Middle» HTML — partially overlaps but adds consortium partners table and deployment roadmap details. Для Мастер та Комунікаційного.</td></tr>
+
+<tr><td><strong>Uploaded: 05_Functional_Specification.html (29K)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Функціональна специфікація: MVP vs Full. MVP: 6 міс, €500K, 500 users, 1,540 dev hrs. Full: 18 міс, €1.5M, 100K+ users, +2,700 hrs (5,780 total). 5 модулів: A-Користувачі (реєстрація, KYC, профілі), B-Matching (алгоритм, календар), C-Платежі (crypto, fiat, P2P), D-Blockchain (ledger, smart contracts), E-Звітність (donor reports, dashboards). Вартість: MVP €123,200, Full додатково €216,000. User flows MVP (email→manual verify→match→payment 48h) vs Full (DIA→AI matching→P2P→smart contract). API інтеграції Full: OCHA FTS, WHO mhGAP, USAID DDL, DIA, Banks, Zoom. Timeline 18 міс, 5 фаз. Для Операційного (MVP spec, cost breakdown).</td></tr>
+
+<tr><td><strong>Uploaded: Tech &amp; integration Claude.html (41K)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Повна технологічна архітектура + ТЗ. 6-layer architecture (Presentation→API Gateway→Application→Service→Data→Infrastructure). Performance: 10K req/sec, &lt;200ms p95, 99.9% uptime, 100K users. Blockchain comparison: QLDB (recommended MVP)→Hyperledger→Solana→PostgreSQL. Tech stack: React 18/Next.js 14/TypeScript, Node.js 20/GraphQL/Prisma, AWS/Docker/Terraform. ТЗ на інтеграції: Платежі (PrivatBank/Monobank/Stripe з endpoints), Медичні (Helsi FHIR/eHealth), KYC (DIA.Pidpys/BankID NBU), Комунікації (Twilio/SendGrid/Telegram). Blockchain ТЗ: QLDB implementation + Solana migration 2026+. Dataset ТЗ: Data Lake (Airflow/Glue, ETL), ML pipeline (matching, churn, demand, quality, anomaly; MLflow/SageMaker). Звітність: IATI 2.03 (3 API endpoints), Superset+Metabase dashboards. Security: TLS 1.3, AES-256, JWT+2FA, RBAC, GDPR, ISO 27001, PCI DSS. Інтеграції status: PrivatBank/Monobank/Twilio=ready, DIA/QLDB=in progress, Helsi/OpenAI/IATI=planned. Для Операційного (primary tech TZ source).</td></tr>
+
+<tr><td><strong>Uploaded: VR Tech.html (6K)</strong></td><td><span class="status-partial">SUPPORTING</span></td><td>CTO Spec: VR/AI/Data/Finance/IATI. 5 модулів: VR-Experience (Unity/Unreal, GPT-4 scenarios), AI-Engine (GPT-4, embeddings), Data Hub (PostgreSQL/Mongo, ETL), Reporting UI (React, Chart.js, XML), Integration API (REST/GraphQL). 6 pipeline задач (VR-01→VR-03, AI-01→AI-03) з KPIs та ризиками. IATI XML template (v2.03, humanitarian=1). Financial flow diagram. Для Операційного (VR module spec).</td></tr>
+
+<tr><td><strong>GDrive: ЛИСТ МОН 1/9-477 від 24.07.2019 (27K)</strong></td><td><span class="status-partial">SUPPORTING</span></td><td>Лист Міністерства освіти і науки, 15 додатків: стандартні шаблони для шкільних психологів та соціальних педагогів — річний план, журнал, протоколи діагностики/консультації, облік корекційних занять, графік роботи, соціальний паспорт. Це регуляторний контекст: показує формальну документаційну/адміністративну навантаженість працівників. Для Стратегічного (regulatory landscape) та Документа 4 (workforce structure).</td></tr>
+
+<tr><td><strong>Uploaded: FEEL Again — National MHPSS Digital Infrastructure.pdf (13 стор.)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Partnership Development Framework v3.0 для Prof. Rizzo / USC ICT, лютий 2026. 9 секцій: Problem (Missing Middle — 3 сектори disconnected, bottleneck 400-500 clinical psychologists ~1/100K), Solution (stepped care + VR), Accountability Cycle (5-step: Donor→Beneficiary→Provider→Result→State/GDP), USC ICT role («scientific anchor not vendor»), Competitive landscape (Aspichi/Luminify Level 1 only, d=0.28-0.43, $555K raised), Provider pipeline (4 sources Y1 140-300, Y2 550-1,150, Y3 1,150-2,200), Financial architecture (platform fee 5-7%→2.5%, BRAVEMIND revenue split USC Author 50% + Platform 30% + USC OK 10% + Reserve 10% = $12.50/session), Partnership terms (3 phases: advisor→partner→full w/equity option 20%), Deployment roadmap. KEY QUOTE: «Єдиний спосіб закрити її — змінити співвідношення: зменшити або усунути потребу в терапевті для легких та середніх випадків». 4-level stepped care: L1 EASY (self-VR, 1:hundreds), L2 MEDIUM (VR+supervision, 1:50-80 THE MULTIPLIER), L3 HARD (VR+clinician, BRAVEMIND), L4 COMPLEX (traditional+meds). Math: 4,000×25/week=100K/yr (1%). Stepped: 300K-500K/yr (3-5x). Для Мастер (positioning), Стратегічного (USC partnership), Операційного (VR deployment).</td></tr>
+
+<tr><td><strong>Uploaded: API Integration.pdf (5 стор.)</strong></td><td><span class="status-partial">SUPPORTING</span></td><td>Perplexity-generated research: 6 categories humanitarian digital APIs — UN OCHA (HDX API), FTS (REST API), UNHCR Global Focus, ReliefWeb, Start Network, HOT, REACH Initiative. Кожен з URL, типами даних, обмеженнями. Для Операційного (API integration reference).</td></tr>
+
+<tr><td><strong>Uploaded: feel-again-tech-architecture-cf7918f8.html (59K)</strong></td><td><span class="status-partial">DUPLICATE</span></td><td>Дублікат раніше прочитаного Tech Architecture / Solana TZ (батч 3). Той самий 59K файл.</td></tr>
+
+<tr><td><strong>Uploaded: 20251012 ДЕМО .gslides</strong></td><td><span class="status-missing">NOT FETCHABLE</span></td><td>Google Slides presentation — НЕ підтримується Google Drive API (тільки Google Docs). Потрібно: export як PPTX або PDF для прочитання.</td></tr>
+
+<tr style="background:#fff3cd;"><td colspan="3" style="padding:10px; font-weight:bold; color:#856404;">НОВІ ДЖЕРЕЛА (знайдені 19.03.2026, батч 2)</td></tr>
+
+<tr><td><strong>GDrive: Методології (EMDR + VR)</strong></td><td><span class="status-have">SECONDARY</span></td><td>9K doc з детальним описом EMDR (WHO/APA рекомендовано), VR-терапії (Hoffman, Rothbaum, Rizzo, Riva — 25 років досліджень), комбінації EMDR+VR. Ключове: VR з доказаною клінічною ефективністю = 70% підтверджено USC ICT. Ліцензії обмежені за часом, не кількістю. Більшість VR-контенту потребує локалізації. Клінічний протокол ПТСР з VR затверджено в Україні. Для Мастер-документа (блок Centre of Excellence) та Операційного (VR integration).</td></tr>
+
+<tr><td><strong>GDrive: «*2» — Комплексний аналітичний документ (20K)</strong></td><td><span class="status-have">PRIMARY</span></td><td>МАСИВНИЙ аналітичний документ з множинними секціями: НЕСЗ роз'яснення (НСЗУ оператор, з 2018), архітектура нової платформи (Financial Hub Layer), Blockchain+P2P+Centre of Excellence пропозиція, 3 «сліпі зони» гуманітарного сектора (inputs≠outcomes, private≠bad, «після перемоги»), 3 сліпі зони медичного сектора (psychologist≠doctor, budget=fixed pie, eHealth=future), сліпі зони Мінекономіки (mental health не в GDP), методологія Mental Health Satellite Account (Direct/Indirect/Intangible/Counterfactual costs), стратегія переконання для 3 аудиторій, верифікація 38K UNICEF (95% не клінічні), тіньовий сектор evaluation, «всі хто міг би» сценарій, 70% treatment gap аналіз. <strong>KILLER QUOTES:</strong> «Ви вимірюєте кількість навчених. Пацієнти вимірюють кількість одужань», «Human capital — це теж інфраструктура», «Doing nothing harms 74%». Для ВСІХ 5 документів.</td></tr>
+
+<tr><td><strong>GDrive: Complementarity_Strategy_Document_UA.md</strong></td><td><span class="status-missing">NOT FETCHABLE</span></td><td>Markdown файл — не читається через Drive API. За назвою — стратегія комплементарності. Критично для Стратегічного документа. Потрібно: upload.</td></tr>
+
+<tr><td><strong>GDrive: feel-again-tech-architecture.html</strong></td><td><span class="status-have">UPLOADED & READ</span></td><td>59K файл завантажено та прочитано (батч 3). Solana blockchain TZ з Rust smart contract structures (TherapySession, PaymentEscrow, SessionStatus enum). Full microservices architecture: React + React Native → Kong/Istio API Gateway → RabbitMQ + Kafka + Redis Pub/Sub → Kubernetes → Solana → PostgreSQL + MongoDB + Redis + S3 + TimescaleDB. Порівняння: Amazon QLDB vs Hyperledger Fabric vs Solana vs PostgreSQL. Performance: 10K req/sec, <200ms p95, 99.9% uptime, 100K users. Для Операційного (ТЗ для HighCastle/Quoroom).</td></tr>
+
+<tr><td><strong>Pasted: MVP та Пілотні Проєкти (launch plan)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Структуроване описання запуску через 6 напрямків: 1) Гуманітарне реагування (escrow smart contracts, P2P, Grand Bargain advocacy), 2) Сталий розвиток (AI аналіз деперсоніфікованих даних, навчальний модуль), 3) Місткість та ефективність (онбординг психологів, верифікація, кабінет), 4) Відкриті дані (оцифрування 10 років практики, API для партнерів, переговори з MHPSS Cluster і ТИ ЯК?), 5) Комунікації (ветерани-побратими як пре-кваліфікатори травми, мобільний інтерфейс, трекінг рефералів), 6) Технології (VR хеджування ризику місткості, VR API). MVP: Бенефіціарам = AI тріаж → реєстрація → підбір 2-3 психологів → підтвердження; Психологам = онбординг, Solana гаманець, пул бенефіціарів, миттєві виплати; Донорам = прозорість, скоринг, підзвітність. <strong>MATCH:</strong> Це актуальна версія launch plan, відповідає 6 шарам програми.</td></tr>
+
+<tr><td><strong>GDrive: Letters (3 знайдено)</strong></td><td><span class="status-partial">PARTIAL</span></td><td>Знайдено через пошук: 1) Letter to Groningen (КНУ/Трофімов → Voloshina/van den Berg, Sept 2025 — research collaboration for MHPSS economic models), 2) Academic cooperation letter (те саме, раніша версія, Horizon Europe €7M deadline), 3) BGV letter 14.11.25 (65K — розгорнута відповідь на питання БГВ щодо Train for Care, VR для підлітків, EMDR, до-співфінансування). Папка з листами не індексується повністю (non-GDoc formats). Для Комунікаційного документа (templates, positioning у листуванні).</td></tr>
+
+<tr style="background:#fff3cd;"><td colspan="3" style="padding:10px; font-weight:bold; color:#856404;">НОВІ ДЖЕРЕЛА (завантажені та прочитані 19.03.2026, батч 3)</td></tr>
+
+<tr><td><strong>Uploaded: Comprehensive Launch Plan EN (171K)</strong></td><td><span class="status-have">PRIMARY</span></td><td>НАЙБІЛЬШИЙ ДОКУМЕНТ у пакеті. Повна білінгвальна (EN+UA з data-en/data-uk) версія launch plan. 12 секцій з навігацією: Humanitarian Response, Priority Recovery, Dual Outcome, For Psychologists, Interaction Flow, Blockchain, Roadmap (3 фази + 5 пілотів), Architecture (6 microservices table), Team (6 ролей), Legal Strategy (hybrid CF+LLC UA + 501(c)(3) US + C-Corp), Financials ($1.7-2.45M Phase 1, $4.75-7.6M Full Load), Dashboard. <strong>КЛЮЧОВЕ:</strong> Має повний 8-step Beneficiary Journey (4-column interaction matrix), 5 PILOT projects (VET-01, DATA-02, MARKET-03, NET-04, CSR-05) з KPIs, Gantt (6 міс, color-coded), Monetization Model (4 streams), 3-Phase Market Transition (Incubation→Hybridization→Maturity), Risk&Compliance (collaboration laws, FOP, OFAC, transfer pricing). Деякі цифри не актуальні (per user). Для Мастер, Операційного, Стратегічного — cross-cutting.</td></tr>
+
+<tr><td><strong>GDrive: Grand Bargain Strategic Proposal (12K)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Стратегічна пропозиція Tom Fletcher / UN. Адресовано: Tom Fletcher ERC UN, CC: WHO Ukraine, Health Cluster, First Lady's Office, Chemonics. Дата: Sept 23, 2025. 12 секцій: §1 Crisis (9.6M need MH, 3.9M moderate-severe, 1.2% direct localization, 78% shadow, 74% IDP без допомоги), §2 Infrastructure not Competition (Visa/Mastercard metaphor, Mermaid flow: traditional 30% lost vs FEEL 2% cost), §3 GB 3.0 Compliance (27% localization 2026, 35% by 2027, admin overhead 20%→10%), §4 Humanitarian Reset (lighter 60% reduction reporting, faster same-day funding, less bureaucratic smart contracts), §5 ВІДСУТНІЙ, §6 Technology (5 consensus nodes, VR 70% improvement, AI coordinator class), §7 Stakeholder Benefits (UN: first 25% target country; Govt: €58M tax revenue, 10K jobs; Donors: 35% admin cost reduction; Local: 90% reporting reduction; Beneficiaries: 10K+ providers), §8 Risks (4 categories), §9 Roadmap Q4 2025-2027 (4 phases: Foundation→Scaling→National→Global), §10 Call to Action (€1.5M seed), §11 Why Ukraine Now, §12 Commitments. <strong>УВАГА:</strong> §5 ВІДСУТНІЙ у документі. Дати Sept 2025 — потребують оновлення. Деякі цифри aggressive (€58M tax, 10K jobs). Для Стратегічного (GB alignment) та Комунікаційного (elevator pitch, stakeholder benefits).</td></tr>
+
+<tr><td><strong>Uploaded: Train for Care CSR Pitch (18K)</strong></td><td><span class="status-have">SECONDARY</span></td><td>Корпоративний CSR-пітч для підтримки ветеранів. Ключові цифри: 450,000 ветеранів повертаються, 6,750,000 годин терапії потрібно, $200K investment → 60 trained specialists, 8,000 therapy hours ($400K value), 500 veterans rehabilitated, 200% Social ROI. GEHA Israel: «Клінічні втручання у ASR, ASD, PTSD». Контакт: Ольга Каостра, +380 73 788 21 98. Для Комунікаційного (CSR messaging) та Операційного (Train for Care pilot cards).</td></tr>
+
+<tr><td><strong>Uploaded: Executive Summary EN v3 (21K)</strong></td><td><span class="status-have">SECONDARY</span></td><td>Англійська embassy presentation version. Stats: 15M need support, 5% GDP impact, $500K pilot, 20-30% efficiency gain. 3 pilot packages: Capacity Building (100 psych), Response Testing (de-risked co-financing), System Integration (institutional readiness). Grand Bargain / Humanitarian Reset alignment: Local Leadership, Efficiency Drive, Transparency, Impact Focus. <strong>УВАГА:</strong> User каже «удачній варіант саммарі хоч і застарілі цифри». Для Комунікаційного (embassy pitch structure) та Мастер (structure reference).</td></tr>
+
+<tr><td><strong>Uploaded: Комплексний План Запуску UA (19K)</strong></td><td><span class="status-have">SECONDARY</span></td><td>Українська версія launch plan з Mermaid діаграмами. Strategic justification: admin costs <10%, targeting >90%, P2P leverage. Mermaid multiplication architecture (3 phases with hypothesis gates and dependencies). Master protocol sequence diagram (full beneficiary lifecycle). Gantt 6-8 міс. Project cards with KPIs/risks. Budget CSV. Team structure. Key calculation: On $10M budget saves $3.5M → 4,375 additional rehabilitation courses = 35% more beneficiaries. Market potential: 50K psych × $50K/year = $2.5B/year. User каже: «гарні діаграми». Для Операційного (Mermaid diagrams) та Стратегічного (35% savings calculation).</td></tr>
+
+<tr><td><strong>Uploaded: Program Directions (31K)</strong></td><td><span class="status-have">SECONDARY</span></td><td>5 program directions з повним обґрунтуванням: 1) Fundraising & transparent distribution, 2) Sustainable sector development, 3) Provider capacity & effectiveness, 4) Open datasets, 5) Beneficiary support. Кожен напрямок має: goals, tasks, expected results, pilot projects, hypotheses, risks & mitigation, standards compliance. Key numbers: 3,000 psych за 2 роки, $150M/рік tax revenue, 50K potential market. Для Операційного (project justification) та Стратегічного (hypotheses/risks per direction).</td></tr>
+
+<tr><td><strong>Uploaded: Tech Architecture / Solana TZ (59K)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Повне ТЗ для HighCastle/Quoroom з Solana blockchain. Rust smart contract structures (TherapySession, PaymentEscrow structs, SessionStatus enum). USDC SPL Token integration. Phantom/Solflare wallet. Full microservices architecture: Presentation (React + React Native) → API Gateway (Kong/Istio) → Message Broker (RabbitMQ + Kafka + Redis Pub/Sub) → Microservices (Kubernetes pods) → Blockchain (Solana) → Data (PostgreSQL + MongoDB + Redis + S3 + TimescaleDB). Technology comparison matrix: QLDB vs Hyperledger vs Solana vs PostgreSQL. Performance: 10K req/sec, <200ms p95, 99.9% uptime, 100K users. Для Операційного (ТЗ HighCastle primary source).</td></tr>
+</table>
+
+<h3>НОВІ ДЖЕРЕЛА (батч 7)</h3>
+<table>
+<tr><th>Джерело</th><th>Статус</th><th>Зміст / Значення</th></tr>
+<tr><td><strong>Uploaded: Blockchain Pitchdeck HTML (945 рядків, 17 слайдів)</strong></td><td><span class="status-have">PRIMARY</span></td><td>Blockchain + P2P Pitch Deck для MHPSS TWG. Показує АРХІТЕКТУРНУ ЕВОЛЮЦІЮ: <strong>Stellar</strong> Network (НЕ Solana!) + HIGHCASTLE platform + USDC $0.00001/tx + 5s finality. 9 категорій користувачів (refugees, military, post-occupation, combat, psychologists 50K+, donors, state, 21K+ NGOs, families). 3-tier data visibility (Public stellarchain.io / Donor anonymized API / GDPR encrypted). 5 блоків скриншот-специфікацій HIGHCASTLE (Stellar explorer, P2P dashboard, Escrow smart contract, KYC/AML верифікація, API GET request api.highcastle.io/v1/). 4-етапний план інтеграції HIGHCASTLE→FEEL (UI/UX→API→Compliance→MVP Launch: 100 psych, 500 benef, Q1 2026). <strong>УВАГА:</strong> Архітектурна еволюція: Stellar (цей файл) → London Exchange Core + DvP → Solana (пізніші TZ). Для Операційного (blockchain history) та Комунікаційного (tech messaging).</td></tr>
+<tr><td><strong>GDrive: Chatbot (2.7K, Oct 2025)</strong></td><td><span class="status-have">SECONDARY</span></td><td>Технічна специфікація чат-бота. 5 core functions: (1) Validated Screening — PHQ-9, GAD-7, PCL-5 з автоматичним scoring та blockchain audit trail; (2) Conversational Flow — WHO protocols: PFA (8 core actions), Self-Help Plus (mild), PM+ (moderate), psychologist matching (severe); (3) Safety Monitoring — crisis keyword detection, sentiment analysis, 15-хвилинна ескалація до on-call психолога (КРИТИЧНО: одна невдача = project failure); (4) Data Architecture — de-personified storage, blockchain milestones, GDPR (deletion + portability); (5) Integration Points — scheduling API, Solana USDC payments, QA feeds, donor dashboards. Tech: Ukrainian NLP (GPT-4 fine-tuned), mobile-first, E2E encryption, N8N workflow engine (webhooks, conditional logic, API calls). Для Операційного (chatbot module) та Документу 3 (tech TZ).</td></tr>
+<tr><td><strong>Uploaded: 04_Communication_Strategy (26.7K)</strong></td><td><span class="status-scattered">ДУБЛІКАТ</span></td><td>Ідентичний файлу Communication Strategy з батчу 5. «Комплексна комунікаційна стратегія FEEL Again × ТИ ЯК?» — та сама 9-секційна стратегія. Нового контенту немає.</td></tr>
+<tr><td><strong>Uploaded: VR Tech HTML (6K, 119 рядків)</strong></td><td><span class="status-have">SECONDARY</span></td><td>CTO Spec: VR/AI/Data/Finance/IATI. Mermaid architecture: VR Experience → AI Engine → Data Hub → Reporting + Integration API. 5 modules (VR-Experience Unity/Unreal + GPT-4, AI-Engine embeddings, Data Hub PostgreSQL/Mongo ETL, Reporting UI React/Chart.js, Integration API REST/GraphQL). 6 pipeline tasks: VR-01 scenarios 10d, VR-02 Unity prototype 14d, VR-03 psychologist testing 7d, AI-01 anonymization 7d, AI-02 pattern analysis 10d, AI-03 course generation 14d. IATI XML template v2.03 Jinja-style з humanitarian="1". Для Операційного (VR module spec).</td></tr>
+<tr><td><strong>GDrive: ТЗ демо MHPSS TWG</strong></td><td><span class="status-missing">NOT FETCHABLE</span></td><td>Doc ID: 1NPGm7SW_9qoRfwyFTZN8ZATmq0Mb6LczbREu6xdItI0. 3× error -32000. Описаний як 30-хвилинний демо-сценарій для Enkidu. Потрібен ручний export (PDF/HTML) від користувача.</td></tr>
+</table>
+</div>
+
+<!-- ==================== ПОРЯДОК РОБОТИ ==================== -->
+
+<h2>Рекомендований порядок створення</h2>
+
+<div class="doc-card">
+<p><strong>Фаза 1 (зараз):</strong> Документ 4 (Дані) — він стає єдиним джерелом правди для всіх цифр. Без нього інші документи будуть мати розбіжності. Сюди ж Missing Middle як висновок.</p>
+<p><strong>Фаза 2:</strong> Документ 1 (Мастер) — він описує ЩО є програма. Посилається на Док.4 для цифр. Включає повну клірингову архітектуру, 6 шарів, консорціум, партнерів.</p>
+<p><strong>Фаза 3:</strong> Документ 3 (Операційний) — конкретні проєкти з НБУ першим. Бюджети, Ганта, залежності. ТЗ для HighCastle.</p>
+<p><strong>Фаза 4:</strong> Документ 2 (Стратегічний) — ToC з англійської v4.2.3, Grand Bargain з GDrive, M&E Framework та Logframe (створити).</p>
+<p><strong>Фаза 5:</strong> Документ 5 (Комунікаційний) — найменше нового контенту, переважно консолідація існуючого.</p>
+</div>
+
+<div class="note">
+<strong>КРИТИЧНІ ЗАУВАЖЕННЯ (v2.1):</strong><br>
+1. <strong>ТИ ЯК? чутливість:</strong> Всі документи мають використовувати ВИКЛЮЧНО комплементарне формулювання. FEEL = інфраструктурний партнер, не конкурент. Fin.Mod. FEEL×ТИ ЯК? правильно фреймить як cooperation, але деякі ROI цифри агресивні — перевірити.<br>
+2. <strong>Комісійна модель — ДВА ВИМІРИ (розв'язано):</strong> 2.5-3.5% = tiered service levels (базова/стандартна/преміум). 7→3% = degressive schedule з часом (для blockchain sustainability). Обидві моделі валідні, працюють паралельно. Canonical: стартуємо з 7% degressive до 3% за 3 роки, ВСЕРЕДИНІ якого 3 тарифні плани. $3M/міс — мінімальний обіг для blockchain sustainability.<br>
+3. <strong>Non-fetchable files: 2 залишились (v2.6).</strong> 6 попередніх — ЗАКРИТО. Залишаються: (a) ДЕМО .gslides (Google Slides не підтримується API), (b) ТЗ демо MHPSS TWG GDoc (3× error -32000, потрібен ручний export). Обидва потребують export як PPTX/PDF від користувача.<br>
+7. <strong>Chemonics $15M CORRECTION (v2.5):</strong> Реальне фінансування Chemonics = $15M (підтверджено дослідженням у GDrive папці Research). Попередні цифри ($51-100M, $340M) — НЕ ВІРНІ. Впливає на ROI розрахунки у Fin.Mod. FEEL×ТИ ЯК? та Tom Fletcher тексті. Chemonics ROI 520% потребує перерахунку з $15M базою.<br>
+4. <strong>Pilot Projects Roadmap MATCH:</strong> Повністю збігається з UNIFIED_PROGRAM_MATRIX ($1,945K, 17 проєктів). Має детальніший breakdown по кожному проєкту. Може служити canonical джерелом для Операційного документа.<br>
+5. <strong>Gantt ALL OUTDATED:</strong> Користувач підтвердив — всі Ганти (4 HTML файли в Operations) побудовані на попередній проєктній сітці. ПОТРІБНА ПОВНА ПЕРЕБУДОВА. Mermaid SVG (Jul 2025) теж outdated. Секвенування задач може бути використано як відправна точка.<br>
+6. <strong>TRD повністю прочитано (41K):</strong> Секції 1-6 з повними API specs. Секції 7-10 (Data Standards, Security, Testing, Deployment) — покривають GDPR, humanitarian data protection, ZK proofs для ТИ ЯК?, OAuth+DS для eHealth. Scalability: 1M+ beneficiaries target.
+</div>
+
+<div class="note">
+<strong>КОРЕКЦІЇ ВНЕСЕНІ (v2.0 → v2.3):</strong><br>
+— v2.0: Pipeline 8 потоків, HighCastle ТЗ знайдено, прогалини 12→9<br>
+— v2.1: Додано 7 джерел батчу 1, розв'язано комісію (2 виміри), підтверджено $1,945K<br>
+— v2.2 (19.03.2026 батч 2): Додано 7 нових джерел (Методології EMDR+VR, «*2» аналітичний 20K, MVP launch plan, 3 листи, Complementarity Strategy [not-fetchable], tech-architecture [not-fetchable])<br>
+— v2.3 (19.03.2026 батч 3): Прочитано 7 uploaded файлів + Grand Bargain Strategic Proposal (12K) via GDrive. Ключові знахідки:<br>
+&nbsp;&nbsp;• Comprehensive Launch Plan EN (171K) = НАЙПОВНІШИЙ документ: 8-step Beneficiary Journey, 5 pilot projects з KPIs, Legal/Tax Strategy (hybrid CF+LLC UA + 501(c)(3) US), $1.7-2.45M Phase 1 budget, Monetization Model, 3-Phase Market Transition<br>
+&nbsp;&nbsp;• Grand Bargain Strategic Proposal = Tom Fletcher адресат, 12 секцій, §5 ВІДСУТНІЙ, 27% localization через blockchain, €1.5M seed ask, Sept 2025 dates — потребують оновлення<br>
+&nbsp;&nbsp;• Tech Architecture/Solana TZ (59K) = повне ТЗ з Rust smart contracts, microservices architecture, technology comparison matrix. Раніше not-fetchable — ТЕПЕР ПРОЧИТАНО<br>
+&nbsp;&nbsp;• Train for Care CSR (18K): 450K veterans, $200K→60 specialists, 200% Social ROI<br>
+&nbsp;&nbsp;• Executive Summary v3 (21K): embassy version, $500K pilot, 3 packages — цифри не актуальні<br>
+&nbsp;&nbsp;• Комплексний План UA (19K): Mermaid діаграми, 35% savings calculation, $2.5B market potential<br>
+&nbsp;&nbsp;• Program Directions (31K): 5 напрямів з hypotheses/risks, 3K psych за 2 роки, $150M tax<br>
+— Прогалини зменшено: 9→7 (Legal/Tax Strategy перекрито Comprehensive Launch Plan, tech-architecture тепер прочитано)<br>
+— УВАГА: Grand Bargain Proposal §5 ВІДСУТНІЙ — потребує з'ясування (можливо Budget section, що пропущений)<br>
+— УВАГА: Comprehensive Launch Plan має budget $1.7-2.45M (Phase 1) vs UNIFIED_PROGRAM_MATRIX $1.945M — різний scope (launch plan включає overhead + contingency + marketing)<br>
+<br>
+— v2.4 (19.03.2026 батч 4): Прочитано 6 uploaded + Complementarity Strategy via GDrive. Financial Model HTML + Parametric Model + 3 XLSX + Complementarity. Прогалини 7→5.<br>
+<br>
+— v2.5 (19.03.2026 батчі 5+6): Прочитано 15 нових джерел (final tech batch). Ключові знахідки:<br>
+&nbsp;&nbsp;• <strong>«The Missing Middle» HTML (226K) — МАЙСТЕР-ПРЕЗЕНТАЦІЯ:</strong> 12 слайдів, повна двомовна UA+EN, A4 landscape, лютий 2026. Покриває ВСЕ: crisis evidence, 4 provider sectors (shadow 8-15K, humanitarian, psychiatric ~2,700/4,000, online 1,600+), digital bridge (3 axes, 7 functions), 6-layer infrastructure (Provider/Session/Payment/Audit/P2P/API), governance (FOS operator, USC scientific, supervisory board), state integration (4 phases Stealth→National Standard; 3 legal mechanisms incl EU €5.7B Investment Framework), stepped care (4 tiers, VR multiplier 1:200+), accountability cycle, financial architecture v5, provider pipeline Y1-Y3. <strong>ВИКОРИСТОВУВАТИ ЯК ANCHOR для всіх 5 документів.</strong><br>
+&nbsp;&nbsp;• <strong>Communication Strategy HTML (22K):</strong> Повна 9-секційна стратегія: 3-фазна (stealth→pilot→public), 8-row stakeholder matrix, key messages per audience, 6 channels, crisis protocol (5 types, 3 escalation levels), approval matrix, 7-month timeline, 6 KPIs, бюджет €169K. <strong>GAP #9 (Visual Identity) та Communication Strategy — ПЕРЕКРИТІ.</strong><br>
+&nbsp;&nbsp;• <strong>USC ICT Partnership Framework PDF (13 стор.):</strong> Partnership Development Framework v3.0 для Prof. Rizzo. Missing Middle defined: bottleneck 400-500 clinical psychologists ~1/100K. 4-level stepped care: L1 self-VR 1:hundreds, L2 VR+supervision 1:50-80 (THE MULTIPLIER), L3 VR+clinician, L4 traditional+meds. Math: traditional 100K/yr (1%) → stepped 300K-500K/yr (3-5x). BRAVEMIND revenue: $12.50/session (USC 60%). Provider pipeline: Y1 140-300, Y2 550-1,150, Y3 1,150-2,200 (4 sources). Partnership: 3 phases advisor→partner→full w/equity option 20%<br>
+&nbsp;&nbsp;• <strong>KMU Resolution 506 від 02.05.2025 (35K):</strong> Постанова КМУ «Про інформаційну платформу громадського здоров'я». Підпис Шмигаля. ПРАВОВА ОСНОВА для FEEL — МОЖНА ПОСИЛАТИСЯ НАПРЯМУ у всіх 5 документах<br>
+&nbsp;&nbsp;• <strong>Functional Specification HTML (29K):</strong> MVP vs Full: 1,540→5,780 dev hrs, €123K→€339K. 5 modules (Users/Matching/Payments/Blockchain/Reporting), user flows, cost per role. Для Операційного<br>
+&nbsp;&nbsp;• <strong>Tech &amp; Integration Claude HTML (41K):</strong> Повне ТЗ: 6-layer arch, blockchain comparison (QLDB recommended), API TZs (PrivatBank/Monobank/Stripe, Helsi/eHealth, DIA/BankID, Twilio/SendGrid/Telegram), Data Lake (Airflow/Glue), ML pipeline (5 models), IATI 2.03, security (TLS 1.3/AES-256/GDPR/ISO 27001). Для Операційного<br>
+&nbsp;&nbsp;• <strong>Donor Coordination Protocol (28K):</strong> Python/JS code: deduplication, mhGAP indicators (6 groups), DHIS2 sync, k-anonymity. 4-phase Gantt Q4 2025→Q2 2026. <strong>M&E Framework GAP upgraded</strong><br>
+&nbsp;&nbsp;• <strong>Tom Fletcher text (~5K):</strong> 3 strategic hooks, 3 alternative paths (A: associations+E&Y, B: Centre of Excellence→MinEcon, C: diaspora), UHF→IASC backdoor. <strong>УВАГА: Chemonics $15M CORRECTION — confirmed by research study</strong><br>
+&nbsp;&nbsp;• <strong>Executive Presentation PPTX (11 slides):</strong> Consortium partners table (USC ICT, GEHA, FOS, KNU + tech), deployment roadmap (2026→2027+). Complementary to Missing Middle HTML<br>
+&nbsp;&nbsp;• <strong>Pilot Projects Roadmap HTML (27K):</strong> 4 packages A/B/C/D. УВАГА: budget discrepancy $710K sum vs $510K executive summary<br>
+&nbsp;&nbsp;• <strong>ЛИСТ МОН 1/9-477 (2019, 27K):</strong> 15 appendices — шаблони для шкільних психологів. Regulatory context: показує адміністративне навантаження<br>
+&nbsp;&nbsp;• VR Tech HTML (6K): CTO spec, IATI XML template. Solana MVP Technical Plan (21K): Rust smart contracts, AI matching engine, ML model<br>
+&nbsp;&nbsp;• Duplicates: 03_Financial_Model_Corrected = Fin.Mod. FEEL×ТИ ЯК?; Tech-architecture 59K = batch 3; Solana MVP gdoc = batch 5 GDrive<br>
+&nbsp;&nbsp;• NOT FETCHABLE: ДЕМО .gslides (Google Slides — not supported by API)<br>
+— Прогалини зменшено: 5→3 критичних (Communication Strategy ЗАКРИТО, Розмежування інфра/навчання downgraded до partial [контент є], M&E upgraded до strong partial)<br>
+— <strong>3 ЗАЛИШКОВІ КРИТИЧНІ ПРОГАЛИНИ:</strong> (1) Logframe — формалізація даних у EU/UN стандарт; (2) Клірингова архітектура — консолідація; (3) Міжпроєктні залежності — dependency map<br>
+— УВАГА: Chemonics REAL funding = $15M (NOT $51-100M, NOT $340M) — confirmed by GDrive research study. Affects ROI calculations in all documents<br>
+— УВАГА: Pilot Roadmap budget $710K ≠ executive summary $510K — discrepancy to resolve with user<br>
+— УВАГА: «The Missing Middle» Financial Architecture v5 shows Y1-Y3 revenue €23K→€95K vs OPEX €300-450K — demonstrates grant dependency in early years, honest<br>
+— УВАГА: ДЕМО .gslides cannot be fetched — user needs to export as PPTX/PDF if content is critical
+<br><br>
+— v2.6 (20.03.2026 батч 7): Прочитано 4 нові джерела (2 uploaded + 1 GDrive + 1 дублікат). Ключові знахідки:<br>
+&nbsp;&nbsp;• <strong>Blockchain Pitchdeck HTML (945 рядків, 17 слайдів):</strong> АРХІТЕКТУРНА ЕВОЛЮЦІЯ документована — Stellar Network + HIGHCASTLE (ранній етап), потім London Exchange Core + DvP, потім Solana (поточний). 9 user categories, 3-tier data visibility, 5 screenshot spec blocks для HIGHCASTLE demos (Stellar explorer, P2P dashboard, Escrow smart contract, KYC/AML, API GET). 4-stage integration plan HIGHCASTLE→FEEL (UI/UX→API→Compliance→MVP: 100 psych, 500 benef). Для Операційного (blockchain evolution) та Комунікаційного (tech credibility)<br>
+&nbsp;&nbsp;• <strong>Chatbot GDoc (2.7K, Oct 2025):</strong> 5 core functions з validated screening (PHQ-9/GAD-7/PCL-5), WHO conversational protocols (PFA/SH+/PM+), Safety Monitoring (15-min crisis escalation — MISSION CRITICAL), blockchain milestone verification, Solana USDC payments. N8N workflow engine. Mobile-first Ukrainian NLP. Для Операційного (chatbot module TZ) та Документу 1 (platform capabilities)<br>
+&nbsp;&nbsp;• <strong>VR Tech HTML (6K):</strong> CTO spec з Mermaid architecture, 5 modules (VR/AI/DataHub/Reporting/Integration), 6 pipeline tasks (VR-01→AI-03), IATI XML template v2.03. Для Операційного (VR module spec)<br>
+&nbsp;&nbsp;• <strong>04_Communication_Strategy (26.7K):</strong> ДУБЛІКАТ батчу 5 — нового контенту немає<br>
+&nbsp;&nbsp;• <strong>ТЗ демо MHPSS TWG:</strong> 3× NOT FETCHABLE (error -32000). Потрібен ручний export від користувача<br>
+— Non-fetchable: 2 файли (ДЕМО .gslides + ТЗ демо GDoc)<br>
+— Загалом оброблено: ~67+ джерел у 8+ форматах. Прогалини: 3 критичних (без змін від v2.5)<br><br>
+— v2.7 (20.03.2026 батч 8 — ФІНАЛЬНИЙ перед створенням документів): Прочитано 5 нових джерел. Обидва раніше unfetchable файли КОНВЕРТОВАНІ в PDF та прочитані:<br>
+&nbsp;&nbsp;• <strong>ТЗ демо MHPSS TWG PDF (10 стор.) — ЗАКРИТО:</strong> 30-хв демо для партнерів (v1.0, Oct 2025, FOS branding). 5 блоків: Dashboard координації (national/regional/org), mhGAP автоматизація (PHQ-9/GAD-7 forms, TWG SQL, IASC 4W, PM+/VR PTSD/School modules), Blockchain дедуплікація (hash-based anon ID), Інтеграції (DIA/eHealth/Helsi/OpenDataBot + OCHA FTS). Tech: AWS EC2 Frankfurt, PostgreSQL 14+MongoDB, <strong>Hyperledger Fabric</strong> (4th blockchain!), Redis, RabbitMQ, Grafana+Prometheus. Test: 50 orgs/500 psych/10K sessions.<br>
+&nbsp;&nbsp;• <strong>ДЕМО PDF (HIGHCASTLE) — ЗАКРИТО:</strong> Смарт-контракт DvP. 3 модулі: Реєстрація (physically separated: reg/ID/compliance/KYC), Ядро (matching, blockchain), Звітний. 3 registration scenarios. London Exchange Core pattern confirmed.<br>
+&nbsp;&nbsp;• <strong>Executive Presentation v2 PDF:</strong> Navy/gold design. «WHAT THIS IS AND THIS IS NOT»: IS sustainability-designed infrastructure, NOT startup/marketplace/VR product. Dashboard mockup: 287 providers, 1,847 sessions/week, 73% outcome, 12,450 beneficiaries. Stepped Care: T1 55%, T2 25%, T3 15%, T4 5%.<br>
+&nbsp;&nbsp;• <strong>Mind Map:</strong> 4-рівнева структура: 8 стратегічних напрямів → Портфель A/Б/Г → 5 моделей партнерства → 4 фази (Jan 2026→2027+).<br>
+&nbsp;&nbsp;• <strong>TRD .md (46K):</strong> Дублікат TRD HTML. API integration gdoc pointer: doc_id 1J7ybf... API Integration PDF: дублікат батчу 6.<br>
+— <strong>Non-fetchable: 0.</strong> ВСІ ЗАКРИТО.<br>
+— <strong>BLOCKCHAIN 4 PLATFORMS:</strong> Hyperledger Fabric (demo) → Stellar (P2P pitchdeck) → London Exchange Core DvP (HIGHCASTLE) → Solana (target production). Потрібна timeline консолідація.<br>
+— Загалом: ~72+ джерел у 9+ форматах. Прогалини: 3 критичних. ГОТОВО ДО СТВОРЕННЯ ДОКУМЕНТІВ.
+</div>
+
+<p style="text-align:center; color:#999; margin-top:40px;">FEEL Again Document Package Benchmark | v2.7 | 20.03.2026</p>
+</body>
+</html>

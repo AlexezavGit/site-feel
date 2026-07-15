@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="uk" data-lang="uk" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Пропозиції до НСЗУ — Повна аналітична записка</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;900&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg0:#EDE8E0;--bg1:#E4DED6;--bg2:#D8D2CA;--bg3:#CCC6BE;--bd:#B8B2AA;--t1:#1A1612;--t2:#5A4E3A;--t3:#8A7E6A;--gl:#7A5010;--gl-75:rgba(122,80,16,.75);--gl-50:rgba(122,80,16,.50);--gl-20:rgba(122,80,16,.20);--gl-08:rgba(122,80,16,.08);--gl-04:rgba(122,80,16,.04);--res:#1A6A9A;--svc:#A04010;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Barlow',sans-serif;background:var(--bg0);color:var(--t1);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(122,80,16,.05) 0%,transparent 70%),radial-gradient(ellipse 60% 40% at 85% 85%,rgba(26,106,154,.04) 0%,transparent 60%),linear-gradient(180deg,var(--bg0) 0%,var(--bg1) 100%);pointer-events:none;z-index:0;}
+.badge-fixed{position:fixed;top:48px;left:20px;z-index:100;background:var(--gl);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:6px 14px;letter-spacing:.06em;box-shadow:0 2px 12px rgba(122,80,16,.3);}
+.sbar{position:sticky;top:0;z-index:100;background:var(--bg0);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 24px 0 20px;height:40px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--t3);}
+.sbar-brand{color:var(--gl);font-weight:700;}.sbar-sep{margin:0 8px;opacity:.3;}.sbar-ctrl{display:flex;gap:10px;align-items:center;}
+.tbtn{background:var(--bg2);border:1px solid var(--bd);color:var(--t2);padding:3px 8px;border-radius:2px;cursor:pointer;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.08em;transition:all .2s;}.tbtn:hover{border-color:var(--gl);color:var(--gl);}
+section{position:relative;z-index:1;padding:72px 48px;}section+section{border-top:1px solid var(--bd);}
+.sec-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--t3);text-transform:uppercase;margin-bottom:28px;}
+h1.headline{font-family:'Barlow Condensed',sans-serif;font-size:clamp(48px,7.5vw,96px);font-weight:700;color:var(--t1);line-height:1.0;max-width:900px;}
+h2.section-h{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,4vw,52px);font-weight:700;color:var(--t1);line-height:1.05;max-width:750px;margin-bottom:8px;}
+.hero-sub{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,2.5vw,28px);font-weight:400;color:var(--gl);line-height:1.1;margin-bottom:52px;}
+.metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);max-width:1100px;margin-bottom:40px;}
+.mc{background:var(--bg1);padding:24px 28px;position:relative;cursor:default;}
+.mc-arrow{font-size:11px;font-family:'Space Mono',monospace;letter-spacing:.06em;display:block;margin-bottom:6px;}
+.mc-arrow.up{color:var(--res);}.mc-arrow.dn{color:var(--svc);}.mc-arrow.fl{color:var(--gl);}
+.mc-value{font-family:'Barlow Condensed',sans-serif;font-size:clamp(38px,5vw,60px);font-weight:700;color:var(--t1);line-height:1;display:flex;align-items:baseline;gap:6px;}
+.mc-value .u{font-size:18px;font-weight:400;color:var(--t2);}
+.mc-label{font-size:11px;color:var(--t2);margin-top:8px;line-height:1.5;}
+.mc-src{font-family:'Space Mono',monospace;font-size:8px;color:var(--t3);margin-top:6px;}
+.funnel-wrap{display:grid;grid-template-columns:1fr 340px;gap:40px;align-items:start;margin-top:32px;}
+.funnel-bars{display:flex;flex-direction:column;gap:5px;}
+.fb{position:relative;height:46px;display:flex;align-items:center;}
+.fb-fill{height:100%;display:flex;align-items:center;padding:0 14px;position:relative;}
+.fb-label{position:absolute;left:100%;padding-left:14px;font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--t2);white-space:nowrap;}
+.fb-label .n{color:var(--gl);font-weight:700;}.fb-label .pct{font-family:'Space Mono',monospace;font-size:9px;color:var(--t3);margin-left:4px;}
+.cascade{display:flex;align-items:stretch;gap:0;margin-top:28px;flex-wrap:wrap;}
+.cn{padding:12px 16px;border:1px solid var(--bd);background:var(--bg1);}.cn+.cn{border-left:none;}
+.cn-lbl{font-family:'Space Mono',monospace;font-size:8px;color:var(--t3);letter-spacing:.08em;margin-bottom:5px;}
+.cn-val{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:var(--t1);line-height:1;}
+.cn-sub{font-family:'Space Mono',monospace;font-size:8px;color:var(--t3);margin-top:5px;line-height:1.4;}
+.cn.danger{border-color:rgba(160,64,16,.4);background:rgba(160,64,16,.06);}
+.cn.terminal{border-color:var(--svc);background:rgba(160,64,16,.1);}
+.c-arr{display:flex;align-items:center;padding:0 6px;color:var(--svc);font-size:22px;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);background:var(--bg0);}
+.fpanel{padding:24px;background:var(--bg1);border:1px solid var(--bd);position:sticky;top:50px;}
+.fpanel h3{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:600;color:var(--gl);margin-bottom:20px;}
+.pm{padding:14px 0;border-bottom:1px solid var(--bg2);}.pm:last-child{border-bottom:none;}
+.pm-val{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:700;color:var(--svc);}
+.pm-lbl{font-size:11px;color:var(--t2);margin-top:4px;line-height:1.4;}
+.pm-form{font-family:'Space Mono',monospace;font-size:8px;color:var(--t3);margin-top:6px;line-height:1.5;}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:12px;}
+th{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.08em;color:var(--t3);text-align:left;padding:8px 12px;border-bottom:1px solid var(--bd);text-transform:uppercase;}
+td{padding:8px 12px;border-bottom:1px solid var(--bg2);color:var(--t2);}
+tr:hover td{background:var(--bg2);}
+.callout{padding:18px 22px;margin-top:24px;max-width:720px;font-size:13px;color:var(--t2);line-height:1.65;border-left:2px solid var(--gl);background:var(--gl-08);}
+.callout.green{border-color:var(--res);background:rgba(26,106,154,.06);}
+.callout.red{border-color:var(--svc);background:rgba(160,64,16,.06);}
+.callout strong{color:var(--gl);}
+.steps{margin-top:28px;}
+.step{display:grid;grid-template-columns:76px 1fr;gap:24px;padding:16px 0;border-bottom:1px solid var(--bg2);}
+.step-num{font-family:'Space Mono',monospace;font-size:9px;color:var(--gl);text-align:right;padding-right:18px;position:relative;padding-top:2px;}
+.step-num::after{content:'';position:absolute;right:-5px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--gl);border:2px solid var(--bg0);}
+.step-content h4{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:600;color:var(--t1);margin-bottom:4px;}
+.step-content p{font-size:12px;color:var(--t2);line-height:1.5;}
+.tl{display:flex;flex-direction:column;max-width:680px;position:relative;margin-top:24px;}
+.tl::before{content:'';position:absolute;left:74px;top:0;bottom:0;width:1px;background:var(--bd);}
+.tl-row{display:grid;grid-template-columns:76px 1fr;gap:24px;padding:16px 0;border-bottom:1px solid var(--bg2);}
+.tl-date{font-family:'Space Mono',monospace;font-size:9px;color:var(--t3);text-align:right;padding-right:18px;position:relative;padding-top:2px;}
+.tl-date::after{content:'';position:absolute;right:-5px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--bd);border:2px solid var(--bg0);}
+.tl-row.now .tl-date::after{background:var(--gl);}
+.tl-content h4{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:600;color:var(--t1);margin-bottom:4px;}
+.tl-content p{font-size:12px;color:var(--t2);line-height:1.5;}
+.arch-flow{display:flex;align-items:stretch;gap:0;margin-top:28px;flex-wrap:wrap;}
+.af{flex:1;min-width:120px;padding:24px 14px;background:var(--bg2);border:1px solid var(--bd);text-align:center;}.af+.af{border-left:none;}
+.af-lbl{font-family:'Space Mono',monospace;font-size:8px;color:var(--t3);letter-spacing:.1em;margin-bottom:12px;}
+.af-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:var(--gl);line-height:1;}
+.af-sub{font-size:11px;color:var(--t2);margin-top:8px;line-height:1.4;}
+.af-arr{display:flex;align-items:center;padding:0 8px;font-size:22px;color:var(--gl-50);background:var(--bg1);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);}
+.af.highlight{border-color:var(--gl);background:var(--bg1);}.af.highlight .af-val{font-size:30px;}
+.sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);margin-top:32px;}
+.sc{background:var(--bg1);padding:32px 26px;transition:background .2s;}.sc:hover{background:var(--bg2);}
+.sc-num{font-family:'Space Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:.14em;margin-bottom:16px;}
+.sc h3{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;color:var(--t1);margin-bottom:12px;line-height:1.1;}
+.sc p{font-size:12px;color:var(--t2);line-height:1.65;}
+.sidebar{position:fixed;right:0;top:40px;bottom:0;width:42px;z-index:50;background:var(--bg1);border-left:1px solid var(--bd);overflow:hidden;display:flex;flex-direction:column;transition:width .25s ease;}
+.sidebar:hover{width:200px;}
+.sb-item{padding:12px 8px;border-bottom:1px solid var(--bg2);cursor:pointer;display:flex;align-items:center;gap:8px;text-decoration:none;}
+.sb-item:hover{background:var(--bg3);}
+.sb-num{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;color:var(--gl);white-space:nowrap;min-width:26px;text-align:center;}
+.sb-lbl{font-family:'Barlow',sans-serif;font-size:11px;color:var(--t2);white-space:nowrap;opacity:0;transition:opacity .15s;}
+.sidebar:hover .sb-lbl{opacity:1;}
+[data-lang="uk"] .en{display:none;}[data-lang="en"] .uk{display:none;}
+.fn{font-family:'Space Mono',monospace;font-size:8px;color:var(--t3);margin-top:28px;line-height:1.9;border-top:1px solid var(--bg2);padding-top:14px;max-width:820px;}
+.cta-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);margin-top:32px;}
+.cta-btn{background:var(--bg1);padding:20px 22px;text-decoration:none;display:block;transition:background .2s;}.cta-btn:hover{background:var(--bg3);}
+.cta-type{font-family:'Space Mono',monospace;font-size:8px;color:var(--t3);letter-spacing:.14em;display:block;margin-bottom:8px;}
+.cta-lbl{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:600;color:var(--gl);}
+.wc-val{font-family:'Barlow Condensed',sans-serif;font-size:80px;font-weight:900;color:var(--svc);line-height:1;}
+.wc-lbl{font-family:'Barlow',sans-serif;font-size:14px;color:var(--t2);display:block;margin-top:4px;}
+@media(min-width:768px){section,.sbar{padding-right:62px;}}
+@media(max-width:767px){.metrics-row,.sol-grid{grid-template-columns:1fr;}.funnel-wrap{grid-template-columns:1fr;}.arch-flow{flex-direction:column;}.sidebar{display:none;}section{padding:40px 20px;}.fb-label{display:none;}.badge-fixed{top:auto;bottom:16px;left:16px;}.cta-row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="badge-fixed">БЕЗ ЗАПИТУ НА ДЕРЖБЮДЖЕТ</div>
+
+<div class="sbar">
+  <div><span class="sbar-brand">FEEL AGAIN</span><span class="sbar-sep">·</span><span class="uk">ПРОПОЗИЦІЇ ДО НСЗУ — ПОВНА АНАЛІТИЧНА ЗАПИСКА</span><span class="en">NSZU PROPOSALS — FULL ANALYTICAL BRIEF</span><span class="sbar-sep">·</span>2026</div>
+  <div class="sbar-ctrl"><button class="tbtn" onclick="toggleLang()" id="lbtn">ENG</button></div>
+</div>
+
+<div class="sidebar">
+  <a class="sb-item" href="#hero"><span class="sb-num">3.9M</span><span class="sb-lbl uk">Потреба</span><span class="sb-lbl en">Need</span></a>
+  <a class="sb-item" href="#inaction"><span class="sb-num">$14B</span><span class="sb-lbl uk">Ціна</span><span class="sb-lbl en">Cost</span></a>
+  <a class="sb-item" href="#scale"><span class="sb-num">1,400</span><span class="sb-lbl uk">Спеціалісти</span><span class="sb-lbl en">Specialists</span></a>
+  <a class="sb-item" href="#esoz"><span class="sb-num">ЄСОЗ</span><span class="sb-lbl uk">Видимість</span><span class="sb-lbl en">Visibility</span></a>
+  <a class="sb-item" href="#reg"><span class="sb-num">∼55%</span><span class="sb-lbl uk">Формалізація</span><span class="sb-lbl en">Audit</span></a>
+  <a class="sb-item" href="#gdp"><span class="sb-num">$15B</span><span class="sb-lbl uk">ВВП</span><span class="sb-lbl en">GDP</span></a>
+  <a class="sb-item" href="#private"><span class="sb-num">8</span><span class="sb-lbl uk">Канали</span><span class="sb-lbl en">Channels</span></a>
+  <a class="sb-item" href="#bus"><span class="sb-num">DB</span><span class="sb-lbl uk">Шина</span><span class="sb-lbl en">Bus</span></a>
+  <a class="sb-item" href="#arch"><span class="sb-num">АРХ</span><span class="sb-lbl uk">Схема</span><span class="sb-lbl en">Schema</span></a>
+  <a class="sb-item" href="#registry"><span class="sb-num">РЕЄСТР</span><span class="sb-lbl uk">Шкали</span><span class="sb-lbl en">Scales</span></a>
+  <a class="sb-item" href="#window"><span class="sb-num">Q4</span><span class="sb-lbl uk">Вікно</span><span class="sb-lbl en">Window</span></a>
+</div>
+
+<!-- §1 HERO -->
+<section id="hero">
+  <div class="sec-label">§1 / <span class="uk">СУТЬ</span><span class="en">OVERVIEW</span></div>
+  <h1 class="headline"><span class="uk">Цифрове плече<br>для сектору MHPSS.</span><span class="en">Digital backbone<br>for the MHPSS sector.</span></h1>
+  <p class="hero-sub"><span class="uk">🔷 БЕЗ ЗАПИТУ НА ДЕРЖБЮДЖЕТ (Zero State Budget Request). Visa of the MHPSS — єдиний шлюз верифікації для НСЗУ, Світового банку та НБУ.</span><span class="en">Zero state capital expenditure.</span></p>
+  <div class="metrics-row">
+    <div class="mc"><span class="mc-arrow up">▲ <span class="uk">ЗРОСТАЄ · ЗОНА РИЗИКУ 15M</span><span class="en">RISING · RISK ZONE 15M</span></span><div class="mc-value">3.9<span class="u">M</span></div><div class="mc-label"><span class="uk">людей з МГЗП потребують допомоги</span><span class="en">people with MHPSS need</span></div><div class="mc-src">WHO/Lancet 2023 · Verified</div></div>
+    <div class="mc"><span class="mc-arrow dn">▼ <span class="uk">ЩОРІЧНИЙ ВИТІК ВВП</span><span class="en">ANNUAL GDP DRAIN</span></span><div class="mc-value">$13.94<span class="u">B/рік</span></div><div class="mc-label"><span class="uk">втрати ВВП від ментальних розладів</span><span class="en">GDP loss from mental disorders</span></div><div class="mc-src">WB RDNA3 стор.112 · $170B×8.2%</div></div>
+    <div class="mc"><span class="mc-arrow fl">→ <span class="uk">В ОЧІКУВАННІ DLI · ВІКНО 7 МІС.</span><span class="en">AWAITING DLI · 7-MONTH WINDOW</span></span><div class="mc-value">$134<span class="u">M</span></div><div class="mc-label"><span class="uk">адресована мета розблокування через FEEL Again (THRIVE)</span><span class="en">addressable unlock target via FEEL Again (THRIVE)</span></div><div class="mc-src">WB ISR #6 · THRIVE P505616 · залишок до розблокування</div></div>
+    <div class="mc"><span class="mc-arrow fl">→ <span class="uk">ТИНЬОВИЙ РИНОК</span><span class="en">SHADOW MARKET</span></span><div class="mc-value">$380<span class="u">M</span></div><div class="mc-label"><span class="uk">неформальний сектор MHPSS</span><span class="en">informal MHPSS sector</span></div><div class="mc-src">НБУ · Офіційні дані · тіньовий сектор</div></div>
+  </div>
+  <p style="font-size:13px;color:var(--t2);max-width:680px;line-height:1.65;"><span class="uk">Базова інфраструктура готова. Digital Bus = цифрове рукостискання: кнопка Start/Stop на пристроях отримувача та надавача, GPS-мітка сесії, файл верифікації навіть без зв'язку (відправляється при появі). Залишилось налаштувати інтерфейси та контрольні точки відповідно до регуляторних вимог.</span><span class="en">Digital Bus = digital handshake: Start/Stop button on both provider and recipient devices, GPS session stamp, offline verification file (sent when connectivity resumes). What remains is to configure interfaces and checkpoints to meet regulatory requirements.</span></p>
+  <p style="font-size:13px;color:var(--t2);max-width:680px;line-height:1.65;margin-top:12px;"><span class="uk">99.59% реальної потреби та 95.44% фактично наданих послуг знаходяться поза ЕСОЗ — поза будь-яким регуляторним інструментом НСЗУ. «Не можливо керувати тим, що не можливо порахувати.»</span><span class="en">99.59% of real need and 95.44% of services delivered are outside ESOZ — outside any NSZU regulatory instrument. "You can't manage what you can't count."</span></p>
+</section>
+
+<!-- §2 ЦІНА БЕЗДІЯЛЬНОСТІ -->
+<section id="inaction">
+  <div class="sec-label">§2 / <span class="uk">ЦІНА БЕЗДІЯЛЬНОСТІ</span><span class="en">COST OF INACTION</span></div>
+  <h2 class="section-h"><span class="uk">Кожен непокритий випадок стає витратою бюджету — не сьогодні, але через 12–18 місяців.</span><span class="en">Every unserved case becomes a budget cost — not today, but in 12–18 months.</span></h2>
+  <div class="funnel-wrap">
+    <div>
+      <div class="funnel-bars" style="margin-top:28px;">
+        <div class="fb"><div class="fb-fill" style="width:100%;background:rgba(26,106,154,.18);border:1px solid rgba(26,106,154,.25);"><span style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--t1);"><span class="uk">Потребують допомоги:</span><span class="en">In need:</span> <span style="color:var(--res);">3,900,000</span></span></div></div>
+        <div class="fb" style="padding-left:20px;"><div class="fb-fill" style="width:6.7%;min-width:6px;background:var(--gl);opacity:.8;"></div><span class="fb-label"><span class="uk">ЄСОЗ:</span><span class="en">ESOZ:</span> <span class="n">260,000</span> <span class="pct">(6.7%)</span></span></div>
+        <div class="fb"><div class="fb-fill" style="width:100%;background:transparent;border:1px dashed rgba(160,64,16,.4);"><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;color:var(--t2);"><span class="uk">Потрібно (WHO 5-12-20):</span><span class="en">Required (WHO 5-12-20):</span> <span style="color:var(--svc);font-weight:700;">19.5–78M</span> <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--t3);">сесій/рік</span></span></div></div>
+        <div class="fb"><div class="fb-fill" style="width:88.5%;background:var(--svc);opacity:.75;"><span style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--bg0);white-space:nowrap;"><span class="uk">ДЕФІЦИТ: 19.2–77.7M сесій/рік</span><span class="en">GAP: 19.2–77.7M sessions/yr</span></span></div></div>
+      </div>
+      <div class="cascade" style="margin-top:28px;">
+        <div class="cn"><div class="cn-lbl"><span class="uk">БЕЗ ВТРУЧАННЯ</span><span class="en">WITHOUT CARE</span></div><div class="cn-val" style="font-size:15px;color:var(--t2);"><span class="uk">90 днів<br>без 5 сесій</span><span class="en">90 days<br>0 of 5 sessions</span></div></div>
+        <div class="c-arr">→</div>
+        <div class="cn danger"><div class="cn-lbl">12 МІС.</div><div class="cn-val" style="color:var(--svc);"><span class="uk">Соматизація</span><span class="en">Somatization</span></div></div>
+        <div class="c-arr">→</div>
+        <div class="cn terminal"><div class="cn-lbl"><span class="uk">ІНВАЛІДИЗАЦІЯ</span><span class="en">DISABILITY</span></div><div class="cn-val" style="color:var(--svc);font-size:24px;">$2,965</div><div class="cn-sub"><span class="uk">/особу/рік</span><span class="en">/person/year</span></div></div>
+        <div class="c-arr">→</div>
+        <div class="cn terminal" style="background:rgba(160,64,16,.15);border-color:var(--svc);"><div class="cn-lbl"><span class="uk">ВВП-ВИТІК</span><span class="en">GDP DRAIN</span></div><div class="cn-val" style="color:var(--svc);font-size:24px;">$13.94B</div><div class="cn-sub"><span class="uk">/рік сукупно: $170B×8.2%</span><span class="en">/yr cumulative: $170B×8.2%</span></div></div>
+      </div>
+    </div>
+    <div class="fpanel">
+      <h3><span class="uk">Тінь системи</span><span class="en">System shadow</span></h3>
+      <div class="pm"><div class="pm-val">$380M</div><div class="pm-lbl"><span class="uk">тіньовий ринок/рік (НБУ)</span><span class="en">shadow market/yr (NBU)</span></div><div class="pm-form"><span class="uk">близько 8 тис. незареєстрованих практиків</span><span class="en">approx. 8K unregistered practitioners</span></div></div>
+      <div class="pm"><div class="pm-val">∼52%</div><div class="pm-lbl"><span class="uk">ціна формалізації (вихід з тіні)</span><span class="en">formalization cost (exit from shadow)</span></div><div class="pm-form"><span class="uk">ремонт приміщення + ЄСВ 22% + Єдиний податок 5%<br>+ адміністрування 30% часу + бухгалтер</span><span class="en">premises + SSU 22% + Unified tax 5%<br>+ 30% admin time + accountant</span></div></div>
+      <div class="pm"><div class="pm-val" style="color:var(--res);">624 тис.</div><div class="pm-lbl"><span class="uk">мобільні бригади (послуги HEAL)<br>невидимі в ЄСОЗ</span><span class="en">mobile brigades (HEAL services)<br>invisible in ESOZ</span></div><div class="pm-form">WB ISR #6 Sep 2025<br>KoBoToolbox→Трембіта: не підключено<br>→ THRIVE DLI призупинено</div></div>
+      <div class="pm"><div class="pm-val" style="color:var(--gl);">$5,850</div><div class="pm-lbl"><span class="uk">ВВП-внесок 1 реабілітованого/рік</span><span class="en">GDP contribution per rehabilitated person/yr</span></div><div class="pm-form"><span class="uk">Мінекономіки + НБУ · Коєф.=0.85</span><span class="en">MinEcon + NBU · Coeff.=0.85</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- §3 МАСШТАБ -->
+<section id="scale">
+  <div class="sec-label">§3 / <span class="uk">МАСШТАБ ВИКЛИКУ</span><span class="en">SCALE OF CHALLENGE</span></div>
+  <h2 class="section-h"><span class="uk">Наявна система охоплює лише частину потреби</span><span class="en">Current system covers only a fraction</span></h2>
+  <div class="metrics-row" style="margin-top:24px;">
+    <div class="mc"><span class="mc-arrow up">▲</span><div class="mc-value">118</div><div class="mc-label"><span class="uk">мобільних бригад</span><span class="en">mobile brigades</span></div></div>
+    <div class="mc"><span class="mc-arrow fl">→</span><div class="mc-value">624K+</div><div class="mc-label"><span class="uk">послуг, 157% цілі</span><span class="en">services, 157% of target</span></div></div>
+    <div class="mc"><span class="mc-arrow up">▲</span><div class="mc-value">450+</div><div class="mc-label"><span class="uk">органи місцевого самоврядування</span><span class="en">local governments</span></div></div>
+    <div class="mc"><span class="mc-arrow fl">→</span><div class="mc-value">1,400</div><div class="mc-label"><span class="uk">клінічні психологи / психотерапевти</span><span class="en">clinical psychologists</span></div></div>
+  </div>
+</section>
+
+<!-- §4 ВИДИМІСТЬ ЄСОЗ -->
+<section id="esoz" style="background:var(--bg1);">
+  <div class="sec-label">§4 / <span class="uk">ВИДИМІСТЬ ЄСОЗ</span><span class="en">ESOZ VISIBILITY</span></div>
+  <h2 class="section-h"><span class="uk">Гуманітарні системи поза ЄСОЗ</span><span class="en">Humanitarian systems outside ESOZ</span></h2>
+  <table style="margin-top:24px;">
+    <tr><th>#</th><th><span class="uk">Система</span><span class="en">System</span></th><th><span class="uk">Тип</span><span class="en">Type</span></th><th><span class="uk">Дані</span><span class="en">Data</span></th></tr>
+    <tr><td>1</td><td>ActivityInfo (OCHA)</td><td><span class="uk">Гуманітарна</span><span class="en">Humanitarian</span></td><td>4,130 <span class="uk">записів</span><span class="en">records</span></td></tr>
+    <tr><td>2</td><td>ENKIDU</td><td>P2P</td><td><span class="uk">Транскрибовані дані</span><span class="en">Transcribed data</span></td></tr>
+    <tr><td>3</td><td>1С:Підприємство</td><td><span class="uk">Бухгалтерія</span><span class="en">Accounting</span></td><td><span class="uk">Фінансові операції</span><span class="en">Financial ops</span></td></tr>
+    <tr><td>4</td><td>НСЗУ</td><td><span class="uk">Державна</span><span class="en">State</span></td><td><span class="uk">Медичні записи (обмежено)</span><span class="en">Medical records (limited)</span></td></tr>
+    <tr><td>5</td><td><span class="uk">Системи грантування</span><span class="en">Grant systems</span></td><td>Donor</td><td><span class="uk">Звітність</span><span class="en">Reporting</span></td></tr>
+    <tr><td>6</td><td><span class="uk">Соціальні МІС</span><span class="en">Social MIS</span></td><td><span class="uk">Місцеві</span><span class="en">Local</span></td><td><span class="uk">Дані соцпрацівників</span><span class="en">Social worker data</span></td></tr>
+    <tr><td>7</td><td>Дія</td><td><span class="uk">Державна</span><span class="en">State</span></td><td><span class="uk">Ветеранські довідки</span><span class="en">Veteran certificates</span></td></tr>
+    <tr><td>8</td><td><span class="uk">Мобільні бригади</span><span class="en">Mobile brigades</span></td><td>HEAL</td><td>624K+ <span class="uk">послуг</span><span class="en">services</span></td></tr>
+  </table>
+</section>
+
+<!-- §5 РЕГУЛЯТОРНИЙ АУДИТ -->
+<section id="reg">
+  <div class="sec-label">§5 / <span class="uk">РЕГУЛЯТОРНИЙ АУДИТ</span><span class="en">REGULATORY AUDIT</span></div>
+  <h2 class="section-h"><span class="uk">Дві структурні перешкоди</span><span class="en">Two structural barriers</span></h2>
+  <div class="callout red"><strong><span class="uk">Перешкода 1:</span><span class="en">Barrier 1:</span></strong> <span class="uk">Ліцензування медичної практики — ст. 7, п. 15 Закону "Про ліцензування".</span><span class="en">Medical practice licensing — Art. 7, para. 15 of the Licensing Law.</span></div>
+  <div class="callout red" style="margin-top:12px;"><strong><span class="uk">Перешкода 2:</span><span class="en">Barrier 2:</span></strong> <span class="uk">Захист персональних даних — Special Category (health) дані.</span><span class="en">Data protection — Special Category (health) data.</span></div>
+  <h3 style="margin-top:24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;color:var(--gl);"><span class="uk">Формалізація: ∼52% → 20%</span><span class="en">Formalization: ∼52% → 20%</span></h3>
+  <table>
+    <tr><th><span class="uk">Компонент</span><span class="en">Component</span></th><th><span class="uk">Ставка</span><span class="en">Rate</span></th></tr>
+    <tr><td><span class="uk">Аквізитор</span><span class="en">Acquisition</span></td><td>2.5%</td></tr>
+    <tr><td><span class="uk">Платформа</span><span class="en">Platform</span></td><td>10%</td></tr>
+    <tr><td>ЄСВ</td><td>22%</td></tr>
+    <tr><td>ПДФО</td><td>18%</td></tr>
+    <tr><td><span class="uk">Адміністрування</span><span class="en">Admin</span></td><td>13%</td></tr>
+    <tr><td><strong><span class="uk">Загалом</span><span class="en">Total</span></strong></td><td><strong>∼52%</strong></td></tr>
+  </table>
+</section>
+
+<!-- §6 МАКРО -->
+<section id="gdp" style="background:var(--bg1);">
+  <div class="sec-label">§6 / <span class="uk">МАКРОЕКОНОМІЧНИЙ ВПЛИВ</span><span class="en">MACRO IMPACT</span></div>
+  <h2 class="section-h"><span class="uk">Сценарії: А vs Б</span><span class="en">Scenarios: A vs B</span></h2>
+  <div class="metrics-row" style="margin-top:24px;">
+    <div class="mc"><span class="mc-arrow dn">▼ <span class="uk">СТАТУС-КВО</span><span class="en">STATUS QUO</span></span><div class="mc-value" style="color:var(--svc);">$26.3<span class="u">B</span></div><div class="mc-label"><span class="uk">втрати ВВП (3 роки, 585K інвалідизацій)</span><span class="en">GDP loss (3yr, 585K disabilities)</span></div></div>
+    <div class="mc"><span class="mc-arrow up">▲ <span class="uk">FEEL AGAIN</span><span class="en">FEEL AGAIN</span></span><div class="mc-value" style="color:var(--res);">$13.2<span class="u">B</span></div><div class="mc-label"><span class="uk">залишкові втрати (293.8K)</span><span class="en">residual loss (293.8K)</span></div></div>
+    <div class="mc"><span class="mc-arrow fl">→ <span class="uk">ЕКОНОМІЯ (включно з униканням соматизації)</span><span class="en">SAVINGS</span></span><div class="mc-value">~$15.5<span class="u">B</span></div><div class="mc-label"><span class="uk">чиста економія за 3 роки</span><span class="en">net savings over 3 years</span></div></div>
+    <div class="mc"><span class="mc-arrow fl">→</span><div class="mc-value">$5,850</div><div class="mc-label"><span class="uk">ВВП на 1 реабілітованого/рік</span><span class="en">GDP per rehabilitated/yr</span></div></div>
+  </div>
+</section>
+
+<!-- §7 ПРИВАТНИЙ СЕКТОР -->
+<section id="private">
+  <div class="sec-label">§7 / <span class="uk">ПРИВАТНИЙ СЕКТОР</span><span class="en">PRIVATE SECTOR</span></div>
+  <h2 class="section-h"><span class="uk">8 каналів залучення</span><span class="en">8 engagement channels</span></h2>
+  <table style="margin-top:24px;">
+    <tr><th>#</th><th><span class="uk">Канал</span><span class="en">Channel</span></th><th><span class="uk">Оцінка</span><span class="en">Estimate</span></th><th><span class="uk">Ставка</span><span class="en">Rate</span></th></tr>
+    <tr><td>1</td><td><span class="uk">Тіньовий ринок</span><span class="en">Shadow market</span></td><td>~8,000 ФОП</td><td>15–25%</td></tr>
+    <tr><td>2</td><td>UPRA</td><td>~2,500</td><td>20–30%</td></tr>
+    <tr><td>3</td><td><span class="uk">Ветерани</span><span class="en">Veterans</span></td><td>500–1,000</td><td>10–15%</td></tr>
+    <tr><td>4</td><td><span class="uk">Університети</span><span class="en">Universities</span></td><td>~3,000/рік</td><td>5–10%</td></tr>
+    <tr><td>5</td><td><span class="uk">Діаспора: репатріація</span><span class="en">Diaspora: repat</span></td><td>1–2,000</td><td>5–10%</td></tr>
+    <tr><td>6</td><td><span class="uk">Діаспора: супервізія</span><span class="en">Diaspora: supervision</span></td><td>~500</td><td>30–40%</td></tr>
+    <tr><td>7</td><td><span class="uk">Гуманітарна трансформація</span><span class="en">Humanitarian transition</span></td><td>2–3,000</td><td>15–20%</td></tr>
+    <tr><td>8</td><td><span class="uk">Конверсія психіатрів</span><span class="en">Psychiatry conversion</span></td><td>~2,700</td><td>5–10%</td></tr>
+  </table>
+</section>
+
+<!-- §8 ЄДИНИЙ ШЛЯХ -->
+<section id="pathway" style="background:var(--bg1);">
+  <div class="sec-label">§8 / <span class="uk">ЄДИНИЙ ШЛЯХ</span><span class="en">UNIFIED PATHWAY</span></div>
+  <h2 class="section-h"><span class="uk">Бенефіціар → Клієнт → Пацієнт</span><span class="en">Beneficiary → Client → Patient</span></h2>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-content"><h4><span class="uk">Звернення</span><span class="en">Contact</span></h4><p><span class="uk">Бенефіціар звертається до будь-якої точки дотику</span><span class="en">Beneficiary contacts any touchpoint</span></p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content"><h4><span class="uk">Транскрибація</span><span class="en">Transcription</span></h4><p><span class="uk">Дані передаються через Digital Bus до ЄСОЗ</span><span class="en">Data flows via Digital Bus to ESOZ</span></p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content"><h4><span class="uk">Діагностика</span><span class="en">Diagnosis</span></h4><p><span class="uk">Клініцист отримує дані, проводить оцінку за шкалами</span><span class="en">Clinician receives data, assesses via scales</span></p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content"><h4><span class="uk">Допомога</span><span class="en">Care</span></h4><p><span class="uk">Призначення лікування, моніторинг через Digital Bus</span><span class="en">Treatment assignment, monitoring via Digital Bus</span></p></div></div>
+  </div>
+</section>
+
+<!-- §9 ЦИФРОВА ШИНА -->
+<section id="bus">
+  <div class="sec-label">§9 / <span class="uk">ЦИФРОВА ШИНА</span><span class="en">DIGITAL BUS</span></div>
+  <h2 class="section-h"><span class="uk">Рейки. Не потяг.<br>FEEL Again Цифрова шина / Digital Bus</span><span class="en">Rails. Not the train.<br>FEEL Again Digital Bus</span></h2>
+  <p style="font-size:13px;color:var(--t2);margin-top:8px;max-width:600px;line-height:1.65;"><span class="uk">НЕ медична інформаційна система для передачі транскрибованих даних з гуманітарних систем моніторингу до державного захищеного контуру у вигляді клінічних епізодів стандарту HL7 FHIR R4. Адміністратор: NGO «Фундація Відкрите Суспільство». Оператор: ENKIDU Global P2P платформа.</span><span class="en">Non-medical information system for transmitting transcribed data from humanitarian monitoring to the state protected circuit as HL7 FHIR R4 clinical episodes. Administrator: NGO "Open Society Foundation". Operator: ENKIDU Global P2P platform.</span></p>
+  <div class="callout"><strong><span class="uk">Ключовий принцип:</span><span class="en">Key principle:</span></strong> <span class="uk">Передача даних з покращенням якості національного дата-сету, що не передбачає прямих державних виплат виконавцю.</span><span class="en">Data transfer improving national dataset quality, without direct state payments to the performer.</span></div>
+  <div class="callout green" style="margin-top:16px;"><strong><span class="uk">🔷 БЕЗ ЗАПИТУ НА ДЕРЖБЮДЖЕТ (Zero State Budget Request). Visa of the MHPSS — єдиний шлюз верифікації для НСЗУ, Світового банку та НБУ.</span><span class="en">Zero state budget request.</span></strong> <span class="uk">Програма не потребує асигнувань з державного бюджету. Фінансування — міжнародні гранти (HEAL, THRIVE) та власні кошти NGO. Держава отримує готову інфраструктуру без бюджетного навантаження.</span><span class="en">The program requires no state budget allocations. Funding via international grants (HEAL, THRIVE) and NGO own funds. The state receives ready infrastructure at zero fiscal cost.</span></div>
+  <div style="margin-top:24px;font-family:'Space Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:.1em;"><span class="uk">ЮРИДИЧНІ ОБГРУНТУВАННЯ</span><span class="en">LEGAL GROUNDING</span></div>
+  <ul style="margin-top:12px;list-style:none;">
+    <li style="padding:6px 0;font-size:12px;color:var(--t2);border-bottom:1px solid var(--bg2);"><span style="color:var(--gl);font-weight:700;">Закон №4223-IX</span> — ст. 24-1: Digital Bus як шлюз інтероперабельності</li>
+    <li style="padding:6px 0;font-size:12px;color:var(--t2);border-bottom:1px solid var(--bg2);"><span style="color:var(--gl);font-weight:700;">Закон №12030</span> — сертифікація до 2031</li>
+    <li style="padding:6px 0;font-size:12px;color:var(--t2);border-bottom:1px solid var(--bg2);"><span style="color:var(--gl);font-weight:700;">Закон "Про ліцензування"</span> — не застосовується до Digital Bus</li>
+    <li style="padding:6px 0;font-size:12px;color:var(--t2);border-bottom:1px solid var(--bg2);"><span style="color:var(--gl);font-weight:700;">Наказ МОЗ</span> — занесення гуманітарних даних у ЄСОЗ</li>
+    <li style="padding:6px 0;font-size:12px;color:var(--t2);border-bottom:1px solid var(--bg2);"><span style="color:var(--gl);font-weight:700;">Закон "Про захист персональних даних"</span> — Special Category</li>
+    <li style="padding:6px 0;font-size:12px;color:var(--t2);"><span style="color:var(--gl);font-weight:700;">NBU №39</span> — пісочниця для ENKIDU</li>
+  </ul>
+</section>
+
+<!-- §10 АРХІТЕКТУРА -->
+<section id="arch" style="background:var(--bg1);">
+  <div class="sec-label">§10 / <span class="uk">АРХІТЕКТУРА</span><span class="en">ARCHITECTURE</span></div>
+  <h2 class="section-h"><span class="uk">Як це працює</span><span class="en">How it works</span></h2>
+  <div class="arch-flow">
+    <div class="af"><div class="af-lbl">KOBOTOOLBOX</div><div class="af-val">624K+</div><div class="af-sub"><span class="uk">mobile teams</span><span class="en">mobile teams</span></div></div>
+    <div class="af-arr">→</div>
+    <div class="af"><div class="af-lbl">ACTIVITYINFO</div><div class="af-val">4,130</div><div class="af-sub"><span class="uk">OCHA cluster</span><span class="en">OCHA cluster</span></div></div>
+    <div class="af-arr">→</div>
+    <div class="af highlight"><div class="af-lbl"><span class="uk">ЦИФРОВА ШИНА</span><span class="en">DIGITAL BUS</span></div><div class="af-val">Feel Again</div><div class="af-sub">HL7 FHIR R4 · AI</div></div>
+    <div class="af-arr">→</div>
+    <div class="af"><div class="af-lbl">ТРЕМБІТА</div><div class="af-val">Gateway</div><div class="af-sub"><span class="uk">Держспецзв'язку</span><span class="en">State Special Comm</span></div></div>
+    <div class="af-arr">→</div>
+    <div class="af"><div class="af-lbl">ЄСОЗ</div><div class="af-val">F33.1 etc.</div><div class="af-sub">NHSU</div></div>
+  </div>
+  <div class="callout" style="margin-top:16px;font-size:12px;"><span class="uk">624K+ послуг стають видимими. Triple Verification Oracle: 20% (Дія.ID) → 30% → 50% (PCL-5/PHQ-9) = верифікований клінічний результат</span><span class="en">624K+ services become visible. Triple Verification Oracle: 20% (Diia.ID) → 30% → 50% (PCL-5/PHQ-9) = verified clinical outcome</span></div>
+</section>
+
+<!-- §11 РЕЄСТР + ШКАЛИ -->
+<section id="registry">
+  <div class="sec-label">§11 / <span class="uk">РЕЄСТР + ШКАЛИ</span><span class="en">REGISTRY + SCALES</span></div>
+  <h2 class="section-h"><span class="uk">Єдиний реєстр фахівців + клінічні шкали</span><span class="en">Unified specialist registry + clinical scales</span></h2>
+  <div class="sol-grid" style="margin-top:24px;">
+    <div class="sc"><div class="sc-num">REGISTRY</div><h3><span class="uk">Єдиний реєстр</span><span class="en">Unified Registry</span></h3><p><span class="uk">1,400 клінічних психологів · ~4,000 соцпрацівників · ~8,000 ФОП · ~3,000/рік університети · діаспора</span><span class="en">1,400 clinical psychologists · ~4,000 social workers · ~8,000 sole proprietors · ~3,000/yr universities · diaspora</span></p></div>
+    <div class="sc"><div class="sc-num">SCALES</div><h3><span class="uk">Клінічні шкали</span><span class="en">Clinical Scales</span></h3><p>PHQ-9 (0–27) · GAD-7 (0–21) · PCL-5 (0–80) · WHO-5 (0–100) · WSAS (0–40) · MDQ</p></div>
+    <div class="sc"><div class="sc-num">INTEGRATION</div><h3><span class="uk">Інтеграція</span><span class="en">Integration</span></h3><p><span class="uk">Всі шкали в Digital Bus, доступні через ЄСОЗ. Результати транскрибуються в медичні записи.</span><span class="en">All scales in Digital Bus, accessible via ESOZ. Results transcribed into medical records.</span></p></div>
+  </div>
+</section>
+
+<!-- §12 ВІКНО ДІЙ -->
+<section id="window" style="background:var(--bg1);">
+  <div class="sec-label">§12 / <span class="uk">ВІКНО ДІЙ 2026</span><span class="en">WINDOW OF ACTION 2026</span></div>
+  <div style="display:flex;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:40px;">
+    <div><div class="wc-val" id="daysLeft">–</div><span class="wc-lbl uk">днів до закриття HEAL P180245 (23.12.2026)</span><span class="wc-lbl en">days until HEAL P180245 closes (23.12.2026)</span></div>
+    <div style="max-width:420px;padding-top:8px;"><p style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:400;color:var(--t2);line-height:1.35;"><span class="uk">Якщо middleware не стане eligible витратою — $41.1M нерозподілених коштів не будуть розподілені. Без Digital Bus — THRIVE DLI залишаються приторможеними.</span><span class="en">If middleware is not classified as eligible expenditure — $41.1M in undisbursed funds will not be disbursed. Without Digital Bus — THRIVE DLI remains stalled.</span></p></div>
+  </div>
+  <h2 class="section-h"><span class="uk">Порядок дій для НСЗУ</span><span class="en">NSZU action plan</span></h2>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-content"><h4><span class="uk">Підписання MoU з МОЗ (API ЄСОЗ/Трембіта)</span><span class="en">MoU signing with MoH (ESOZ/Trembita API)</span></h4><p><span class="uk">Без пілотів — одномоментний залив даних мобільних бригад (перевиконання плану). Технічний опис FHIR R4 middleware-шару.</span><span class="en">No pilot — immediate full data load from mobile teams (plan exceeded). Technical spec for FHIR R4 middleware layer.</span></p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content"><h4><span class="uk">Нормативне рішення</span><span class="en">Regulatory decision</span></h4><p><span class="uk">НСЗУ приймає рішення про акредитацію Цифрової шини як шлюзу інтероперабельності згідно ст. 24-1 Закону №4223-IX</span><span class="en">NSZU adopts decision on Digital Bus accreditation under Art. 24-1 of Law No. 4223-IX</span></p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content"><h4><span class="uk">Технічна інтеграція</span><span class="en">Technical integration</span></h4><p><span class="uk">Підключення до ЄСОЗ через API-шлюз Digital Bus; мапінг формул тарифікації</span><span class="en">Connection to ESOZ via Digital Bus API gateway; tariff formula mapping</span></p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content"><h4><span class="uk">Масштабування</span><span class="en">Scaling</span></h4><p><span class="uk">Підключення додаткових виконавців; досягнення критичної маси для DLI THRIVE</span><span class="en">Onboarding additional performers; reaching critical mass for THRIVE DLI</span></p></div></div>
+  </div>
+  <div class="callout" style="margin-top:24px;"><strong><span class="uk">Прогнозований результат:</span><span class="en">Expected result:</span></strong> <span class="uk">Збільшення покриття з 0.33%–1.33% до критичної маси для верифікації DLI THRIVE ($134 млн очікує діагностичний рівень).</span><span class="en">Coverage increase from 0.33%–1.33% to critical mass for THRIVE DLI verification ($134M awaiting diagnostic level).</span></div>
+  <div class="cta-row">
+    <a href="Пропозиції до НСЗУ Відчувай Знову (Feel Again) — Short.html" class="cta-btn"><span class="cta-type uk">АНАЛІТИКА ТА ПРОПОЗИЦІЇ</span><span class="cta-type en">ANALYTICS & PROPOSALS</span><span class="cta-lbl uk">→ Переглянути розгорнуто</span><span class="cta-lbl en">→ View full version</span></a>
+    <a href="https://dashboard.feelagain.me" target="_blank" class="cta-btn"><span class="cta-type">LIVE DASHBOARD</span><span class="cta-lbl">→ dashboard.feelagain.me</span></a>
+    <a href="https://feelagain.me" target="_blank" class="cta-btn"><span class="cta-type uk">ВЕБСАЙТ ПРОГРАМИ</span><span class="cta-type en">PROGRAM WEBSITE</span><span class="cta-lbl">→ feelagain.me</span></a>
+  </div>
+  <div class="fn"><span class="uk">Підготовлено: Фундація Відкрите Суспільство · Програма FEEL Again<br>Дані: НБУ · НСЗУ · ВООЗ · WB ISR #6 · ActivityInfo 4,130 · Закон №4223-IX · Закон №12030<br>Верифіковані дані за протоколом L3 (2+ перехресних джерела). Інформаційний документ.</span><span class="en">Prepared by: Open Society Foundation · FEEL Again Program<br>Data: NBU (L3_DAT_12) · NSZU · WHO · WB ISR #6 · ActivityInfo 4,130 · Law No. 4223-IX · Law No. 12030<br>Verified data under L3 protocol (2+ cross-referenced sources). Informational document.</span></div>
+</section>
+
+<script>
+function toggleLang(){const h=document.documentElement,b=document.getElementById('lbtn');const isUk=h.getAttribute('data-lang')==='uk';h.setAttribute('data-lang',isUk?'en':'uk');b.textContent=isUk?'УКР':'ENG';}
+function updateDays(){const d=new Date('2026-12-23T00:00:00'),n=new Date();const diff=Math.ceil((d-n)/864e5);const el=document.getElementById('daysLeft');if(el&&diff>0)el.textContent=diff;}
+updateDays();
+</script>
+</body>
+</html>

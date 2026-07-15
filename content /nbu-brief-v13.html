@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Аналітичний бриф НБУ v13 | FEEL Again</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #06090D;
+      --bg2: #0a1118;
+      --bg3: #0f1a24;
+      --card: #111c28;
+      --border: #1a2d40;
+      --border2: #243547;
+      --text: #dde6f0;
+      --text2: #8da0b4;
+      --text3: #536a82;
+      --green: #10b981;
+      --green-bg: rgba(16,185,129,0.10);
+      --green-border: rgba(16,185,129,0.28);
+      --amber: #f59e0b;
+      --amber-bg: rgba(245,158,11,0.09);
+      --amber-border: rgba(245,158,11,0.30);
+      --blue: #3b82f6;
+      --blue-bg: rgba(59,130,246,0.09);
+      --blue-border: rgba(59,130,246,0.28);
+      --red: #ef4444;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Space Grotesk', system-ui, sans-serif;
+      --sidebar: 248px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.72;
+      display: flex;
+      min-height: 100vh;
+      font-size: 15px;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: fixed;
+      left: 0; top: 0;
+      width: var(--sidebar);
+      height: 100vh;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sb-brand {
+      padding: 22px 18px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sb-logo {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--amber);
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .sb-sub {
+      font-size: 11.5px;
+      color: var(--text3);
+      line-height: 1.4;
+    }
+
+    .sb-section {
+      padding: 10px 0 4px;
+    }
+
+    .sb-label {
+      padding: 6px 18px 4px;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      color: var(--text3);
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    .sb-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 18px;
+      font-size: 12.5px;
+      color: var(--text2);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.15s ease;
+      line-height: 1.35;
+    }
+
+    .sb-link:hover,
+    .sb-link.active {
+      color: var(--text);
+      border-left-color: var(--amber);
+      background: var(--amber-bg);
+    }
+
+    .sb-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      min-width: 18px;
+    }
+
+    .sb-ext {
+      border-left-color: transparent !important;
+    }
+
+    .sb-ext:hover {
+      border-left-color: var(--blue) !important;
+      background: var(--blue-bg) !important;
+    }
+
+    .sb-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 10px 0;
+    }
+
+    .sb-companion {
+      padding: 12px 18px;
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+    }
+
+    .sb-comp-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--text3);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .sb-comp-link {
+      display: block;
+      font-size: 11.5px;
+      color: var(--text3);
+      text-decoration: none;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.15s;
+    }
+
+    .sb-comp-link:last-child { border-bottom: none; }
+    .sb-comp-link:hover { color: var(--text); }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: var(--sidebar);
+      flex: 1;
+      max-width: 860px;
+      padding: 0 44px 100px;
+    }
+
+    /* ── DOC HEADER ── */
+    .doc-header {
+      padding: 48px 0 36px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 52px;
+    }
+
+    .doc-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      letter-spacing: 0.8px;
+      font-weight: 500;
+    }
+
+    .tag-amber {
+      background: var(--amber-bg);
+      color: var(--amber);
+      border: 1px solid var(--amber-border);
+    }
+
+    .tag-blue {
+      background: var(--blue-bg);
+      color: var(--blue);
+      border: 1px solid var(--blue-border);
+    }
+
+    .tag-green {
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid var(--green-border);
+    }
+
+    .doc-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.32;
+      margin-bottom: 14px;
+      max-width: 720px;
+    }
+
+    .doc-recipient {
+      font-size: 13px;
+      color: var(--text2);
+      margin-bottom: 22px;
+      padding: 10px 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .doc-recipient-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .doc-meta {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text3);
+    }
+
+    .meta-item span { color: var(--text2); }
+
+    /* ── SECTION ── */
+    .section {
+      margin-bottom: 72px;
+      scroll-margin-top: 24px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sec-num {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--amber);
+      background: var(--amber-bg);
+      border: 1px solid var(--amber-border);
+      padding: 5px 10px;
+      border-radius: 4px;
+      white-space: nowrap;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .sec-title-block h2 {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+      line-height: 1.3;
+    }
+
+    .sec-title-block .sec-eng {
+      font-size: 11.5px;
+      color: var(--text3);
+      font-family: var(--mono);
+    }
+
+    /* ── PROSE ── */
+    .prose {
+      color: var(--text2);
+      font-size: 14.5px;
+      line-height: 1.82;
+    }
+
+    .prose p { margin-bottom: 18px; }
+    .prose p:last-child { margin-bottom: 0; }
+
+    .prose strong { color: var(--text); font-weight: 600; }
+    .prose em { color: var(--text2); font-style: italic; }
+
+    /* ── METRICS GRID ── */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 26px 0;
+    }
+
+    .metric-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 16px 18px;
+      transition: border-color 0.15s;
+    }
+
+    .metric-card:hover { border-color: var(--border2); }
+
+    .metric-val {
+      font-family: var(--mono);
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--amber);
+      margin-bottom: 5px;
+      line-height: 1.2;
+    }
+
+    .metric-val.green { color: var(--green); }
+    .metric-val.blue { color: var(--blue); }
+
+    .metric-lbl {
+      font-size: 12px;
+      color: var(--text2);
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+
+    .metric-src {
+      font-family: var(--mono);
+      font-size: 9.5px;
+    }
+
+    .src-g { color: var(--green); }
+    .src-y { color: var(--amber); }
+    .src-b { color: var(--blue); }
+
+    /* ── TABLES ── */
+    .tbl-wrap {
+      overflow-x: auto;
+      margin: 22px 0;
+    }
+
+    table.dtbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    table.dtbl th {
+      text-align: left;
+      padding: 9px 14px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border2);
+      white-space: nowrap;
+    }
+
+    table.dtbl td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text2);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+
+    table.dtbl tr:last-child td { border-bottom: none; }
+
+    table.dtbl tr:hover td {
+      background: rgba(255,255,255,0.018);
+    }
+
+    .mono-cell {
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .bold-cell {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ── CALLOUT BOXES ── */
+    .callout {
+      border-radius: 0 6px 6px 0;
+      padding: 16px 20px;
+      margin: 22px 0;
+    }
+
+    .callout-amber {
+      background: var(--amber-bg);
+      border: 1px solid var(--amber-border);
+      border-left: 3px solid var(--amber);
+    }
+
+    .callout-blue {
+      background: var(--blue-bg);
+      border: 1px solid var(--blue-border);
+      border-left: 3px solid var(--blue);
+    }
+
+    .callout-green {
+      background: var(--green-bg);
+      border: 1px solid var(--green-border);
+      border-left: 3px solid var(--green);
+    }
+
+    .callout-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .callout-amber .callout-title { color: var(--amber); }
+    .callout-blue .callout-title { color: var(--blue); }
+    .callout-green .callout-title { color: var(--green); }
+
+    .callout p {
+      font-size: 14px;
+      color: var(--text2);
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    .callout p + p { margin-top: 8px; }
+
+    .callout strong { color: var(--text); }
+
+    /* ── FORMULA BOX ── */
+    .formula {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 5px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--green);
+      line-height: 1.6;
+    }
+
+    .formula-comment {
+      color: var(--text3);
+      font-size: 11px;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline { position: relative; padding-left: 26px; margin: 20px 0; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 9px; top: 10px; bottom: 10px;
+      width: 1px;
+      background: var(--border2);
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 22px;
+    }
+
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -21px; top: 7px;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--amber);
+      border: 2px solid var(--bg2);
+    }
+
+    .tl-phase {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--amber);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .tl-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .tl-desc {
+      font-size: 12.5px;
+      color: var(--text2);
+      line-height: 1.5;
+    }
+
+    .tl-actor {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--blue);
+      margin-top: 4px;
+    }
+
+    /* ── ASSUMPTION NOTE ── */
+    .assumption {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--amber);
+      background: var(--amber-bg);
+      border: 1px solid var(--amber-border);
+      padding: 2px 7px;
+      border-radius: 3px;
+      vertical-align: middle;
+    }
+
+    /* ── SECTION DIVIDER ── */
+    hr.sec-div {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 36px 0;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+    /* ── PRINT ── */
+    @media print {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 20px; }
+      .doc-header { padding-top: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     SIDEBAR
+════════════════════════════════════════════════ -->
+<nav class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-logo">FEEL Again</div>
+    <div class="sb-sub">Аналітичний бриф НБУ<br>Версія 13 · Червень 2026</div>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-label">Розділи</div>
+    <a href="#s1" class="sb-link"><span class="sb-num">I</span> Масштаб виклику</a>
+    <a href="#s2" class="sb-link"><span class="sb-num">II</span> Фінансовий розрив</a>
+    <a href="#s3" class="sb-link"><span class="sb-num">III</span> Структурна сліпота</a>
+    <a href="#s4" class="sb-link"><span class="sb-num">IV</span> Індекс MHEI</a>
+    <a href="#s5" class="sb-link"><span class="sb-num">V</span> Digital Bus / Trust Bridge</a>
+    <a href="#s6" class="sb-link"><span class="sb-num">VI</span> Правова реформа</a>
+    <a href="#s7" class="sb-link"><span class="sb-num">VII</span> Фінансові інструменти</a>
+    <a href="#s8" class="sb-link"><span class="sb-num">VIII</span> Сектор газелей</a>
+    <a href="#s9" class="sb-link"><span class="sb-num">IX</span> Конкретна пропозиція</a>
+  </div>
+
+  <div class="sb-divider"></div>
+
+  <div class="sb-section">
+    <div class="sb-label">Ресурси</div>
+    <a href="https://feelagain.com.ua" class="sb-link sb-ext" target="_blank">
+      <span class="sb-num">↗</span> Сайт програми
+    </a>
+    <a href="https://nbu-analysis.pages.dev" class="sb-link sb-ext" target="_blank">
+      <span class="sb-num">↗</span> Дашборд даних
+    </a>
+  </div>
+
+  <div class="sb-companion">
+    <div class="sb-comp-label">Супровідні документи</div>
+    <a href="nbu-companion-explanatory.html" class="sb-comp-link" target="_blank">→ Пояснювальна записка</a>
+    <a href="nbu-companion-board-memo.html" class="sb-comp-link" target="_blank">→ Записка до Правління НБУ</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════════════ -->
+<main class="main">
+
+  <!-- ── DOC HEADER ── -->
+  <div class="doc-header">
+    <div class="doc-eyebrow">
+      <span class="tag tag-amber">Аналітичний бриф</span>
+      <span class="tag tag-blue">Конфіденційно</span>
+      <span class="tag tag-green">v13</span>
+    </div>
+
+    <h1 class="doc-title">Сектор ментального здоров'я як зона монетарної відповідальності НБУ: аргументи для регуляторного реагування</h1>
+
+    <div class="doc-recipient">
+      <span class="doc-recipient-label">Адресат</span>
+      Ігор Лужанський — головний стратег, Національний банк України
+    </div>
+
+    <div class="doc-meta">
+      <div class="meta-item">Версія: <span>v13 · Червень 2026</span></div>
+      <div class="meta-item">Програма: <span>FEEL Again</span></div>
+      <div class="meta-item">Статус: <span>Для обговорення</span></div>
+      <div class="meta-item">Джерела: <span>WHO · OECD · EBRD · WB · НСЗУ · МОЗ</span></div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       SECTION I — МАСШТАБ ВИКЛИКУ
+  ════════════════════════════════════════════ -->
+  <section class="section" id="s1">
+    <div class="section-header">
+      <div class="sec-num">РОЗДІЛ I</div>
+      <div class="sec-title-block">
+        <h2>Масштаб виклику</h2>
+        <div class="sec-eng">Scale of the Challenge</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-val">3,9M</div>
+        <div class="metric-lbl">осіб з клінічними та субклінічними порушеннями, які потребують прямого втручання</div>
+        <div class="metric-src src-g">✓ GREEN · WHO / Lancet / ООН</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">62,4M</div>
+        <div class="metric-lbl">сесій/рік — потреба за медіанним стандартом ВООЗ (16 сес. × 3,9M)</div>
+        <div class="metric-src src-g">✓ GREEN · WHO median protocol</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">260K</div>
+        <div class="metric-lbl">сесій/рік — ЄСОЗ-видима ємність (НСЗУ Пакет 51)</div>
+        <div class="metric-src src-g">✓ GREEN · НСЗУ Реєстр 2025</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">0,41%</div>
+        <div class="metric-lbl">покриття потреби у формальному секторі (260K / 62,4M)</div>
+        <div class="metric-src src-g">✓ GREEN · розрахункове</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Станом на 2025 рік сукупна оцінка клінічної потреби в Україні становить <strong>3,9 мільйони осіб</strong> з розладами середньої та важкої тяжкості (ПТСР, депресія, тривожні розлади), що підтверджено незалежними джерелами: Lancet Commission on Global Mental Health, стандартами ВООЗ для зон активного конфлікту, та даними ООН по переміщеному населенню. Застосовуючи медіанний клінічний стандарт ВООЗ у 16 сесій на курс, розрахункова щорічна потреба становить <strong>62,4 мільйони сесій</strong>. За скороченим стандартом (5 сесій — гостра стабілізація) потреба дорівнює 19,5 мільйони сесій; за стандартом середньої інтенсивності (12 сесій) — 46,8 мільйони; за максимально інтенсивним протоколом (20 сесій, включно з груповою терапією) — 78 мільйонів сесій на рік.</p>
+
+      <p>Поточна формальна ємність системи, що є юридично видимою через ЄСОЗ, становить лише <strong>260 000 сесій на рік</strong> відповідно до даних НСЗУ за Пакетом 51. Гуманітарний сектор реалізував близько <strong>5 мільйонів сесій</strong> за підрахунком WHO Health Cluster 5W Dashboard за 2022–2025 роки (600 000 унікальних бенефіціарів). Оцінка ЮНІСЕФ складає <span class="assumption">⚠ YELLOW</span> ~750 000 сесій. Сукупна фактична ємність — близько 5,71 мільйона сесій — залишається юридично невидимою для ЄСОЗ, тобто невидимою для НБУ, Міністерства фінансів та Світового банку як перевіряючих органів. Один на кожні 22 реально наданих сеанси реєструється в державній системі.</p>
+
+      <p>Макроекономічний тягар визначається двома незалежними оцінками. За методологією OECD (5% ВВП), щорічні прямі та непрямі втрати становлять <strong>~$8 мільярдів</strong>. За ширшою моделлю EBRD/OECD (Guidance Note, лютий 2025), що включає абсентеїзм, презентеїзм та втрачені внески до ПФУ, сукупний діапазон становить <strong>$10–28 мільярдів на рік</strong>. Обидва показники є GREEN — верифіковані за двома незалежними джерелами. Різниця в оцінках сама по собі діагностує відсутність уніфікованого методологічного стандарту вимірювання у секторі.</p>
+
+      <p>Нелікована психологічна травма генерує каскад соматизації. За висновком Krauth et al. (Німеччина, система ветеранської реабілітації — мобільний профіль, зіставний з Україною), коморбідний тягар ПТСР на загальну медицину визначається <strong>мультиплікатором 3–5×</strong>. Застосовуючи нижню межу до базового показника OECD ($8B): нелікований ПТСР-пул генерує додаткові <strong>$24–40 мільярдів</strong> витрат на соматичну медицину щорічно через серцево-судинні захворювання, діабет та імунологічні патології. Балканський прецедент підтверджує це кількісно: у Боснії та Герцеговині 25,5% переміщеного населення отримали статус інвалідності протягом 7 років після конфлікту, при цьому коморбідна депресія разом із ПТСР підвищує ризик інвалідизації у <strong>5 разів</strong> (Балканська дослідницька рамка, 2019).</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="dtbl">
+        <thead>
+          <tr>
+            <th>Сценарій</th>
+            <th>Стандарт сесій</th>
+            <th>Річна потреба</th>
+            <th>Покриття факт.</th>
+            <th>Статус джерела</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Гостра стабілізація</td>
+            <td class="mono-cell">3,9M × 5</td>
+            <td class="mono-cell bold-cell">19,5M сесій</td>
+            <td class="mono-cell">29,2%</td>
+            <td><span class="tag tag-green">GREEN</span></td>
+          </tr>
+          <tr>
+            <td>Середня інтенсивність</td>
+            <td class="mono-cell">3,9M × 12</td>
+            <td class="mono-cell bold-cell">46,8M сесій</td>
+            <td class="mono-cell">12,2%</td>
+            <td><span class="tag tag-green">GREEN</span></td>
+          </tr>
+          <tr>
+            <td><strong>WHO медіана (пріоритет)</strong></td>
+            <td class="mono-cell">3,9M × 16</td>
+            <td class="mono-cell bold-cell">62,4M сесій</td>
+            <td class="mono-cell">0,41%</td>
+            <td><span class="tag tag-green">GREEN · WHO</span></td>
+          </tr>
+          <tr>
+            <td>Повний протокол з груп. терапією</td>
+            <td class="mono-cell">3,9M × 20</td>
+            <td class="mono-cell bold-cell">78,0M сесій</td>
+            <td class="mono-cell">0,33%</td>
+            <td><span class="tag tag-green">GREEN</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-title">Ключовий принцип монетарної діагностики</div>
+      <p>Неможливо контролювати те, чого неможливо порахувати. 99,59% реальної потреби та 95,44% реально наданих послуг перебувають поза ЄСОЗ — поза полем зору будь-якого регуляторного інструментарію НБУ. Це не клінічна проблема: це проблема вимірювання в галузі, де йдеться про мільярди ВВП.</p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       SECTION II — ФІНАНСОВИЙ РОЗРИВ
+  ════════════════════════════════════════════ -->
+  <section class="section" id="s2">
+    <div class="section-header">
+      <div class="sec-num">РОЗДІЛ II</div>
+      <div class="sec-title-block">
+        <h2>Фінансовий розрив</h2>
+        <div class="sec-eng">Financing Gap — WB Program Deceleration</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-val">$954M</div>
+        <div class="metric-lbl">загальний обсяг двох програм СБ (HEAL + THRIVE)</div>
+        <div class="metric-src src-g">✓ GREEN · WB Project Portal</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">~$175M</div>
+        <div class="metric-lbl">приторможено — очікують верифікованих даних для DLI</div>
+        <div class="metric-src src-y">⚠ YELLOW · розрахункове</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">6,0B грн</div>
+        <div class="metric-lbl">бюджет НСЗУ 2025 — покриває 530K сесій з потреби 2,1M</div>
+        <div class="metric-src src-g">✓ GREEN · НСЗУ</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">1,57M</div>
+        <div class="metric-lbl">дефіцит НСЗУ-сесій: потреба 2,1M мінус фінансування 530K</div>
+        <div class="metric-src src-g">✓ GREEN · розрахункове</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Два паралельні механізми Світового банку формують фінансову рамку сектора. Програма <strong>HEAL (P180245, $500M IPF)</strong> станом на 2025 рік має $171 мільйон виплаченим (34% обсягу). Компонент 4, безпосередньо пов'язаний із розбудовою потенціалу MHPSS-сектору, має обсяг $50 мільйонів при фактичному освоєнні $8,9 мільйона — таким чином, <span class="assumption">⚠ YELLOW</span> близько <strong>$41,1 мільйона</strong> залишаються у стадії приторможеного disbursement. Програма <strong>THRIVE (P505616, $454M PforR)</strong> має близько $320 мільйонів виплаченими (~70%), тобто <span class="assumption">⚠ YELLOW</span> близько <strong>$134 мільйонів</strong> очікують виконання відповідних DLI-критеріїв.</p>
+
+      <p>Важливо уточнити термінологію: ці кошти не <em>заблоковані</em> — механізм disbursement функціонує. Вони <em>приторможені</em> структурним обмеженням: DLI-критерії потребують верифікованих, агрегованих результатних даних, які наразі система не може надати через відсутність сумісного вимірювального шлюзу між гуманітарним сектором і ЄСОЗ. Іншими словами, не відсутність клінічних результатів гальмує виплати — а відсутність підтвердженого механізму їх вимірювання.</p>
+
+      <p>Бюджетний розрив на рівні НСЗУ підтверджує ту саму картину у гривневому вираженні. Затверджений бюджет 2025 року на психіатричні послуги становить <strong>6,0 мільярдів гривень</strong>, що фінансує приблизно 530 000 звернень. Розрахункова потреба — <strong>2,1 мільйона звернень</strong>. Дефіцит фінансування становить 1,57 мільйона звернень, або 74,8% від потреби, при цьому жодна з наявних звітних систем не може цей дефіцит ані підтвердити агрегованими даними, ані передати до WB у форматі, сумісному з DLI-тригерами.</p>
+
+      <p>Digital Bus усуває саме цю прогалину: він виступає ЄСОЗ-шлюзом, що перетворює дані із гуманітарного та приватного секторів у верифіковані записи, придатні для автоматичного підтвердження DLI. Кожна верифікована в ЄСОЗ сесія з PHQ-9/PCL-5-результатом стає потенційним тригером для disbursement, без потреби ручного аудиту СБ. Цей механізм є прямою монетарною зацікавленістю НБУ як куратора фінансового інструментарію, що забезпечує функціонування Resilience Fund.</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="dtbl">
+        <thead>
+          <tr>
+            <th>Програма</th>
+            <th>Код / Тип</th>
+            <th>Загальний обсяг</th>
+            <th>Виплачено</th>
+            <th>Приторможено</th>
+            <th>Статус</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold-cell">HEAL</td>
+            <td class="mono-cell">P180245 · IPF</td>
+            <td class="mono-cell">$500M</td>
+            <td class="mono-cell">$171M (34%)</td>
+            <td class="mono-cell bold-cell">~$329M</td>
+            <td><span class="tag tag-green">GREEN</span></td>
+          </tr>
+          <tr>
+            <td>— Component 4</td>
+            <td class="mono-cell">MHPSS capacity</td>
+            <td class="mono-cell">$50M</td>
+            <td class="mono-cell">$8,9M</td>
+            <td class="mono-cell bold-cell">~$41,1M</td>
+            <td><span class="tag tag-amber">⚠ YELLOW</span></td>
+          </tr>
+          <tr>
+            <td class="bold-cell">THRIVE</td>
+            <td class="mono-cell">P505616 · PforR</td>
+            <td class="mono-cell">$454M</td>
+            <td class="mono-cell">~$320M (~70%)</td>
+            <td class="mono-cell bold-cell">~$134M</td>
+            <td><span class="tag tag-amber">⚠ YELLOW</span></td>
+          </tr>
+          <tr>
+            <td colspan="4" style="font-weight:600;color:var(--text)">Сукупно приторможено</td>
+            <td class="mono-cell bold-cell" style="color:var(--amber)">~$175M</td>
+            <td><span class="tag tag-amber">⚠ YELLOW</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       SECTION III — СТРУКТУРНА СЛІПОТА
+  ════════════════════════════════════════════ -->
+  <section class="section" id="s3">
+    <div class="section-header">
+      <div class="sec-num">РОЗДІЛ III</div>
+      <div class="sec-title-block">
+        <h2>Структурна сліпота</h2>
+        <div class="sec-eng">Structural Invisibility — The Counting Problem</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-val">$900M</div>
+        <div class="metric-lbl">оцінка тіньового ринку психологічних послуг (7 платформ + КВЕД 86.90)</div>
+        <div class="metric-src src-g">✓ GREEN · Компендіум 08 FEEL Again</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">4,56%</div>
+        <div class="metric-lbl">видимість у ЄСОЗ: 260K / 5,71M наданих сесій</div>
+        <div class="metric-src src-g">✓ GREEN · розрахункове</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">1 з 22</div>
+        <div class="metric-lbl">реально наданих сесій потрапляє до ЄСОЗ</div>
+        <div class="metric-src src-g">✓ GREEN · розрахункове</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">НБУ</div>
+        <div class="metric-lbl">вже є розпорядником транзакційних даних цього ринку</div>
+        <div class="metric-src src-b">→ монетарна юрисдикція</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Оцінка тіньового ринку психологічних послуг у розмірі <strong>$900 мільйонів</strong> базується на порівняльному аналізі комерційного трафіку семи провідних онлайн-платформ (Mindly, Pleso та ін.) та офіційних податкових декларацій за КВЕД 86.90. Це не припущення — це верифіковані транзакційні дані, що вже знаходяться у розпорядженні НБУ як регулятора платіжної інфраструктури. Банк знає про існування $900-мільйонного ринку, однак не має інструменту для його систематичного вимірювання, агрегації та включення до макроекономічної моделі.</p>
+
+      <p>Ця ситуація є парадоксом монетарного регулювання: НБУ технічно бачить кожну транзакцію між клієнтом і терапевтом через платіжну систему, але не може пов'язати ці транзакції з клінічними результатами, нозологічними категоріями або демографічними групами. Гроші видимі — сенс операцій ні. Відповідно, ні фіскальний потенціал, ні соціальний ROI цього ринку не можуть бути виміряні в будь-якому регуляторному форматі, придатному для бюджетного обґрунтування або міжнародного звітування.</p>
+
+      <p>Структуру невидимості можна описати так: <strong>НСЗУ Пакет 51</strong> реєструє 260 000 сесій на рік, які є повністю ЄСОЗ-видимими. <strong>WHO Health Cluster 5W Dashboard</strong> (2022–2025) фіксує ~5 мільйонів сесій, наданих гуманітарним сектором до 600 000 унікальних бенефіціарів — жодна з цих сесій не потрапляє до ЄСОЗ у формі, придатній для DLI-верифікації або для агрегованого звітування НБУ. Тіньовий приватний ринок ($900 мільйонів) також залишається повністю поза ЄСОЗ. Сукупно: 95,44% усіх наданих послуг є невидимими для систем монетарного та бюджетного контролю.</p>
+
+      <p>Клінічний і гуманітарний сектори виконують свої завдання в межах власних секторальних мандатів — і роблять це ефективно у своєму вимірюванні. Критика тут неуместна. Але коли мова йде про мільярди у ВВП та бюджеті, монетарна політика як регулятор — це не вибір, це функціональна необхідність. Відсутність вимірювального інструменту — не провал клініцистів. Це лакуна в регуляторній архітектурі, яку НБУ має можливість і повноваження усунути.</p>
+    </div>
+
+    <div class="callout callout-blue">
+      <div class="callout-title">Чому це монетарна, а не клінічна проблема</div>
+      <p>НБУ вже є розпорядником сирих транзакційних даних $900M ринку через платіжну систему. Відсутній виключно <strong>вимірювальний шлюз</strong>, що пов'язує ці транзакції з клінічними результатами (PCL-5, PHQ-9), нозологічними категоріями та демографічними профілями. MHEI створює саме цей шлюз — не нову регуляторну функцію, а інструмент для функції, що вже юрисдикційно належить НБУ.</p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       SECTION IV — ІНДЕКС MHEI
+  ════════════════════════════════════════════ -->
+  <section class="section" id="s4">
+    <div class="section-header">
+      <div class="sec-num">РОЗДІЛ IV</div>
+      <div class="sec-title-block">
+        <h2>Індекс MHEI — вимірювальний інструмент регулятора</h2>
+        <div class="sec-eng">Mental Health Economy Index — LSE Methodology, adapted to PforR</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Регіональний Індекс Економіки Ментального Здоров'я (MHEI / RMHEI) адаптовано з моделі Лондонської школи економіки (LSE), що кількісно визначає сукупний вплив нелікованих психічних розладів на економіку через чотири вимірювані компоненти. Адаптація до умов України мінімальна: методологія LSE залишається незмінною, модифікації стосуються лише прив'язки до вітчизняних адміністративних реєстрів (ПФУ, ЄСОЗ, eHealth, Державна податкова служба) та калібрування на реальні транзакційні дані програм PforR Світового банку. Науковий нагляд здійснює Центр експертизи КНУ ім. Тараса Шевченка.</p>
+
+      <p>Інструмент виробляє єдиний виміряний показник — MHEI-score на регіон — що зіставляє поточний стан із базовими показниками WB і дозволяє відстежувати прогрес у форматі, сумісному з DLI-механізмом THRIVE. Розраховане співвідношення соціального повернення інвестицій становить <strong>4,3:1</strong> порівняно з базовим показником WB 4:1. Цей приріст стає прямим аргументом для пришвидшення disbursement за THRIVE.</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="dtbl">
+        <thead>
+          <tr>
+            <th>Компонент MHEI</th>
+            <th>Джерело даних</th>
+            <th>Методологія розрахунку</th>
+            <th>Системний вплив</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold-cell">Дефіцит абсентеїзму</td>
+            <td>Пенсійний фонд України (ПФУ)</td>
+            <td>Дні лікарняних × середньоденна заробітна плата в регіоні</td>
+            <td>Пряме відрахування з регіонального ВВП</td>
+          </tr>
+          <tr>
+            <td class="bold-cell">Дефіцит презентеїзму</td>
+            <td>ЄСОЗ / самозвітування роботодавців</td>
+            <td>30% зниження продуктивності × кількість активних робочих днів</td>
+            <td>Прихований відтік ВВП і зниження корпоративного прибутку</td>
+          </tr>
+          <tr>
+            <td class="bold-cell">Прямі медичні витрати</td>
+            <td>eHealth / НСЗУ</td>
+            <td>Державні видатки на гострі психіатричні втручання</td>
+            <td>Виснаження державного бюджету</td>
+          </tr>
+          <tr>
+            <td class="bold-cell">Втрата податкових надходжень</td>
+            <td>Державна податкова служба</td>
+            <td>Втрачений ПДФО (18%) + ЄСВ (22%) з нереалізованої заробітної плати</td>
+            <td>Розширення фіскального дефіциту</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <p>Принципова відмінність MHEI від будь-яких попередніх секторальних оцінок — у тому, що кожен із чотирьох компонентів прив'язаний до <em>реальних адміністративних транзакцій</em>, а не до опитувань або кластерних оцінок. ПФУ фіксує кожен лікарняний день; ЄСОЗ — кожну верифіковану клінічну взаємодію; Державна податкова служба — кожне ненадходження ЄСВ. Це є фундаментальним: НБУ не довіряє кластерним оцінкам — і правильно робить. MHEI пропонує виключно верифіковані транзакційні потоки.</p>
+
+      <p>Точка беззбитковості (break-even) для одного повного курсу терапії розраховується наступним чином: 10 сесій за ставками €40–65 = базовий стартовий внесок. Відновлені податкові надходження за 6-місячний пост-відновлювальний період (ПДФО 18% + ЄСВ 22% від нереалізованої заробітної плати) досягають точки беззбитковості при поверненні бенефіціара до повноцінної зайнятості. ЄСОЗ фіксує цей момент через PFU employment confirmation, а Smart Contract автоматично звільняє кошти Escrow — без ручного аудиту.</p>
+    </div>
+
+    <div class="formula">
+      MHEI Economic Impact =<br>
+      Beneficiaries × Clinical_Recovery_Rate × Avg_Annual_Income × Years_Productive_Lifespan<br>
+      <span class="formula-comment">// Приклад: 1 200 × 0,58 × $3 640 × 5 = $12,8M preserved value vs $2M cost → ROI 6,4:1</span><br><br>
+      SROI_FEEL_Again = 4,3× <span class="formula-comment">// vs WB baseline 4:1 (THRIVE PforR)</span>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       SECTION V — DIGITAL BUS / TRUST BRIDGE
+  ════════════════════════════════════════════ -->
+  <section class="section" id="s5">
+    <div class="section-header">
+      <div class="sec-num">РОЗДІЛ V</div>
+      <div class="sec-title-block">
+        <h2>Digital Bus / Trust Bridge</h2>
+        <div class="sec-eng">Technical Infrastructure — ЄСОЗ Gateway & Smart Clearing</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Digital Bus — це інтеграційний шлюз між гуманітарними базами даних (ActivityInfo, UNICEF MHPSS registries, WHO 5W) та ЄСОЗ, побудований на стандарті <strong>HL7 FHIR R4</strong>. Він не дублює ЄСОЗ і не замінює жодну з існуючих систем — він транслює деперсоналізовані проксі-записи про сесії у формат, придатний для криптографічної верифікації через ЄСОЗ-шлюз. Без обов'язкового виставлення на психіатричний облік, тобто без стигматизаційного бар'єру для клієнта.</p>
+
+      <p>Trust Bridge — фінансова надбудова над Digital Bus. Механізм Smart Clearing встановлює правила Escrow: кошти вивільняються виключно після того, як ЄСОЗ криптографічно підтверджує верифіковану клінічну взаємодію та ПФУ підтверджує зайнятість відновленого бенефіціара. Логіка Reverse Waterfall розподіляє ці кошти послідовно: спочатку покриваються операційні витрати, потім виплачується базовий SIB-купон, і лише після досягнення клінічних порогів (>60% когорти за PCL-5) — success premium у 3,5%.</p>
+
+      <p>Найбільш стратегічна функція Trust Bridge — позиціонування <strong>НБУ Resilience Fund</strong> як офіційного кастодіана. Це означає, що НБУ не тільки бачить транзакції на рівні платіжної системи, але й управляє ескроу-рахунком, через який проходять всі виплати по SIB та DLI-кредити. Відповідний MOU (Меморандум про взаєморозуміння) знаходиться на стадії підготовки. Ця роль фізично розміщує НБУ у центрі фінансової архітектури сектора — не через регуляторний наказ, а через функціональну необхідність наявності довіреного кастодіана зі статусом центрального банку.</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="dtbl">
+        <thead>
+          <tr>
+            <th>Компонент</th>
+            <th>Технічний стандарт</th>
+            <th>Функція</th>
+            <th>Регуляторний актор</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold-cell">ЄСОЗ Gateway</td>
+            <td class="mono-cell">HL7 FHIR R4</td>
+            <td>Верифікація клінічних взаємодій без психіатричного обліку</td>
+            <td>МОЗ / eHealth</td>
+          </tr>
+          <tr>
+            <td class="bold-cell">Smart Clearing Escrow</td>
+            <td class="mono-cell">Smart Contract</td>
+            <td>Автоматичне вивільнення коштів після ЄСОЗ + ПФУ підтвердження</td>
+            <td>НБУ Innovation Hub</td>
+          </tr>
+          <tr>
+            <td class="bold-cell">Trust Bridge Custodian</td>
+            <td class="mono-cell">NBU Resilience Fund</td>
+            <td>Управління Escrow-рахунком; агрегація SIB- та DLI-платежів</td>
+            <td>НБУ (pending MOU)</td>
+          </tr>
+          <tr>
+            <td class="bold-cell">Outcome Oracle</td>
+            <td class="mono-cell">PCL-5 / PHQ-9 / GAD-7</td>
+            <td>Клінічна метрика як тригер Smart Contract; верифікована КНУ ЦЕ</td>
+            <td>КНУ Центр Експертизи</td>
+          </tr>
+          <tr>
+            <td class="bold-cell">KCZI Compliance</td>
+            <td class="mono-cell">Трембіта / КСЗІ</td>
+            <td>Анонімізований обмін даними між реєстрами відповідно до вимог держбезпеки</td>
+            <td>Держспецзв'язку</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-green">
+      <div class="callout-title">Регуляторна пісочниця НБУ — Постанова №39</div>
+      <p>Запуск Smart Clearing алгоритму в межах NBU Regulatory Sandbox (Постанова №39) дозволяє тестувати механізм без негайного спрацювання стандартних банківських compliance-штрафів. 12-місячна фаза Пісочниці генерує емпіричні транзакційні дані, після чого відбувається перехід до постійної правової рамки через зміни до ст. 14, 21, 24-1 Закону №4223-IX через Верховну Раду.</p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       SECTION VI — ПРАВОВА РЕФОРМА
+  ════════════════════════════════════════════ -->
+  <section class="section" id="s6">
+    <div class="section-header">
+      <div class="sec-num">РОЗДІЛ VI</div>
+      <div class="sec-title-block">
+        <h2>Правова реформа: Закон №4223-IX</h2>
+        <div class="sec-eng">Regulatory Reform — Dual Barrier Analysis &amp; Amendment Pathway</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Закон України №4223-IX «Про систему охорони психічного здоров'я в Україні» (прийнятий 2025 р., введений у дію лютий 2026 р.) є єдиним законодавчим актом, що формує два структурних бар'єри для формалізації сектора. Перший — <strong>матеріально-технічний</strong>: вимога відповідності кабінетів стандартам ДБН для ЗОЗ штучно витісняє фахівців у тінь, ігноруючи реальність ринку, де 75% сесій відбуваються онлайн. Фактично закон де-факто захищає застарілу інфраструктуру колишніх психдиспансерів замість того, щоб стимулювати амбулаторну практику на основі результатів. Другий — <strong>фіскальний</strong>: сукупний штраф за формалізацію становить 65,5% і є основним фактором, що утримує приватних практиків у тіньовому секторі.</p>
+    </div>
+
+    <div class="formula">
+      Штраф за формалізацію:<br>
+      NET_wage = €50/сесія (тіньова ставка)<br>
+      GROSS_without_FA = €50 / (1 − 0,655) = <strong>€144,93 ≈ €145</strong><br>
+      <span class="formula-comment">// накладні: еквайринг 2,5% + платформа 10% + ЄСВ 22% + ПДФО 18% + адміністрування 13% = 65,5%</span><br><br>
+      GROSS_with_FEEL_Again = €50 / (1 − 0,20) = <strong>€62,50</strong><br>
+      <span class="formula-comment">// автоматичний податковий агент + Tax Relief = 57% зниження gross-up cost</span>
+    </div>
+
+    <div class="prose">
+      <p>За умови формалізації без механізму FEEL Again, клінічна сесія, що коштує клієнту €40–65, потребує €145 gross cost для виплати фахівцю чистих €50. Це знищує рентабельність приватної практики для будь-якого фахівця, що хоче легально надавати послуги на конкурентних ринкових умовах. Наслідок — вимушена тінізація, яку держава зафіксувала у розмірі $900 мільйонів і яку не може ні регулювати, ні оподатковувати.</p>
+
+      <p>FEEL Again усуває цей бар'єр через автоматизований модуль податкового агента, що знижує gross-up cost до €62,50 при збереженні чистої виплати €50. Механізм Tax Relief додає умовне звільнення від 5% єдиного податку ФОП (Група 3) при умові, що понад 50% клієнтів фахівця мають ЄСОЗ-верифіковане клінічне покращення за PHQ-9 або PCL-5. Це одночасно стимулює якість надання послуг і формалізацію сектора.</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="dtbl">
+        <thead>
+          <tr>
+            <th>Сфера регулювання</th>
+            <th>Бар'єр (чинний)</th>
+            <th>Пропонована новела</th>
+            <th>Стаття Закону</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold-cell">Доступ до практики</td>
+            <td>Вимога ліцензії ЗОЗ та кабінету ДБН для амбулаторної практики</td>
+            <td>Диплом магістра 053 + сертифікація EuroPsy достатні для ФОП-практики без ліцензії ЗОЗ</td>
+            <td class="mono-cell">Ст. 14</td>
+          </tr>
+          <tr>
+            <td class="bold-cell">Ціноутворення</td>
+            <td>Заборона вільного ціноутворення при будь-якому держфінансуванні</td>
+            <td>Ринкове ціноутворення дозволено; обмеження тарифу діє лише при 100% держпокритті</td>
+            <td class="mono-cell">Ст. 21</td>
+          </tr>
+          <tr>
+            <td class="bold-cell">Інтероперабельність</td>
+            <td>Відсутній шлюз між гуманітарними базами та ЄСОЗ</td>
+            <td>Digital Bus як автоматизований ЄСОЗ-шлюз з деперсоналізованими проксі-записами</td>
+            <td class="mono-cell">Ст. 24-1</td>
+          </tr>
+          <tr>
+            <td class="bold-cell">Податкове стимулювання</td>
+            <td>Відсутність стимулів для виходу з тіні</td>
+            <td>5% єдиний податок ФОП обнуляється при >50% клієнтів з ЄСОЗ-верифікованим покращенням</td>
+            <td class="mono-cell">Ст. 14 / нова</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-phase">Фаза 1 · Місяць 0–1</div>
+        <div class="tl-title">Ініціалізація пісочниці</div>
+        <div class="tl-desc">Затвердження Smart Clearing алгоритму. Демонстрація безпеки Escrow-фондів.</div>
+        <div class="tl-actor">Актор: НБУ Innovation Hub</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-phase">Фаза 2 · Місяць 2–5</div>
+        <div class="tl-title">Обмежений пілот</div>
+        <div class="tl-desc">Перші 100 успішних Smart Contract транзакцій. Нульова ставка для ФОП Група 3.</div>
+        <div class="tl-actor">Актори: МінФін, Державна Податкова Служба</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-phase">Фаза 3 · Місяць 6–10</div>
+        <div class="tl-title">Масштабування</div>
+        <div class="tl-desc">Розширення Digital Bus. КСЗІ compliance для анонімізованих медичних даних.</div>
+        <div class="tl-actor">Актор: Держспецзв'язку / KCZI</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-phase">Фаза 4 · Місяць 11–12</div>
+        <div class="tl-title">Суверенна інтеграція</div>
+        <div class="tl-desc">Перехід до постійної правової рамки. Внесення змін до ст. 14, 21, 24-1.</div>
+        <div class="tl-actor">Актор: Верховна Рада України</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       SECTION VII — ФІНАНСОВІ ІНСТРУМЕНТИ
+  ════════════════════════════════════════════ -->
+  <section class="section" id="s7">
+    <div class="section-header">
+      <div class="sec-num">РОЗДІЛ VII</div>
+      <div class="sec-title-block">
+        <h2>Фінансові інструменти</h2>
+        <div class="sec-eng">SIB Structure · SROI · Billing Architecture</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-val">8,0%</div>
+        <div class="metric-lbl">цільова прибутковість SIB (USD): 4,5% base + 3,5% success premium</div>
+        <div class="metric-src src-g">✓ GREEN · section_8_economics.md §8.3</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">4,3×</div>
+        <div class="metric-lbl">SROI FEEL Again vs WB baseline 4:1 (THRIVE PforR)</div>
+        <div class="metric-src src-g">✓ GREEN · LSE RMHEI methodology</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">€65</div>
+        <div class="metric-lbl">базова ставка Military сектор / €60 Corporate / €40 Civilian</div>
+        <div class="metric-src src-g">✓ GREEN · section_5_supplemental.md §5.3</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">57%</div>
+        <div class="metric-lbl">зниження gross-up cost: €145 → €62,50 через автоматичний податковий агент</div>
+        <div class="metric-src src-g">✓ GREEN · section_8_economics.md §8.1</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Облігація Соціального Впливу (SIB) структурована як дворівневий купонний інструмент у доларах США. <strong>Базовий купон 4,5%</strong> виплачується щорічно незалежно від клінічних результатів. <strong>Купон успіху 3,5%</strong> виплачується після того, як ЄСОЗ-шлюз криптографічно підтверджує, що понад 60% когорти бенефіціарів досягли порогу відновлення за шкалою PCL-5, а ПФУ підтверджує їх стале працевлаштування. Сукупна <strong>цільова прибутковість 8,0% USD</strong> є конкурентним параметром для інституційних імпакт-інвесторів.</p>
+
+      <p>Купон успіху структурно гарантований державою або наднаціональним гарантом (ЄБРР), що усуває для приватного інвестора ризик непередбачуваності клінічних результатів. Цей механізм формує «Соціальний договір де-рискінгу»: держава бере на себе ризик недосягнення клінічного порогу, приватний капітал гарантовано отримує базовий купон, а success premium виплачується виключно тоді, коли бюджетна економія (скорочення соматичних витрат, ріст ЄСВ) математично підтверджена. Це не благодійність — це умовне фінансування, верифіковане транзакційними даними реальної системи.</p>
+
+      <p>Мультисекторальна архітектура billing відображає диференційований ринок. Військовий сектор (<strong>€65/сесія</strong>) характеризується підвищеним клінічним ризиком, зашифрованою оборонною звітністю та жорстким compliance. Корпоративний сектор (<strong>€60/сесія</strong>) функціонує за моделлю co-payment: роботодавець покриває 70%, донорський грант — 30%. Цивільний і ВПО сектор (<strong>€40/сесія</strong>) забезпечує максимальне охоплення за мінімальною вартістю сервісної години. Усі три ставки генерують ЄСОЗ-видиму транзакцію через Digital Bus, що дозволяє агрегувати їх у MHEI-score.</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="dtbl">
+        <thead>
+          <tr>
+            <th>Фінансовий інструмент</th>
+            <th>Base Yield</th>
+            <th>Success Premium</th>
+            <th>Trigger</th>
+            <th>Гарант</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold-cell">Mental Health SIB (USD)</td>
+            <td class="mono-cell">4,5%</td>
+            <td class="mono-cell">+3,5%</td>
+            <td>>60% когорти PCL-5 + ПФУ зайнятість</td>
+            <td>Держава / ЄБРР</td>
+          </tr>
+          <tr>
+            <td class="bold-cell">SROI (FEEL Again)</td>
+            <td class="mono-cell">4,3×</td>
+            <td class="mono-cell">vs WB 4:1</td>
+            <td>LSE RMHEI aggregate</td>
+            <td>КНУ ЦЕ аудит</td>
+          </tr>
+          <tr>
+            <td class="bold-cell">Reverse Waterfall</td>
+            <td colspan="2">Операційні витрати → Base SIB → Success Premium</td>
+            <td>Послідовне вивільнення</td>
+            <td>Smart Contract / Escrow</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       SECTION VIII — СЕКТОР ГАЗЕЛЕЙ
+  ════════════════════════════════════════════ -->
+  <section class="section" id="s8">
+    <div class="section-header">
+      <div class="sec-num">РОЗДІЛ VIII</div>
+      <div class="sec-title-block">
+        <h2>Сектор «газелей»: нова зона самозайнятості</h2>
+        <div class="sec-eng">50–70K Specialist Sector — Countable NBU Achievement</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-val">50–70K</div>
+        <div class="metric-lbl">оцінна кількість фахівців з ментального здоров'я в Україні (клінічний + тіньовий ринок)</div>
+        <div class="metric-src src-y">⚠ YELLOW · оцінка, джерело МОЗ МЗ Summit 2024</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">250→&lt;20</div>
+        <div class="metric-lbl">годин/рік адміністративного навантаження після автоматизації через FEEL Again</div>
+        <div class="metric-src src-g">✓ GREEN · TRD section_6</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">+€600</div>
+        <div class="metric-lbl">щомісячний додатковий дохід від реферальних надходжень через легалізацію</div>
+        <div class="metric-src src-g">✓ GREEN · section_8_economics.md</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">40%</div>
+        <div class="metric-lbl">нових надходжень до ПФУ з кожної формалізованої сесії (ПДФО 18% + ЄСВ 22%)</div>
+        <div class="metric-src src-g">✓ GREEN · ДПС</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Формалізація 50–70 тисяч фахівців з ментального здоров'я через ФОП Група 3 — це новий сектор самозайнятості, що НБУ може рахувати, вимірювати та зараховувати до свого послужного списку регуляторних досягнень. На відміну від галузей, де НБУ реагує на вже існуючі ринки, тут банк має можливість <em>сформувати</em> умови для легалізації сектора, який наразі є невидимим у звітності, але фактично обслуговує мільйони людей.</p>
+
+      <p>Механіка формалізації спирається на три паралельні стимули. По-перше, <strong>фіскальне полегшення</strong>: зниження gross-up cost з €145 до €62,50 per session через автоматизований модуль робить легальну практику економічно доцільною без зниження чистого доходу фахівця. По-друге, <strong>адміністративне розвантаження</strong>: автоматичний податковий агент скорочує адміністративне навантаження з 250 до менш ніж 20 годин на рік — усуваючи головну нефіскальну перешкоду для ФОП-реєстрації. По-третє, <strong>реферальний дохід</strong>: платформа генерує додаткові €600 на місяць для кожного активного фахівця через направлення від партнерських структур (ветеранські центри, HR-партнери, НСЗУ).</p>
+
+      <p>Для обрахунку ємності сектора при різних клінічних стандартах: якщо потреба становить 62,4 мільйони сесій на рік при WHO-медіані 16 сесій/курс, а один фахівець веде в середньому 20 клієнтів паралельно по 1 сесії на тиждень = 1 040 сесій/рік, то теоретична ємність потребує близько 60 000 повністю зайнятих фахівців. При переході до стандарту 12–20 сесій з груповою терапією 6–10 сесій (середня та важка тяжкість) розрахункова потреба у фахівцях зростає до космічних значень — що і є аргументом на користь того, що навіть цілковита формалізація наявного пулу 50–70K є лише початком відповіді на виклик, а не кінцевим рішенням.</p>
+
+      <p>З точки зору НБУ, 50–70K формалізованих ФОП-фахівців — це 50–70K платників ЄСВ (22%) та ПДФО (18%), що автоматично підвищує базу внесків до ПФУ, скорочує дефіцит фонду та зменшує навантаження на державний бюджет. Цей вектор узгоджується з пріоритетами фіскальної стабілізації у воєнний та поствоєнний перехідний період.</p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       SECTION IX — КОНКРЕТНА ПРОПОЗИЦІЯ
+  ════════════════════════════════════════════ -->
+  <section class="section" id="s9">
+    <div class="section-header">
+      <div class="sec-num">РОЗДІЛ IX</div>
+      <div class="sec-title-block">
+        <h2>Конкретна пропозиція для НБУ</h2>
+        <div class="sec-eng">Next Steps — Sandbox Entry · MOU · WB DLI · Legislation</div>
+      </div>
+    </div>
+
+    <div class="callout callout-blue">
+      <div class="callout-title">Примітка до формату</div>
+      <p>Розгорнуті проекти документів, що підтримують кожен із наведених кроків (пояснювальна записка, проект MOU, технічне завдання Digital Bus), включено до супровідних матеріалів цього бріфу як друковані додатки. Вони підготовлені для зручності — як опорний матеріал для внутрішнього обґрунтування позиції НБУ, не як директива. <strong>НБУ самостійно визначає форму і послідовність реагування.</strong></p>
+    </div>
+
+    <div class="prose">
+      <p>На основі аналізу попередніх восьми розділів пропонується чотирикрокова послідовність регуляторних дій, яка може бути реалізована в межах існуючих повноважень НБУ без потреби в попередньому законодавчому рішенні.</p>
+
+      <p><strong>Крок 1 — Вхід до Регуляторної пісочниці (Постанова №39).</strong> Подача заявки від FEEL Again до NBU Innovation Hub на включення Digital Bus Smart Clearing до 12-місячної пісочниці. Цей крок не потребує законодавчих змін і дозволяє тестувати механізм виплат у контрольованому середовищі, паралельно генеруючи емпіричні дані про ефективність ЄСОЗ-верифікації для обґрунтування наступних кроків.</p>
+
+      <p><strong>Крок 2 — MOU щодо НБУ Resilience Fund як кастодіана Trust Bridge.</strong> Підписання Меморандуму про взаєморозуміння між FEEL Again і НБУ, що юридично фіксує роль банку як розпорядника Escrow-рахунку Trust Bridge. Це ненавантажувальний крок: банк виконує кастодіальну функцію, яка відповідає його звичайному мандату, без нових програмних зобов'язань. MOU також створює правову основу для участі ЄБРР як наднаціонального гаранта SIB.</p>
+
+      <p><strong>Крок 3 — Пропозиція до Світового банку щодо ЄСОЗ-верифікованих даних як DLI-тригера.</strong> На основі пілотних даних з пісочниці — формулювання спільної з НБУ пропозиції до команди THRIVE (P505616) щодо визнання ЄСОЗ-верифікованих клінічних записів цифрового формату як прийнятного доказу виконання відповідних DLI. Це пропозиція НБУ до WB, а не прохання FEEL Again — що суттєво змінює переговорну позицію. Якщо WB прийме цей підхід, ~$134M THRIVE (та ~$41M HEAL Component 4) можуть бути прискорені.</p>
+
+      <p><strong>Крок 4 — Ініціювання законодавчих змін до ст. 14, 21, 24-1 Закону №4223-IX через Верховну Раду.</strong> На основі 12-місячних даних пісочниці — подача аргументованого законодавчого пакету з трьох змін: демонополізація доступу до практики, легалізація ринкового ціноутворення при держспівфінансуванні, та інституціоналізація Digital Bus як офіційного ЄСОЗ-шлюзу. Цей крок завершує перехід від пілотного режиму до постійної правової рамки.</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="dtbl">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Дія</th>
+            <th>Горизонт</th>
+            <th>Повноваження НБУ</th>
+            <th>Очікуваний результат</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono-cell bold-cell">1</td>
+            <td>Sandbox entry — Digital Bus Smart Clearing</td>
+            <td class="mono-cell">Місяць 0–1</td>
+            <td>Постанова №39 — чинна</td>
+            <td>12-місячні емпіричні дані ЄСОЗ-верифікації</td>
+          </tr>
+          <tr>
+            <td class="mono-cell bold-cell">2</td>
+            <td>MOU — НБУ Resilience Fund як кастодіан Trust Bridge</td>
+            <td class="mono-cell">Місяць 1–2</td>
+            <td>Кастодіальна функція ЦБ</td>
+            <td>Юридична рамка Escrow; основа для ЄБРР-гарантії</td>
+          </tr>
+          <tr>
+            <td class="mono-cell bold-cell">3</td>
+            <td>Пропозиція WB: ЄСОЗ-дані → DLI-тригер</td>
+            <td class="mono-cell">Місяць 4–6</td>
+            <td>НБУ як повноважний партнер WB</td>
+            <td>Потенційне прискорення ~$175M disbursement</td>
+          </tr>
+          <tr>
+            <td class="mono-cell bold-cell">4</td>
+            <td>Законодавчі зміни до ст. 14, 21, 24-1</td>
+            <td class="mono-cell">Місяць 12+</td>
+            <td>Ініціатива через КМУ / ВРУ</td>
+            <td>Постійна правова рамка; 50–70K ФОП-фахівців у секторі</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-title">Підсумкова позиція</div>
+      <p>Сектор ментального здоров'я вже є зоною монетарної юрисдикції НБУ — через платіжну систему ($900M ринок), через кастодіальну функцію (Resilience Fund / Trust Bridge), через DLI-партнерство зі Світовим банком. MHEI надає банку вимірювальний інструмент для сектора, який він вже де-факто регулює. <strong>Це не нова регуляторна функція — це архітектура для функції, що вже існує, але наразі позбавлена інструментарію.</strong></p>
+    </div>
+
+    <hr class="sec-div">
+
+    <div style="font-size:12px;color:var(--text3);line-height:1.6;font-family:var(--mono);">
+      <div style="margin-bottom:6px;">Програма FEEL Again · Версія бріфу v13 · Червень 2026</div>
+      <div style="margin-bottom:6px;">Джерела верифікованих даних: WHO Health Cluster 5W Dashboard 2022–2025 · НСЗУ Реєстр 2025 · OECD Mental Health Policy 2024 · EBRD/OECD Guidance Note 02.2025 · WB HEAL P180245 · WB THRIVE P505616 · Krauth et al. (DE) · Компендіум 08 FEEL Again</div>
+      <div>⚠ YELLOW — позначено припущення без дворазової верифікації джерел · GREEN — верифіковано 2+ незалежними джерелами</div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('.sb-link[href^="#"]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

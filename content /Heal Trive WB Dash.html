@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FEEL Again — L2 Delta Calculator</title>
+  <style>
+    /* VARIABLES & RESET */
+    :root {
+      --bg-dark: #07090f;
+      --bg-panel: rgba(15, 20, 35, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --teal: #00d2ff;
+      --teal-dim: rgba(0, 210, 255, 0.15);
+      --gold: #f2c94c;
+      --red: #ff4b4b;
+      --red-dim: rgba(255, 75, 75, 0.15);
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(0, 210, 255, 0.03), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(242, 201, 76, 0.03), transparent 25%);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+    /* HEADER */
+    .header {
+      max-width: 1000px;
+      margin: 0 auto 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--glass-border);
+      padding-bottom: 20px;
+    }
+    .header h1 {
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    .header .subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    /* MHEI CENTRAL PANEL */
+    .mhei-panel {
+      max-width: 1000px;
+      margin: 0 auto 40px;
+      background: var(--bg-panel);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    
+    .mhei-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    
+    .mhei-score {
+      font-size: 84px;
+      font-weight: 200;
+      font-family: var(--font-mono);
+      line-height: 1;
+      margin-bottom: 5px;
+      transition: color 0.5s ease, text-shadow 0.5s ease;
+    }
+    .mhei-score.red { color: var(--red); text-shadow: 0 0 20px var(--red-dim); }
+    .mhei-score.yellow { color: var(--gold); text-shadow: 0 0 20px rgba(242, 201, 76, 0.2); }
+    .mhei-score.green { color: var(--teal); text-shadow: 0 0 20px var(--teal-dim); }
+    .mhei-status {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      transition: color 0.5s ease;
+    }
+    .mhei-status.red { color: var(--red); }
+    .mhei-status.green { color: var(--teal); }
+    .gdp-impact {
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-bottom: 25px;
+      color: var(--text-main);
+      padding: 12px 24px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--glass-border);
+      transition: all 0.5s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .gdp-impact.good {
+      border-color: var(--teal);
+      background: rgba(0, 210, 255, 0.1);
+      color: var(--teal);
+      box-shadow: 0 0 15px var(--teal-dim);
+    }
+    .gdp-impact.bad {
+      border-color: var(--red);
+      background: rgba(255, 75, 75, 0.1);
+      color: var(--red);
+      box-shadow: 0 0 15px var(--red-dim);
+    }
+    /* TOGGLE SWITCH */
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: rgba(0,0,0,0.3);
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: 1px solid var(--glass-border);
+    }
+    .toggle-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.3s ease;
+    }
+    .toggle-label.active {
+      color: #fff;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: var(--red-dim);
+      border: 1px solid var(--red);
+      transition: .4s;
+      border-radius: 30px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--red);
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: var(--teal-dim);
+      border-color: var(--teal);
+    }
+    input:checked + .slider:before {
+      transform: translateX(30px);
+      background-color: var(--teal);
+    }
+    /* GRID CARDS */
+    .grid {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .card {
+      background: var(--bg-panel);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.5s ease;
+    }
+    .card.active-teal {
+      border-color: var(--teal);
+      box-shadow: 0 0 20px var(--teal-dim);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .card-weight {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      background: rgba(255,255,255,0.1);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .card-value-wrapper {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .card-value {
+      font-size: 36px;
+      font-weight: 300;
+      font-family: var(--font-mono);
+      color: var(--red);
+      transition: color 0.5s ease;
+    }
+    .card.active-teal .card-value {
+      color: var(--teal);
+    }
+    .trend {
+      font-size: 14px;
+      font-weight: 600;
+      margin-left: 8px;
+      transition: color 0.5s ease;
+    }
+    .trend.down-bad { color: var(--red); }
+    .trend.up-bad { color: var(--red); }
+    .trend.up-good { color: var(--teal); }
+    .trend.down-good { color: var(--teal); }
+    
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    
+    /* PROGRESS BAR */
+    .progress-track {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 2px;
+      margin-top: 15px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--red);
+      width: 0%;
+      transition: width 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.5s ease;
+    }
+    .card.active-teal .progress-fill {
+      background: var(--teal);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>FEEL Again: L2 Intelligence Engine</h1>
+    <div class="subtitle">Mental Health Economic Index (MHEI) Calculator</div>
+  </div>
+  <div class="mhei-panel">
+    <div class="mhei-title">Загальний Індекс MHEI (World Bank / NBU Standard)</div>
+    <div class="mhei-score red" id="mheiScore">22</div>
+    <div class="mhei-status red" id="mheiStatus">Критично / Падіння ВВП</div>
+    <div class="gdp-impact bad" id="gdpImpact">
+      <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:currentColor;"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      <span id="gdpText">Втрата ВВП: ~$8B/рік (5%)</span>
+    </div>
+    
+    <div class="toggle-container">
+      <div class="toggle-label active" id="lblNow">Стан: Зараз</div>
+      <label class="switch">
+        <input type="checkbox" id="feelToggle">
+        <span class="slider"></span>
+      </label>
+      <div class="toggle-label" id="lblInfra">З інфраструктурою FEEL</div>
+    </div>
+  </div>
+  <div class="grid">
+    <!-- PILLAR 1 -->
+    <div class="card" id="card1">
+      <div class="card-header">
+        <div class="card-title">Фінансування / Розблокування DLI</div>
+        <div class="card-weight">Вага: 40%</div>
+      </div>
+      <div class="card-value-wrapper">
+        <div class="card-value" id="val1">$0M</div>
+        <div class="trend down-bad" id="trend1">▼ Заблоковано</div>
+      </div>
+      <div class="card-desc" id="desc1">Доступ до траншів THRIVE заблоковано через відсутність верифікації.</div>
+      <div class="progress-track"><div class="progress-fill" id="prog1" style="width: 5%;"></div></div>
+    </div>
+    <!-- PILLAR 2 -->
+    <div class="card" id="card2">
+      <div class="card-header">
+        <div class="card-title">Прозорість (Traceability) в ЄСОЗ</div>
+        <div class="card-weight">Вага: 20%</div>
+      </div>
+      <div class="card-value-wrapper">
+        <div class="card-value" id="val2">5%</div>
+        <div class="trend down-bad" id="trend2">▼ Фрагментація</div>
+      </div>
+      <div class="card-desc" id="desc2">Гуманітарні дані фрагментовані (KoBo/Excel). Немає clinical_payload.</div>
+      <div class="progress-track"><div class="progress-fill" id="prog2" style="width: 5%;"></div></div>
+    </div>
+    <!-- PILLAR 3 -->
+    <div class="card" id="card3">
+      <div class="card-header">
+        <div class="card-title">Легалізація Ринку (Formalization)</div>
+        <div class="card-weight">Вага: 20%</div>
+      </div>
+      <div class="card-value-wrapper">
+        <div class="card-value" id="val3">€260M</div>
+        <div class="trend up-bad" id="trend3">▲ Зростання тіні</div>
+      </div>
+      <div class="card-desc" id="desc3">Обсяг тіньового ринку (готівка). 6500+ фахівців поза системою.</div>
+      <div class="progress-track"><div class="progress-fill" id="prog3" style="width: 15%;"></div></div>
+    </div>
+    <!-- PILLAR 4 -->
+    <div class="card" id="card4">
+      <div class="card-header">
+        <div class="card-title">Покриття Беклогу (Coverage)</div>
+        <div class="card-weight">Вага: 20%</div>
+      </div>
+      <div class="card-value-wrapper">
+        <div class="card-value" id="val4">7.8 р.</div>
+        <div class="trend up-bad" id="trend4">▲ Дефіцит кадрів</div>
+      </div>
+      <div class="card-desc" id="desc4">Естімейт ліквідації черги (91.4M годин) за поточних потужностей.</div>
+      <div class="progress-track"><div class="progress-fill" id="prog4" style="width: 10%;"></div></div>
+    </div>
+  </div>
+  <script>
+    const toggle = document.getElementById('feelToggle');
+    const lblNow = document.getElementById('lblNow');
+    const lblInfra = document.getElementById('lblInfra');
+    
+    // Elements
+    const mheiScore = document.getElementById('mheiScore');
+    const mheiStatus = document.getElementById('mheiStatus');
+    const gdpImpact = document.getElementById('gdpImpact');
+    const gdpText = document.getElementById('gdpText');
+    
+    // Cards
+    const c1 = document.getElementById('card1');
+    const v1 = document.getElementById('val1');
+    const d1 = document.getElementById('desc1');
+    const p1 = document.getElementById('prog1');
+    const c2 = document.getElementById('card2');
+    const v2 = document.getElementById('val2');
+    const d2 = document.getElementById('desc2');
+    const p2 = document.getElementById('prog2');
+    const c3 = document.getElementById('card3');
+    const v3 = document.getElementById('val3');
+    const d3 = document.getElementById('desc3');
+    const p3 = document.getElementById('prog3');
+    const c4 = document.getElementById('card4');
+    const v4 = document.getElementById('val4');
+    const d4 = document.getElementById('desc4');
+    const p4 = document.getElementById('prog4');
+    const t1 = document.getElementById('trend1');
+    const t2 = document.getElementById('trend2');
+    const t3 = document.getElementById('trend3');
+    const t4 = document.getElementById('trend4');
+    // Data Models
+    const STATE_NOW = {
+      mhei: 22,
+      status: "Критично / Економічний тягар",
+      statusClass: "red",
+      gdp: "Втрата ВВП: ~$8B/рік (5%)", gdpClass: "bad",
+      v1: "$0M", d1: "Доступ до траншів THRIVE заблоковано через відсутність верифікації.", p1: "5%",
+      t1Text: "▼ Заблоковано", t1Class: "down-bad",
+      v2: "5%", d2: "Гуманітарні дані фрагментовані (KoBo/Excel). Немає clinical_payload.", p2: "5%",
+      t2Text: "▼ Фрагментація", t2Class: "down-bad",
+      v3: "€260M", d3: "Обсяг тіньового ринку (готівка). 6500+ фахівців поза системою.", p3: "15%",
+      t3Text: "▲ Зростання тіні", t3Class: "up-bad",
+      v4: "7.8 років", d4: "Естімейт ліквідації черги (91.4M годин) за поточних потужностей.", p4: "10%",
+      t4Text: "▲ Дефіцит кадрів", t4Class: "up-bad"
+    };
+    const STATE_INFRA = {
+      mhei: 85,
+      status: "Економічне відновлення / Рециркуляція",
+      statusClass: "green",
+      gdp: "Повернення у ВВП: ~$1.2B/рік", gdpClass: "good",
+      v1: "$454M", d1: "Транші DLI автоматично розблоковуються через FEEL API Bus.", p1: "100%",
+      t1Text: "▲ +$454M", t1Class: "up-good",
+      v2: "80%", d2: "FHIR R4 сумісність. Пряма інтеграція з eHealth та ЄСОЗ.", p2: "80%",
+      t2Text: "▲ +75%", t2Class: "up-good",
+      v3: "€50M", d3: "Тінь скорочена. 5000+ фахівців легалізовано через цифровий слід.", p3: "85%",
+      t3Text: "▼ -€210M", t3Class: "down-good",
+      v4: "2.1 роки", d4: "Колаборативна пропускна здатність збільшена. Беклог падає.", p4: "75%",
+      t4Text: "▼ -5.7 років", t4Class: "down-good"
+    };
+    // Animation function for counting numbers
+    function animateValue(obj, start, end, duration, prefix="", suffix="", decimals=0) {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const current = progress * (end - start) + start;
+        obj.innerHTML = prefix + current.toFixed(decimals) + suffix;
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+    toggle.addEventListener('change', (e) => {
+      const isInfra = e.target.checked;
+      const state = isInfra ? STATE_INFRA : STATE_NOW;
+      
+      // Labels
+      lblNow.classList.toggle('active', !isInfra);
+      lblInfra.classList.toggle('active', isInfra);
+      // MHEI
+      mheiScore.className = `mhei-score ${state.statusClass}`;
+      mheiStatus.className = `mhei-status ${state.statusClass}`;
+      mheiStatus.textContent = state.status;
+      
+      // GDP
+      gdpImpact.className = `gdp-impact ${state.gdpClass}`;
+      gdpText.textContent = state.gdp;
+      
+      // Animate MHEI Score
+      animateValue(mheiScore, parseInt(mheiScore.textContent), state.mhei, 800);
+      // Card 1
+      c1.className = `card ${isInfra ? 'active-teal' : ''}`;
+      d1.textContent = state.d1;
+      p1.style.width = state.p1;
+      t1.textContent = state.t1Text;
+      t1.className = `trend ${state.t1Class}`;
+      if (isInfra) animateValue(v1, 0, 454, 800, "$", "M");
+      else v1.textContent = "$0M";
+      // Card 2
+      c2.className = `card ${isInfra ? 'active-teal' : ''}`;
+      d2.textContent = state.d2;
+      p2.style.width = state.p2;
+      t2.textContent = state.t2Text;
+      t2.className = `trend ${state.t2Class}`;
+      if (isInfra) animateValue(v2, 5, 80, 800, "", "%");
+      else animateValue(v2, 80, 5, 800, "", "%");
+      // Card 3
+      c3.className = `card ${isInfra ? 'active-teal' : ''}`;
+      d3.textContent = state.d3;
+      p3.style.width = state.p3;
+      t3.textContent = state.t3Text;
+      t3.className = `trend ${state.t3Class}`;
+      if (isInfra) animateValue(v3, 260, 50, 800, "€", "M");
+      else animateValue(v3, 50, 260, 800, "€", "M");
+      // Card 4
+      c4.className = `card ${isInfra ? 'active-teal' : ''}`;
+      d4.textContent = state.d4;
+      p4.style.width = state.p4;
+      t4.textContent = state.t4Text;
+      t4.className = `trend ${state.t4Class}`;
+      if (isInfra) animateValue(v4, 7.8, 2.1, 800, "", " р.", 1);
+      else animateValue(v4, 2.1, 7.8, 800, "", " р.", 1);
+    });
+  </script>
+</body>
+</html>

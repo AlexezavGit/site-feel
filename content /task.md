@@ -1,0 +1,29 @@
+# Task Checklist — FEEL Again Bilingual Compendium
+
+- `[ ]` **Phase 1: Pre-requisites & Codebase Reading**
+  - `[ ]` Read `Feel transformation to fintech.md` (33.6KB)
+  - `[ ]` Read `UNIFIED_PROGRAM_MATRIX.md.pdf` (694KB) using pdftotext
+  - `[ ]` Read `Conservative targets for FEEL Again Digital Bus - Table 1.csv` (31.6KB)
+  - `[ ]` Read `FEEL_AGAIN_HEAL_Validation_Analysis.html` (58.8KB)
+  - `[ ]` Read `Digital bus logic NBU.md` (38.8KB)
+  - `[ ]` Read `АРХІТЕКТУРИ канстелейшена.md` (43.3KB)
+  - `[ ]` Read `DALY...md` (42KB)
+  - `[ ]` Read `цифрове середовище інтерфейси скорінг.md` (35.4KB)
+  - `[ ]` Read `ЕКСПЕРТНИЙ ЮРИДИЧНО-ЕКОНОМІЧНИЙ ВИСНОВОК.md` (32.6KB)
+  - `[ ]` Read `Детализированный разбор ошибок THRIVE.md` (145.4KB)
+- `[ ]` **Phase 2: Mathematical and Formula Verification**
+  - `[ ]` Calculate and cross-verify Formalization Penalty (65.5% breakdown, gross-up €145 vs €62.50 via FEEL Again).
+  - `[ ]` Adapt the MHEI / RMHEI indicator formulas to the London School of Economics (LSE) Mental Health Economy model.
+  - `[ ]` Verify SIB coupon rates (4.5% base + 3.5% success premium = 8.0% USD target yield) cashflows.
+  - `[ ]` Verify SROI multipliers (4:1 World Bank vs 4.3:1) and Economic Impact preservation formulas.
+- `[ ]` **Phase 3: Drafting Compendium Sections (Bilingual: EN / UA)**
+  - `[ ]` Draft `section_1_dashboard.md` (Dashboard Data Matrix, World Bank comparisons, visualization proposals).
+  - `[ ]` Draft `section_2_website.md` (Website Solutions, narratives, corporate and state positioning, visualization designs).
+  - `[ ]` Draft `section_3_cabinets.md` (Cabinets specs, role onboarding, anti-burnout scheduler, tax agent module, Trembita/PFU rules, and sequential interaction diagrams).
+  - `[ ]` Draft `section_4_reference.md` (Laws, sandbox resolutions, mhGAP protocols, linked to specific operational actions).
+  - `[ ]` Draft `section_5_supplemental.md` (Supplemental styling & Kimera Underground designs).
+  - `[x]` Draft `section_6_trd.md` (All TRD-related content, including duplicated specifications from other sections).
+- `[x]` **Phase 4: Final Validation and Self-Check**
+  - `[x]` Execute Grep verification of all completed files to ensure no missing metrics or formulas.
+  - `[x]` Run GEMINI.md Self-Check checklist.
+  - `[x]` Present final verified bilingual reports to the user.

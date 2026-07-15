@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html style="background:#0c2630;">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body style="background:#0c2630;margin:0;">
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=Source+Sans+3:wght@400;500;600&family=Spline+Sans+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  #eco .mono{font-family:'Spline Sans Mono',monospace;}
+  #eco .cond{font-family:'Archivo',sans-serif;}
+  #eco ::-webkit-scrollbar{width:8px;height:8px;}
+  #eco ::-webkit-scrollbar-thumb{background:rgba(46,96,76,.7);border-radius:4px;}
+  #eco ::-webkit-scrollbar-track{background:transparent;}
+  #eco[data-view="donor"] .arch-only{display:none!important;}
+  #eco[data-view="arch"] .donor-only{display:none!important;}
+  .eco-nav{cursor:pointer;transition:all .2s;}
+  .eco-nav:hover{background:rgba(18,60,74,.7)!important;}
+  .pnode{transition:all .35s;}
+  .pnode.lit{box-shadow:0 0 0 1px var(--nc),0 0 18px var(--ng)!important;border-color:var(--nc)!important;background:rgba(18,60,74,.96)!important;transform:translateY(-3px);}
+  .pnode.done{border-color:rgba(111,191,168,.4)!important;}
+  .pk2{animation:flowx 1.6s linear infinite;}
+  @keyframes flowx{from{left:0;opacity:0}10%{opacity:1}90%{opacity:1}to{left:100%;opacity:0}}
+  .blink{animation:bl 1.3s ease-in-out infinite;}
+  @keyframes bl{0%,100%{opacity:1}50%{opacity:.35}}
+  .subt{cursor:pointer;transition:all .2s;}
+  @keyframes actorPulse{0%{transform:scale(1)}35%{transform:scale(1.3)}100%{transform:scale(1)}}
+  @keyframes flowDashFwd{to{background-position:-24px 0;}}
+  @keyframes flowDashRev{to{background-position:24px 0;}}
+  .hm-step:hover{border-color:rgba(212,165,116,.6)!important;}
+  .hm-cta:hover{filter:brightness(1.08);}
+  @media(prefers-reduced-motion:reduce){#eco *{animation:none!important;transition:none!important;}}
+</style>
+</helmet>
+
+<div id="eco" data-view="donor" style="position:fixed;inset:0;display:flex;flex-direction:column;font-family:'Source Sans 3',sans-serif;color:#F5F2ED;background-image:linear-gradient(rgba(106,168,180,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(106,168,180,.05) 1px,transparent 1px),radial-gradient(ellipse 100% 55% at 50% 110%,rgba(212,165,116,.12) 0%,transparent 60%),linear-gradient(180deg,#0a1f28 0%,#0c2630 40%,#0f3744 100%);background-size:64px 64px,64px 64px,100% 100%,100% 100%;overflow:hidden;">
+
+  <!-- UNIFIED RING NAV -->
+  <x-import component-from-global-scope="ring-nav" from="./ring-nav.js" active="cabinets" hint-size="100%,236px" style="flex-shrink:0;"></x-import>
+
+  <!-- HEADER -->
+  <!-- BODY -->
+  <!-- Standalone header strip removed 2026-07-12 (Alex): the bar between the ring and the page
+       content read as a redundant duplicate chrome layer. Its content now lives ON the surface —
+       the "?" docs button sits directly beside each view's own title (renderHome/renderCabinet),
+       and "proof-of-concept" is dropped rather than relocated (was never load-bearing copy). -->
+  <!-- Left sidebar (cabinet switcher + integration points + connected minisites) removed 2026-07-10 (Alex):
+       fully redundant — the ring's own sub-nav (SUB.cabinets in ring-nav.js: ОГЛЯД/ДОНОР/ВЕНДОР/БЕНЕФІЦІАР/АУДИТОР)
+       already drives the same go(k) switch via the ring-subnav listener below. Two navs for one switch was the bug. -->
+  <div style="flex:1;display:flex;min-height:0;">
+    <!-- STAGE -->
+    <main id="eco-stage" style="flex:1;position:relative;overflow:hidden;min-width:0;"></main>
+
+    <!-- DOCS DRAWER -->
+    <aside id="eco-docs" style="width:0;flex-shrink:0;border-left:1px solid #2a5562;background:rgba(7,16,13,.92);overflow:hidden;transition:width .3s;">
+      <div style="width:300px;padding:20px;height:100%;overflow-y:auto;" id="eco-docs-body"></div>
+    </aside>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:860}}">
+class Component extends DCLogic {
+  componentDidMount(){
+    const $=id=>document.getElementById(id);
+    const eco=$('eco');
+    const PC={donor:'#8FBF9E',provider:'#D4A574',beneficiary:'#6AA8B4',verif:'#D4A574',settle:'#6FBFA8'};
+    const PT={donor:'#a6d4bd',provider:'#e0c098',beneficiary:'#9ccfe0',verif:'#D4A574',settle:'#8FD0B8'};
+
+    // ─────────── ACTOR/TRIGGER SEQUENCE (rebuilt 2026-07-11) ───────────
+    // Source: Feel/Application Horizon T09/Drafts/"Feel participant relations scheme.pdf" +
+    // "Feel processes and legal framework.pdf" — the real 19-step beneficiary journey + trigger
+    // table Alex authored, incl. the 2 legal-branch exits and the 3 co-financing contract types.
+    // Replaces the earlier invented ISO20022/FHIR/blockchain donor-pipeline (EXPLORATORY, never
+    // grounded in a real source) with the actual documented actor/trigger protocol.
+    const PHASE_EN={'НАЛАШТУВАННЯ':'SETUP','ВХІД':'ENTRY','ДІАГНОСТИКА':'DIAGNOSIS','ТЕРАПІЯ':'THERAPY','СПІВФІНАНСУВАННЯ':'CO-FINANCING','ЗАВЕРШЕННЯ':'COMPLETION'};
+    // Swimlane column order for the trigger diagram below: financial actors left → hub → service/community right.
+    // 'gov' excluded — it only appears in branch-exit annotation text, never as an actual message participant.
+    const LANES=['donor','bank','platform','spec','benef','p2p'];
+    // Cabinet key → the actor lane it corresponds to on the diagram (ring sub-nav highlight mapping).
+    const CAB_ACTOR={donor:'donor',provider:'spec',beneficiary:'benef'};
+    const CAB_ACTOR_KEYS=Object.keys(CAB_ACTOR);
+    const ACTORS={
+      benef:{uk:'Бенефіціар',en:'Beneficiary',color:'#6AA8B4',icon:'person'},
+      spec:{uk:'Фахівець / Психолог',en:'Specialist / Psychologist',color:'#D4A574',icon:'person'},
+      donor:{uk:'Донор / Фонди',en:'Donor / Funds',color:'#8FBF9E',icon:'coin'},
+      bank:{uk:'Банк',en:'Bank',color:'#2E89A6',icon:'bank'},
+      platform:{uk:'Платформа «FEEL Again»',en:'"FEEL Again" Platform',color:'#F0E4CE',icon:'node'},
+      p2p:{uk:'P2P / Найближче оточення',en:'P2P / Close circle',color:'#5C8C72',icon:'people'},
+      gov:{uk:'Держслужба «Ти як»',en:'"Ty Yak" state service',color:'#8CA8AC',icon:'shield'},
+    };
+    function actorIcon(kind,s){
+      s=s||20;
+      const M={
+        person:`<circle cx="12" cy="7.5" r="3.4"/><path d="M5 20c0-4 3.2-6.5 7-6.5s7 2.5 7 6.5"/>`,
+        coin:`<circle cx="8.5" cy="9" r="5.2"/><circle cx="15" cy="14.5" r="5.2"/>`,
+        bank:`<path d="M4 10 12 4l8 6"/><path d="M5 10v8M9.6 10v8M14.4 10v8M19 10v8"/><path d="M3.5 20.5h17"/>`,
+        node:`<path d="M12 3 20 8v8l-8 5-8-5V8z"/><circle cx="12" cy="12" r="2.1" fill="currentColor" stroke="none"/>`,
+        people:`<circle cx="8.5" cy="8" r="3"/><circle cx="16" cy="9.5" r="2.6"/><path d="M3 20c0-3.4 2.6-5.7 5.8-5.7 2.2 0 4 1 5 2.6"/><path d="M12.6 20c.3-2.7 2.2-4.6 4.8-4.6 2.6 0 4.6 2 4.6 4.6"/>`,
+        shield:`<path d="M12 3.5 19 6v6c0 5-3 8-7 9-4-1-7-4-7-9V6z"/>`,
+      };
+      return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${M[kind]||''}</svg>`;
+    }
+    // Each node now also carries: service (what's used) / expects (input required from the acting
+    // actor) / result (expected output) / verify (how the need/outcome is confirmed) / digital
+    // (systems of record) / deviation (protocol-alert rule, shown as a ▲ glyph + in the step-detail
+    // panel — the "warn on deviation from the service/financing protocol" system). Two SETUP nodes
+    // (0a/0b) added 2026-07-12 so the SAME diagram also answers "when/how are funding programs and
+    // aid projects configured" for the donor/provider, not just the beneficiary path.
+    const SEQUENCE=[
+      {phase:'НАЛАШТУВАННЯ',actors:['donor','platform'],
+        t:{uk:'Налаштування програми фінансування',en:'Funding program setup'},
+        d:{uk:'Донор визначає бюджет, критерії допустимості (напр. ветерани/ВПО) і максимальну ставку сесії.',en:'Donor sets the budget, eligibility criteria (e.g. veterans/IDPs) and the max session rate.'},
+        service:{uk:'Реєстр програм фінансування (FundingProgram)',en:'Funding-program registry (FundingProgram)'},
+        expects:{uk:'Рішення про бюджет, цільову групу і критерії допустимості',en:'A budget, target-group and eligibility decision'},
+        result:{uk:'Опублікована програма, видима в каталозі бенефіціара й провайдера',en:'A published program, visible in the beneficiary & provider catalogs'},
+        verify:{uk:'Внутрішній комплаєнс-чек платформи — повнота полів + підпис донора',en:"Platform's internal compliance check — field completeness + donor sign-off"},
+        digital:{uk:'Платформа «FEEL Again» (реєстр програм), кабінет донора',en:'"FEEL Again" Platform (program registry), donor cabinet'},
+        deviation:{uk:'Програма без явних критеріїв допустимості → публікацію блоковано до виправлення',en:'A program without explicit eligibility criteria → publication blocked until fixed'}},
+      {actors:['spec','platform'],
+        t:{uk:'Акредитація фахівця та проєкт допомоги',en:'Specialist accreditation & aid project'},
+        d:{uk:'Фахівець завантажує кваліфікаційні документи; за потреби подає проєкт допомоги під конкретну програму донора.',en:'Specialist uploads credentials; optionally submits an aid project under a specific donor program.'},
+        service:{uk:'Акредитація (ProviderAccreditation) + подання проєкту',en:'Accreditation (ProviderAccreditation) + project submission'},
+        expects:{uk:'Диплом/сертифікати, чинна ліцензія, опційно — кейси попередньої практики',en:'Diploma/certificates, valid license, optionally prior-practice cases'},
+        result:{uk:'Акредитований профіль + затверджений проєкт, прив’язаний до програми',en:'An accredited profile + an approved project bound to a program'},
+        verify:{uk:'Автоперевірка документів, крос-звірка сертифікатів (mhGAP/EMDR/CBT)',en:'Automated document check, cross-check of certificates (mhGAP/EMDR/CBT)'},
+        digital:{uk:'Платформа (реєстр акредитації), державні реєстри де можливо',en:'Platform (accreditation registry), state registries where available'},
+        deviation:{uk:'Недійсні/підроблені документи → профіль призупинено, позначка передається Аудитору',en:'Invalid/forged documents → profile suspended, flagged to the Auditor'}},
+      {phase:'ВХІД',actors:['benef'],
+        t:{uk:'Перенаправлення бенефіціара',en:'Beneficiary referral'},
+        d:{uk:'Мережа перенаправлення радить пройти тестування.',en:'The referral network recommends taking the test.'},
+        service:{uk:'Мережа перенаправлення (гуманітарні актори, лікарі)',en:'Referral network (humanitarian actors, GPs)'},
+        expects:{uk:'Звернутись і погодитись пройти первинний тест',en:'Reach out and agree to take the initial test'},
+        result:{uk:'Бенефіціар потрапляє у воронку платформи',en:'Beneficiary enters the platform funnel'},
+        verify:{uk:'Не потрібна — це вхідна точка',en:'None needed — this is the entry point'},
+        digital:{uk:'Платформа «FEEL Again» (лендінг і маршрутизація)',en:'"FEEL Again" Platform (landing & routing)'}},
+      {actors:['benef'],
+        t:{uk:'Тестування',en:'Testing'},
+        d:{uk:'Бенефіціар проходить короткий діагностичний тест.',en:'Beneficiary takes a short diagnostic test.'},
+        service:{uk:'Короткий скринінг (5-item screener)',en:'Short screener (5-item)'},
+        expects:{uk:'Чесні відповіді на скринінг — це не діагноз',en:'Honest screener answers — this is not a diagnosis'},
+        result:{uk:'Попередній ступінь тяжкості (легкий / середній-важкий)',en:'A preliminary severity band (mild / moderate-severe)'},
+        verify:{uk:'Автоматичний скоринг тесту платформою',en:'Automated test scoring by the platform'},
+        digital:{uk:'Платформа (screener engine)',en:'Platform (screener engine)'},
+        deviation:{uk:'Немає відповіді 14 днів → профіль архівується, повторний вхід лише через сайт',en:'No response for 14 days → profile archived, re-entry only via the site'},
+        branch:{b:{label:{uk:'Середня/важка травма',en:'Moderate/severe trauma'},note:{uk:'→ реєстрація в програмі',en:'→ registration in the program'}},
+                a:{label:{uk:'Легка травма',en:'Mild trauma'},note:{uk:'→ направлення на сайт держслужби «Ти як», поза межами програми — НЕ зараховується як кейс програми',en:'→ referred to the "Ty Yak" state service site, outside the program — NOT counted as a program case'}}}},
+      {actors:['benef','platform'],
+        t:{uk:'Реєстрація та створення Ордеру',en:'Registration & Order creation'},
+        d:{uk:'Профіль створено; Платформа автоматично формує Ордер — цифровий смарт-документ, що фіксує всю подальшу послідовність.',en:'Profile created; the Platform auto-generates an Order — a digital smart-document recording the whole sequence ahead.'},
+        service:{uk:'Реєстрація профілю + цифровий Ордер',en:'Profile registration + digital Order'},
+        expects:{uk:'Базові дані профілю + згода на обробку деперсоніфікованих даних',en:'Basic profile data + consent to de-identified data processing'},
+        result:{uk:'Створено Ордер, що фіксуватиме всю подальшу послідовність',en:'An Order is created, recording the whole sequence ahead'},
+        verify:{uk:'Підтвердження згоди (opt-in) записується в Ордер',en:'Consent confirmation (opt-in) recorded into the Order'},
+        digital:{uk:'Платформа (Order registry) + деперсоніфікований реєстр',en:'Platform (Order registry) + de-identified registry'},
+        deviation:{uk:'Відмова від згоди на обробку даних → реєстрацію призупинено',en:'Consent declined → registration paused'}},
+      {phase:'ДІАГНОСТИКА',actors:['platform','spec'],
+        t:{uk:'Призначення фахівця',en:'Specialist assignment'},
+        d:{uk:'Ордер направлено фахівцю; узгоджується дата й час діагностичного сеансу.',en:'Order routed to a specialist; date & time of the diagnostic session are proposed.'},
+        service:{uk:'Матчинг фахівця (спеціалізація / локація / навантаження)',en:'Specialist matching (specialty / location / caseload)'},
+        expects:{uk:'Нічого — крок виконує платформа автоматично',en:'Nothing — this step runs automatically'},
+        result:{uk:'Запропонована дата й час діагностичного сеансу',en:'A proposed date & time for the diagnostic session'},
+        verify:{uk:'Фахівець має чинну акредитацію (крок 0b)',en:'Specialist holds a valid accreditation (step 0b)'},
+        digital:{uk:'Платформа (matching engine + акредитаційний реєстр)',en:'Platform (matching engine + accreditation registry)'},
+        deviation:{uk:'Немає доступного фахівця в радіусі/спеціалізації 72г → ескалація на ручний підбір',en:'No specialist available within radius/specialty in 72h → escalated to manual matching'}},
+      {actors:['spec','benef'],
+        t:{uk:'Підтвердження сеансу',en:'Session confirmation'},
+        d:{uk:'Бенефіціар підтверджує час — або отримує пропозицію іншого.',en:'Beneficiary confirms the time — or is offered another slot.'},
+        service:{uk:'Підтвердження зустрічі',en:'Appointment confirmation'},
+        expects:{uk:'Підтвердити слот або обрати інший протягом 48 годин',en:'Confirm the slot or pick another within 48 hours'},
+        result:{uk:'Погоджений час діагностичного сеансу',en:'An agreed diagnostic session time'},
+        verify:{uk:'Двостороннє підтвердження в системі',en:'Two-sided confirmation in the system'},
+        digital:{uk:'Платформа (календар і нагадування)',en:'Platform (calendar & reminders)'},
+        deviation:{uk:'Немає підтвердження 48г → авто-нагадування, потім перепризначення',en:'No confirmation in 48h → auto-reminder, then rescheduling'}},
+      {actors:['spec'],
+        t:{uk:'Діагностика та затвердження діагнозу',en:'Diagnosis & sign-off'},
+        d:{uk:'Фахівець проводить діагностику й фіксує ступінь тяжкості.',en:'Specialist runs the diagnostic and records severity.'},
+        service:{uk:'Клінічна діагностика (PHQ-9 / PCL-5 / GAD-7)',en:'Clinical diagnosis (PHQ-9 / PCL-5 / GAD-7)'},
+        expects:{uk:'Присутність на сеансі й чесна участь в оцінці',en:'Attend the session, participate honestly in the assessment'},
+        result:{uk:'Зафіксований ступінь тяжкості + базовий бал шкали (baseline)',en:'Recorded severity + a baseline scale score'},
+        verify:{uk:'Підпис акредитованого фахівця + валідований інструмент шкали — не самооцінка',en:'Accredited specialist sign-off + a validated scale instrument — not self-report'},
+        digital:{uk:'Платформа (CarePlan запис), клінічний профіль',en:'Platform (CarePlan record), clinical profile'},
+        deviation:{uk:'Діагноз без підпису фахівця або без інструменту шкали → НЕ приймається як підтверджена потреба',en:'A diagnosis without specialist sign-off or a scale instrument → NOT accepted as a confirmed need'},
+        branch:{b:{label:{uk:'Середній/важкий ступінь',en:'Moderate/severe degree'},note:{uk:'→ перевірка відповідності вимогам, курс триває',en:'→ eligibility check runs, course continues'}},
+                a:{label:{uk:'Легкий ступінь',en:'Mild degree'},note:{uk:'→ направлення на сайт держслужби «Ти як» — НЕ зараховується як кейс програми',en:'→ referred to the "Ty Yak" state service site — NOT counted as a program case'}}}},
+      {phase:'ТЕРАПІЯ',actors:['platform','benef'],
+        t:{uk:'Призначення терапії',en:'Therapy assignment'},
+        d:{uk:'Бенефіціар приймає перші 3 сеанси курсу.',en:'Beneficiary accepts the first 3 sessions of the course.'},
+        service:{uk:'Призначення протоколу терапії (перші 3 сеанси)',en:'Therapy protocol assignment (first 3 sessions)'},
+        expects:{uk:'Прийняти призначені сеанси',en:'Accept the assigned sessions'},
+        result:{uk:'Бенефіціар зараховано в активний курс',en:'Beneficiary is enrolled in an active course'},
+        verify:{uk:'Прийняття фіксується у записі CarePlan',en:'Acceptance is logged into the CarePlan record'},
+        digital:{uk:'Платформа (CarePlan)',en:'Platform (CarePlan)'}},
+      {actors:['platform','spec'],
+        t:{uk:'Призначення фахівця на курс',en:'Specialist assigned to the course'},
+        d:{uk:'Фахівець складає розклад повного курсу реабілітації.',en:'Specialist schedules the full rehabilitation course.'},
+        service:{uk:'Складання розкладу повного курсу',en:'Full-course scheduling'},
+        expects:{uk:'Фахівець узгоджує регулярну каденцію сеансів',en:'Specialist commits to a regular session cadence'},
+        result:{uk:'Затверджений розклад курсу',en:'An approved course schedule'},
+        verify:{uk:'Розклад видимий обом сторонам; будь-які зміни логуються',en:'Schedule is visible to both sides; any change is logged'},
+        digital:{uk:'Платформа (розклад)',en:'Platform (scheduling)'}},
+      {actors:['spec','benef'],
+        t:{uk:'Перший сеанс реабілітації',en:'First rehab session'},
+        d:{uk:'Курс офіційно розпочато.',en:'The course officially begins.'},
+        service:{uk:'Сеанс реабілітації',en:'Rehabilitation session'},
+        expects:{uk:'Присутність + зворотний зв’язок після сеансу',en:'Attendance + post-session feedback'},
+        result:{uk:'Сеанс проведено й підтверджено обома сторонами',en:'Session held & confirmed by both sides'},
+        verify:{uk:'Двостороннє підтвердження проведення — не лише запис фахівця',en:'Two-sided confirmation of attendance — not the specialist\'s record alone'},
+        digital:{uk:'Платформа (Encounter запис)',en:'Platform (Encounter record)'},
+        deviation:{uk:'Сеанс відмічено фахівцем без підтвердження бенефіціара → сесія позначена «непідтверджена», НЕ йде в розрахунок оплати',en:'Session marked by the specialist without beneficiary confirmation → flagged "unconfirmed", excluded from payment'}},
+      {phase:'СПІВФІНАНСУВАННЯ',actors:['spec','platform','benef'],
+        t:{uk:'Акцептація потреби у співфінансуванні',en:'Co-financing need accepted'},
+        d:{uk:'Фахівець підтверджує потребу; Платформа сповіщає бенефіціара про можливість співфінансування.',en:'Specialist confirms the need; the Platform notifies the beneficiary of the co-financing option.'},
+        service:{uk:'Оцінка потреби у співфінансуванні',en:'Co-financing needs assessment'},
+        expects:{uk:'Погодитись на подання заявки на співфінансування',en:'Agree to submit a co-financing request'},
+        result:{uk:'Заявка на співфінансування сформована',en:'A co-financing request is generated'},
+        verify:{uk:'Підпис фахівця, що курс і надалі клінічно показаний',en:'Specialist sign-off that the course remains clinically indicated'},
+        digital:{uk:'Платформа (черга заявок на фінансування)',en:'Platform (financing request queue)'}},
+      {actors:['platform','donor'],
+        t:{uk:'Ухвалення рішення про фінансування',en:'Financing decision'},
+        d:{uk:'Подвійна перевірка відповідності — Донор/Фонд затверджує або відмовляє (відмова → автоматичний мотиваційний лист).',en:'Double compliance check — Donor/Fund approves or declines (decline → an auto-generated motivational letter).'},
+        service:{uk:'Розгляд заявки донором/фондом',en:'Donor/fund request review'},
+        expects:{uk:'Нічого додаткового від бенефіціара на цьому кроці',en:'Nothing further from the beneficiary at this step'},
+        result:{uk:'Заявку затверджено або відхилено — з причиною',en:'Request approved or declined — with a stated reason'},
+        verify:{uk:'Подвійна перевірка відповідності критеріям програми (крок 0a)',en:'Double compliance check against the program\'s eligibility criteria (step 0a)'},
+        digital:{uk:'Кабінет донора (скоринг), Платформа',en:'Donor cabinet (scoring), Platform'},
+        deviation:{uk:'Відмова → автоматичний мотиваційний лист + пропозиція альтернативної програми, не тупик',en:'Decline → an auto-generated motivational letter + an alternative-program suggestion, not a dead end'}},
+      {actors:['donor','benef','bank'],
+        t:{uk:'Укладання договору про співфінансування',en:'Co-financing contract signed'},
+        d:{uk:'Тристороння угода Донор — Бенефіціар — Банк; офіційне оформлення, відкриття субрахунку.',en:'Three-party agreement Donor — Beneficiary — Bank; formal signing, sub-account opened.'},
+        service:{uk:'Тристороння угода про співфінансування',en:'Three-party co-financing agreement'},
+        expects:{uk:'Підписати угоду; пройти ідентифікацію (KYC)',en:'Sign the agreement; complete identification (KYC)'},
+        result:{uk:'Відкрито цільовий субрахунок під конкретний курс',en:'A ring-fenced sub-account is opened for this course'},
+        verify:{uk:'Банк проводить KYC/AML-перевірку всіх сторін угоди',en:"Bank runs a KYC/AML check on all parties to the agreement"},
+        digital:{uk:'Банк (субрахунок), Платформа (реєстрація договору)',en:'Bank (sub-account), Platform (contract registration)'},
+        deviation:{uk:'KYC/AML-перевірка не пройдена → угоду блоковано до виправлення',en:'KYC/AML check fails → agreement blocked pending resolution'}},
+      {actors:['bank','p2p'],
+        t:{uk:'Контроль та розрахунки',en:'Control & settlement'},
+        d:{uk:'Кошти надходять на субрахунок; долучаються P2P-внески найближчого оточення.',en:'Funds land in the sub-account; P2P contributions from the close circle join in.'},
+        service:{uk:'Ескроу-розрахунки + P2P-надходження',en:'Escrow settlement + P2P inflows'},
+        expects:{uk:'(опційно) поширити збір серед найближчого оточення',en:'(optional) share the fundraiser with the close circle'},
+        result:{uk:'Кошти зарезервовано в ескроу до підтвердженого сеансу',en:'Funds are reserved in escrow pending a verified session'},
+        verify:{uk:'Виплата фахівцю відбувається ЛИШЕ після підтвердженого сеансу (крок 9/15/17) — не за фактом запису в календарі',en:'Payout to the specialist happens ONLY after a verified session (step 9/15/17) — never on a calendar entry alone'},
+        digital:{uk:'Банк (ескроу), P2P-модуль',en:'Bank (escrow), P2P module'},
+        deviation:{uk:'Спроба розрахунку без підтвердженого сеансу → автоматична заморозка, сигнал Аудитору',en:'Payout attempted without a verified session → automatic freeze, signal sent to the Auditor'}},
+      {actors:['platform','benef'],
+        t:{uk:'Запрошення на сеанси терапії',en:'Invitations to therapy sessions'},
+        d:{uk:'Автоматичні запрошення; бенефіціар підтверджує участь.',en:'Automatic invitations sent; beneficiary confirms attendance.'},
+        service:{uk:'Автозапрошення на сеанси курсу',en:'Automated course session invitations'},
+        expects:{uk:'Підтвердити участь у кожному запрошеному сеансі',en:'Confirm attendance for each invited session'},
+        result:{uk:'Розклад курсу синхронізовано з бенефіціаром',en:'Course schedule synced with the beneficiary'},
+        verify:{uk:'Логується кожне підтвердження або відхилення',en:'Every confirm or decline is logged'},
+        digital:{uk:'Платформа (нагадування)',en:'Platform (reminders)'},
+        deviation:{uk:'2 пропущені сеанси підряд без підтвердження → курс позначається «під ризиком», сповіщення фахівцю й донору',en:'2 consecutive missed sessions without confirmation → course flagged "at risk", specialist & donor notified'}},
+      {actors:['spec','benef'],
+        t:{uk:'Третій сеанс реабілітації',en:'Third rehab session'},
+        d:{uk:'Ухвалюється рішення про продовження курсу.',en:'Decision made on whether to continue the course.'},
+        service:{uk:'Проміжна клінічна оцінка (сеанс 3)',en:'Interim clinical assessment (session 3)'},
+        expects:{uk:'Повторно пройти контрольний замір шкали',en:'Retake the scale measurement'},
+        result:{uk:'Рішення: продовжити курс або скоригувати план',en:'Decision: continue the course or adjust the plan'},
+        verify:{uk:'Контрольний бал шкали порівнюється з базовим (крок 6)',en:'Follow-up scale score compared against the baseline (step 6)'},
+        digital:{uk:'Платформа (Observation запис)',en:'Platform (Observation record)'},
+        deviation:{uk:'Погіршення стану без клінічного пояснення → ескалація до супервізії фахівця',en:'Deterioration with no clinical explanation → escalated to specialist supervision'}},
+      {phase:'ЗАВЕРШЕННЯ',actors:['benef','platform'],
+        t:{uk:'Зворотний зв’язок та відгуки',en:'Feedback & reviews'},
+        d:{uk:'Оцінка ефективності після кожного сеансу.',en:'Effectiveness rated after every session.'},
+        service:{uk:'Зворотний зв’язок після кожного сеансу',en:'Post-session feedback'},
+        expects:{uk:'Оцінити сеанс — займає близько хвилини',en:'Rate the session — takes about a minute'},
+        result:{uk:'Рейтинг фахівця + сигнал про якість для платформи',en:'A specialist rating + a quality signal for the platform'},
+        verify:{uk:'Деперсоніфіковано агрегується в рейтинг фахівця',en:"De-identified aggregation into the specialist's rating"},
+        digital:{uk:'Платформа (feedback engine), деперсоніфікований реєстр',en:'Platform (feedback engine), de-identified registry'}},
+      {actors:['spec','platform'],
+        t:{uk:'Останній сеанс реабілітації',en:'Final rehab session'},
+        d:{uk:'Курс завершено; автоматично формується звіт.',en:'Course completed; a report is auto-generated.'},
+        service:{uk:'Фінальний сеанс + підсумковий замір шкали',en:'Final session + closing scale measurement'},
+        expects:{uk:'Пройти фінальний замір шкали',en:'Complete the final scale measurement'},
+        result:{uk:'Δ базовий→фінальний бал розраховано; курс формально закрито',en:'Baseline→final Δ score computed; course formally closed'},
+        verify:{uk:'Δ ≥ порогового значення (напр. ≥50% на PHQ-9) → зараховується як підтверджений результат',en:'Δ ≥ threshold (e.g. ≥50% on PHQ-9) → counted as a confirmed outcome'},
+        digital:{uk:'Платформа (звіт), деперсоніфікований реєстр (запис результату)',en:'Platform (report), de-identified registry (outcome record)'},
+        deviation:{uk:'Курс перервано без фінального заміру → статус «неповний», НЕ зараховується як результат',en:'Course discontinued without a final measurement → status "incomplete", NOT counted as an outcome'}},
+      {actors:['platform','benef'],
+        t:{uk:'Інформування бенефіціара',en:'Beneficiary kept informed'},
+        d:{uk:'Регулярні статуси на кожному кроці шляху.',en:'Regular status updates at every step of the journey.'},
+        service:{uk:'Підсумкове інформування всіх сторін',en:'Final status update to all parties'},
+        expects:{uk:'—',en:'—'},
+        result:{uk:'Донор бачить підтверджений анонімізований результат; фахівець отримує повну оплату; бенефіціар — підсумок',en:"Donor sees the confirmed anonymized outcome; specialist receives full payment; beneficiary gets a summary"},
+        verify:{uk:'Виплата з ескроу розблоковується лише зараз, після підтвердження на кроці 17',en:'Escrow payout unlocks only now, after step 17 is confirmed'},
+        digital:{uk:'Платформа, Банк (фінальний розрахунок), відкритий агрегований дата-сет без PII',en:'Platform, Bank (final settlement), open aggregate dataset with no PII'}},
+    ];
+
+    // ─────────── CABINETS ───────────
+    const card=(h,body,c)=>`<div style="background:rgba(15,55,68,.75);border:1px solid rgba(38,90,108,.85);border-top:2px solid ${c||'#2a5562'};border-radius:2px;padding:15px 17px;"><div class="mono" style="font-size:.54rem;letter-spacing:2px;text-transform:uppercase;color:#5f8088;margin-bottom:9px;">${h}</div>${body}</div>`;
+    const big=(v,l,c)=>`<div class="mono" style="font-size:1.7rem;font-weight:700;line-height:1;color:${c};">${v}</div><div class="cond" style="font-size:.74rem;letter-spacing:.5px;color:#A9C2C8;margin-top:4px;">${l}</div>`;
+    const bar=(l,r,pct,c)=>`<div style="display:flex;justify-content:space-between;font-size:.56rem;color:#5f8088;margin-bottom:3px;" class="mono"><span>${l}</span><span>${r}</span></div><div style="height:4px;background:rgba(38,90,108,.8);border-radius:1px;overflow:hidden;margin-bottom:11px;"><div style="height:100%;width:${pct}%;background:${c};border-radius:1px;"></div></div>`;
+    const dv=(donor,arch)=>`<span class="donor-only">${donor}</span><span class="arch-only mono" style="font-size:.9em;">${arch}</span>`;
+
+    const PC_AUD='#B592D6', PT_AUD='#cdb8e8';
+    const CAB={
+      donor:{name:'Кабінет донора',color:PC.donor,tint:PT.donor,
+        stages:[
+          {k:'dash',t:'Дашборд',sub:dv('KPI за типом донора \u2014 меценат, роботодавець, SIB-інвестор, гуманітарний актор, банк','Donor read-model \u2014 per-segment KPI aggregation'),cards:[
+            card('Типи донорів',`<div style="display:flex;flex-wrap:wrap;gap:6px;">${['Меценат','Роботодавець','SIB-інвестор','Гум. актор','Банк / Фонд'].map(t=>`<span class="mono" style="font-size:.54rem;padding:4px 9px;border:1px solid ${PC.donor}66;border-radius:20px;color:${PT.donor};">${t}</span>`).join('')}</div>`,PC.donor),
+            card('Параметрична модель · 12 точок',`${bar('Запити на діагностику','4,820',100,PC.donor)}${bar('Погоджені фінансування','2,340',49,PC.donor)}${bar('Завершені реабілітації','1,940',40,'#8FD0B8')}`,PC.donor),
+            card('Верифікація кроків',`<div class="mono" style="font-size:.6rem;color:#F5F2ED;line-height:1.8;">ДІЯ-підпис сеансів<br>Solana-реєстр (Qouroom)<br>Bank ID</div>`,'#8FD0B8'),
+          ]},
+          {k:'programs',t:'Програми',sub:dv('Флагманські програми фінансування за результатом','FundingProgram registry \u2014 budget · eligibility · credentials'),cards:[
+            card('Train for Care · Флагман',`<div class="cond" style="font-size:.95rem;color:#F5F2ED;">EMDR + VR Bravemind</div><div class="mono" style="font-size:.54rem;color:${PT.donor};margin-top:5px;">€75,605 · 20 фахівців</div><div style="font-size:.6rem;color:#A9C2C8;margin-top:6px;">Geha Clalit (Ізраїль) · USC ICT (США)</div>`,PC.donor),
+            card('SIB Київ · у скорингу',`<div class="cond" style="font-size:.95rem;color:#F5F2ED;">Ветеранська психологія</div><div class="mono" style="font-size:.54rem;color:#D4A574;margin-top:5px;">€180,000 · 120 ветеранів</div><div style="font-size:.6rem;color:#A9C2C8;margin-top:6px;">ЄБРР-гарантія · outcomes-based</div>`,'#D4A574'),
+            card('VR Bravemind · заплановано',`<div class="cond" style="font-size:.95rem;color:#F5F2ED;">Ветерани Харкова</div><div class="mono" style="font-size:.54rem;color:#5f8088;margin-top:5px;">€12.50/сеанс · 40 бенефіціарів</div>`,'#5f8088'),
+          ]},
+          {k:'scoring',t:'Скоринг',sub:dv('AI-скоринг ініціатив \u2014 авто-затвердження, ручний розгляд, відхилення','score/100 + compliance% \u2192 AUTO / REVIEW / LOW routing'),cards:[
+            card('Train for Care №20',`${bar('Скор','94/100',94,'#8FD0B8')}${bar('Compliance','100%',100,'#8FD0B8')}`,'#8FD0B8'),
+            card('SIB Київ',`${bar('Скор','81/100',81,PC.donor)}${bar('Compliance','88%',88,PC.donor)}`,PC.donor),
+            card('VR Bravemind Харків',`${bar('Скор','72/100',72,'#D4A574')}${bar('Compliance','65%',65,'#D4A574')}`,'#D4A574'),
+          ]},
+          {k:'calc',t:'Калькулятор',sub:dv('Соціальна віддача (SROI) на внесок','SROI = beneficiaries \u00d7 €4,200 / budget \u2014 WHO baseline'),cards:[
+            card('Приклад: €75,000',big('375','бенефіціарів охоплено',PC.donor),PC.donor),
+            card('Соціальна віддача',big('21×','SROI · WHO baseline','#8FD0B8'),'#8FD0B8'),
+            card('Co-financing match',big('60%','типове співфінансування','#D4A574'),'#D4A574'),
+          ]},
+          {k:'partners',t:'Партнери',sub:dv('Клінічні партнери та координатор програми','Partner registry \u2014 clinical excellence + academic centers'),cards:[
+            card('ГО «Фундація Відкрите Суспільство»',`<div style="font-size:.62rem;color:#A9C2C8;line-height:1.5;">Координатор і адміністратор програми. Цифрова інфраструктура, відкриті дані, комплаєнс.</div>`,'#D4A574'),
+            card('Geha Clalit · Ізраїль',`<div style="font-size:.62rem;color:#A9C2C8;line-height:1.5;">Клінічний партнер з EMDR. Бойова травма, диференціальна діагностика ПТСР.</div>`,PC.donor),
+            card('USC ICT · США',`<div style="font-size:.62rem;color:#A9C2C8;line-height:1.5;">Dr. Skip Rizzo. Розробник VR Bravemind. 170+ клінік VA.</div>`,PC.donor),
+          ]},
+        ]},
+      provider:{name:'Кабінет провайдера',color:PC.provider,tint:PT.provider,
+        stages:[
+          {k:'clients',t:'Клієнти',sub:dv('Циркуляційний фолдер \u2014 клієнти у роботі','Circulation folder \u2014 client roster + intake status'),cards:[
+            card('Клініка',`<div class="cond" style="font-size:1.05rem;color:#F5F2ED;">МЦ «Відновлення» · Львів</div><div class="mono" style="font-size:.56rem;color:#5f8088;margin-top:4px;">ЄДРПОУ верифіковано в ЄСОЗ ✓</div>`,PC.provider),
+            card('Активні клієнти',big('38','у циркуляційному фолдері',PC.provider),PC.provider),
+            card('Облікові дані',`<div class="mono" style="font-size:.6rem;color:#F5F2ED;line-height:1.8;"><span style="color:#8FD0B8;">✓</span> ProviderAccreditation · видано<br><span style="color:#8FD0B8;">✓</span> ліцензія МОЗ · дійсна</div>`,'#8FD0B8'),
+          ]},
+          {k:'programs',t:'Програми',sub:dv('Банери активних програм фінансування \u2014 запис одним кліком','FundingProgram list \u2014 enroll(programId, providerId)'),cards:[
+            card('Train for Care',`<div class="mono" style="font-size:.54rem;color:${PT.provider};">Бюджет ₴75,605 · макс. сеанс ₴3,780</div>`,PC.provider),
+            card('SIB Київ',`<div class="mono" style="font-size:.54rem;color:${PT.provider};">Бюджет ₴180,000 · outcomes-based</div>`,PC.provider),
+            card('Вимоги до акредитації',`<div class="mono" style="font-size:.56rem;color:#A9C2C8;line-height:1.7;">mhGAP · EMDR · CBT</div>`,'#5f8088'),
+          ]},
+          {k:'projects',t:'Проєкти',sub:dv('Проєкти, подані на фінансування в межах програм','Project lifecycle: draft \u2192 submitted \u2192 approved \u2192 active'),cards:[
+            card('Психологічна підтримка ВПО',`<div style="font-size:.6rem;color:#A9C2C8;">12 сеансів заплановано · ₴6,000</div>`,PC.provider),
+            card('Статус',big('Активний','8/12 сеансів виконано',PC.provider),PC.provider),
+            card('Наступний крок',`<div style="font-size:.6rem;color:#A9C2C8;">Подати проміжний звіт донору</div>`,'#D4A574'),
+          ]},
+          {k:'reports',t:'Звітність',sub:dv('Звіти по проєктах \u2014 видимі донору та аудитору','Report types: progress · final · financial'),cards:[
+            card('Звіт #RPT-001',`<div class="mono" style="font-size:.56rem;color:#A9C2C8;line-height:1.7;">48 бенефіціарів · 192 сеанси<br>Статус: <span style="color:#8FD0B8;">Подано</span></div>`,'#8FD0B8'),
+            card('Звітний цикл',big('Щоквартально','progress + final',PC.provider),PC.provider),
+            card('Видимість',`<div style="font-size:.6rem;color:#A9C2C8;">Донор бачить агреговано · Аудитор \u2014 деталізовано</div>`,'#5f8088'),
+          ]},
+          {k:'income',t:'Дохід',sub:dv('Калькулятор доходу фахівця','Revenue = sessions/week \u00d7 rate \u00d7 4 \u2212 tax \u2212 expenses'),cards:[
+            card('Приклад: 20 сеансів/тиждень',big('€3,400','місячний дохід (нетто)',PC.provider),PC.provider),
+            card('Річний дохід',big('€40,800','за поточним темпом','#8FD0B8'),'#8FD0B8'),
+            card('Податок',big('5%','спрощена система','#D4A574'),'#D4A574'),
+          ]},
+        ]},
+      beneficiary:{name:'Кабінет пацієнта',color:PC.beneficiary,tint:PT.beneficiary,
+        stages:[
+          {k:'programs',t:'Програми',sub:dv('Доступні програми фінансування \u2014 подати заявку','Open FundingProgram list filtered by eligibility'),cards:[
+            card('Що таке програма?',`<div style="font-size:.62rem;color:#A9C2C8;line-height:1.5;">Донори виділяють кошти на психологічну допомогу з мінімальною або нульовою доплатою.</div>`,PC.beneficiary),
+            card('Train for Care',`<div class="mono" style="font-size:.54rem;color:${PT.beneficiary};">Макс. сеанс ₴3,780 · ВПО, ветерани</div>`,PC.beneficiary),
+            card('Статус заявки',big('Відкрита','подати заявку',PC.beneficiary),'#8FD0B8'),
+          ]},
+          {k:'screen',t:'Скринінг',sub:dv('Анонімна оцінка стану \u2014 не є медичним діагнозом','5-item screener \u2192 severity band \u2192 recommendation'),cards:[
+            card('Базовий скринінг',`<div class="mono" style="font-size:1.4rem;font-weight:700;color:#C84E4E;">PHQ-9 = 18</div><div class="cond" style="font-size:.74rem;color:#A9C2C8;margin-top:3px;">помірно-тяжка депресія</div>`,'#C84E4E'),
+            card('Рекомендація',`<div style="font-size:.62rem;color:#A9C2C8;line-height:1.5;">Рекомендовано консультацію з верифікованим фахівцем MHPSS.</div>`,'#D4A574'),
+            card('Призначений протокол',big('КПТ · 12','сесій · депресія',PC.beneficiary),PC.beneficiary),
+          ]},
+          {k:'providers',t:'Фахівці',sub:dv('Каталог верифікованих фахівців \u2014 фільтр за форматом і містом','Provider catalog \u2014 rating, credentials, price band'),cards:[
+            card('Др. Олена Шевченко',`<div class="mono" style="font-size:.54rem;color:#A9C2C8;">EMDR · PTSD · ★4.9 · 47 кейсів</div>`,PC.beneficiary),
+            card('Др. Максим Коваль',`<div class="mono" style="font-size:.54rem;color:#A9C2C8;">CBT · Ветеранська психологія · ★4.7</div>`,PC.beneficiary),
+            card('Формати',`<div style="font-size:.6rem;color:#A9C2C8;">Онлайн · Офлайн · Київ, Харків, Львів, Одеса</div>`,'#5f8088'),
+          ]},
+          {k:'schedule',t:'Графік',sub:dv('Прогрес лікування та наступний сеанс','CarePlan execution \u2014 sessions completed / planned'),cards:[
+            card('Прогрес',`${bar('Сесії','8/12',67,PC.beneficiary)}<div class="mono" style="font-size:.6rem;color:#8FD0B8;">Δ PHQ-9 +34% покращення</div>`,PC.beneficiary),
+            card('Наступний сеанс',big('Сер · 10:00','Др. Олена Шевченко',PC.beneficiary),PC.beneficiary),
+            card('Формат',`<div style="font-size:.6rem;color:#A9C2C8;">Відеосеанс · онлайн</div>`,'#5f8088'),
+          ]},
+          {k:'calc',t:'Калькулятор',sub:dv('Кошторис сеансів і порівняння з кредитом','Session cost vs. co-financing vs. consumer credit'),cards:[
+            card('12 сеансів · ₴800',big('₴9,600','загальна вартість',PC.beneficiary),PC.beneficiary),
+            card('Покриває програма',big('₴5,760','60% співфінансування','#8FD0B8'),'#8FD0B8'),
+            card('Ваша частка',big('₴3,840','замість кредиту під 18%','#D4A574'),'#D4A574'),
+          ]},
+          {k:'p2p',t:'P2P-збір',sub:dv('Персональне посилання для збору коштів від родини та друзів','Direct P2P transfer \u2014 no intermediary, paid on verified session'),cards:[
+            card('Мій курс реабілітації',`${bar('Зібрано','₴4,800 / ₴6,400',75,PC.beneficiary)}`,PC.beneficiary),
+            card('Донорів',big('7','долучилися до збору',PC.beneficiary),PC.beneficiary),
+            card('Як це працює',`<div style="font-size:.6rem;color:#A9C2C8;line-height:1.5;">Кошти напряму на програму \u2014 без посередників. Фахівець отримує оплату після верифікованого сеансу.</div>`,'#5f8088'),
+          ]},
+        ]},
+      auditor:{name:'Кабінет аудитора',color:PC_AUD,tint:PT_AUD,
+        stages:[
+          {k:'reports',t:'Звіти',sub:dv('Звіти проєктів на незалежній перевірці','Report queue \u2014 risk score + status routing'),cards:[
+            card('RPT-001 · ВПО Львів',`<div class="mono" style="font-size:.54rem;color:#8FD0B8;">Ризик: низький · Статус: подано</div>`,'#8FD0B8'),
+            card('RPT-004 · ПТСР Дніпро',`<div class="mono" style="font-size:.54rem;color:#C84E4E;">Ризик: високий · Позначено</div>`,'#C84E4E'),
+            card('Під моніторингом',big('₴264,500','бюджет 4 звітів',PC_AUD),PC_AUD),
+          ]},
+          {k:'compliance',t:'Комплаєнс',sub:dv('Верифікація фахівців та їх сертифікатів','Provider credential registry cross-check'),cards:[
+            card('Марченко О.В.',`${bar('Рейтинг','94/100',94,'#8FD0B8')}<div class="mono" style="font-size:.5rem;color:#A9C2C8;">mhGAP · CPT · верифіковано ✓</div>`,'#8FD0B8'),
+            card('Сидоренко К.О.',`${bar('Рейтинг','42/100',42,'#C84E4E')}<div class="mono" style="font-size:.5rem;color:#C84E4E;">верифікацію не пройдено ✗</div>`,'#C84E4E'),
+            card('Охоплено бенефіціарів',big('114','по 4 звітах','#8FD0B8'),'#8FD0B8'),
+          ]},
+          {k:'summary',t:'Зведення',sub:dv('Виконання програм та аудит-трейл','Program utilization % + immutable action log'),cards:[
+            card('USAID MHPSS Q1',bar('Виконання','78%',78,PC_AUD),PC_AUD),
+            card('КСВ Метінвест',bar('Виконання','95%',95,'#8FD0B8'),'#8FD0B8'),
+            card('Аудит-трейл',`<div class="mono" style="font-size:.5rem;color:#A9C2C8;line-height:1.7;">RPT-003 затверджено<br>RPT-004 позначено як ризиковий</div>`,'#5f8088'),
+          ]},
+        ]},
+    };
+
+    const NAV=[{k:'home',t:'Огляд · шлях бенефіціара',c:'#D4A574'},{k:'donor',t:'Донор',c:PC.donor},{k:'provider',t:'Провайдер',c:PC.provider},{k:'beneficiary',t:'Пацієнт',c:PC.beneficiary},{k:'auditor',t:'Аудитор',c:PC_AUD}];
+    // Sidebar (cabinet-switcher buttons + integration-points list + connected-minisites list)
+    // removed 2026-07-10 — the ring's own SUB.cabinets sub-nav already drives go(k) via the
+    // ring-subnav listener below; INTS/EXT stay defined only where still read elsewhere (renderCabinet).
+
+    // ─────────── STAGE RENDER ───────────
+    const stage=$('eco-stage');
+    let cur='home';
+    let cabStage={donor:0,provider:0,beneficiary:0,auditor:0};
+    let homeIdx=0, homePlaying=true, homeLang='uk', homeTimer=null, homeHighlight=null, homeScrollObs=null;
+
+    function clearHomeTimer(){ if(homeTimer){clearInterval(homeTimer);homeTimer=null;} }
+    function startHomeTimer(){
+      clearHomeTimer();
+      homeTimer=setInterval(()=>{ homeIdx=(homeIdx+1)%SEQUENCE.length; renderHome(); },2200);
+    }
+
+    function ctaCard(key,color,icon,title,questions,fields,ctaLabel){
+      return `<div style="background:rgba(15,55,68,.75);border:1px solid ${color}55;border-top:2px solid ${color};border-radius:2px;padding:16px 17px;display:flex;flex-direction:column;gap:10px;">`
+        +`<div style="display:flex;align-items:center;gap:8px;color:${color};">${actorIcon(icon,20)}<span class="cond" style="font-size:.92rem;font-weight:700;color:#F5F2ED;">${title}</span></div>`
+        +`<div style="display:flex;flex-direction:column;gap:5px;">${questions.map(q=>`<div style="font-size:.62rem;color:#A9C2C8;line-height:1.4;">☐ ${q}</div>`).join('')}</div>`
+        +`<div style="display:flex;flex-direction:column;gap:6px;margin-top:2px;">${fields.map(f=>`<input placeholder="${f}" style="background:rgba(10,20,16,.5);border:1px solid #2a5562;border-radius:2px;padding:7px 9px;font-size:.62rem;color:#F5F2ED;font-family:'Source Sans 3',sans-serif;" />`).join('')}</div>`
+        +`<button class="hm-cta" data-go="${key}" style="margin-top:4px;background:${color};color:#0c2630;border:none;border-radius:2px;padding:9px 12px;font-family:'Spline Sans Mono',monospace;font-size:.6rem;letter-spacing:1px;text-transform:uppercase;font-weight:700;cursor:pointer;">${ctaLabel} →</button>`
+        +`</div>`;
+    }
+
+    function renderHome(){
+      // Sequence/trigger diagram (rebuilt 2026-07-11): 18 nodes = the real beneficiary-journey
+      // protocol from the two Horizon-application PDFs (participant relations scheme + processes
+      // & legal framework), incl. both legal-branch exits and the 3-party co-financing contract.
+      // Autoplay steps through it; each step pulses its actor icon(s) in the legend + inline —
+      // the "actor reacts to a trigger" animation Alex asked for. Ends in 3 tailored CTA cards
+      // that hand off into the already-built donor/provider/beneficiary cabinets below.
+      const L=homeLang, tt=o=>o[L];
+      const node=SEQUENCE[homeIdx];
+      let h=`<div style="padding:22px 26px;height:100%;overflow:auto;display:flex;flex-direction:column;">`;
+
+      h+=`<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;">`;
+      h+=`<div><div class="cond" style="font-size:1.5rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#F5F2ED;">${L==='uk'?'Шлях бенефіціара — тригери й ролі':'Beneficiary journey — triggers & roles'}</div>`;
+      h+=`<div style="font-size:.72rem;color:#A9C2C8;margin-top:5px;max-width:640px;line-height:1.5;">${L==='uk'?'Кожен крок — реальний тригер з протоколу співфінансування Feel Again. Дія однієї сторони автоматично викликає реакцію наступної.':'Every step is a real trigger from the Feel Again co-financing protocol. Each actor’s action automatically fires the next.'}</div></div>`;
+      h+=`<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">`
+        +`<button id="hm-prev" class="mono" style="width:30px;height:30px;border:1px solid #2a5562;background:transparent;color:#A9C2C8;border-radius:2px;cursor:pointer;">‹</button>`
+        +`<button id="hm-play" class="mono" style="min-width:78px;height:30px;border:1px solid ${homePlaying?'#D4A574':'#2a5562'};background:${homePlaying?'rgba(212,165,116,.12)':'transparent'};color:${homePlaying?'#D4A574':'#A9C2C8'};border-radius:2px;cursor:pointer;font-size:.6rem;letter-spacing:1px;text-transform:uppercase;">${homePlaying?(L==='uk'?'⏸ Пауза':'⏸ Pause'):(L==='uk'?'▶ Плей':'▶ Play')}</button>`
+        +`<button id="hm-next" class="mono" style="width:30px;height:30px;border:1px solid #2a5562;background:transparent;color:#A9C2C8;border-radius:2px;cursor:pointer;">›</button>`
+        +`<button id="hm-lang" class="mono" style="height:30px;padding:0 10px;border:1px solid #2a5562;background:transparent;color:#A9C2C8;border-radius:2px;cursor:pointer;font-size:.6rem;letter-spacing:1px;">${L==='uk'?'EN':'UA'}</button>`
+        +`<button class="mono eco-docs-btn" style="width:30px;height:30px;border:1px solid ${docsOpen?'#D4A574':'#2a5562'};background:transparent;color:${docsOpen?'#D4A574':'#A9C2C8'};border-radius:2px;cursor:pointer;font-size:.75rem;">?</button>`
+        +`</div></div>`;
+
+      // (2026-07-12, Alex: role names were duplicated — this pill legend repeated the exact same
+      // names as the lane-header below it. Removed; the lane header is now the single source, made
+      // sticky so it stays on screen while scrolling instead.)
+
+      // progress rail
+      h+=`<div style="display:flex;gap:3px;margin-bottom:12px;">`;
+      SEQUENCE.forEach((n,i)=>{ h+=`<div style="flex:1;height:3px;border-radius:2px;background:${i<=homeIdx?'#D4A574':'rgba(255,255,255,.08)'};"></div>`; });
+      h+=`</div>`;
+
+      // ─── unified per-step row: lane visual + its OWN label share one flex row, so the name is
+      // always physically attached to its icons. Lane column is now a PERCENTAGE (not a fixed px)
+      // so the whole thing stretches to fill the panel width — the header row uses the exact same
+      // percentage and is sticky, so it rides along the top of the viewport as you scroll down
+      // instead of scrolling away with the rows (2026-07-12, Alex).
+      const N=LANES.length, LANE_PCT=44;
+      const laneIdx=k=>LANES.indexOf(k);
+      const dim=k=>homeHighlight && CAB_ACTOR[homeHighlight]!==k;
+      h+=`<div style="border:1px solid rgba(38,90,108,.5);border-radius:2px;background:rgba(8,18,15,.4);overflow:hidden;flex-shrink:0;">`;
+      h+=`<div style="position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:14px;padding:10px 14px;background:#0e1c17;border-bottom:1px solid rgba(38,90,108,.5);">`;
+      h+=`<div style="width:${LANE_PCT}%;flex-shrink:0;display:grid;grid-template-columns:repeat(${N},1fr);">`;
+      LANES.forEach(k=>{
+        const a=ACTORS[k];
+        h+=`<div style="display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;overflow:hidden;opacity:${dim(k)?.3:1};transition:opacity .3s;">`
+          +`<span style="color:${a.color};">${actorIcon(a.icon,15)}</span>`
+          +`<span class="mono" style="font-size:.46rem;letter-spacing:.3px;color:${a.color};text-align:center;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;">${tt(a).split(' / ')[0].split(' ')[0]}</span>`
+          +`</div>`;
+      });
+      h+=`</div>`;
+      h+=`<div class="mono" style="flex:1;font-size:.48rem;letter-spacing:2px;text-transform:uppercase;color:#5f8088;">${L==='uk'?'ДІЯ':'ACTION'}</div>`;
+      // reserved slot — same footprint as the header's own "?" docs toggle, so it stays reachable
+      // while this bar is pinned (the page-title "?" above scrolls out of view with the rest).
+      h+=`<button class="mono eco-docs-btn" style="width:28px;height:28px;flex-shrink:0;border:1px solid ${docsOpen?'#D4A574':'#2a5562'};background:transparent;color:${docsOpen?'#D4A574':'#A9C2C8'};border-radius:2px;cursor:pointer;font-size:.7rem;">?</button>`;
+      h+=`</div>`;
+      h+=`<div style="padding:8px 14px 10px;">`;
+      let lastPhase=null;
+      SEQUENCE.forEach((n,i)=>{
+        if(n.phase && n.phase!==lastPhase){
+          lastPhase=n.phase;
+          h+=`<div class="mono" style="font-size:.5rem;letter-spacing:3px;text-transform:uppercase;color:#F0D9B0;margin:${i?7:2}px 0 3px;">${L==='uk'?n.phase:PHASE_EN[n.phase]}</div>`;
+        }
+        const active=i===homeIdx, passed=i<homeIdx;
+        const src=n.actors[0], tgt=n.actors[1];
+        const srcI=laneIdx(src), tgtI=(tgt!==undefined)?laneIdx(tgt):-1;
+        const rowOpacity=(passed||active?1:.4) * ((dim(src)&&(tgtI<0||dim(tgt)))?.4:1);
+        h+=`<div class="hm-step" data-i="${i}" style="display:flex;align-items:center;gap:14px;padding:4px 6px;margin-bottom:1px;border-radius:2px;cursor:pointer;background:${active?'rgba(18,60,74,.85)':'transparent'};opacity:${rowOpacity};transition:opacity .25s,background .25s;">`;
+        h+=`<div style="position:relative;width:${LANE_PCT}%;flex-shrink:0;height:26px;">`;
+        if(tgtI>=0){
+          const lo=Math.min(srcI,tgtI), hi=Math.max(srcI,tgtI);
+          const leftPct=(lo+0.5)/N*100, widthPct=(hi-lo)/N*100;
+          const dir=tgtI>srcI?'fwd':'rev';
+          const col=active?ACTORS[tgt].color:'rgba(140,168,172,.35)';
+          h+=`<div style="position:absolute;left:${leftPct}%;width:${widthPct}%;top:12px;height:2px;background-image:linear-gradient(90deg,${col} 0 6px,transparent 6px 12px);background-size:24px 2px;background-repeat:repeat-x;${active?`animation:flowDash${dir==='fwd'?'Fwd':'Rev'} .6s linear infinite;`:''}"></div>`;
+          const arrowPct=(tgtI>srcI?hi+0.5:lo+0.5)/N*100;
+          h+=`<div style="position:absolute;left:calc(${arrowPct}% - 5px);top:6px;font-size:.58rem;color:${active?ACTORS[tgt].color:'#5f8088'};">${tgtI>srcI?'▸':'◂'}</div>`;
+        }
+        n.actors.forEach(k=>{
+          const li=laneIdx(k), leftPct=(li+0.5)/N*100;
+          h+=`<div style="position:absolute;left:${leftPct}%;top:0;transform:translate(-50%,0);width:18px;height:18px;border-radius:50%;border:1.5px solid ${ACTORS[k].color};background:#0c2630;display:flex;align-items:center;justify-content:center;color:${ACTORS[k].color};${active?'animation:actorPulse .9s ease;':''}">${actorIcon(ACTORS[k].icon,10)}</div>`;
+        });
+        h+=`</div>`;
+        h+=`<div style="flex:1;min-width:0;"><span class="cond" style="font-size:.74rem;font-weight:600;color:${active?'#F5F2ED':'#8CA8AC'};">${tt(n.t)}</span>`
+          +`<span style="font-size:.6rem;color:#A9C2C8;margin-left:8px;">${tt(n.d)}</span></div>`;
+        h+=`</div>`;
+        if(n.branch){
+          const b=n.branch;
+          h+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:2px 0 6px calc(${LANE_PCT}% + 14px);">`
+            +`<div style="border:1px dashed rgba(111,191,168,.5);border-radius:2px;padding:5px 9px;font-size:.56rem;color:#8FD0B8;">→ <b>${tt(b.b.label)}</b> <span style="color:#A9C2C8;">${tt(b.b.note)}</span></div>`
+            +`<div style="border:1px dashed rgba(140,168,172,.5);border-radius:2px;padding:5px 9px;font-size:.56rem;color:#8CA8AC;">⇥ <b>${tt(b.a.label)}</b> <span style="color:#A9C2C8;">${tt(b.a.note)}</span></div>`
+            +`</div>`;
+        }
+      });
+      h+=`</div></div>`;
+
+      // terminal: qualifying-question LINKS (not buttons/cards) — clicking the question itself is
+      // what opens the cabinet; phrased first-person the way the visitor would ask an assistant.
+      h+=`<div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(38,90,108,.6);">`;
+      h+=`<div class="mono" style="font-size:.54rem;letter-spacing:3px;text-transform:uppercase;color:#5f8088;margin-bottom:10px;">${L==='uk'?'З ЧОГО ПОЧАТИ':'WHERE TO START'}</div>`;
+      h+=`<div style="display:flex;flex-direction:column;gap:9px;">`;
+      const qLink=(key,color,icon,q)=>`<div class="hm-cta" data-go="${key}" style="cursor:pointer;display:flex;align-items:center;gap:9px;color:${color};">`
+        +`<span style="flex-shrink:0;">${actorIcon(icon,15)}</span>`
+        +`<span class="cond" style="font-size:.82rem;font-weight:500;text-decoration:underline;text-underline-offset:3px;text-decoration-color:${color}66;">«${q}»</span></div>`;
+      h+=qLink('beneficiary',ACTORS.benef.color,'person',L==='uk'?'Мене накрила тривога, відколи почалась війна — з чого почати?':'Anxiety hit me hard since the war started — where do I begin?');
+      h+=qLink('provider',ACTORS.spec.color,'person',L==='uk'?'У мене є диплом психолога і час на кількох клієнтів на тиждень — як приєднатися?':'I have a psychology diploma and time for a few clients a week — how do I join?');
+      h+=qLink('donor',ACTORS.donor.color,'coin',L==='uk'?'Хочу профінансувати конкретні сесії, а не абстрактний фонд — покажіть як':'I want to fund specific sessions, not an abstract pool — show me how');
+      h+=`</div>`;
+      h+=`<div style="margin-top:12px;font-size:.6rem;color:#5f8088;">${L==='uk'?'Банк, фонди та P2P-контриб’ютори долучаються через кабінет донора.':'Banks, funds, and P2P contributors join via the donor cabinet.'} · <span class="hm-cta" data-go="auditor" style="cursor:pointer;text-decoration:underline;color:#8CA8AC;">${L==='uk'?'Кабінет аудитора':'Auditor cabinet'}</span></div>`;
+      h+=`</div>`;
+
+      h+=`</div>`;
+      // Preserve exact scroll position across re-render (no forced jump — Alex: autoplay/clicks
+      // yanking the viewport meant nobody could keep up reading). The scroll-driven neon highlight
+      // below is what surfaces the active step now: as the user scrolls at their OWN pace, whichever
+      // row crosses the center band lights up — no viewport movement is ever triggered from JS.
+      const __prevScroll = stage.firstElementChild ? stage.firstElementChild.scrollTop : 0;
+      stage.innerHTML=h;
+      const scroller = stage.firstElementChild;
+      if(scroller) scroller.scrollTop = __prevScroll;
+
+      stage.querySelectorAll('.hm-step').forEach(el=>el.addEventListener('click',()=>{homeIdx=+el.dataset.i;homePlaying=false;clearHomeTimer();renderHome();}));
+      stage.querySelectorAll('.hm-cta').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go)));
+      bindDocsBtn();
+
+      // ─── scroll-linked neon highlight: re-attach each render since innerHTML replaced the nodes.
+      // Whichever step's row crosses the center band becomes "active" (homeIdx) — driven purely by
+      // the user's own scroll, at their own speed. No auto-scroll, no forced pacing.
+      if(homeScrollObs) homeScrollObs.disconnect();
+      if(scroller){
+        homeScrollObs = new IntersectionObserver(entries=>{
+          entries.forEach(en=>{
+            if(en.isIntersecting){
+              const i=+en.target.dataset.i;
+              if(i!==homeIdx){ homeIdx=i; homePlaying=false; clearHomeTimer(); renderHome(); }
+            }
+          });
+        }, {root:scroller, rootMargin:'-46% 0px -46% 0px', threshold:0});
+        scroller.querySelectorAll('.hm-step').forEach(el=>homeScrollObs.observe(el));
+      }
+      const prevB=$('hm-prev'),nextB=$('hm-next'),playB=$('hm-play'),langB=$('hm-lang');
+      if(prevB)prevB.onclick=()=>{homeIdx=Math.max(0,homeIdx-1);homePlaying=false;clearHomeTimer();renderHome();};
+      if(nextB)nextB.onclick=()=>{homeIdx=Math.min(SEQUENCE.length-1,homeIdx+1);homePlaying=false;clearHomeTimer();renderHome();};
+      if(playB)playB.onclick=()=>{homePlaying=!homePlaying;if(homePlaying)startHomeTimer();else clearHomeTimer();renderHome();};
+      if(langB)langB.onclick=()=>{homeLang=homeLang==='uk'?'en':'uk';renderHome();};
+    }
+
+    function renderCabinet(key){
+      const c=CAB[key]; const si=cabStage[key];
+      let h=`<div style="padding:22px 26px;height:100%;overflow:auto;display:flex;flex-direction:column;">`;
+      h+=`<div style="display:flex;align-items:center;gap:14px;margin-bottom:4px;"><div class="cond" style="font-size:1.5rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:${c.tint};">${c.name}</div>`;
+      if(key==='donor'||key==='provider') h+=`<a href="Dashboard.html" target="_blank" rel="noopener" class="mono" style="text-decoration:none;font-size:.54rem;letter-spacing:1px;text-transform:uppercase;color:#8FD0B8;border:1px solid rgba(111,191,168,.3);background:rgba(111,191,168,.06);padding:5px 11px;border-radius:2px;">↗ Повний дашборд</a>`;
+      h+=`<div style="flex:1;"></div><button class="mono eco-docs-btn" style="width:30px;height:30px;flex-shrink:0;border:1px solid ${docsOpen?c.color:'#2a5562'};background:transparent;color:${docsOpen?c.color:'#A9C2C8'};border-radius:2px;cursor:pointer;font-size:.75rem;">?</button>`;
+      h+=`</div>`;
+      // ─── per-role callouts (moved off the shared "\u041e\u0433\u043b\u044f\u0434" home screen 2026-07-12: same
+      // underlying facts, framed for what THIS role actually needs to know) ───
+      if(key==='provider'){
+        // Missing Middle rationale lands here, not on Огляд — it's the provider's own market
+        // position (why the platform needs a trusted middle tier, and why that's THEM).
+        h+=`<div style="border:1.5px solid #D4A574;border-radius:2px;padding:11px 14px;background:rgba(212,165,116,.09);margin-bottom:14px;max-width:640px;">`
+          +`<div class="cond" style="font-size:.78rem;font-weight:700;color:#F0D9B0;">Ви — «втрачена середина», яку добудовує платформа</div>`
+          +`<div style="font-size:.62rem;color:#D9C2A0;margin-top:4px;line-height:1.5;">Сімейні лікарі перевантажені й не мають куди скерувати легкі/середні випадки; психіатрія — останній рубіж, не перша точка входу. Приватна практика, гуманітарні респондери та перекваліфіковані фахівці — довірений цифровий шар МІЖ ними. Платформа легалізує вашу практику й дає потік клієнтів, не забираючи вашу автономію.</div></div>`;
+        h+=`<div style="border:1px solid rgba(38,90,108,.6);border-radius:2px;padding:10px 14px;margin-bottom:14px;max-width:640px;">`
+          +`<div class="mono" style="font-size:.5rem;letter-spacing:1.5px;color:#5f8088;margin-bottom:4px;">СПІВФІНАНСУВАННЯ · ОПЛАТА ПОСЛУГ</div>`
+          +`<div style="font-size:.68rem;color:#D7E3E0;line-height:1.5;">Ви завжди отримуєте 100% ставки за сесію: 70% з основного пулу відразу після підтвердження, 30% з бюджету донора протягом циклу верифікації. Жодних затримок через брак коштів у клієнта — платформа несе цей ризик, не ви.</div></div>`;
+      }
+      if(key==='donor'){
+        h+=`<div style="border:1px solid rgba(38,90,108,.6);border-radius:2px;padding:10px 14px;margin-bottom:14px;max-width:640px;">`
+          +`<div class="mono" style="font-size:.5rem;letter-spacing:1.5px;color:#5f8088;margin-bottom:4px;">СПІВФІНАНСУВАННЯ · ВАШ ВНЕСОК</div>`
+          +`<div style="font-size:.68rem;color:#D7E3E0;line-height:1.5;">Ви ніколи не закриваєте весь курс самі. Основний пул платформи бере 70% кожної сесії — ваш бюджет цільово покриває решту 30% для обраної групи (напр. ветерани). Той самий результат, у 3+ рази менший чек на бенефіціара.</div></div>`;
+      }
+      if(key==='beneficiary'){
+        h+=`<div style="border:1px solid rgba(111,191,168,.5);border-radius:2px;padding:10px 14px;margin-bottom:14px;max-width:640px;background:rgba(111,191,168,.06);">`
+          +`<div class="mono" style="font-size:.5rem;letter-spacing:1.5px;color:#6FBFA8;margin-bottom:4px;">СПІВФІНАНСУВАННЯ · ДЛЯ ВАС</div>`
+          +`<div style="font-size:.68rem;color:#D7E3E0;line-height:1.5;">Ви нічого не платите з власної кишені. Вартість курсу покривають основний пул платформи та бюджет донора — ваша частина завжди 0 ₴. Все, що від вас потрібно — пройти скринінг і підтвердити сесію.</div></div>`;
+      }
+      // stage sub-nav
+      h+=`<div style="display:flex;gap:0;margin:14px 0 6px;border:1px solid #2a5562;border-radius:3px;overflow:hidden;width:max-content;">`;
+      c.stages.forEach((s,i)=>{
+        const on=i===si;
+        h+=`<div class="subt" data-si="${i}" style="padding:8px 18px;font-family:'Spline Sans Mono',monospace;font-size:.56rem;letter-spacing:1.5px;text-transform:uppercase;background:${on?c.color:'transparent'};color:${on?'#0c2630':'#A9C2C8'};font-weight:${on?'700':'400'};border-right:${i<c.stages.length-1?'1px solid #2a5562':'none'};">${i+1}. ${s.t}</div>`;
+      });
+      h+=`</div>`;
+      const s=c.stages[si];
+      h+=`<div style="font-size:.7rem;color:#A9C2C8;margin-bottom:18px;">${s.sub}</div>`;
+      h+=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">${s.cards.join('')}</div>`;
+      // flow strip
+      h+=`<div style="display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:22px;">`;
+      c.stages.forEach((st,i)=>{
+        h+=`<div class="subt" data-si="${i}" style="display:flex;align-items:center;gap:8px;">`;
+        h+=`<span style="font-family:'Spline Sans Mono',monospace;font-size:.56rem;letter-spacing:1px;color:${i<=si?c.tint:'#5f8088'};text-transform:uppercase;">${st.t}</span>`;
+        if(i<c.stages.length-1)h+=`<span style="color:${i<si?c.color:'#2a5562'};">→</span>`;
+        h+=`</div>`;
+      });
+      h+=`</div></div>`;
+      stage.innerHTML=h;
+      stage.querySelectorAll('.subt').forEach(el=>el.addEventListener('click',()=>{cabStage[key]=+el.dataset.si;renderCabinet(key);}));
+      bindDocsBtn();
+    }
+
+    // ─────────── shared docs-drawer toggle (button is re-rendered per view, so re-bind each time) ───────────
+    function toggleDocs(){
+      docsOpen=!docsOpen;
+      $('eco-docs').style.flex=docsOpen?'0 0 301px':'0 0 0px';
+      $('eco-docs').style.width=docsOpen?'301px':'0';
+      renderDocs();
+      if(cur==='home')renderHome(); else renderCabinet(cur);
+    }
+    function bindDocsBtn(){ document.querySelectorAll('.eco-docs-btn').forEach(b=>{ b.onclick=toggleDocs; }); }
+
+    function go(k){
+      cur=k;
+      clearHomeTimer();
+      if(k==='home'){ homeIdx=0; homePlaying=true; renderHome(); startHomeTimer(); }
+      else renderCabinet(k);
+      renderDocs();
+    }
+
+    // ─────────── (hover-reveal trace card + runTrace/runTraceFrom/showNodeInfo removed 2026-07-10)
+    // The vertical sequence diagram (seqCardHTML above) shows every step's description, standard,
+    // and amount inline and permanently — there is nothing left to reveal on hover or animate
+    // through, so the floating trace-card and its trigger button/hover bindings are gone, not
+    // just hidden. The Donor/Architect view toggle is gone too; view stays fixed at 'donor'.
+
+    // ─────────── DOCS DRAWER ───────────
+    let docsOpen=false;
+    const DOCS={
+      home:{t:'Шлях бенефіціара',donor:'Цей екран показує повний шлях бенефіціара — від першого перенаправлення до завершення курсу — і всіх, хто реагує на кожен тригер: фахівця, платформу, донора, банк, найближче оточення. Це реальна послідовність з протоколу співфінансування Feel Again, включно з обома точками виходу (легка травма → державна служба «Ти як»).',arch:'Actor/trigger sequence sourced from the two Horizon-application source docs (participant relations scheme + processes & legal framework). 18 ordered trigger nodes, 2 legal-branch exits, 3 contract types (co-financing / service / funding). Replaces the earlier speculative ISO20022/FHIR/on-chain donor pipeline, which was never grounded in a real source document.'},
+      donor:{t:'Кабінет донора',donor:'Донор бачить, куди йдуть кошти і скільки результатів уже підтверджено. Кожен підтверджений кейс має простежуваний слід — від внеску до клінічного результату.',arch:'Donor read-model aggregates OutcomeAttestation VCs and settlement receipts. Allocation ledger earmarks funds to a CarePlan-bound outcome price. Reporting frameworks export per-donor compliance rows referencing VC + tx hashes.'},
+      provider:{t:'Кабінет провайдера',donor:'Провайдер веде пацієнтів і подає клінічні результати. Виплата надходить автоматично після незалежного підтвердження результату.',arch:'Provider authenticated via W3C VC (ProviderAccreditation), cross-checked with ЄСОЗ. Patient data as FHIR Patient/CarePlan/Encounter/Observation. Outcome submission triggers verification → ISO 20022 pacs.008 settlement from escrow.'},
+      beneficiary:{t:'Кабінет пацієнта',donor:'Пацієнт проходить скринінг, лікування за протоколом і фінальний замір. Його (анонімізований) результат живить підтвердження для донора.',arch:'Beneficiary journey captured as FHIR resources; PHQ-9 baseline/follow-up Observations compute symptom-reduction Δ. Δ ≥ 50% emits an OutcomeAttestation event to the verification core. PII anonymized in donor reporting.'},
+      auditor:{t:'Кабінет аудитора',donor:'Незалежний аудитор перевіряє звіти провайдерів, верифікує сертифікати та бачить повний аудит-трейл дій по кожній програмі.',arch:'Auditor role has read access across Provider Report + Credential registries; risk score = f(compliance%, verification status); all approve/reject actions are appended to an immutable audit log.'},
+    };
+    function renderDocs(){
+      const d=DOCS[cur];
+      $('eco-docs-body').innerHTML=`<div class="mono" style="font-size:.54rem;letter-spacing:3px;color:#5f8088;text-transform:uppercase;margin-bottom:10px;">// документація</div>`
+        +`<div class="cond" style="font-size:1.2rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#D4A574;margin-bottom:12px;">${d.t}</div>`
+        +`<div style="font-size:.72rem;color:#F5F2ED;line-height:1.65;margin-bottom:10px;">${d.donor}</div>`
+        +`<div style="font-size:.62rem;color:#8CA8AC;line-height:1.55;margin-bottom:16px;">${d.arch}</div>`
+        +`<div class="mono" style="font-size:.54rem;letter-spacing:2px;color:#5f8088;text-transform:uppercase;margin-bottom:8px;">// стандарти</div>`
+        +`<div style="display:flex;flex-direction:column;gap:7px;">`
+        +[['HL7 FHIR R4','Клінічні дані: Patient, CarePlan, Encounter, Observation (PHQ-9).'],['W3C Verifiable Credentials','Сертифікація провайдера та підтвердження результату.'],['ISO 20022','Платіжні доручення pacs.008 для розрахунку за результатом.'],['Blockchain settlement','Незмінний аудиторський запис кожної виплати.'],['ЄСОЗ / Трембіта','Інтеграція з державною інфраструктурою eHealth.']].map(([a,b])=>`<div style="border:1px solid #2a5562;border-left:2px solid #D4A574;border-radius:2px;padding:8px 10px;"><div class="mono" style="font-size:.56rem;color:#D4A574;letter-spacing:.5px;">${a}</div><div style="font-size:.6rem;color:#A9C2C8;line-height:1.4;margin-top:3px;">${b}</div></div>`).join('')
+        +`</div>`;
+    }
+
+    // ─────────── RING SUB-NAV → switch cabinets ───────────
+    if(!window.__ecoRingSub){
+      window.__ecoRingSub=true;
+      window.addEventListener('ring-subnav', e=>{
+        const d=e.detail||{};
+        if(d.site!=='cabinets' || !d.si) return;
+        const key=d.si==='provider'?'provider':d.si;
+        // While already viewing Огляд, donor/provider/beneficiary sub-items just filter/highlight
+        // their own lane on the trigger diagram (per Alex) — they do NOT jump into the cabinet.
+        // Cabinet entry only happens via the qualifying-question link at the page bottom.
+        // 'home'/'auditor' have no lane on the diagram (auditor never appears in the beneficiary
+        // journey), so those still navigate directly.
+        if(cur==='home' && CAB_ACTOR_KEYS.includes(key)){
+          homeHighlight = homeHighlight===key ? null : key;
+          renderHome();
+        } else {
+          go(key);
+        }
+      });
+    }
+
+    // ─────────── INIT ───────────
+    go('home'); renderDocs();
+  }
+}
+</script>
+</body>
+</html>
