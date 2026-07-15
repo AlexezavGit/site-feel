@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Пропозиції до НСЗУ — Відчувай Знову (Feel Again) — Short</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#EDE8E0;--text:#2A2520;--muted:#7A7060;--border:#C8BFA8;
+  --gold:#7A5010;--gold-light:#A07828;--teal:#1A6A9A;--teal-light:#2888B8;
+  --coral:#A04010;--surface:#F5F0E8;--surface-alt:#E8E0D0;
+  --font-head:'Barlow Condensed',sans-serif;
+  --font-body:'Barlow',sans-serif;
+  --font-mono:'Space Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+.lang-en{display:none}
+
+/* Badge */
+.badge{position:fixed;top:16px;left:16px;z-index:100;background:var(--coral);color:#fff;font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:3px}
+
+/* Header */
+.header{padding:40px 40px 0;max-width:1200px;margin:0 auto}
+.hero-label{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:8px}
+.hero-title{font-family:var(--font-head);font-weight:800;font-size:clamp(28px,5vw,48px);line-height:1.05;color:var(--text);text-transform:uppercase;letter-spacing:-0.5px;margin-bottom:12px}
+.hero-subtitle{font-family:var(--font-body);font-size:16px;color:var(--muted);font-weight:400;max-width:600px}
+
+/* Metrics row */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin:32px 40px;border-radius:6px;overflow:hidden;max-width:1120px}
+.metric{background:var(--surface);padding:20px 16px;text-align:center}
+.metric-value{font-family:var(--font-mono);font-size:clamp(20px,3vw,28px);font-weight:700;color:var(--gold);line-height:1.1}
+.metric-label{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-top:6px}
+
+/* Main layout */
+.main{display:grid;grid-template-columns:1fr 320px;gap:0;max-width:1200px;margin:0 auto;padding:0 40px 60px}
+.content{padding-right:40px}
+.sidebar{border-left:1px solid var(--border);padding-left:24px}
+
+/* Sections */
+.section{margin-top:40px}
+.section-num{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--teal);text-transform:uppercase;margin-bottom:6px}
+.section-title{font-family:var(--font-head);font-weight:800;font-size:clamp(22px,3vw,32px);text-transform:uppercase;letter-spacing:-0.3px;color:var(--text);margin-bottom:16px;line-height:1.1}
+.section-body{font-size:15px;color:var(--text);line-height:1.7}
+.section-body p{margin-bottom:12px}
+.section-body strong{color:var(--gold);font-weight:600}
+
+/* Cascade */
+.cascade{margin:24px 0;background:var(--surface);border-radius:6px;padding:20px;border:1px solid var(--border)}
+.cascade-title{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:12px}
+.cascade-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.cascade-bar{height:28px;border-radius:3px;display:flex;align-items:center;padding:0 12px;font-family:var(--font-mono);font-size:11px;color:#fff;font-weight:700;transition:width 0.6s ease}
+.cascade-label{font-family:var(--font-body);font-size:13px;color:var(--text);min-width:140px;text-align:right}
+.cascade-value{font-family:var(--font-mono);font-size:12px;color:var(--muted);min-width:80px}
+
+/* Funnel */
+.funnel{margin:24px 0}
+.funnel-row{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.funnel-label{font-family:var(--font-body);font-size:13px;color:var(--text);min-width:160px;text-align:right}
+.funnel-bar-wrap{flex:1;background:var(--surface-alt);border-radius:3px;height:24px;overflow:hidden;border:1px solid var(--border)}
+.funnel-bar{height:100%;border-radius:3px;display:flex;align-items:center;padding:0 10px;font-family:var(--font-mono);font-size:11px;color:#fff;font-weight:700}
+.funnel-pct{font-family:var(--font-mono);font-size:12px;color:var(--muted);min-width:50px}
+
+/* Sidebar */
+.sidebar-panel{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:20px;margin-bottom:20px}
+.sidebar-title{font-family:var(--font-head);font-weight:700;font-size:16px;text-transform:uppercase;color:var(--text);margin-bottom:12px;letter-spacing:0.5px}
+.sidebar-metric{margin-bottom:14px}
+.sidebar-metric-val{font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--gold)}
+.sidebar-metric-label{font-family:var(--font-body);font-size:12px;color:var(--muted);margin-top:2px}
+.sidebar-note{font-family:var(--font-body);font-size:12px;color:var(--muted);line-height:1.5;margin-top:8px}
+.sidebar-note strong{color:var(--coral);font-weight:600}
+
+/* CTA */
+.cta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:6px;overflow:hidden;margin-top:40px}
+.cta-item{background:var(--surface);padding:16px;text-align:center;text-decoration:none;color:var(--text);transition:background 0.2s}
+.cta-item:hover{background:var(--surface-alt)}
+.cta-label{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:var(--teal);text-transform:uppercase;margin-bottom:4px}
+.cta-text{font-family:var(--font-head);font-weight:700;font-size:14px;text-transform:uppercase}
+
+/* Countdown */
+.countdown{font-family:var(--font-mono);font-size:12px;color:var(--coral);letter-spacing:1px;margin-top:12px}
+
+/* Footer */
+.footer{max-width:1200px;margin:0 auto;padding:20px 40px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+
+/* Lang toggle */
+.lang-toggle{position:fixed;top:16px;right:16px;z-index:100;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:6px 12px;font-family:var(--font-mono);font-size:11px;cursor:pointer;color:var(--text)}
+
+@media(max-width:768px){
+  .metrics{grid-template-columns:repeat(2,1fr);margin:24px 16px}
+  .main{grid-template-columns:1fr;padding:0 16px 40px}
+  .content{padding-right:0}
+  .sidebar{border-left:none;border-top:1px solid var(--border);padding-left:0;padding-top:24px}
+  .header{padding:24px 16px 0}
+  .cta-grid{grid-template-columns:1fr}
+  .badge{font-size:9px;padding:4px 10px}
+}
+</style>
+</head>
+<body>
+
+<div class="badge">БЕЗ ЗАПИТУ НА ДЕРЖБЮДЖЕТ</div>
+<button class="lang-toggle" onclick="toggleLang()">EN / UK</button>
+
+<div class="header">
+  <div class="hero-label">Feel Again × НСЗУ — коротка пропозиція</div>
+  <h1 class="hero-title">Цифрова шина для<br>психосоціальної підтримки</h1>
+  <p class="hero-subtitle">Без запиту на держбюджет.</p>
+  <div class="countdown" id="countdown"></div>
+</div>
+
+<div class="metrics">
+  <div class="metric">
+    <div class="metric-value">3.9M</div>
+    <div class="metric-label">Мають потребу<br><span class="lang-en">In need</span></div>
+  </div>
+  <div class="metric">
+    <div class="metric-value">$13.94B</div>
+    <div class="metric-label">Втрати ВВП/рік<br><span class="lang-en">GDP drain/yr</span></div>
+  </div>
+  <div class="metric">
+    <div class="metric-value">$134M</div>
+    <div class="metric-label">DLI очікує<br><span class="lang-en">DLI pending</span></div>
+  </div>
+  <div class="metric">
+    <div class="metric-value">$380M</div>
+    <div class="metric-label">Тіньовий ринок<br><span class="lang-en">Shadow market</span></div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="content">
+
+    <div class="section">
+      <div class="section-num">01 — Суть</div>
+      <h2 class="section-title">Проблема, яку бачить НСЗУ</h2>
+      <div class="section-body">
+        <p>624 тис. послуг з психосоціальної підтримки щороку виконуються поза системою ЕСОЗ. Це не теоретична статистика — це реальні люди, які отримують допомогу, але їхні дані ніде не фіксуються. Спеціалісти працюють без верифікації, без стандартів, без можливості довести ефективність.</p>
+        <p><strong>118 мобільних бригад</strong> та тисячі соціальних працівників працюють «всліпу». Їхні послуги невидимі для ЕСОЗ, тому НСЗУ не може ані регулювати, ані фінансувати, ані контролювати якість.</p>
+        <p>Проблема не в бажанні — проблема в <strong>відсутності інфраструктури</strong>, яка б з'єднала виконавців із державною системою охорони здоров'я.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">02 — Ціна бездіяльності</div>
+      <h2 class="section-title">Кожен непокритий випадок стає витратою бюджету — не сьогодні, але через 12–18 місяців</h2>
+      <div class="section-body">
+        <p>Втрати ВВП через неліковані ментальні розлади та супутні соматизації складають <strong>$13.94 млрд на рік</strong> — 8.2% від $170 млрд ВВП (WB RDNA3, с.112). Це не «теоретичний збиток» — це реальний тягар для бюджету через передчасну інвалідизацію, втрату продуктивності та збільшення навантаження на систему охорони здоров'я.</p>
+        <p>Кожна людина, яка не отримала когнітивно-поведінкову терапію вчасно, має високий ризик потрапити до системи через <strong>соматизацію</strong> — і тоді вже бюджет покриває повне лікування, а не профілактику.</p>
+      </div>
+
+      <div class="cascade">
+        <div class="cascade-title">Каскад: від бездіяльності до втрат</div>
+        <div class="cascade-row">
+          <div class="cascade-label">Немає контакту</div>
+          <div class="cascade-bar" style="width:95%;background:var(--coral)">99.59%</div>
+        </div>
+        <div class="cascade-row">
+          <div class="cascade-label">Соматизація</div>
+          <div class="cascade-bar" style="width:60%;background:var(--gold)">→ бюджет</div>
+        </div>
+        <div class="cascade-row">
+          <div class="cascade-label">Інвалідизація</div>
+          <div class="cascade-bar" style="width:30%;background:var(--teal)">→ втрати</div>
+        </div>
+        <div class="cascade-row">
+          <div class="cascade-label">Сукупно</div>
+          <div class="cascade-value" style="font-weight:700;color:var(--coral)">$170B × 8.2% = $13.94B</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">03 — Рішення</div>
+      <h2 class="section-title">Рейки. Не потяг.</h2>
+      <div class="section-body">
+        <p>FEEL Again пропонує <strong>Digital Bus</strong> — автоматизований шлюз інтероперабельності, інтегрований з ЕСОЗ відповідно до ст. 24-1 Закону №4223-IX. Це не чергова платформа і не додаток — це <strong>інфраструктура</strong>, яка робить видимим те, що вже працює.</p>
+        <p>624 тис. послуг стають видимими для системи. Triple Verification Oracle забезпечує якість даних: 20% (Дія.ID) → 30% → 50% (PCL-5/PHQ-9) = верифікований клінічний результат.</p>
+        <p>Це не чергова платформа. Це <strong>інфраструктура</strong>, яка робить видимим те, що вже працює.</p>
+      </div>
+
+      <div class="funnel">
+        <div class="funnel-row">
+          <div class="funnel-label">3.9M потребують</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%;background:var(--teal)">3.9M</div></div>
+          <div class="funnel-pct">100%</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">9.6M потребують підтримки</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%;background:var(--teal-light)">9.6M (OCHA)</div></div>
+          <div class="funnel-pct">—</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">260K сесій/рік</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:7%;background:var(--gold)"></div></div>
+          <div class="funnel-pct">0.33%</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">95.44% поза ЕСОЗ</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:95%;background:var(--coral)"></div></div>
+          <div class="funnel-pct">95.44%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">04 — Архітектура</div>
+      <h2 class="section-title">Як працює Digital Bus</h2>
+      <div class="section-body">
+        <p><strong>KoBoToolbox</strong> → <strong>ActivityInfo</strong> → <strong>Feel Again Digital Bus</strong> → <strong>Трембіта</strong> → <strong>ЕСОЗ</strong></p>
+        <p>Кожен крок — це верифікація. KoBoToolbox збирає дані в польових умовах. ActivityInfo структурує. Digital Bus верифікує та трансформує. Трембіта передає в ЕСОЗ.</p>
+        <p>НСЗУ отримує <strong>фінальний клінічний продукт</strong> — дані, які можна використовувати для регулювання, фінансування та контролю якості.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">05 — Де НСЗУ в ланцюзі</div>
+      <h2 class="section-title">Юридичні обгрунтування</h2>
+      <div class="section-body">
+        <p><strong>Ст. 24-1 Закону №4223-IX</strong> визначає Digital Bus як «автоматизований шлюз інтероперабельності», інтегрований з ЕСОЗ. Це не пілот — це <strong>законодавча основа</strong>.</p>
+        <p>НСЗУ виступає адміністратором: отримує верифіковані дані, забезпечує відповідність стандартам, контролює якість. НЕ є оператором — оператором є ENKIDU.</p>
+        <p>Формалізація коштує: ремонт приміщення + ЄСВ 22% + Єдиний податок 5% + адміністрування 30% часу + бухгалтер. <strong>Ціна формалізації (вихід з тіні)</strong> — це реальний бар'єр, який Digital Bus знімає.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">06 — Вікно дій 2026</div>
+      <h2 class="section-title">Кроки до реалізації</h2>
+      <div class="section-body">
+        <p><strong>Крок 1:</strong> Підписання MoU з МОЗ (API ЄСОЗ/Трембіта)</p>
+        <p><strong>Крок 2:</strong> Нормативне рішення — внесення змін до нормативної бази</p>
+        <p><strong>Крок 3:</strong> Технічна інтеграція — підключення Digital Bus до ЕСОЗ</p>
+        <p><strong>Крок 4:</strong> Масштабування — розгортання на національному рівні</p>
+      </div>
+    </div>
+
+    <div class="cta-grid">
+      <a href="#" class="cta-item">
+        <div class="cta-label">Аналітика та пропозиції</div>
+        <div class="cta-text">Передивитись розгорнуто →</div>
+      </a>
+      <a href="https://dashboard.feelagain.me" class="cta-item">
+        <div class="cta-label">Live Dashboard</div>
+        <div class="cta-text">dashboard.feelagain.me</div>
+      </a>
+      <a href="https://feelagain.me" class="cta-item">
+        <div class="cta-label">Вебсайт програми</div>
+        <div class="cta-text">feelagain.me</div>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="sidebar">
+
+    <div class="sidebar-panel">
+      <div class="sidebar-title">Тінь системи</div>
+      <div class="sidebar-metric">
+        <div class="sidebar-metric-val">$380M</div>
+        <div class="sidebar-metric-label">Тіньовий ринок МГЗ (НБУ, L3_DAT_12, с.19)</div>
+      </div>
+      <div class="sidebar-metric">
+        <div class="sidebar-metric-val">65.5%</div>
+        <div class="sidebar-metric-label">Ціна формалізації (вихід з тіні)</div>
+      </div>
+      <div class="sidebar-metric">
+        <div class="sidebar-metric-val">624K</div>
+        <div class="sidebar-metric-label">Мобільних бригад невидимих в ЕСОЗ</div>
+      </div>
+      <div class="sidebar-metric">
+        <div class="sidebar-metric-val">$5,850</div>
+        <div class="sidebar-metric-label">Внесок у ВВП на рік на особу (Коеф.=0.85)</div>
+      </div>
+      <div class="sidebar-note"><strong>~8K</strong> незареєстрованих практиків. Джерело: НБУ, Мінекономіки.</div>
+    </div>
+
+    <div class="sidebar-panel">
+      <div class="sidebar-title">Ключові бар'єри</div>
+      <div class="sidebar-note">
+        <p style="margin-bottom:8px"><strong>1. Відсутність інтеграції з ЕСОЗ.</strong> 95.44% послуг поза системою.</p>
+        <p style="margin-bottom:8px"><strong>2. Відсутність верифікації.</strong> Тільки 20% даних мають хоча б один рівень підтвердження (Дія.ID).</p>
+        <p><strong>3. Тіньова економіка.</strong> $380M ринок, який не підлягає регулюванню без інфраструктури.</p>
+      </div>
+    </div>
+
+    <div class="sidebar-panel">
+      <div class="sidebar-title">Джерела</div>
+      <div class="sidebar-note">
+        <p style="margin-bottom:4px">• WB RDNA3, с.112 — $170B × 8.2%</p>
+        <p style="margin-bottom:4px">• НБУ L3_DAT_12, с.19 — $380M shadow</p>
+        <p style="margin-bottom:4px">• WHO/Lancet 2023 — 3.9M clinical need</p>
+        <p style="margin-bottom:4px">• OCHA — 9.6M total needing support</p>
+        <p style="margin-bottom:4px">• Мінекономіки + НБУ — $5,850 GDP/person</p>
+        <p>• Ст. 24-1 Закону №4223-IX — Digital Bus</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer">
+  Feel Again × НСЗУ — Пропозиція 2026 — feelagain.me
+</div>
+
+<script>
+(function(){
+  // Countdown to HEAL deadline
+  var deadline = new Date('2026-12-23');
+  function updateCountdown(){
+    var now = new Date();
+    var diff = deadline - now;
+    if(diff <= 0){document.getElementById('countdown').textContent='HEAL deadline passed';return}
+    var days = Math.floor(diff / (1000*60*60*24));
+    document.getElementById('countdown').textContent = days + ' днів до закриття HEAL P180245 (23.12.2026)';
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 3600000);
+
+  // Bilingual toggle
+  var currentLang = 'uk';
+  window.toggleLang = function(){
+    currentLang = currentLang === 'uk' ? 'en' : 'uk';
+    document.querySelectorAll('.lang-en').forEach(function(el){
+      el.style.display = currentLang === 'en' ? 'inline' : 'none';
+    });
+    document.querySelector('.lang-toggle').textContent = currentLang === 'uk' ? 'EN / UK' : 'UK / EN';
+  };
+})();
+</script>
+
+</body>
+</html>
