@@ -1,260 +1,939 @@
+
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="uk" data-theme="light" data-lang="uk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FEEL Again · Executive Summary для НБУ</title>
+<title>NBU Short Briefing v2.0 | FEEL Again</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-.center { text-align: center; }
-h1 { font-size: 2.5em; }
-h2 { font-size: 1.8em; border-bottom: 2px solid #0066cc; padding-bottom: 0.3em; }
-h3 { font-size: 1.4em; }
-table { border-collapse: collapse; width: 100%; margin: 20px 0; }
-th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-th { background: #f8f9fa; }
-pre { background: #f5f5f5; padding: 15px; overflow-x: auto; }
-hr { margin: 40px 0; border: none; border-top: 1px solid #eee; }
+:root {
+  --bg0:#0C1816; --bg1:#172B26; --bg2:#1F3530; --bg3:#273F3A;
+  --bd:#304845;
+  --t1:#D5E8E2; --t2:#7A9E98; --t3:#426058;
+  --gl:#DFA030;
+  --gl-75:rgba(223,160,48,0.75);
+  --gl-50:rgba(223,160,48,0.50);
+  --gl-20:rgba(223,160,48,0.20);
+  --gl-08:rgba(223,160,48,0.08);
+  --gl-04:rgba(223,160,48,0.04);
+  --res:#4A98D0; --res-50:rgba(74,152,208,.5); --res-12:rgba(74,152,208,.12);
+  --svc:#D06A20; --svc-50:rgba(208,106,32,.5); --svc-12:rgba(208,106,32,.12);
+  --d1:#C84E4E; --d4:#50987A;
+  --r:4px;
+  --sidebar:260px;
+}
+[data-theme="light"] {
+  --bg0:#EDE8E0; --bg1:#E4DED6; --bg2:#DAD4CB; --bg3:#CFC9C0;
+  --bd:#B4ADA6;
+  --t1:#1A1612; --t2:#3C3830; --t3:#6A6460;
+  --gl:#7A5010;
+  --gl-75:rgba(122,80,16,0.75); --gl-50:rgba(122,80,16,0.50);
+  --gl-20:rgba(122,80,16,0.20); --gl-08:rgba(122,80,16,0.08); --gl-04:rgba(122,80,16,0.04);
+  --res:#1E5C8A; --res-50:rgba(30,92,138,0.5); --res-12:rgba(30,92,138,0.12);
+  --svc:#8A3C0A; --svc-50:rgba(138,60,10,0.5); --svc-12:rgba(138,60,10,0.12);
+  --d4:#286A50; --d1:#8A2A2A;
+}
+[data-theme="light"] body::before { display:none; }
+[data-theme="light"] body { background:var(--bg0); }
+[data-theme="light"] .status-bar { background:#E0DAD2; border-color:rgba(122,80,16,0.25); }
+[data-theme="light"] .sidebar { background:rgba(220,215,208,0.96); }
+[data-theme="light"] .metric-card { background:#F0EBE3; }
+[data-theme="light"] .formula { background:#F5F0E8; }
+[data-theme="light"] .callout-gl { background:rgba(122,80,16,0.06); }
+[data-theme="light"] .callout-res { background:rgba(30,92,138,0.06); }
+[data-theme="light"] .callout-d4 { background:rgba(40,106,80,0.06); }
+[data-theme="light"] .chain-item { background:#F0EBE3; }
+[data-theme="light"] table.dtbl td { border-color:rgba(180,173,166,0.5); }
+,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body {
+  font-family:'Barlow',sans-serif;
+  background:var(--bg0);
+  color:var(--t1);
+  line-height:1.7;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  font-size:15px;
+}
+
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background-image:
+    radial-gradient(ellipse 100% 55% at 50% 112%, rgba(218,152,40,0.28) 0%, rgba(168,104,16,0.12) 38%, rgba(80,48,8,0.05) 62%, transparent 76%),
+    radial-gradient(ellipse 55% 35% at 50% -4%, rgba(218,152,40,0.04) 0%, transparent 70%),
+    linear-gradient(180deg,#060d0b 0%,#09120e 12%,#0d1812 26%,#141710 42%,#1c160a 58%,#241908 72%,#2d1d07 84%,#361f06 100%);
+}
+
+.status-bar {
+  background:var(--bg1);
+  border-bottom:1px solid var(--gl-20);
+  padding:5px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--t3);
+  letter-spacing:1.5px;
+  flex-shrink:0;
+}
+.status-dot {
+  display:inline-block;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--gl);
+  box-shadow:0 0 6px var(--gl);
+  animation:blink 2s ease-in-out infinite;
+  margin-right:6px;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.lang-toggle {
+  display:flex;
+  gap:0;
+  border:1px solid var(--bd);
+  border-radius:3px;
+  overflow:hidden;
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+}
+.lang-btn {
+  padding:4px 10px;
+  cursor:pointer;
+  background:transparent;
+  border:none;
+  color:var(--t3);
+  letter-spacing:1px;
+  transition:all .15s;
+}
+.lang-btn.active {
+  background:var(--gl-20);
+  color:var(--gl);
+}
+
+.layout { display:flex; flex:1; }
+
+.sidebar {
+  position:fixed;
+  left:0;top:31px;
+  width:var(--sidebar);
+  height:calc(100vh - 31px);
+  background:rgba(9,18,14,0.92);
+  border-right:1px solid var(--bd);
+  overflow-y:auto;
+  z-index:200;
+  display:flex;
+  flex-direction:column;
+  backdrop-filter:blur(10px);
+}
+.sb-brand { padding:20px 18px 14px; border-bottom:1px solid var(--gl-20); }
+.sb-logo {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.1rem;
+  font-weight:700;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--gl);
+  text-shadow:0 0 10px var(--gl-50);
+  margin-bottom:2px;
+}
+.sb-sub {
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--t3);
+  letter-spacing:1px;
+  line-height:1.6;
+}
+.sb-section { padding:8px 0 4px; }
+.sb-label {
+  padding:6px 18px 4px;
+  font-family:'Space Mono',monospace;
+  font-size:.55rem;
+  color:var(--t3);
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+.sb-link {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 18px;
+  font-family:'Barlow',sans-serif;
+  font-size:.8rem;
+  color:var(--t2);
+  text-decoration:none;
+  border-left:2px solid transparent;
+  transition:all .15s;
+}
+.sb-link:hover,.sb-link.active {
+  color:var(--t1);
+  border-left-color:var(--gl);
+  background:var(--gl-04);
+}
+.sb-num {
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--t3);
+  min-width:20px;
+}
+.sb-divider { height:1px; background:var(--bd); margin:8px 0; }
+
+.main {
+  margin-left:var(--sidebar);
+  flex:1;
+  max-width:900px;
+  padding:0 48px 100px;
+}
+
+.doc-header {
+  padding:48px 0 36px;
+  border-bottom:1px solid var(--bd);
+  margin-bottom:52px;
+}
+.doc-eyebrow {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:16px;
+  flex-wrap:wrap;
+}
+.chip {
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:3px 10px;
+  border-radius:2px;
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  font-weight:700;
+}
+.chip-gl { background:var(--gl-08); color:var(--gl); border:1px solid var(--gl-20); }
+.chip-res { background:var(--res-12); color:var(--res); border:1px solid rgba(74,152,208,.3); }
+.chip-svc { background:var(--svc-12); color:var(--svc); border:1px solid rgba(208,106,32,.3); }
+
+.doc-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.9rem;
+  font-weight:700;
+  letter-spacing:2px;
+  color:var(--t1);
+  line-height:1.25;
+  margin-bottom:16px;
+  max-width:780px;
+  text-transform:uppercase;
+}
+.doc-recipient {
+  font-size:.85rem;
+  color:var(--t2);
+  margin-bottom:20px;
+  padding:10px 14px;
+  background:var(--bg1);
+  border:1px solid var(--bd);
+  display:inline-flex;
+  gap:10px;
+  align-items:center;
+}
+.doc-recipient-label {
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--t3);
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+}
+.doc-meta {
+  display:flex;
+  gap:28px;
+  flex-wrap:wrap;
+}
+.meta-item {
+  font-family:'Space Mono',monospace;
+  font-size:.65rem;
+  color:var(--t3);
+}
+.meta-item span { color:var(--t2); }
+
+.section {
+  margin-bottom:72px;
+  scroll-margin-top:24px;
+}
+.section-header {
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  margin-bottom:28px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--bd);
+}
+.sec-num {
+  font-family:'Space Mono',monospace;
+  font-size:.65rem;
+  color:var(--gl);
+  background:var(--gl-08);
+  border:1px solid var(--gl-20);
+  padding:5px 10px;
+  white-space:nowrap;
+  margin-top:4px;
+  flex-shrink:0;
+  letter-spacing:1px;
+}
+.sec-title-block h2 {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.45rem;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--t1);
+  margin-bottom:2px;
+  line-height:1.2;
+}
+.sec-eng {
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--t3);
+  letter-spacing:1px;
+}
+
+.prose { color:var(--t2); font-size:.95rem; line-height:1.85; }
+.prose p { margin-bottom:18px; }
+.prose p:last-child { margin-bottom:0; }
+.prose strong { color:var(--t1); font-weight:600; }
+.prose em { color:var(--t2); font-style:italic; }
+
+.metric-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(158px,1fr));
+  gap:10px;
+  margin:24px 0;
+}
+.metric-card {
+  background:var(--bg1);
+  border:1px solid var(--bd);
+  padding:16px 18px;
+  transition:border-color .15s;
+  position:relative;
+  overflow:hidden;
+}
+.metric-card::before {
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,transparent,var(--gl-50),transparent);
+}
+.metric-val {
+  font-family:'Space Mono',monospace;
+  font-size:1.3rem;
+  font-weight:700;
+  color:var(--gl);
+  text-shadow:0 0 10px var(--gl-50);
+  margin-bottom:5px;
+  line-height:1.2;
+}
+.metric-val.res { color:var(--res); text-shadow:0 0 10px var(--res-50); }
+.metric-val.svc { color:var(--svc); }
+.metric-lbl { font-size:.8rem; color:var(--t2); line-height:1.45; margin-bottom:8px; }
+.metric-src { font-family:'Space Mono',monospace; font-size:.6rem; }
+.src-g { color:var(--d4); }
+.src-y { color:var(--gl); }
+.src-b { color:var(--res); }
+
+.tbl-wrap { overflow-x:auto; margin:22px 0; }
+table.dtbl { width:100%; border-collapse:collapse; font-size:.85rem; }
+table.dtbl th {
+  text-align:left;
+  padding:9px 14px;
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--t3);
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  border-bottom:1px solid var(--bd);
+  white-space:nowrap;
+}
+table.dtbl td {
+  padding:10px 14px;
+  border-bottom:1px solid rgba(48,72,69,0.5);
+  color:var(--t2);
+  vertical-align:top;
+  line-height:1.5;
+}
+table.dtbl tr:last-child td { border-bottom:none; }
+table.dtbl tr:hover td { background:var(--gl-04); }
+.mono-cell { font-family:'Space Mono',monospace; font-size:.75rem; }
+.bold-cell { color:var(--t1); font-weight:600; }
+
+.callout {
+  padding:16px 20px;
+  margin:22px 0;
+  border-left:3px solid;
+  position:relative;
+}
+.callout-gl { background:var(--gl-08); border-color:var(--gl); }
+.callout-res { background:var(--res-12); border-color:var(--res); }
+.callout-d4 { background:rgba(80,152,122,0.08); border-color:var(--d4); }
+.callout-red { background:rgba(200,78,78,0.08); border-color:var(--d1); }
+.callout-title {
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.callout-gl .callout-title { color:var(--gl); }
+.callout-res .callout-title { color:var(--res); }
+.callout-d4 .callout-title { color:var(--d4); }
+.callout-red .callout-title { color:var(--d1); }
+.callout p { font-size:.88rem; color:var(--t2); margin:0; line-height:1.7; }
+.callout p+p { margin-top:8px; }
+.callout strong { color:var(--t1); }
+
+.formula {
+  background:var(--bg0);
+  border:1px solid var(--bd);
+  border-top:2px solid var(--gl-50);
+  padding:14px 18px;
+  margin:14px 0;
+  font-family:'Space Mono',monospace;
+  font-size:.75rem;
+  color:var(--d4);
+  line-height:1.7;
+}
+.formula-comment { color:var(--t3); font-size:.65rem; }
+.formula strong { color:var(--gl); }
+
+.asmpt {
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--gl);
+  background:var(--gl-08);
+  border:1px solid var(--gl-20);
+  padding:2px 6px;
+  vertical-align:middle;
+}
+
+.timeline { position:relative; padding-left:26px; margin:20px 0; }
+.timeline::before {
+  content:'';
+  position:absolute;
+  left:9px;top:10px;bottom:10px;
+  width:1px;
+  background:var(--bd);
+}
+.tl-item { position:relative; margin-bottom:22px; }
+.tl-item::before {
+  content:'';
+  position:absolute;
+  left:-21px;top:7px;
+  width:9px;height:9px;
+  border-radius:50%;
+  background:var(--gl);
+  box-shadow:0 0 6px var(--gl-50);
+  border:2px solid var(--bg1);
+}
+.tl-phase {
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--gl);
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:3px;
+}
+.tl-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--t1);
+  margin-bottom:3px;
+}
+.tl-desc { font-size:.85rem; color:var(--t2); line-height:1.5; }
+.tl-actor { font-family:'Space Mono',monospace; font-size:.65rem; color:var(--res); margin-top:4px; }
+
+.chain {
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  margin:24px 0;
+}
+.chain-item {
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  padding:14px 18px;
+  background:var(--bg1);
+  border:1px solid var(--bd);
+  border-bottom:none;
+  position:relative;
+}
+.chain-item:last-child { border-bottom:1px solid var(--bd); }
+.chain-arrow {
+  font-family:'Space Mono',monospace;
+  font-size:.65rem;
+  color:var(--gl);
+  margin-top:2px;
+  flex-shrink:0;
+  width:20px;
+}
+.chain-text { font-size:.88rem; color:var(--t2); line-height:1.55; }
+.chain-text strong { color:var(--t1); }
+.chain-text .val { color:var(--gl); font-family:'Space Mono',monospace; font-weight:700; }
+
+[data-lang="uk"] .en { display:none; }
+[data-lang="en"] .uk { display:none; }
+
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:var(--bg0);}
+::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px;}
+
+@media print {
+  .sidebar,.status-bar{display:none;}
+  .main{margin-left:0;padding:20px;}
+}
 </style>
+<script>
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  localStorage.setItem('lang', lang);
+  document.getElementById('btn-uk').classList.toggle('active', lang === 'uk');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+}
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+  document.getElementById('btn-light').classList.toggle('active', theme === 'light');
+  document.getElementById('btn-dark').classList.toggle('active', theme === 'dark');
+}
+window.addEventListener('DOMContentLoaded', () => {
+  const lang = localStorage.getItem('lang') || 'uk';
+  const theme = localStorage.getItem('theme') || 'light';
+  setLang(lang);
+  setTheme(theme);
+});
+</script>
 </head>
 <body>
 
-<div class="center">
-<h1><strong>FEEL Again</strong></h1>
-<h2>Цифрова та фінансова інфраструктура для сектору психічного здоров'я України</h2>
-<h3>Executive Summary для Національного банку України</h3>
-<p><em>v2.0 · Липень 2026 · Конфіденційно</em></p>
+<div class="status-bar">
+  <span><span class="status-dot"></span>FEEL AGAIN � NBU SHORT BRIEF � v2.0 � 2026</span>
+  <div style="display:flex;gap:6px;align-items:center;">
+  <div class="lang-toggle" style="margin-right:4px;">
+    <button class="lang-btn active" id="btn-uk" onclick="setLang('uk')"># </button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">ENG</button>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-light" onclick="setTheme('light')"> </button>
+    <button class="lang-btn" id="btn-dark" onclick="setTheme('dark')">�</button>
+  </div>
+  </div>
+  <span>$& � CONFIDENTIAL</span>
 </div>
 
-<hr>
-<h2>🎯 Ключове повідомлення</h2>
-<p><strong>FEEL Again</strong> — цифрові та фінансові рейки (аналогія Visa/Mastercard) для сектору MHPSS. З'єднують інформаційні та фінансові потоки без витрат бюджету. Дозволяють розблокувати <strong>$175.1M</strong> коштів Світового банку, знизити втрати ВВП на <strong>$13.94B/рік</strong> та створити перший у світі <strong>Mental Health Economic Index (MHEI)</strong> з НБУ як custodian.</p>
+<div class="layout">
 
-<hr>
-<h2>📊 Ключові цифри</h2>
-<h3>Проблема</h3>
-<table>
-<tr><th>Метрика</th><th>Значення</th><th>Джерело</th><th>Статус</th></tr>
-<tr><td>Втрати ВВП</td><td><strong>$13.94B/рік</strong></td><td>L3_DAT_22: WB RDNA3, IMF WEO 2025</td><td>⚠️ Критично</td></tr>
-<tr><td>Кількість людей</td><td><strong>3.9M</strong></td><td>L3_DAT_01: КМУ/ВООЗ 2023</td><td>✅</td></tr>
-<tr><td>Потреба в сесіях</td><td><strong>19–70M/рік</strong></td><td>WHO Standards</td><td>✅</td></tr>
-<tr><td>Спроможність НСЗУ</td><td><strong>260K сесій/рік</strong></td><td>НСЗУ</td><td>⚠️ Дефіцит 98.5-99.6%</td></tr>
-<tr><td>Тіньовий ринок</td><td><strong>$380M/рік</strong></td><td>L3_DAT_12: НБУ розрахунок</td><td>✅</td></tr>
-</table>
+<nav class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-logo">FEEL Again</div>
+    <div class="sb-sub">
+      <span class="uk">>@>B:89 1@8D #<br>5@AVO 2.0 � 8?5=L 2026</span>
+      <span class="en">NBU Short Brief<br>Version 2.0 � July 2026</span>
+    </div>
+  </div>
 
-<h3>Рішення</h3>
-<table>
-<tr><th>Метрика</th><th>Значення</th><th>Статус</th></tr>
-<tr><td>Адресований залишок</td><td><strong>$175.1M</strong></td><td>✅ Готовий до розблокування</td></tr>
-<tr><td>HEAL Component 4</td><td><strong>$41.1M</strong></td><td>⚠️ Дедлайн 23.12.2026</td></tr>
-<tr><td>THRIVE залишок</td><td><strong>$134M</strong></td><td>⚠️ DLI заблоковані</td></tr>
-<tr><td>ВВП-внесок/рік</td><td><strong>$5,850</strong></td><td>✅ L3_DAT_10</td></tr>
-<tr><td>ROI моделі</td><td><strong>4.3×</strong></td><td>$1 → $4.3</td></tr>
-</table>
+  <div class="sb-section">
+    <div class="sb-label"><span class="uk"> >74V;8</span><span class="en">Sections</span></div>
+    <a href="#s1" class="sb-link"><span class="sb-num">I</span><span class="uk">;NG>2V F8D@8</span><span class="en">Key Figures</span></a>
+    <a href="#s2" class="sb-link"><span class="sb-num">II</span><span class="uk">@>1;5<0</span><span class="en">The Problem</span></a>
+    <a href="#s3" class="sb-link"><span class="sb-num">III</span><span class="uk"> VH5==O</span><span class="en">The Solution</span></a>
+    <a href="#s4" class="sb-link"><span class="sb-num">IV</span><span class="uk">:>=><VG=89 5D5:B</span><span class="en">Economic Effect</span></a>
+    <a href="#s5" class="sb-link"><span class="sb-num">V</span><span class="uk">@>?>78FVO</span><span class="en">Proposal</span></a>
+  </div>
 
-<h3>Вікно дій</h3>
-<pre>HEAL P180245: 23.12.2026
-Шлях: MoU → Стандартизація → Middleware → Формалізація → Digital Bus → Дані → Мультиплікація</pre>
+  <div class="sb-divider"></div>
 
-<hr>
-<h2>🏗️ Архітектура</h2>
-<h3>Digital Bus (HL7 FHIR R4 Middleware)</h3>
-<pre>KoBoToolbox --624K+--> Digital Bus --HL7 FHIR R4--> Трембіта --API Gateway--> ЄСОЗ --Дані--> НСЗУ
-                                |
-                            Triple Oracle
-                                |
-                        DIIA Verification --SEP ISO 20022--> Провайдер</pre>
+  <div class="sb-section">
+    <div class="sb-label"><span class="uk"> 5AC@A8</span><span class="en">Resources</span></div>
+    <a href="https://feelagain.me" class="sb-link" target="_blank"><span class="sb-num">�</span><span class="uk">!09B ?@>3@0<8</span><span class="en">Programme Site</span></a>
+    <a href="https://dashboard.feelagain.me" class="sb-link" target="_blank"><span class="sb-num">�</span><span class="uk">0H1>@4 40=8E</span><span class="en">Data Dashboard</span></a>
+  </div>
 
-<h3>Blended Finance Механізм</h3>
-<pre>Унікальний код (GDPR/HIPAA) → Digital Handshake з DIIA
-→ Соціальний договір (10-15%) + Корпоративне (15-20%) + Державне (до 70-95%)
-→ Виплата через ENKIDU P2P Gateway → Фонд (НБУ Custodian для MHEI)</pre>
-<p><strong>ENKIDU:</strong> Blended Finance P2P Gateway (global consortium partner)</p>
+  <div class="sb-companion">
+    <div class="sb-comp-label"><span class="uk">>2=0 25@AVO</span><span class="en">Full Version</span></div>
+    <a href="analytical-report.html" class="sb-comp-link" target="_blank">� <span class="uk">=0;VB8G=89 72VB</span><span class="en">Analytical Report</span></a>
+  </div>
+</nav>
 
-<hr>
-<h2>🎯 Чому саме НБУ?</h2>
-<h3>Три унікальні компетенції</h3>
-<table>
-<tr><th>№</th><th>Компетенція</th><th>Роль</th><th>Перевага</th></tr>
-<tr><td>1</td><td>Фінансова інфраструктура</td><td>SEP (ISO 20022, <10 сек)</td><td>Швидкість та прозорість</td></tr>
-<tr><td>2</td><td>Regulatory Sandbox</td><td>Постанова №39 від 30.03.2023</td><td>Тестування без регуляції</td></tr>
-<tr><td>3</td><td>Data Custodian</td><td>Mental Health Economic Index (MHEI)</td><td>Перший у світі</td></tr>
-</table>
+<main class="main">
 
-<hr>
-<h2>📋 Конкретні кроки НБУ</h2>
-<h3>MoU-first підхід</h3>
-<p><strong>Послідовність:</strong> MoU → Угода про стандартизацію → Налаштування middleware → Одночасна формалізація → Налаштування Digital Bus → Інтероперабельний потік → Мультиплікація</p>
+<div class="doc-header">
+  <div class="doc-eyebrow">
+    <span class="chip chip-gl"><span class="uk">>@>B:89 1@8D</span><span class="en">Short Brief</span></span>
+    <span class="chip chip-svc"><span class="uk">>=DV45=FV9=></span><span class="en">Confidential</span></span>
+    <span class="chip chip-res">v2.0 � 2026</span>
+  </div>
 
-<h3>Фази впровадження</h3>
-<table>
-<tr><th>Фаза</th><th>Термін</th><th>Дії</th></tr>
-<tr><td>1. Формалізація</td><td>Червень-Липень 2026</td><td>Робоча група, MoU з МОЗ/НСЗУ/WB, угода про стандартизацію</td></tr>
-<tr><td>2. Налаштування</td><td>Серпень-Вересень 2026</td><td>Sandbox, middleware, формалізація, перші дані MHI</td></tr>
-<tr><td>3. Масштабування</td><td>Вересень-Грудень 2026</td><td>Digital Bus, інтероперабельний потік, демонстрація WB</td></tr>
-<tr><td>4. Повне впровадження</td><td>2027</td><td>Масштабування Sandbox → Повна ліцензія, мультиплікація</td></tr>
-</table>
+  <h1 class="doc-title">
+    <span class="uk">0FV>=0;L=89 0=: #:@0W=8:  >;L C D>@<0;V70FVW A5:B>@C MHPSS</span>
+    <span class="en">National Bank of Ukraine: Role in MHPSS Sector Formalization</span>
+  </h1>
 
-<hr>
-<h2>🤝 Роль НБУ в екосистемі</h2>
-<table>
-<tr><th>Інституція</th><th>Роль</th><th>Що отримує</th><th>Статус</th></tr>
-<tr><td><strong>НБУ</strong></td><td>Regulatory Sandbox, SEP, Data Custodian <strong>MHEI</strong></td><td>Перший MHI, лідерство в MH-fintech</td><td>✅</td></tr>
-<tr><td><strong>МОЗ</strong></td><td>API ЄСОЗ/Трембіта</td><td>624K+ послуг в ЄСОЗ, розблокування THRIVE DLI</td><td>🟡 MoU</td></tr>
-<tr><td><strong>НСЗУ</strong></td><td>Пакет MH-послуг</td><td>Outcome-based payment, DLI дані</td><td>🟡 Очікування</td></tr>
-<tr><td><strong>Мінеконом</strong></td><td>MHI методологія</td><td>Інструмент прогнозування ВВП</td><td>✅</td></tr>
-<tr><td><strong>Світовий Банк</strong></td><td>Підтвердження middleware</td><td>Capacity KPI 0→4, DLI trigger</td><td>✅</td></tr>
-</table>
+  <div class="doc-recipient">
+    <span class="doc-recipient-label"><span class="uk">4@5A0B</span><span class="en">Recipient</span></span>
+    <span class="uk">0FV>=0;L=89 0=: #:@0W=8 (#)</span>
+    <span class="en">National Bank of Ukraine (NBU)</span>
+  </div>
 
-<hr>
-<h2>⚠️ Ризики та мітигація</h2>
-<h3>Топ-5 ризиків</h3>
-<table>
-<tr><th>№</th><th>Ризик</th><th>Ймовірність</th><th>Вплив</th><th>Мітигація</th><th>Відповідальний</th></tr>
-<tr><td>1</td><td>HEAL дедлайн 23.12.2026</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>Прискорення всіх процесів</td><td>НБУ</td></tr>
-<tr><td>2</td><td>NBU Sandbox відмова</td><td>⭐⭐</td><td>⭐⭐⭐⭐</td><td>Альтернативний банк</td><td>НБУ</td></tr>
-<tr><td>3</td><td>MoU з МОЗ затримка</td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>Паралельні переговори</td><td>НБУ/МОЗ</td></tr>
-<tr><td>4</td><td>Технічні збої</td><td>⭐</td><td>⭐⭐⭐</td><td>Backup системи</td><td>FEEL Again</td></tr>
-<tr><td>5</td><td>Фінансова нестійкість</td><td>⭐⭐</td><td>⭐⭐⭐</td><td>Диверсифікація доходів</td><td>FEEL Again</td></tr>
-</table>
-
-<h3>Ключові припущення</h3>
-<table>
-<tr><th>Припущення</th><th>Статус</th><th>Джерело</th><th>Ризик</th></tr>
-<tr><td>НБУ погодиться бути data custodian <strong>MHEI</strong></td><td>🟡 Не підтверджено</td><td>MoU з НБУ</td><td>Високий</td></tr>
-<tr><td>МОЗ погодиться на API ЄСОЗ</td><td>🟡 Не підтверджено</td><td>MoU з МОЗ</td><td>Високий</td></tr>
-<tr><td>Банк-партнер погодиться на 0% ЄСВ</td><td>🟡 Не підтверджено</td><td>Угода з банком</td><td>Середній</td></tr>
-<tr><td>Digital Handshake з DIIA буде реалізовано</td><td>🟡 Не підтверджено</td><td>Технічна інтеграція</td><td>Середній</td></tr>
-</table>
-
-<hr>
-<h2>📈 Економічний ефект</h2>
-<h3>Прогноз</h3>
-<p><strong>Поточна ситуація:</strong> 19–70M сесій/рік потреба, 260K + 5M = 5.26M доступно, 13.74–64.74M невиконано.</p>
-<p><strong>З FEEL Again:</strong> +13.8M сесій від 13,806 фахівців, загалом ~19M сесій.</p>
-<p><strong>Ефект:</strong> 1.37–12.95M людей отримують допомогу, $1.9–26.3B збережено на рік, кумулятивно $5.7–78.9B за 3 роки.</p>
-
-<h4>Спрощений прогноз</h4>
-<table>
-<tr><th>Показник</th><th>Без FEEL</th><th>З FEEL</th><th>Ефект</th></tr>
-<tr><td>Втрати ВВП/рік</td><td>$13.94B</td><td>$11.0B</td><td><strong>$2.94B/рік</strong></td></tr>
-<tr><td>MHEI вплив</td><td>-</td><td>Перший у світі</td><td><strong>Лідерство</strong></td></tr>
-<tr><td>Розблоковані кошти</td><td>-</td><td>$175.1M</td><td><strong>WB HEAL+THRIVE</strong></td></tr>
-</table>
-
-<p><strong>Ключові припущення:</strong></p>
-<ul>
-<li>50-70% пацієнтів повертаються до економіки</li>
-<li>Середня вартість соматизації + інвалідизації: <strong>$4,165/людина/рік</strong> (підтверджено)</li>
-<li>Середній ВВП-внесок: <strong>$5,850/рік</strong> (L3_DAT_10)</li>
-</ul>
-
-<blockquote>
-<p><strong>Примітка:</strong> $380M тіньовий ринок НБУ — окрема цифра, не пов'язана з втратами ВВП.</p>
-</blockquote>
-
-<h4>Схема економічного ефекту</h4>
-<pre>
-[Недиагностовані: 1.37-12.95M людей]
-    ↓
-[Втрати: $4,165/людина/рік]
-    ↓
-[Загальні втрати: $5.7-54B/рік]
-    ↓
-[FEEL Again: +13.8M сесій]
-    ↓
-[Охоплення: 50-70%]
-    ↓
-[Повернення до економіки: 1.3-6.9M людей]
-    ↓
-[Ефект: $3.8-27.7B/рік]
-    ↓
-[MHEI: Перший у світі індекс від НБУ]
-</pre>
-
-<hr>
-<h2>📞 Контакти</h2>
-<table>
-<tr><td><strong>Роль</strong></td><td><strong>Ім'я</strong></td><td><strong>Організація</strong></td><td><strong>Email</strong></td><td><strong>Телефон</strong></td></tr>
-<tr><td>Programme Architect</td><td><strong>Олексій Зволинський</strong></td><td>ГО «Фундація Відкрите Суспільство»</td><td>alexezav@gmail.com</td><td>+380 XX XXX XX XX</td></tr>
-<tr><td>Technical Lead</td><td>-</td><td>FEEL Again</td><td>-</td><td>-</td></tr>
-<tr><td>NBU Contact</td><td>-</td><td>Національний банк України</td><td>-</td><td>-</td></tr>
-</table>
-
-<hr>
-<h2>🔗 Додаткові матеріали</h2>
-<ul>
-<li><a href="https://dashboard.feelagain.me">Live Dashboard</a></li>
-<li><a href="https://feelagain.me">Програмний сайт</a></li>
-</ul>
-
-<h2>📌 Додатки</h2>
-<h3>Додаток А: Проєкт доручення Голови НБУ</h3>
-<p><strong>Національний банк України</strong><br><strong>ДОРУЧЕННЯ</strong><br><em>«___» ___________ 2026 р.</em><br>м. Київ</p>
-<p><strong>Щодо створення робочої групи з питань цифрової фінансової інфраструктури для сектору психічного здоров'я</strong></p>
-<p>З метою дослідження можливостей використання фінансової інфраструктури НБУ для підтримки сектору MHPSS:</p>
-<p><strong>ДОРУЧАЮ:</strong></p>
-<ol>
-<li>Департаменту платіжних систем та інновацій спільно з Управлінням стратегії — <strong>створити робочу групу</strong> у складі представників НБУ, МОЗ, НСЗУ, Мінекономіки, Світового Банку та КНУ ім. Шевченка.</li>
-<li>Робочій групі протягом <strong>90 днів</strong> підготувати:
-  <ol type="a">
-    <li>Концепцію <strong>Mental Health Economic Index (MHEI)</strong></li>
-    <li>Заявку до <strong>Regulatory Sandbox</strong></li>
-    <li>Проєкт <strong>Меморандуму про взаєморозуміння з МОЗ, НСЗУ, Світовим Банком</strong></li>
-    <li>План одночасної формалізації (MoU-first підхід)</li>
-  </ol>
-</li>
-<li>Департаменту комунікацій — підготувати <strong>комунікаційну стратегію</strong> для позиціювання MHEI.</li>
-</ol>
-<p><em>Голова НБУ</em><br>______________________</p>
-
-<h3>Додаток Б: Проєкт листа до МОЗ, НСЗУ</h3>
-<p><strong>Міністерство охорони здоров'я України, Національна служба здоров'я України</strong><br><em>Міністру, Голові НСЗУ</em><br>______________________</p>
-<p><strong>Щодо інтеграції гуманітарних систем MH-даних з ЄСОЗ (MoU-first підхід)</strong></p>
-<p>Шановний/Шановна _______________,</p>
-<p>Національний банк України ініціює створення робочої групи з питань цифрової інтеграції гуманітарних та державних систем охорони здоров'я.</p>
-<p><strong>Контекст:</strong> За даними WB ISR #6 (вересень 2025), <strong>624,464 осіб</strong> отримали MH-послуги за програмою HEAL. Ці дані зібрані через KoBoToolbox та CommCare, проте не інтегровані з ЄСОЗ, що унеможливлює верифікацію DLI-тригерів програми THRIVE (<strong>$134M</strong>). Загальний адресований ринок: <strong>$175.1M</strong> (HEAL + THRIVE).</p>
-<p><strong>Пропонуємо:</strong></p>
-<ol>
-<li>Включення представників Директорату цифрової трансформації МОЗ та НСЗУ до робочої групи НБУ</li>
-<li>Надання технічного опису <strong>API ЄСОЗ/Трембіта</strong> для розробки middleware-шару (FHIR R4)</li>
-<li>Визначення регіонів для інтеграції (2-3 області) в рамках одночасної формалізації</li>
-</ol>
-<p><strong>Очікуваний результат:</strong> Розблокування DLI-виплат THRIVE ($134M) та HEAL Component 4 ($41.1M), забезпечення видимості MH-послуг у ЄСОЗ до <strong>23.12.2026</strong>.</p>
-<p>З повагою,<br><em>Заступник Голови НБУ</em><br>______________________</p>
-
-<h3>Додаток В: Проєкт доручення на участь у розробці індексу MHEI</h3>
-<p><strong>Національний банк України</strong><br><strong>ДОРУЧЕННЯ</strong><br><em>«___» ___________ 2026 р.</em><br>м. Київ</p>
-<p><strong>Щодо участі у розробці Mental Health Economic Index (MHEI)</strong></p>
-<p>З метою створення першого у світі індексу економічного впливу психічного здоров'я:</p>
-<p><strong>ДОРУЧАЮ:</strong></p>
-<ol>
-<li>Спільно з Мінекономіки та КНУ ім. Шевченка розробити методологію <strong>MHEI</strong>.</li>
-<li>Забезпечити доступ до агрегованих даних для розрахунку індексу.</li>
-<li>Визначити KPI для оцінки економічного ефекту від MHPSS послуг.</li>
-<li>Опублікувати перший звіт MHEI до кінця 2026 року.</li>
-</ol>
-<p><em>Голова НБУ</em><br>______________________</p>
-
-<h3>Додаток Г: Проєкт доручення на ліцензування доступу до ЄСОЗ</h3>
-<p><strong>Національний банк України</strong><br><strong>ДОРУЧЕННЯ</strong><br><em>«___» ___________ 2026 р.</em><br>м. Київ</p>
-<p><strong>Щодо ліцензування доступу до ЄСОЗ для Digital Bus</strong></p>
-<p>З метою інтеграції гуманітарних даних з державними системами:</p>
-<p><strong>ДОРУЧАЮ:</strong></p>
-<ol>
-<li>Надати FEEL Again доступ до API ЄСОЗ/Трембіта через акредитований шлюз Digital Bus.</li>
-<li>Забезпечити відповідність вимогам Закону №4223-IX (ст. 24-1).</li>
-<li>Встановити процедуру Digital Handshake з DIIA верифікацією для всіх транзакцій.</li>
-<li>Забезпечити унікальну ідентифікацію бенефіціарів через де-персоніфіковані коди (GDPR/HIPAA compliant).</li>
-</ol>
-<p><em>Голова НБУ</em><br>______________________</p>
-
-<div class="footer">
-<p><strong>ГО «Фундація „Відкрите суспільство“» — з 2001 р.</strong></p>
-<p><strong>Дані верифіковані:</strong> L3_DAT_01-25 · НБУ ($380M тіньовий ринок) · WB ISR #6 (Sep 2025) · Lancet 2023 · IMF WEO 2025 · WB HEAL/THRIVE ($175.1M)</p>
-<p><strong>Канонічні метрики:</strong> $13.94B ВВП втрат/рік | $1.8B MHPSS витрат 2025 | $175.1M адресований ринок | $41.1M HEAL Component 4</p>
-<p><strong>Версія:</strong> 2.0 · Липень 2026 · Конфіденційно</p>
+  <div class="doc-meta">
+    <div class="meta-item"><span class="uk">5@AVO:</span><span class="en">Version:</span> <span>v2.0 � <span class="uk">8?5=L</span><span class="en">July</span> 2026</span></div>
+    <div class="meta-item"><span class="uk">@>3@0<0:</span><span class="en">Programme:</span> <span>FEEL Again</span></div>
+    <div class="meta-item"><span class="uk">>=B0:B:</span><span class="en">Contact:</span> <span>;5:AV9 2>;V=AL:89</span></div>
+  </div>
 </div>
+
+<!-- SECTION I: Key Figures -->
+<section class="section" id="s1">
+  <div class="section-header">
+    <div class="sec-num">I</div>
+    <div class="sec-title-block">
+      <h2><span class="uk">;NG>2V F8D@8</span><span class="en">Key Figures</span></h2>
+      <div class="sec-eng">L3 Primary Data � MHPSS Sector � NBU Regulatory Role</div>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-val">3,9M</div>
+      <div class="metric-lbl"><span class="uk">>AV1 7 :;V=VG=8<8 ?>@CH5==O<8</span><span class="en">persons with clinical disorders</span></div>
+      <div class="metric-src src-g"> GREEN � L3_DAT_01 � WHO / Lancet 2023</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">19-70M</div>
+      <div class="metric-lbl"><span class="uk">A5AV9/@V:  ?>B@510</span><span class="en">sessions/year  need</span></div>
+      <div class="metric-src src-g"> GREEN � WHO 5-12-20</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val svc">260K</div>
+      <div class="metric-lbl"><span class="uk">A5AV9/@V:  ?>BC6=VABL !#</span><span class="en">sessions/year  NSZU capacity</span></div>
+      <div class="metric-src src-g"> GREEN � !#</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">0,4-1,4%</div>
+      <div class="metric-lbl"><span class="uk">?>:@8BBO ?>B@518</span><span class="en">need coverage</span></div>
+      <div class="metric-src src-g"> GREEN � @>7@0EC=:>25</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val res">$13,94B</div>
+      <div class="metric-lbl"><span class="uk">/@V:  2B@0B8 </span><span class="en">/year  GDP losses</span></div>
+      <div class="metric-src src-g"> GREEN � L3_DAT_22</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$380M</div>
+      <div class="metric-lbl"><span class="uk">/@V:  BV=L>289 @8=>:</span><span class="en">/year  shadow market</span></div>
+      <div class="metric-src src-g"> GREEN � L3_DAT_12 � NBU</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$1,8B</div>
+      <div class="metric-lbl"><span class="uk">28B@0B8 =0 MHPSS 2025</span><span class="en">MHPSS spending 2025</span></div>
+      <div class="metric-src src-g"> GREEN � L3_DAT_25</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$4,19B</div>
+      <div class="metric-lbl"><span class="uk">/@V:  28?;0B8 ?> V=20;V4=>ABV</span><span class="en">/year  disability payments</span></div>
+      <div class="metric-src src-y">� YELLOW � Compendium 13_GDP_DISABILITY_PROJECTION</div>
+    </div>
+  </div>
+
+  <div class="callout callout-gl">
+    <div class="callout-title"><span class="uk">0=>=VG=V 40=V L3</span><span class="en">L3 Canonical Data</span></div>
+    <p><span class="uk"><strong>L3_DAT_01:</strong> 3,9M >AV1 (WHO/Lancet 2023)<br><strong>L3_DAT_10:</strong> $5,850 2=5A>: C />A>10/@V:<br><strong>L3_DAT_12:</strong> $380M BV=L>289 @8=>:/@V: (NBU)<br><strong>L3_DAT_22:</strong> $13,94B 2B@0B8 /@V:<br><strong>L3_DAT_23:</strong> $41,1M HEAL Component 4<br><strong>L3_DAT_25:</strong> $1,8B 28B@0B8 =0 MHPSS 2025</span><span class="en"><strong>L3_DAT_01:</strong> 3.9M persons (WHO/Lancet 2023)<br><strong>L3_DAT_10:</strong> $5,850 GDP contribution/person/year<br><strong>L3_DAT_12:</strong> $380M shadow market/year (NBU)<br><strong>L3_DAT_22:</strong> $13.94B GDP loss/year<br><strong>L3_DAT_23:</strong> $41.1M HEAL Component 4<br><strong>L3_DAT_25:</strong> $1.8B MHPSS spending 2025</span></p>
+  </div>
+</section>
+
+<!-- SECTION II: The Problem -->
+<section class="section" id="s2">
+  <div class="section-header">
+    <div class="sec-num">II</div>
+    <div class="sec-title-block">
+      <h2><span class="uk">@>1;5<0</span><span class="en">The Problem</span></h2>
+      <div class="sec-eng">NBU Sees All Transactions � Cannot Link to Clinical Outcomes</div>
+    </div>
+  </div>
+
+  <div class="chain">
+    <div class="chain-item">
+      <div class="chain-arrow">01</div>
+      <div class="chain-text">
+        <strong><span class="uk"># 10G8BL CAV B@0=70:FVW</span><span class="en">NBU sees all transactions</span></strong>
+        <span class="uk"> # 10G8BL :>6=C B@0=70:FVN BV=L>2>3> @8=:C MHPSS ($380M/@V:) G5@57 ?;0BV6=C A8AB5<C, 0;5 =5 <>65 ?>2'O70B8 WE 7 :;V=VG=8<8 @57C;LB0B0<8 01> 15=5DVFV0@0<8.</span>
+        <span class="en"> NBU sees every transaction of the MHPSS shadow market ($380M/year) through the payment system but cannot link them to clinical outcomes or beneficiaries.</span>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-arrow">� 02</div>
+      <div class="chain-text">
+        <strong><span class="uk">99,59% =52848<V 4;O @53C;OB>@0</span><span class="en">99.59% invisible to regulator</span></strong>
+        <span class="uk"> 99,59% @50;L=>W ?>B@518 B0 95,44% @50;L=> =040=8E ?>A;C3 ?5@51C20NBL ?>70 1C4L-O:8< @53C;OB>@=8< V=AB@C<5=B0@VT< #.</span>
+        <span class="en"> 99.59% of actual need and 95.44% of actually delivered services lie outside any NBU regulatory instrument.</span>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-arrow">� 03</div>
+      <div class="chain-text">
+        <strong><span class="uk">$13,94B 2B@0B </span><span class="en">$13.94B GDP losses</span></strong>
+        <span class="uk"> 5;V:>20=89 "!  35=5@CT :><>@1V4=89 BO30@ G5@57 <C;LB8?;V:0B>@ 35�. !><0B870FVO: $1,200/>A>10/@V:. =20;V4870FVO: $2,965/>A>10/@V:. 030;L=V 2B@0B8: $13,94B/@V:.</span>
+        <span class="en"> Untreated PTSD generates comorbid burden via 35� multiplier. Somatization: $1,200/person/year. Invalidization: $2,965/person/year. Total losses: $13.94B/year.</span>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-arrow">� 04</div>
+      <div class="chain-text">
+        <strong><span class="uk">$4,19B 28?;0B ?> V=20;V4=>ABV</span><span class="en">$4.19B disability payments</span></strong>
+        <span class="uk"> @8 Base-AF5=0@VW: $4,19B/@V: = 66% 45@61N465BC >E>@>=8 74>@>2'O 2026. &5 DVA:0;L=0 703@>70.</span>
+        <span class="en"> Base scenario: $4.19B/year = 66% of state health budget 2026. This is a fiscal threat.</span>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-arrow">� 05</div>
+      <div class="chain-text">
+        <strong><span class="uk"> 53C;OB>@=0 20:CC<0</span><span class="en">Regulatory vacuum</span></strong>
+        <span class="uk"> # 10G8BL DV=0=A>2V ?>B>:8, 0;5 =5 <0T V=AB@C<5=BV2 4;O @53C;N20==O A5:B>@C MHPSS.  53C;OB>@=0 20:CC<0 70?>2=NTBLAO BV=L>28< @8=:><.</span>
+        <span class="en"> NBU sees financial flows but lacks tools to regulate the MHPSS sector. The regulatory vacuum is filled by the shadow market.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-red">
+    <div class="callout-title"><span class="uk">@8B8G=0 @>;L #</span><span class="en">Critical Role of NBU</span></div>
+    <p><span class="uk"><strong>#  T48=89, EB> 10G8BL CAV DV=0=A>2V ?>B>:8 A5:B>@C MHPSS.</strong> 57 4V9 #, BV=L>289 @8=>: ?@>4>26C20B8<5 7@>AB0B8, 0 45@602=89 1N465B ?;0B8B8<5 70 =0A;V4:8, 0 =5 70 ?@>DV;0:B8:C.</span><span class="en"><strong>NBU is the only one who sees all financial flows of the MHPSS sector.</strong> Without NBU action, the shadow market will continue to grow, and the state budget will pay for consequences, not prevention.</span></p>
+  </div>
+</section>
+
+<!-- SECTION III: The Solution -->
+<section class="section" id="s3">
+  <div class="section-header">
+    <div class="sec-num">III</div>
+    <div class="sec-title-block">
+      <h2><span class="uk"> VH5==O</span><span class="en">The Solution</span></h2>
+      <div class="sec-eng">FEEL Again � Digital Bus � Trust Bridge � ENKIDU</div>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-val">Digital Bus</div>
+      <div class="metric-lbl"><span class="uk">2B><0B87>20=5 2V4H:>4C20==O</span><span class="en">Automated reimbursement</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">Trust Bridge</div>
+      <div class="metric-lbl"><span class="uk">Digital Handshake 7 /</span><span class="en">Digital Handshake with DIIA</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">ENKIDU</div>
+      <div class="metric-lbl"><span class="uk">Blended Finance P2P Gateway</span><span class="en">Blended Finance P2P Gateway</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">#=V:0;L=89 ID</div>
+      <div class="metric-lbl"><span class="uk">>4 15=5DVFV0@0</span><span class="en">Beneficiary code</span></div>
+    </div>
+  </div>
+
+  <div class="callout callout-gl">
+    <div class="callout-title"><span class="uk">FEEL Again 4;O #</span><span class="en">FEEL Again for NBU</span></div>
+    <p><span class="uk">FEEL Again =040T # V=AB@C<5=B8 4;O:</span><span class="en">FEEL Again provides NBU with tools to:</span></p>
+    <ol style="font-size:.88rem; color:var(--t2); line-height:1.7; padding-left:20px;">
+      <li><span class="uk">0G8B8 72'O7>: <V6 DV=0=A>28<8 B@0=70:FVO<8 B0 :;V=VG=8<8 @57C;LB0B0<8</span><span class="en">See the link between financial transactions and clinical outcomes</span></li>
+      <li><span class="uk"> 53C;N20B8 A5:B>@ MHPSS G5@57 Digital Bus B0 Trust Bridge</span><span class="en">Regulate the MHPSS sector via Digital Bus and Trust Bridge</span></li>
+      <li><span class="uk">?@>2046C20B8 C=V:0;L=C V45=B8DV:0FVN 15=5DVFV0@V2 (GDPR/HIPAA compliant)</span><span class="en">Implement unique beneficiary identification (GDPR/HIPAA compliant)</span></li>
+      <li><span class="uk"><5=HC20B8 BV=L>289 @8=>: G5@57 D>@<0;V70FVN</span><span class="en">Reduce shadow market through formalization</span></li>
+    </ol>
+  </div>
+
+  <div class="callout callout-d4">
+    <div class="callout-title"><span class="uk">;NG>2V <5E0=V7<8</span><span class="en">Key Mechanisms</span></div>
+    <p><span class="uk"><strong>Digital Handshake 7 25@8DV:0FVTN /</strong> 70<V=NT Escrow. <strong>Reverse Waterfall:</strong> !>FV0;L=89 :>=B@0:B 10-15% + >@?>@0B82=5 A?V2DV=0=AC20==O 15-20% + 5@6020/4>=>@ 4> 70-95% = >:@8BBO 5-35%+ 20@B>ABV :C@AC.</span><span class="en"><strong>Digital Handshake with DIIA verification</strong> replaces Escrow. <strong>Reverse Waterfall:</strong> Social contract 10-15% + Corporate co-financing 15-20% + State/donor up to 70-95% = Coverage of 5-35%+ of course cost.</span></p>
+  </div>
+
+  <div class="callout callout-res">
+    <div class="callout-title"><span class="uk">ENKIDU O: 3;>10;L=89 ?0@B=5@</span><span class="en">ENKIDU as Global Partner</span></div>
+    <p><span class="uk">ENKIDU 4VT O: Blended Finance P2P Gateway, >1'T4=CNG8 3;>10;L=8E ?0@B=5@V2 4;O DV=0=AC20==O A5:B>@C MHPSS 2 #:@0W=V.</span><span class="en">ENKIDU acts as a Blended Finance P2P Gateway, uniting global partners to finance Ukraine's MHPSS sector.</span></p>
+  </div>
+</section>
+
+<!-- SECTION IV: Economic Effect -->
+<section class="section" id="s4">
+  <div class="section-header">
+    <div class="sec-num">IV</div>
+    <div class="sec-title-block">
+      <h2><span class="uk">:>=><VG=89 5D5:B</span><span class="en">Economic Effect</span></h2>
+      <div class="sec-eng">$3.8-27.7B/year GDP Savings � NBU Regulatory Oversight</div>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-val">1,3-6,9M</div>
+      <div class="metric-lbl"><span class="uk">>AV1/@V:  4>?><>65=V</span><span class="en">persons/year  helped</span></div>
+      <div class="metric-src src-g"> GREEN � FEEL Again</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val res">$3,8-27,7B</div>
+      <div class="metric-lbl"><span class="uk">/@V:  5:>=><VO </span><span class="en">/year  GDP savings</span></div>
+      <div class="metric-src src-g"> GREEN � (1.3-6.9M) � 50-70% � $5,850</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$1,9-26,3B</div>
+      <div class="metric-lbl"><span class="uk">/@V:  70>I0465=V @5AC@A8</span><span class="en">/year  saved resources</span></div>
+      <div class="metric-src src-g"> GREEN � Prevention vs Treatment</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val svc">$5,7-78,9B</div>
+      <div class="metric-lbl"><span class="uk">=0:>?8GC20;L=89 5D5:B 70 3 @>:8</span><span class="en">cumulative effect over 3 years</span></div>
+      <div class="metric-src src-g"> GREEN � Forecast</div>
+    </div>
+  </div>
+
+  <div class="callout callout-gl">
+    <div class="callout-title"><span class="uk">$>@<C;0 5:>=><VG=>3> 5D5:BC</span><span class="en">Economic Effect Formula</span></div>
+    <p><span class="uk"><strong>@>3=>7 70A=>20=89 =0 ?>B>:C =54V03=>AB>20=8E ?0FVT=BV2.</strong></span><span class="en"><strong>Forecast based on flow of undiagnosed patients.</strong></span></p>
+    <p><span class="uk">(1,3-6,9M >AV1) � (50-70% CA?VH=>3> ;V:C20==O) � $5,850 (2=5A>: C ) = <strong>$3,8-27,7B/@V:</strong></span><span class="en">(1.3-6.9M persons) � (50-70% successful treatment) � $5,850 (GDP contribution) = <strong>$3.8-27.7B/year</strong></span></p>
+    <p><span class="uk"><strong>57 FEEL Again:</strong> $5,7-54B/@V: 2B@0B 2V4 A><0B870FVW ($1,200/>A>10) B0 V=20;V4870FVW ($2,965/>A>10).</span><span class="en"><strong>Without FEEL Again:</strong> $5.7-54B/year in somatization ($1,200/person) and invalidization ($2,965/person) losses.</span></p>
+  </div>
+
+  <div class="callout callout-res">
+    <div class="callout-title"><span class="uk"> >;L # 2 5:>=><VG=><C 5D5:BV</span><span class="en">NBU Role in Economic Effect</span></div>
+    <p><span class="uk"># <>65 <strong>7<5=H8B8 BV=L>289 @8=>: 7 $380M 4> $0M</strong> G5@57 @53C;N20==O B0 D>@<0;V70FVN. &5 4>72>;8BL:</span><span class="en">NBU can <strong>reduce shadow market from $380M to $0M</strong> through regulation and formalization. This will allow:</span></p>
+    <ol style="font-size:.88rem; color:var(--t2); line-height:1.7; padding-left:20px;">
+      <li><span class="uk">1V;LH8B8 ?>:@8BBO 7 0,4-1,4% 4> 15-20%</span><span class="en">Increase coverage from 0.4-1.4% to 15-20%</span></li>
+      <li><span class="uk">=878B8 04<V=BO30@ 7 52% 4> 11-15%</span><span class="en">Reduce admin burden from 52% to 11-15%</span></li>
+      <li><span class="uk">0>I048B8 $1,9-26,3B/@V: =0 28?;0B0E ?> V=20;V4=>ABV</span><span class="en">Save $1.9-26.3B/year on disability payments</span></li>
+      <li><span class="uk">1V;LH8B8  =0 $3,8-27,7B/@V:</span><span class="en">Increase GDP by $3.8-27.7B/year</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- SECTION V: Proposal -->
+<section class="section" id="s5">
+  <div class="section-header">
+    <div class="sec-num">V</div>
+    <div class="sec-title-block">
+      <h2><span class="uk">@>?>78FVO</span><span class="en">Proposal</span></h2>
+      <div class="sec-eng">MoU-first Approach � Regulatory Oversight � 2026 Window</div>
+    </div>
+  </div>
+
+  <div class="callout callout-gl">
+    <div class="callout-title"><span class="uk">@>?>78FVO # 2V4 FEEL Again</span><span class="en">FEEL Again Proposal to NBU</span></div>
+    <p><span class="uk"><strong>V4?8A0B8 MoU 7 FEEL Again 4;O:</strong></span><span class="en"><strong>Sign MoU with FEEL Again to:</strong></span></p>
+    <ol style="font-size:.88rem; color:var(--t2); line-height:1.7; padding-left:20px;">
+      <li><span class="uk">?@>2048B8 Digital Bus 4;O 02B><0B87>20=>3> 2V4H:>4C20==O G5@57 ?;0BV6=V A8AB5<8 #</span><span class="en">Implement Digital Bus for automated reimbursement via NBU payment systems</span></li>
+      <li><span class="uk">0?CAB8B8 Trust Bridge 7 Digital Handshake (70<V=0 Escrow)</span><span class="en">Launch Trust Bridge with Digital Handshake (replaces Escrow)</span></li>
+      <li><span class="uk">?@>2048B8 C=V:0;L=89 :>4 15=5DVFV0@0 (GDPR/HIPAA compliant)</span><span class="en">Implement unique beneficiary code (GDPR/HIPAA compliant)</span></li>
+      <li><span class="uk">0;0HBC20B8 V=B53@0FVN 7 ENKIDU 4;O Blended Finance</span><span class="en">Set up integration with ENKIDU for Blended Finance</span></li>
+      <li><span class="uk">0?CAB8B8 Reverse Waterfall <5E0=V7< DV=0=AC20==O</span><span class="en">Launch Reverse Waterfall financing mechanism</span></li>
+    </ol>
+  </div>
+
+  <div class="callout callout-res">
+    <div class="callout-title"><span class="uk">MoU-first ?V4EV4</span><span class="en">MoU-first Approach</span></div>
+    <p><span class="uk">VO:>W ?V;>B=>W D078. @O<5 2?@>20465==O G5@57 MoU 7 #, !# B0 !2VB>28< 0=:><. V:=> 4V9  <strong>2026 @V:</strong>.</span><span class="en">No pilot phase. Direct implementation via MoU with NBU, NSZU, and World Bank. Action window is <strong>2026</strong>.</span></p>
+    <p><span class="uk"><strong>Zero State Budget Request:</strong> FEEL Again =5 28<030T 4>40B:>2>3> DV=0=AC20==O 7 45@602=>3> 1N465BC. $V=0=AC20==O 74V9A=NTBLAO G5@57 Blended Finance (ENKIDU) B0 VA=CNGV ?@>3@0<8.</span><span class="en"><strong>Zero State Budget Request:</strong> FEEL Again does not require additional state budget funding. Financing is through Blended Finance (ENKIDU) and existing programs.</span></p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-phase">$070 1</div>
+      <div class="tl-title"><span class="uk">5<>@0=4C< ?@> 270T<>@>7C<V==O</span><span class="en">Memorandum of Understanding</span></div>
+      <div class="tl-desc"><span class="uk">V4?8A0==O MoU 7 #, !# B0 !2VB>28< 0=:><</span><span class="en">Signing MoU with NBU, NSZU, and World Bank</span></div>
+      <div class="tl-actor"><span class="uk"># � !# � !2VB>289 0=: � FEEL Again</span><span class="en">NBU � NSZU � World Bank � FEEL Again</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">$070 2</div>
+      <div class="tl-title"><span class="uk">#3>40 ?@> AB0=40@B870FVN</span><span class="en">Standardization Agreement</span></div>
+      <div class="tl-desc"><span class="uk">87=0G5==O T48=8E AB0=40@BV2 MHEI B0 25@8DV:0FVW</span><span class="en">Defining unified MHEI and verification standards</span></div>
+      <div class="tl-actor"><span class="uk"># � !# � FEEL Again</span><span class="en">NBU � NSZU � FEEL Again</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">$070 3</div>
+      <div class="tl-title"><span class="uk">0?CA: @>7@>1:8</span><span class="en">Development Launch</span></div>
+      <div class="tl-desc"><span class="uk"> >7@>1:0 B5E=VG=>W V=D@0AB@C:BC@8 Digital Bus</span><span class="en">Development of Digital Bus technical infrastructure</span></div>
+      <div class="tl-actor"><span class="uk">FEEL Again � ENKIDU</span><span class="en">FEEL Again � ENKIDU</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">$070 4</div>
+      <div class="tl-title"><span class="uk">4=>G0A=0 D>@<0;V70FVO</span><span class="en">Simultaneous Formalization</span></div>
+      <div class="tl-desc"><span class="uk">0@0;5;L=0 D>@<0;V70FVO D0EV2FV2 B0 V=B53@0FVO 7 !#</span><span class="en">Parallel formalization of practitioners and integration with NSZU</span></div>
+      <div class="tl-actor"><span class="uk"># � !# � FEEL Again</span><span class="en">NBU � NSZU � FEEL Again</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">$070 5</div>
+      <div class="tl-title"><span class="uk">0;0HBC20==O middleware</span><span class="en">Middleware Setup</span></div>
+      <div class="tl-desc"><span class="uk">0;0HBC20==O middleware 4;O V=B53@0FVW 7 VA=CNG8<8 A8AB5<0<8 #</span><span class="en">Middleware setup for integration with existing NBU systems</span></div>
+      <div class="tl-actor"><span class="uk">FEEL Again � #</span><span class="en">FEEL Again � NBU</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">$070 6</div>
+      <div class="tl-title"><span class="uk">0?CA: Digital Bus</span><span class="en">Digital Bus Launch</span></div>
+      <div class="tl-desc"><span class="uk">DVFV9=89 70?CA: Digital Bus B0 Trust Bridge</span><span class="en">Official launch of Digital Bus and Trust Bridge</span></div>
+      <div class="tl-actor"><span class="uk"># � !# � FEEL Again � ENKIDU</span><span class="en">NBU � NSZU � FEEL Again � ENKIDU</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">$070 7</div>
+      <div class="tl-title"><span class="uk">V630;C75289 ?>BV: 40=8E</span><span class="en">Interoperable Data Flow</span></div>
+      <div class="tl-desc"><span class="uk">?@>20465==O <V630;C752>3> >1<V=C 40=8<8 7 !# B0 </span><span class="en">Implementation of interoperable data exchange with NSZU and Ministry of Health</span></div>
+      <div class="tl-actor"><span class="uk"># � !# � </span><span class="en">NBU � NSZU � Ministry of Health</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">$070 8</div>
+      <div class="tl-title"><span class="uk">=>65==O</span><span class="en">Multiplication</span></div>
+      <div class="tl-desc"><span class="uk">0AHB01C20==O @VH5==O =0 V=HV A5:B>@8</span><span class="en">Scaling the solution to other sectors</span></div>
+      <div class="tl-actor"><span class="uk">FEEL Again � #</span><span class="en">FEEL Again � NBU</span></div>
+    </div>
+  </div>
+
+  <div class="callout callout-d4">
+    <div class="callout-title"><span class="uk">>=B0:B8</span><span class="en">Contacts</span></div>
+    <p><span class="uk"><strong>;5:AV9 2>;V=AL:89</strong><br>FEEL Again � @>3@0<=89 48@5:B>@<br><a href="mailto:oleksii.zvolinskyi@feelagain.me" style="color:var(--d4);">oleksii.zvolinskyi@feelagain.me</a></span><span class="en"><strong>Oleksii Zvolinskyi</strong><br>FEEL Again � Programme Director<br><a href="mailto:oleksii.zvolinskyi@feelagain.me" style="color:var(--d4);">oleksii.zvolinskyi@feelagain.me</a></span></p>
+  </div>
+
+  <div class="callout callout-svc">
+    <div class="callout-title"><span class="uk">>40B:8</span><span class="en">Appendices</span></div>
+    <p><span class="uk"> 04V0;L=0 4V03@0<0 @>7?>4V;C $1,8B 28B@0B =0 MHPSS 2025 (L3_DAT_25) 4>ABC?=0 70 70?8B><. >:C<5=B <VAB8BL D>@<0;L=V ?@>5:B8 =>@<0B82=8E 0:BV2 #.</span><span class="en">Radial diagram of $1.8B MHPSS spending distribution 2025 (L3_DAT_25) available upon request. Document includes formal draft NBU regulatory acts.</span></p>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  localStorage.setItem('lang', lang);
+  document.getElementById('btn-uk').classList.toggle('active', lang === 'uk');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+}
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+  document.getElementById('btn-light').classList.toggle('active', theme === 'light');
+  document.getElementById('btn-dark').classList.toggle('active', theme === 'dark');
+}
+window.addEventListener('DOMContentLoaded', () => {
+  const lang = localStorage.getItem('lang') || 'uk';
+  const theme = localStorage.getItem('theme') || 'light';
+  setLang(lang);
+  setTheme(theme);
+});
+</script>
 
 </body>
 </html>

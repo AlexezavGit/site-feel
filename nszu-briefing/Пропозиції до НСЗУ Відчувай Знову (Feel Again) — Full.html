@@ -1,463 +1,1123 @@
+
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="uk" data-theme="light" data-lang="uk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FEEL Again · Full Proposal для НСЗУ</title>
+<title>Пропозиції до НСЗУ Відчувай Знову | FEEL Again</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-.center { text-align: center; }
-h1 { font-size: 2.5em; }
-h2 { font-size: 1.8em; border-bottom: 2px solid #0066cc; padding-bottom: 0.3em; }
-h3 { font-size: 1.4em; }
-table { border-collapse: collapse; width: 100%; margin: 20px 0; }
-th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-th { background: #f8f9fa; }
-pre { background: #f5f5f5; padding: 15px; overflow-x: auto; }
-hr { margin: 40px 0; border: none; border-top: 1px solid #eee; }
-.status-good { color: #28a745; }
-.status-warning { color: #ffc107; }
-.status-bad { color: #dc3545; }
-.footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.9em; color: #666; }
+:root {
+  --bg0:#0C1816; --bg1:#172B26; --bg2:#1F3530; --bg3:#273F3A;
+  --bd:#304845;
+  --t1:#D5E8E2; --t2:#7A9E98; --t3:#426058;
+  --gl:#DFA030;
+  --gl-75:rgba(223,160,48,0.75);
+  --gl-50:rgba(223,160,48,0.50);
+  --gl-20:rgba(223,160,48,0.20);
+  --gl-08:rgba(223,160,48,0.08);
+  --gl-04:rgba(223,160,48,0.04);
+  --res:#4A98D0; --res-50:rgba(74,152,208,.5); --res-12:rgba(74,152,208,.12);
+  --svc:#D06A20; --svc-50:rgba(208,106,32,.5); --svc-12:rgba(208,106,32,.12);
+  --d1:#C84E4E; --d4:#50987A;
+  --r:4px;
+  --sidebar:260px;
+}
+[data-theme="light"] {
+  --bg0:#EDE8E0; --bg1:#E4DED6; --bg2:#DAD4CB; --bg3:#CFC9C0;
+  --bd:#B4ADA6;
+  --t1:#1A1612; --t2:#3C3830; --t3:#6A6460;
+  --gl:#7A5010;
+  --gl-75:rgba(122,80,16,0.75); --gl-50:rgba(122,80,16,0.50);
+  --gl-20:rgba(122,80,16,0.20); --gl-08:rgba(122,80,16,0.08); --gl-04:rgba(122,80,16,0.04);
+  --res:#1E5C8A; --res-50:rgba(30,92,138,0.5); --res-12:rgba(30,92,138,0.12);
+  --svc:#8A3C0A; --svc-50:rgba(138,60,10,0.5); --svc-12:rgba(138,60,10,0.12);
+  --d4:#286A50; --d1:#8A2A2A;
+}
+[data-theme="light"] body::before { display:none; }
+[data-theme="light"] body { background:var(--bg0); }
+[data-theme="light"] .status-bar { background:#E0DAD2; border-color:rgba(122,80,16,0.25); }
+[data-theme="light"] .sidebar { background:rgba(220,215,208,0.96); }
+[data-theme="light"] .metric-card { background:#F0EBE3; }
+[data-theme="light"] .formula { background:#F5F0E8; }
+[data-theme="light"] .callout-gl { background:rgba(122,80,16,0.06); }
+[data-theme="light"] .callout-res { background:rgba(30,92,138,0.06); }
+[data-theme="light"] .callout-d4 { background:rgba(40,106,80,0.06); }
+[data-theme="light"] .chain-item { background:#F0EBE3; }
+[data-theme="light"] table.dtbl td { border-color:rgba(180,173,166,0.5); }
+,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body {
+  font-family:'Barlow',sans-serif;
+  background:var(--bg0);
+  color:var(--t1);
+  line-height:1.7;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  font-size:15px;
+}
+
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background-image:
+    radial-gradient(ellipse 100% 55% at 50% 112%, rgba(218,152,40,0.28) 0%, rgba(168,104,16,0.12) 38%, rgba(80,48,8,0.05) 62%, transparent 76%),
+    radial-gradient(ellipse 55% 35% at 50% -4%, rgba(218,152,40,0.04) 0%, transparent 70%),
+    linear-gradient(180deg,#060d0b 0%,#09120e 12%,#0d1812 26%,#141710 42%,#1c160a 58%,#241908 72%,#2d1d07 84%,#361f06 100%);
+}
+
+.status-bar {
+  background:var(--bg1);
+  border-bottom:1px solid var(--gl-20);
+  padding:5px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--t3);
+  letter-spacing:1.5px;
+  flex-shrink:0;
+}
+.status-dot {
+  display:inline-block;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--gl);
+  box-shadow:0 0 6px var(--gl);
+  animation:blink 2s ease-in-out infinite;
+  margin-right:6px;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.lang-toggle {
+  display:flex;
+  gap:0;
+  border:1px solid var(--bd);
+  border-radius:3px;
+  overflow:hidden;
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+}
+.lang-btn {
+  padding:4px 10px;
+  cursor:pointer;
+  background:transparent;
+  border:none;
+  color:var(--t3);
+  letter-spacing:1px;
+  transition:all .15s;
+}
+.lang-btn.active {
+  background:var(--gl-20);
+  color:var(--gl);
+}
+
+.layout { display:flex; flex:1; }
+
+.sidebar {
+  position:fixed;
+  left:0;top:31px;
+  width:var(--sidebar);
+  height:calc(100vh - 31px);
+  background:rgba(9,18,14,0.92);
+  border-right:1px solid var(--bd);
+  overflow-y:auto;
+  z-index:200;
+  display:flex;
+  flex-direction:column;
+  backdrop-filter:blur(10px);
+}
+.sb-brand { padding:20px 18px 14px; border-bottom:1px solid var(--gl-20); }
+.sb-logo {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.1rem;
+  font-weight:700;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--gl);
+  text-shadow:0 0 10px var(--gl-50);
+  margin-bottom:2px;
+}
+.sb-sub {
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--t3);
+  letter-spacing:1px;
+  line-height:1.6;
+}
+.sb-section { padding:8px 0 4px; }
+.sb-label {
+  padding:6px 18px 4px;
+  font-family:'Space Mono',monospace;
+  font-size:.55rem;
+  color:var(--t3);
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+.sb-link {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 18px;
+  font-family:'Barlow',sans-serif;
+  font-size:.8rem;
+  color:var(--t2);
+  text-decoration:none;
+  border-left:2px solid transparent;
+  transition:all .15s;
+}
+.sb-link:hover,.sb-link.active {
+  color:var(--t1);
+  border-left-color:var(--gl);
+  background:var(--gl-04);
+}
+.sb-num {
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--t3);
+  min-width:20px;
+}
+.sb-divider { height:1px; background:var(--bd); margin:8px 0; }
+
+.main {
+  margin-left:var(--sidebar);
+  flex:1;
+  max-width:900px;
+  padding:0 48px 100px;
+}
+
+.doc-header {
+  padding:48px 0 36px;
+  border-bottom:1px solid var(--bd);
+  margin-bottom:52px;
+}
+.doc-eyebrow {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:16px;
+  flex-wrap:wrap;
+}
+.chip {
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:3px 10px;
+  border-radius:2px;
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  font-weight:700;
+}
+.chip-gl { background:var(--gl-08); color:var(--gl); border:1px solid var(--gl-20); }
+.chip-res { background:var(--res-12); color:var(--res); border:1px solid rgba(74,152,208,.3); }
+.chip-svc { background:var(--svc-12); color:var(--svc); border:1px solid rgba(208,106,32,.3); }
+
+.doc-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.9rem;
+  font-weight:700;
+  letter-spacing:2px;
+  color:var(--t1);
+  line-height:1.25;
+  margin-bottom:16px;
+  max-width:780px;
+  text-transform:uppercase;
+}
+.doc-recipient {
+  font-size:.85rem;
+  color:var(--t2);
+  margin-bottom:20px;
+  padding:10px 14px;
+  background:var(--bg1);
+  border:1px solid var(--bd);
+  display:inline-flex;
+  gap:10px;
+  align-items:center;
+}
+.doc-recipient-label {
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--t3);
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+}
+.doc-meta {
+  display:flex;
+  gap:28px;
+  flex-wrap:wrap;
+}
+.meta-item {
+  font-family:'Space Mono',monospace;
+  font-size:.65rem;
+  color:var(--t3);
+}
+.meta-item span { color:var(--t2); }
+
+.section {
+  margin-bottom:72px;
+  scroll-margin-top:24px;
+}
+.section-header {
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  margin-bottom:28px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--bd);
+}
+.sec-num {
+  font-family:'Space Mono',monospace;
+  font-size:.65rem;
+  color:var(--gl);
+  background:var(--gl-08);
+  border:1px solid var(--gl-20);
+  padding:5px 10px;
+  white-space:nowrap;
+  margin-top:4px;
+  flex-shrink:0;
+  letter-spacing:1px;
+}
+.sec-title-block h2 {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.45rem;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--t1);
+  margin-bottom:2px;
+  line-height:1.2;
+}
+.sec-eng {
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--t3);
+  letter-spacing:1px;
+}
+
+.prose { color:var(--t2); font-size:.95rem; line-height:1.85; }
+.prose p { margin-bottom:18px; }
+.prose p:last-child { margin-bottom:0; }
+.prose strong { color:var(--t1); font-weight:600; }
+.prose em { color:var(--t2); font-style:italic; }
+
+.metric-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(158px,1fr));
+  gap:10px;
+  margin:24px 0;
+}
+.metric-card {
+  background:var(--bg1);
+  border:1px solid var(--bd);
+  padding:16px 18px;
+  transition:border-color .15s;
+  position:relative;
+  overflow:hidden;
+}
+.metric-card::before {
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,transparent,var(--gl-50),transparent);
+}
+.metric-val {
+  font-family:'Space Mono',monospace;
+  font-size:1.3rem;
+  font-weight:700;
+  color:var(--gl);
+  text-shadow:0 0 10px var(--gl-50);
+  margin-bottom:5px;
+  line-height:1.2;
+}
+.metric-val.res { color:var(--res); text-shadow:0 0 10px var(--res-50); }
+.metric-val.svc { color:var(--svc); }
+.metric-lbl { font-size:.8rem; color:var(--t2); line-height:1.45; margin-bottom:8px; }
+.metric-src { font-family:'Space Mono',monospace; font-size:.6rem; }
+.src-g { color:var(--d4); }
+.src-y { color:var(--gl); }
+.src-b { color:var(--res); }
+
+.tbl-wrap { overflow-x:auto; margin:22px 0; }
+table.dtbl { width:100%; border-collapse:collapse; font-size:.85rem; }
+table.dtbl th {
+  text-align:left;
+  padding:9px 14px;
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--t3);
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  border-bottom:1px solid var(--bd);
+  white-space:nowrap;
+}
+table.dtbl td {
+  padding:10px 14px;
+  border-bottom:1px solid rgba(48,72,69,0.5);
+  color:var(--t2);
+  vertical-align:top;
+  line-height:1.5;
+}
+table.dtbl tr:last-child td { border-bottom:none; }
+table.dtbl tr:hover td { background:var(--gl-04); }
+.mono-cell { font-family:'Space Mono',monospace; font-size:.75rem; }
+.bold-cell { color:var(--t1); font-weight:600; }
+
+.callout {
+  padding:16px 20px;
+  margin:22px 0;
+  border-left:3px solid;
+  position:relative;
+}
+.callout-gl { background:var(--gl-08); border-color:var(--gl); }
+.callout-res { background:var(--res-12); border-color:var(--res); }
+.callout-d4 { background:rgba(80,152,122,0.08); border-color:var(--d4); }
+.callout-red { background:rgba(200,78,78,0.08); border-color:var(--d1); }
+.callout-title {
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.callout-gl .callout-title { color:var(--gl); }
+.callout-res .callout-title { color:var(--res); }
+.callout-d4 .callout-title { color:var(--d4); }
+.callout-red .callout-title { color:var(--d1); }
+.callout p { font-size:.88rem; color:var(--t2); margin:0; line-height:1.7; }
+.callout p+p { margin-top:8px; }
+.callout strong { color:var(--t1); }
+
+.formula {
+  background:var(--bg0);
+  border:1px solid var(--bd);
+  border-top:2px solid var(--gl-50);
+  padding:14px 18px;
+  margin:14px 0;
+  font-family:'Space Mono',monospace;
+  font-size:.75rem;
+  color:var(--d4);
+  line-height:1.7;
+}
+.formula-comment { color:var(--t3); font-size:.65rem; }
+.formula strong { color:var(--gl); }
+
+.asmpt {
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--gl);
+  background:var(--gl-08);
+  border:1px solid var(--gl-20);
+  padding:2px 6px;
+  vertical-align:middle;
+}
+
+.timeline { position:relative; padding-left:26px; margin:20px 0; }
+.timeline::before {
+  content:'';
+  position:absolute;
+  left:9px;top:10px;bottom:10px;
+  width:1px;
+  background:var(--bd);
+}
+.tl-item { position:relative; margin-bottom:22px; }
+.tl-item::before {
+  content:'';
+  position:absolute;
+  left:-21px;top:7px;
+  width:9px;height:9px;
+  border-radius:50%;
+  background:var(--gl);
+  box-shadow:0 0 6px var(--gl-50);
+  border:2px solid var(--bg1);
+}
+.tl-phase {
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;
+  color:var(--gl);
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:3px;
+}
+.tl-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--t1);
+  margin-bottom:3px;
+}
+.tl-desc { font-size:.85rem; color:var(--t2); line-height:1.5; }
+.tl-actor { font-family:'Space Mono',monospace; font-size:.65rem; color:var(--res); margin-top:4px; }
+
+.chain {
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  margin:24px 0;
+}
+.chain-item {
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  padding:14px 18px;
+  background:var(--bg1);
+  border:1px solid var(--bd);
+  border-bottom:none;
+  position:relative;
+}
+.chain-item:last-child { border-bottom:1px solid var(--bd); }
+.chain-arrow {
+  font-family:'Space Mono',monospace;
+  font-size:.65rem;
+  color:var(--gl);
+  margin-top:2px;
+  flex-shrink:0;
+  width:20px;
+}
+.chain-text { font-size:.88rem; color:var(--t2); line-height:1.55; }
+.chain-text strong { color:var(--t1); }
+.chain-text .val { color:var(--gl); font-family:'Space Mono',monospace; font-weight:700; }
+
+[data-lang="uk"] .en { display:none; }
+[data-lang="en"] .uk { display:none; }
+
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:var(--bg0);}
+::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px;}
+
+@media print {
+  .sidebar,.status-bar{display:none;}
+  .main{margin-left:0;padding:20px;}
+}
 </style>
+<script>
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  localStorage.setItem('lang', lang);
+  document.getElementById('btn-uk').classList.toggle('active', lang === 'uk');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+}
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+  document.getElementById('btn-light').classList.toggle('active', theme === 'light');
+  document.getElementById('btn-dark').classList.toggle('active', theme === 'dark');
+}
+window.addEventListener('DOMContentLoaded', () => {
+  const lang = localStorage.getItem('lang') || 'uk';
+  const theme = localStorage.getItem('theme') || 'light';
+  setLang(lang);
+  setTheme(theme);
+});
+</script>
 </head>
 <body>
 
-<div class="center">
-<h1><strong>FEEL Again</strong></h1>
-<h2>Цифрове плече для сектору MHPSS України</h2>
-<h3>Full Proposal для Національної служби здоров'я України</h3>
-<p><em>v2.0 · Липень 2026 · Конфіденційно</em></p>
+<div class="status-bar">
+  <span><span class="status-dot"></span>FEEL AGAIN · НСЗУ FULL PROPOSAL · v2.0 · 2026</span>
+  <div style="display:flex;gap:6px;align-items:center;">
+  <div class="lang-toggle" style="margin-right:4px;">
+    <button class="lang-btn active" id="btn-uk" onclick="setLang('uk')">УКР</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">ENG</button>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-light" onclick="setTheme('light')">☀</button>
+    <button class="lang-btn" id="btn-dark" onclick="setTheme('dark')">◑</button>
+  </div>
+  </div>
+  <span>КОНФІДЕНЦІЙНО · CONFIDENTIAL</span>
 </div>
 
-<hr>
-<h2>🎯 Ключове повідомлення</h2>
-<p><strong>FEEL Again</strong> — це <strong>цифрове плече</strong> для сектору MHPSS, яке з'єднує гуманітарні системи з ЄСОЗ через <strong>Digital Bus</strong> (HL7 FHIR R4 middleware). Інфраструктура дозволяє зробити <strong>98.5-99.6%</strong> реальної потреби видимою для НСЗУ, розблокувати <strong>$134M</strong> коштів THRIVE та збільшити покриття послуг з <strong>0.4–1.4%</strong> до критичної маси без витрат державного бюджету, а також створити <strong>контрольований ринок приватної практики</strong> як другу ланку надання спеціалізованої допомоги.</p>
+<div class="layout">
 
-<hr>
-<h2>📊 Ключові цифри (Canonical Data)</h2>
+<nav class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-logo">FEEL Again</div>
+    <div class="sb-sub">
+      <span class="uk">Пропозиції до НСЗУ<br>Повна версія · v2.0 · Липень 2026</span>
+      <span class="en">Proposals to NSZU<br>Full Version · v2.0 · July 2026</span>
+    </div>
+  </div>
 
-<h3>Проблема: Фрагментація даних</h3>
-<table>
-<tr><th>Метрика</th><th>Значення</th><th>Джерело</th><th>Статус</th></tr>
-<tr><td><strong>Кількість людей, що потребують допомоги</strong></td><td><strong>3.9M</strong></td><td>L3_DAT_01: WHO/Lancet 2023</td><td class="status-good">✅ Верифіковано</td></tr>
-<tr><td><strong>Потреба в сесіях (WHO 5-12-20)</strong></td><td><strong>19–70M/рік</strong></td><td>WHO Standards (залежно від тяжкості та швидкості реагування)</td><td class="status-good">✅ Верифіковано</td></tr>
-<tr><td><strong>Поточна спроможність НСЗУ</strong></td><td><strong>260K сесій/рік</strong></td><td>НСЗУ 10.04.2026</td><td class="status-warning">⚠️ Дефіцит 98.5-99.6%</td></tr>
-<tr><td><strong>Покриття потреби</strong></td><td><strong>0.4–1.4%</strong></td><td>НСЗУ дані (260K / 19-70M)</td><td class="status-bad">❌ Критично низьке</td></tr>
-<tr><td><strong>Невидимі послуги HEAL в ЄСОЗ</strong></td><td><strong>624K</strong></td><td>WB ISR #6 Sep 2025</td><td class="status-bad">❌ Блокує DLI</td></tr>
-</table>
+  <div class="sb-section">
+    <div class="sb-label"><span class="uk">Розділи</span><span class="en">Sections</span></div>
+    <a href="#s1" class="sb-link"><span class="sb-num">I</span><span class="uk">Ключові цифри</span><span class="en">Key Figures</span></a>
+    <a href="#s2" class="sb-link"><span class="sb-num">II</span><span class="uk">Структурна сліпота</span><span class="en">Structural Invisibility</span></a>
+    <a href="#s3" class="sb-link"><span class="sb-num">III</span><span class="uk">Економічний контекст</span><span class="en">Economic Context</span></a>
+    <a href="#s4" class="sb-link"><span class="sb-num">IV</span><span class="uk">Рішення FEEL Again</span><span class="en">FEEL Again Solution</span></a>
+    <a href="#s5" class="sb-link"><span class="sb-num">V</span><span class="uk">Фінансовий механізм</span><span class="en">Financial Mechanism</span></a>
+    <a href="#s6" class="sb-link"><span class="sb-num">VI</span><span class="uk">Правова реформа</span><span class="en">Legal Reform</span></a>
+    <a href="#s7" class="sb-link"><span class="sb-num">VII</span><span class="uk">Економічний ефект</span><span class="en">Economic Effect</span></a>
+    <a href="#s8" class="sb-link"><span class="sb-num">VIII</span><span class="uk">Пропозиція</span><span class="en">Proposal</span></a>
+  </div>
 
-<h3>Рішення: FEEL Again Digital Bus</h3>
-<table>
-<tr><th>Метрика</th><th>Значення</th><th>Статус</th></tr>
-<tr><td><strong>Адресована мета (THRIVE)</strong></td><td><strong>$134M</strong></td><td class="status-good">L3_DAT_25: ✅ Готовий до розблокування</td></tr>
-<tr><td><strong>HEAL Component 4</strong></td><td><strong>$41.1M</strong></td><td class="status-warning">L3_DAT_23: ⚠️ Дедлайн: 23.12.2026</td></tr>
-<tr><td><strong>Очікуваний результат</strong></td><td><strong>Критична маса для DLI</strong></td><td class="status-good">✅ План</td></tr>
-<tr><td><strong>ВВП-внесок 1 реабілітованого/рік</strong></td><td><strong>$5,850</strong></td><td class="status-good">L3_DAT_10: ✅ Верифіковано</td></tr>
-<tr><td><strong>Тіньовий ринок НБУ</strong></td><td><strong>$380M/рік</strong></td><td class="status-good">L3_DAT_12: ✅ Розрахунок НБУ</td></tr>
-</table>
+  <div class="sb-divider"></div>
 
-<h3>Вікно дій: 7 місяців</h3>
-<pre>
-THRIVE DLI закривається: 23.12.2026
-⏳ Днів залишилося: ~210
-⚠️ Критичний шлях: MoU → Угода про стандартизацію → Налаштування middleware → Одночасна формалізація → Digital Bus → Інтероперабельний потік → Мультиплікація
-</pre>
+  <div class="sb-section">
+    <div class="sb-label"><span class="uk">Ресурси</span><span class="en">Resources</span></div>
+    <a href="https://feelagain.me" class="sb-link" target="_blank"><span class="sb-num">↗</span><span class="uk">Сайт програми</span><span class="en">Programme Site</span></a>
+    <a href="https://dashboard.feelagain.me" class="sb-link" target="_blank"><span class="sb-num">↗</span><span class="uk">Дашборд даних</span><span class="en">Data Dashboard</span></a>
+  </div>
 
-<hr>
-<h2>🏗️ Архітектура рішення</h2>
+  <div class="sb-companion">
+    <div class="sb-comp-label"><span class="uk">Коротка версія</span><span class="en">Short Version</span></div>
+    <a href="Пропозиції до НСЗУ Відчувай Знову (Feel Again) — Short.html" class="sb-comp-link" target="_blank">→ <span class="uk">Короткий бриф</span><span class="en">Short Brief</span></a>
+  </div>
+</nav>
 
-<h3>Digital Bus: Шлюз інтероперабельності</h3>
-<pre>
-Гуманітарні системи: KoBoToolbox (4,130 записів), CommCare, ActivityInfo (624K сесій)
-       |
-       v
-[Digital Bus: HL7 FHIR R4 Middleware]
-       |
-       v
-Фінансова інфраструктура: ENKIDU (Blended Finance P2P Gateway - global consortium partner)
-       |
-       v
-Державні системи: Трембіта (Gateway) → ЄСОЗ → НСЗУ
-       |
-       v
-Verification: Triple Oracle → Digital Handshake → DIIA Verification → SEP ISO 20022 → Провайдер
-</pre>
+<main class="main">
 
-<h3>Єдиний шлях бенефіціара</h3>
-<pre>
-Звернення: Будь-яка точка дотику
-    (Унікальний код бенефіціара: GDPR/HIPAA compliant)
-       |
-       v
-Транскрибація: Digital Bus → ЄСОЗ
-       |
-       v
-Діагностика: Клініцист + шкали (PHQ-9, GAD-7, PCL-5, WHO-5, WSAS, MDQ)
-       |
-       v
-Допомога: Призначення лікування
-       |
-       v
-Моніторинг: Через Digital Bus
-       |
-       v
-Веріфікація: DLI-індикатори
-       |
-       v
-Виплата: Digital Handshake з DIIA
+<div class="doc-header">
+  <div class="doc-eyebrow">
+    <span class="chip chip-gl"><span class="uk">Пропозиція</span><span class="en">Proposal</span></span>
+    <span class="chip chip-svc"><span class="uk">Конфіденційно</span><span class="en">Confidential</span></span>
+    <span class="chip chip-res">v2.0 · 2026</span>
+  </div>
 
-Унікальний ідентифікатор бенефіціара: Де-персоніфікований код, який забезпечує трекінг та аудит кожного випадку при дотриманні GDPR та HIPAA
-</pre>
+  <h1 class="doc-title">
+    <span class="uk">Пропозиції до Національної служби здоров'я України: Відчувай Знову (Feel Again)</span>
+    <span class="en">Proposals to the National Health Service of Ukraine: Feel Again</span>
+  </h1>
 
-<hr>
-<h2>🎯 Чому це важливо для НСЗУ?</h2>
+  <div class="doc-recipient">
+    <span class="doc-recipient-label"><span class="uk">Адресат</span><span class="en">Recipient</span></span>
+    <span class="uk">Національна служба здоров'я України (НСЗУ)</span>
+    <span class="en">National Health Service of Ukraine (NSZU)</span>
+  </div>
 
-<h3>5 ключових переваг</h3>
-<table>
-<tr><th>№</th><th>Перевага</th><th>Вплив</th><th>Статус</th></tr>
-<tr><td><strong>1</strong></td><td><strong>Видимість 98.5-99.6% даних</strong></td><td>19-70M сесій стають видимими</td><td class="status-good">✅ Готово</td></tr>
-<tr><td><strong>2</strong></td><td><strong>Розблокування $134M THRIVE</strong></td><td>DLI-тригери працюють</td><td class="status-warning">⚠️ Очікування MoU</td></tr>
-<tr><td><strong>3</strong></td><td><strong>Збільшення покриття</strong></td><td>0.4–1.4% → 27–100%</td><td class="status-good">✅ План</td></tr>
-<tr><td><strong>4</strong></td><td><strong>Якісні дані</strong></td><td>Outcome-based, не process-based</td><td class="status-good">✅ Готово</td></tr>
-<tr><td><strong>5</strong></td><td><strong>Нульове навантаження</strong></td><td>$0 CAPEX для НСЗУ</td><td class="status-good">✅ Готово</td></tr>
-</table>
-
-<h3>Фінансування та розподіл ресурсів</h3>
-
-<h4>Світовий Банк (WB HEAL + THRIVE)</h4>
-<table>
-<tr><th>Програма</th><th>Загальний обсяг</th><th>Витрачено</th><th>Залишок</th><th>Статус</th></tr>
-<tr><td><strong>HEAL P180245</strong></td><td>$500M</td><td>34% ($170M)</td><td><strong>$41.1M</strong> (Component 4)</td><td class="status-warning">⚠️ Дедлайн: 23.12.2026</td></tr>
-<tr><td><strong>THRIVE P505616</strong></td><td>$454M</td><td>-</td><td><strong>$134M</strong></td><td class="status-good">✅ Готовий до розблокування</td></tr>
-<tr><td><strong>Загалом WB</strong></td><td><strong>$954M</strong></td><td>-</td><td><strong>$175.1M</strong></td><td class="status-good">✅ Адресований ринок</td></tr>
-</table>
-
-<h4>Гуманітарне фінансування (млн USD)</h4>
-<table>
-<tr><th>Донор</th><th>Сума</th><th>Джерело</th></tr>
-<tr><td>ЄС (запозичено)</td><td><strong>$390M</strong></td><td>OCHA FTS 2025</td></tr>
-<tr><td>ЄС (виділено)</td><td><strong>$140M</strong></td><td>OCHA FTS 2025</td></tr>
-<tr><td>USAID</td><td><strong>$15M</strong></td><td>OCHA FTS 2025</td></tr>
-<tr><td>UNICEF HAC</td><td><strong>$633.6M</strong></td><td>OCHA FTS 2025</td></tr>
-<tr><td><strong>Загалом гуманітарне</strong></td><td><strong>$1,178.6M</strong></td><td>-</td></tr>
-</table>
-
-<p><strong>Модель Blended Finance:</strong></p>
-<ul>
-<li><strong>Соціальний договір:</strong> 10–15% (громада/близьке оточення)</li>
-<li><strong>Корпоративне співфінансування:</strong> 15–20% (роботодавець/фонд)</li>
-<li><strong>Державне/донорське:</strong> до 70–95% (PforR/бонди SIB/гуманітарні ресурси)</li>
-<li><strong>Загалом:</strong> 5–35%+ від вартості курсу</li>
-</ul>
-<p><strong>Рішення:</strong> Digital Bus об'єднує всі системи в <strong>єдиний потік даних</strong> через уніфікований HL7 FHIR R4 інтерфейс</p>
-
-<hr>
-<h2>📋 Конкретні кроки для НСЗУ</h2>
-
-<h3>Шлях впровадження (MoU-first підхід)</h3>
-<p><strong>Послідовність:</strong> MoU → Угода про стандартизацію → Налаштування middleware → Одночасна формалізація → Налаштування Digital Bus → Інтероперабельний потік даних → Мультиплікація</p>
-
-<h3>Фаза 1: Формалізація (Червень-Липень 2026)</h3>
-<table>
-<tr><th>№</th><th>Дія</th><th>Термін</th><th>Відповідальний</th><th>Статус</th></tr>
-<tr><td><strong>1.1</strong></td><td>Підписання <strong>MoU з МОЗ, НБУ, Світовим Банком</strong></td><td>Червень 2026</td><td>НСЗУ/МОЗ/НБУ/WB</td><td class="status-warning">🟡 В очікуванні</td></tr>
-<tr><td><strong>1.2</strong></td><td>Угода про стандартизацію даних (HL7 FHIR R4)</td><td>Липень 2026</td><td>НСЗУ</td><td class="status-good">⏳ План</td></tr>
-</table>
-
-<h3>Фаза 2: Налаштування та інтеграція (Серпень-Вересень 2026)</h3>
-<table>
-<tr><th>№</th><th>Дія</th><th>Термін</th><th>Відповідальний</th><th>Статус</th></tr>
-<tr><td><strong>2.1</strong></td><td>Налаштування middleware Digital Bus</td><td>Серпень 2026</td><td>FEEL Again</td><td class="status-good">⏳ План</td></tr>
-<tr><td><strong>2.2</strong></td><td>Одночасна формалізація з усіма партнерами</td><td>Серпень-Вересень 2026</td><td>НСЗУ/FEEL Again</td><td class="status-good">⏳ План</td></tr>
-<tr><td><strong>2.3</strong></td><td>Технічна інтеграція з ЄСОЗ через API-шлюз</td><td>Вересень 2026</td><td>НСЗУ/FEEL Again</td><td class="status-good">⏳ План</td></tr>
-</table>
-
-<h3>Фаза 3: Масштабування (Вересень-Грудень 2026)</h3>
-<table>
-<tr><th>№</th><th>Дія</th><th>Термін</th><th>Відповідальний</th><th>Статус</th></tr>
-<tr><td><strong>3.1</strong></td><td>Налаштування Digital Bus</td><td>Вересень 2026</td><td>FEEL Again</td><td class="status-good">⏳ План</td></tr>
-<tr><td><strong>3.2</strong></td><td>Інтероперабельний потік даних</td><td>Жовтень-Листопад 2026</td><td>НСЗУ</td><td class="status-good">⏳ План</td></tr>
-<tr><td><strong>3.3</strong></td><td>Досягнення критичної маси для DLI THRIVE</td><td>Грудень 2026</td><td>НСЗУ</td><td class="status-good">⏳ План</td></tr>
-<tr><td><strong>3.4</strong></td><td>Мультиплікація та постійний моніторинг</td><td>Грудень 2026</td><td>НСЗУ</td><td class="status-good">⏳ План</td></tr>
-</table>
-
-<hr>
-<h2>🤝 Роль НСЗУ в екосистемі</h2>
-
-<h3>Матриця відповідальності</h3>
-<table>
-<tr><th>Інституція</th><th>Роль</th><th>Що отримує</th><th>Статус</th></tr>
-<tr><td><strong>НСЗУ</strong></td><td>Кінцевий бенефіціар клінічних даних</td><td>Якісні дані для DLI звітності</td><td class="status-good">✅ Готово</td></tr>
-<tr><td><strong>МОЗ</strong></td><td>API ЄСОЗ/Трембіта, нормативна рамка</td><td>624K+ послуг в ЄСОЗ</td><td class="status-warning">🟡 MoU</td></tr>
-<tr><td><strong>НБУ</strong></td><td>Regulatory Sandbox, SEP, MHI</td><td>Перший MHI, ESG compliance</td><td class="status-good">✅ Готово</td></tr>
-<tr><td><strong>WB</strong></td><td>Підтвердження middleware</td><td>Capacity KPI 0→4, DLI trigger</td><td class="status-good">✅ Готово</td></tr>
-<tr><td><strong>FEEL Again</strong></td><td>Digital Bus, Smart-clearing</td><td>Інфраструктура без витрат</td><td class="status-good">✅ Готово</td></tr>
-</table>
-
-<hr>
-<h2>⚠️ Ризики та мітигація</h2>
-
-<h3>Топ-5 ризиків</h3>
-<table>
-<tr><th>№</th><th>Ризик</th><th>Ймовірність</th><th>Вплив</th><th>Мітигація</th><th>Відповідальний</th></tr>
-<tr><td><strong>1</strong></td><td>THRIVE дедлайн 23.12.2026</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>Прискорення інтеграції</td><td>НСЗУ</td></tr>
-<tr><td><strong>2</strong></td><td>MoU з МОЗ затримка</td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>Паралельні переговори</td><td>НСЗУ/МОЗ</td></tr>
-<tr><td><strong>3</strong></td><td>Технічні проблеми інтеграції</td><td>⭐⭐</td><td>⭐⭐⭐</td><td>Технічна підтримка</td><td>FEEL Again</td></tr>
-<tr><td><strong>4</strong></td><td>Опір провайдерів</td><td>⭐⭐</td><td>⭐⭐⭐</td><td>Навчання та стимули</td><td>НСЗУ</td></tr>
-<tr><td><strong>5</strong></td><td>Неузгодженість даних</td><td>⭐</td><td>⭐⭐</td><td>Стандартизація</td><td>НСЗУ</td></tr>
-</table>
-
-<hr>
-<h2>📈 Економічний ефект від імплементації</h2>
-
-<h3>Прогноз потоку недіагностованих пацієнтів</h3>
-<p><strong>Поточна ситуація (на рік):</strong></p>
-<ul>
-<li><strong>Потреба:</strong> 19–70M сесій (WHO 5-12-20 залежно від тяжкості та швидкості реагування)</li>
-<li><strong>Поточна спроможність:</strong> 260K сесій (НСЗУ)</li>
-<li><strong>Донорські кошти:</strong> до 5M сесій</li>
-<li><strong>Загальна доступна спроможність:</strong> <strong>5.26M сесій</strong></li>
-<li><strong>Невиконана потреба:</strong> <strong>13.74–64.74M сесій</strong></li>
-</ul>
-
-<p><strong>З FEEL Again:</strong></p>
-<ul>
-<li><strong>Приватні фахівці з тіні:</strong> ~13,806 фахівців (8 каналів залучення)</li>
-<li><strong>Додаткова спроможність:</strong> ~1000 годин/рік × 13,806 фахівців ÷ 20 сесій/курс = <strong>~690K курсов</strong> = <strong>~13.8M сесій</strong></li>
-<li><strong>Загальна спроможність з FEEL Again:</strong> <strong>5.26M + 13.8M = ~19M сесій</strong></li>
-</ul>
-
-<h3>Економічний ефект</h3>
-<p><strong>Кількість людей, яким не зможемо надати допомогу без FEEL Again:</strong></p>
-<ul>
-<li>Невиконана потреба: 13.74–64.74M сесій</li>
-<li>Кількість людей: (13.74–64.74M) ÷ (5-20 сесій/курс) = <strong>1.37–12.95M людей</strong></li>
-</ul>
-
-<p><strong>Втрати від недіагностованих (підтверджено дослідженнями):</strong></p>
-<ul>
-<li>Соматизація: <strong>$1,200/людина/рік</strong> (підтверджено)</li>
-<li>Інвалідизація: <strong>$2,965/людина/рік</strong> (підтверджено)</li>
-<li><strong>Загальні втрати на людину:</strong> <strong>$4,165/рік</strong></li>
-<li><strong>Загальні втрати:</strong> (1.37–12.95M) × $4,165 = <strong>$5.7–54B на рік</strong></li>
-</ul>
-
-<p><strong>З FEEL Again:</strong></p>
-<ul>
-<li>Кількість людей, яким надається допомога: <strong>1.3–6.9M людей</strong> (50-70% від 1.37-12.95M)</li>
-<li><strong>Ефект від повернення до економіки:</strong> (1.3–6.9M) × 50-70% × $5,850 = <strong>$3.8–27.7B на рік</strong></li>
-<li><strong>Збережені ресурси:</strong> $5.7–54B (втрати без FEEL) – $3.8–27.7B (з FEEL) = <strong>$1.9–26.3B на рік</strong></li>
-</ul>
-
-<p><strong>Кумулятивний ефект за 3 роки:</strong> <strong>$5.7–78.9B</strong></p>
-
-<h4>Спрощений прогноз:</h4>
-<table>
-<tr><th>Показник</th><th>Без FEEL Again</th><th>З FEEL Again</th><th>Ефект</th></tr>
-<tr><td>Втрати ВВП/рік</td><td>$13.94B</td><td>$11.0B</td><td><strong>$2.94B/рік</strong></td></tr>
-<tr><td>Кумулятивний ефект за 3 роки</td><td>-</td><td>-</td><td><strong>$8.8B</strong></td></tr>
-</table>
-
-<p><strong>Ключові припущення:</strong></p>
-<ul>
-<li>50-70% пацієнтів повертаються до ефективної економіки</li>
-<li>Середня вартість соматизації + інвалідизації: <strong>$4,165/людина/рік</strong> (підтверджено)</li>
-<li>Середній ВВП-внесок реабілітованої людини: <strong>$5,850/рік</strong> (L3_DAT_10)</li>
-</ul>
-
-<blockquote>
-<p><strong>Примітка:</strong> $380M тіньовий ринок НБУ — це <strong>окрема цифра</strong>, не пов'язана з втратами ВВП. Вона відображає обсяг неформального ринку MHPSS послуг.</p>
-</blockquote>
-
-<h4>Схема економічного ефекту</h4>
-<pre>
-[Недиагностовані: 1.37-12.95M людей]
-    ↓
-[Втрати: $4,165/людина/рік (соматизація + інвалідизація)]
-    ↓
-[Загальні втрати: $5.7-54B/рік]
-    
-[FEEL Again: +13.8M сесій від приватних фахівців]
-    ↓
-[Охоплення: 50-70% від недіагностованих]
-    ↓
-[Повернення до економіки: 1.3-6.9M людей]
-    ↓
-[Ефект: $3.8-27.7B/рік]
-    ↓
-[Збережені ресурси: $1.9-26.3B/рік]
-</pre>
-
-<hr>
-<h2>🏢 Тіньовий сектор: Проблема та рішення</h2>
-
-<h3>Проблема: Висока вартість формалізації</h3>
-
-<h4>Поточна модель (тіньовий ринок):</h4>
-<table>
-<tr><th>Компонент</th><th>Ставка</th><th>Сума</th></tr>
-<tr><td>Аквізитор</td><td>2.5%</td><td>-</td></tr>
-<tr><td>Платформа</td><td>10%</td><td>-</td></tr>
-<tr><td>ЄСВ</td><td>22%</td><td>-</td></tr>
-<tr><td>ПДФО</td><td>18%</td><td>-</td></tr>
-<tr><td>Адміністрування</td><td>13%</td><td>-</td></tr>
-<tr><td><strong>Загалом</strong></td><td><strong>~52%</strong></td><td><strong>$380M/рік</strong> (розрахунок НБУ)</td></tr>
-</table>
-
-<h4>Нова модель (єдиний податок + операційні витрати приватних фахівців):</h4>
-<table>
-<tr><th>Компонент</th><th>Ставка</th><th>Примітка</th></tr>
-<tr><td>Єдиний податок (ФОП)</td><td>5%</td><td>-</td></tr>
-<tr><td>Оренда приміщення</td><td>3-5%</td><td>Додано</td></tr>
-<tr><td>Бухгалтер</td><td>2-3%</td><td>Додано</td></tr>
-<tr><td>Збір військовий</td><td>1-2%</td><td>Додано</td></tr>
-<tr><td>ЄСВ</td><td>0-5%</td><td>Додано</td></tr>
-<tr><td><strong>Загалом</strong></td><td><strong>~11-15%</strong></td><td><strong>Без FEEL Again</strong></td></tr>
-</table>
-
-<p><strong>Рішення:</strong> FEEL Again <strong>знижує адміністративне навантаження з 30% до 7% шляхом автоматизації</strong> (за умови гармонізації законодавства). Digital Bus не знижує вартість самостійно — це вимагає зміни законодавчої бази.</p>
-
-<p><strong>Контрольований ринок приватної практики</strong> як друга ланка надання спеціалізованої допомоги — <strong>готовий сидіти в тіні</strong>, бо не створені умови. FEEL Again створює ці умови через Digital Bus та Blended Finance механізми.</p>
-
-<blockquote>
-<p><strong>Примітка:</strong> $380M тіньовий ринок НБУ — це <strong>окрема цифра</strong>, що відображає обсяг неформального ринку MHPSS послуг, <strong>не пов'язана з втратами ВВП</strong>.</p>
-</blockquote>
-
-<h4>8 каналів залучення приватного сектору</h4>
-<table>
-<tr><th>№</th><th>Канал</th><th>Оцінка</th><th>Ставка</th></tr>
-<tr><td><strong>1</strong></td><td>Тіньовий ринок</td><td>~8,000 ФОП</td><td>15–25%</td></tr>
-<tr><td><strong>2</strong></td><td>UPRA</td><td>~2,500</td><td>20–30%</td></tr>
-<tr><td><strong>3</strong></td><td>Ветерани</td><td>500–1,000</td><td>10–15%</td></tr>
-<tr><td><strong>4</strong></td><td>Університети</td><td>~3,000/рік</td><td>5–10%</td></tr>
-<tr><td><strong>5</strong></td><td>Діаспора: репатріація</td><td>1–2,000</td><td>5–10%</td></tr>
-<tr><td><strong>6</strong></td><td>Діаспора: супервізія</td><td>~500</td><td>30–40%</td></tr>
-<tr><td><strong>7</strong></td><td>Гуманітарна трансформація</td><td>2–3,000</td><td>15–20%</td></tr>
-<tr><td><strong>8</strong></td><td>Конверсія психіатрів</td><td>~2,700</td><td>5–10%</td></tr>
-<tr><td colspan="3"><strong>Загалом:</strong></td><td><strong>~13,806 фахівців на платформі</strong></td></tr>
-</table>
-
-<hr>
-<h2>🔐 Юридичні обґрунтування</h2>
-
-<h3>6 законодавчих основ</h3>
-<table>
-<tr><th>№</th><th>Закон/Документ</th><th>Стаття</th><th>Призначення</th></tr>
-<tr><td><strong>1</strong></td><td><strong>Закон №4223-IX</strong></td><td>ст. 24-1</td><td>Digital Bus як шлюз інтероперабельності</td></tr>
-<tr><td><strong>2</strong></td><td><strong>Закон №12030</strong></td><td>-</td><td>Сертифікація до 2031</td></tr>
-<tr><td><strong>3</strong></td><td><strong>Закон «Про ліцензування»</strong></td><td>ст. 7, п. 15</td><td>Не застосовується до Digital Bus</td></tr>
-<tr><td><strong>4</strong></td><td><strong>Наказ МОЗ</strong></td><td>-</td><td>Занесення гуманітарних даних у ЄСОЗ</td></tr>
-<tr><td><strong>5</strong></td><td><strong>Закон «Про захист персональних даних»</strong></td><td>-</td><td>Special Category даних</td></tr>
-<tr><td><strong>6</strong></td><td><strong>NBU №39</strong></td><td>-</td><td>Регуляторна пісочниця для ENKIDU</td></tr>
-</table>
-
-<hr>
-<h2>📞 Контакти</h2>
-<table class="contacts-table">
-<tr><td><strong>Роль</strong></td><td><strong>Ім'я</strong></td><td><strong>Організація</strong></td><td><strong>Email</strong></td></tr>
-<tr><td>Programme Architect</td><td><strong>Олексій Зволинський</strong></td><td>ГО «Фундація Відкрите Суспільство»</td><td>alexezav@gmail.com</td></tr>
-<tr><td>Technical Lead</td><td>-</td><td>FEEL Again</td><td>-</td></tr>
-<tr><td>NSZU Contact</td><td>-</td><td>Національна служба здоров'я України</td><td>-</td></tr>
-</table>
-
-<hr>
-<h2>🔗 Додаткові матеріали</h2>
-<ul>
-<li><a href="https://dashboard.feelagain.me">Live Dashboard</a> <em>(демонстрація рішення)</em></li>
-<li><a href="https://feelagain.me">Програмний сайт</a> <em>(інформація про програму)</em></li>
-</ul>
-
-<h2>📌 Додатки</h2>
-
-<h3>Додаток А: Порядок дій для НСЗУ</h3>
-<p><strong>Крок 1: Підписання MoU з МОЗ, НБУ, Світовим Банком</strong><br><em>Термін: Червень 2026</em></p>
-<ul>
-<li><strong>Дія:</strong> Підписання Меморандуму про взаєморозуміння щодо API ЄСОЗ/Трембіта та фінансової інтеграції</li>
-<li><strong>Вимоги:</strong> Технічний опис FHIR R4 middleware-шару, Blended Finance механізми</li>
-<li><strong>Результат:</strong> Формалізація партнерства, запуск MoU-first підходу</li>
-</ul>
-
-<p><strong>Крок 2: Угода про стандартизацію даних</strong><br><em>Термін: Липень 2026</em></p>
-<ul>
-<li><strong>Дія:</strong> Укладення угоди про стандартизацію даних між усіма партнерами</li>
-<li><strong>Вимоги:</strong> HL7 FHIR R4, унікальний код бенефіціара, GDPR/HIPAA комплаєнс</li>
-<li><strong>Результат:</strong> Єдиний стандарт даних для усієї екосистеми</li>
-</ul>
-
-<p><strong>Крок 3: Налаштування middleware Digital Bus</strong><br><em>Термін: Серпень 2026</em></p>
-<ul>
-<li><strong>Дія:</strong> Налаштування middleware з усіма зацікавленими сторонами</li>
-<li><strong>Вимоги:</strong> Інтеграція з ЄСОЗ, Трембіта, ENKIDU, DIIA</li>
-<li><strong>Результат:</strong> Готова інфраструктура для формалізації</li>
-</ul>
-
-<p><strong>Крок 4: Одночасна формалізація</strong><br><em>Термін: Серпень-Вересень 2026</em></p>
-<ul>
-<li><strong>Дія:</strong> Паралельна формалізація з усіма партнерами</li>
-<li><strong>Вимоги:</strong> Digital Handshake з DIIA верифікацією</li>
-<li><strong>Результат:</strong> Усунення пілотної фази, безпосереднє впровадження</li>
-</ul>
-
-<p><strong>Крок 5: Налаштування Digital Bus та масштабування</strong><br><em>Термін: Вересень-Грудень 2026</em></p>
-<ul>
-<li><strong>Дія:</strong> Налаштування Digital Bus, підключення виконавців, досягнення критичної маси</li>
-<li><strong>Вимоги:</strong> Інтероперабельний потік даних, автоматична верифікація DLI</li>
-<li><strong>Результат:</strong> Розблокування $134M THRIVE, мультиплікація системи</li>
-</ul>
-
-<h3>Додаток Б: Юридичний захист даних</h3>
-<p><strong>Проблема:</strong> Фіксація шкал PCL-5 може призвести до обмеження прав ветеранів.</p>
-<p><strong>Рішення:</strong> Юридична заборона використовувати дані про амбулаторні сесії приватних ФОП для:</p>
-<ul>
-<li>Постановки на психіатричний облік</li>
-<li>Дискримінації при працевлаштуванні</li>
-<li>Обмеження прав</li>
-</ul>
-<p><strong>Альтернатива:</strong> Система оперує <strong>агрегованими пре-персонами</strong> та <strong>проксі-даними</strong>. Унікальний код бенефіціара забезпечує де-персоніфікацію та дотримання GDPR/HIPAA</p>
-
-<h3>Додаток В: Проєкт доручень на створення робочої групи</h3>
-<p><strong>Національна служба здоров'я України</strong><br><strong>ДОРУЧЕННЯ</strong><br><em>«___» ___________ 2026 р.</em><br>м. Київ</p>
-<p><strong>Щодо створення робочої групи з питань цифрової інтеграції MHPSS</strong></p>
-<p>З метою впровадження Digital Bus та розблокування $134M THRIVE:</p>
-<p><strong>ДОРУЧАЮ:</strong></p>
-<ol>
-<li>Створити робочу групу у складі представників НСЗУ, МОЗ, НБУ, Світового Банку та FEEL Again.</li>
-<li>Робочій групі протягом 90 днів підготувати план інтеграції з ЄСОЗ через Digital Bus.</li>
-<li>Забезпечити координацію з проєктами HEAL та THRIVE.</li>
-</ol>
-<p><em>Голова НСЗУ</em><br>______________________</p>
-
-<h3>Додаток Г: Проєкт доручення на участь у розробці індексу MHEI</h3>
-<p><strong>Національна служба здоров'я України</strong><br><strong>ДОРУЧЕННЯ</strong><br><em>«___» ___________ 2026 р.</em><br>м. Київ</p>
-<p><strong>Щодо участі у розробці Mental Health Economic Index (MHEI)</strong></p>
-<p>З метою створення першого у світі індексу економічного впливу психічного здоров'я:</p>
-<p><strong>ДОРУЧАЮ:</strong></p>
-<ol>
-<li>Спільно з НБУ та Мінекономіки розробити методологію MHEI.</li>
-<li>Забезпечити доступ до агрегованих даних для розрахунку індексу.</li>
-<li>Визначити KPI для оцінки економічного ефекту від MHPSS послуг.</li>
-</ol>
-<p><em>Голова НСЗУ</em><br>______________________</p>
-
-<h3>Додаток Д: Проєкт доручення на ліцензування доступу до ЄСОЗ</h3>
-<p><strong>Національна служба здоров'я України</strong><br><strong>ДОРУЧЕННЯ</strong><br><em>«___» ___________ 2026 р.</em><br>м. Київ</p>
-<p><strong>Щодо ліцензування доступу до ЄСОЗ для Digital Bus</strong></p>
-<p>З метою інтеграції гуманітарних даних з державними системами:</p>
-<p><strong>ДОРУЧАЮ:</strong></p>
-<ol>
-<li>Надати FEEL Again доступ до API ЄСОЗ/Трембіта через акредитований шлюз.</li>
-<li>Забезпечити відповідність вимогам Закону №4223-IX (ст. 24-1).</li>
-<li>Встановити процедуру верифікації даних перед завантаженням до ЄСОЗ.</li>
-</ol>
-<p><em>Голова НСЗУ</em><br>______________________</p>
-
-<div class="footer">
-<p><strong>ГО «Фундація „Відкрите суспільство“» — з 2001 р.</strong></p>
-<p><strong>Дані верифіковані:</strong> L3_DAT_01-25 · НБУ ($380M тіньовий ринок) · НСЗУ · ВООЗ · WB ISR #6 · WB HEAL/THRIVE ($175.1M) · ActivityInfo 4,130 · Закон №4223-IX · Закон №12030</p>
-<p><strong>Канонічні метрики:</strong> $13.94B ВВП втрат/рік | $1.8B MHPSS витрат 2025 | $175.1M адресований ринок</p>
-<p><strong>Версія:</strong> 2.0 · Липень 2026 · Конфіденційно</p>
+  <div class="doc-meta">
+    <div class="meta-item"><span class="uk">Версія:</span><span class="en">Version:</span> <span>v2.0 · <span class="uk">Липень</span><span class="en">July</span> 2026</span></div>
+    <div class="meta-item"><span class="uk">Програма:</span><span class="en">Programme:</span> <span>FEEL Again</span></div>
+    <div class="meta-item"><span class="uk">Контакт:</span><span class="en">Contact:</span> <span>Олексій Зволінський</span></div>
+    <div class="meta-item"><span class="uk">Статус:</span><span class="en">Status:</span> <span><span class="uk">Для обговорення</span><span class="en">For Discussion</span></span></div>
+  </div>
 </div>
+
+<!-- SECTION I: Key Figures -->
+<section class="section" id="s1">
+  <div class="section-header">
+    <div class="sec-num">I</div>
+    <div class="sec-title-block">
+      <h2><span class="uk">Ключові цифри</span><span class="en">Key Figures</span></h2>
+      <div class="sec-eng">L3 Primary Data · Canonical Metrics · Zero State Budget Request</div>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-val">3,9M</div>
+      <div class="metric-lbl"><span class="uk">осіб з клінічними порушеннями, що потребують прямого втручання</span><span class="en">persons with clinical disorders requiring direct intervention</span></div>
+      <div class="metric-src src-g">✓ GREEN · L3_DAT_01 · WHO / Lancet 2023</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">19-70M</div>
+      <div class="metric-lbl"><span class="uk">сесій/рік — потреба за стандартами ВООЗ (5-20 × 3,9M)</span><span class="en">sessions/year — WHO protocol need (5-20 × 3.9M)</span></div>
+      <div class="metric-src src-g">✓ GREEN · WHO 5-12-20</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val svc">260K</div>
+      <div class="metric-lbl"><span class="uk">сесій/рік — потужність НСЗУ (формальний сектор)</span><span class="en">sessions/year — NSZU capacity (formal sector)</span></div>
+      <div class="metric-src src-g">✓ GREEN · НСЗУ</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">0,4-1,4%</div>
+      <div class="metric-lbl"><span class="uk">покриття потреби у формальному секторі (260K / 19-70M)</span><span class="en">formal sector need coverage (260K / 19-70M)</span></div>
+      <div class="metric-src src-g">✓ GREEN · НСЗУ / розрахункове</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val res">$13,94B</div>
+      <div class="metric-lbl"><span class="uk">/рік — втрати ВВП через неліковану MHPSS</span><span class="en">/year — GDP loss from untreated MHPSS</span></div>
+      <div class="metric-src src-g">✓ GREEN · L3_DAT_22</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$380M</div>
+      <div class="metric-lbl"><span class="uk">/рік — тіньовий ринок MHPSS (окремий від втрат ВВП)</span><span class="en">/year — MHPSS shadow market (separate from GDP losses)</span></div>
+      <div class="metric-src src-g">✓ GREEN · L3_DAT_12 · NBU calculation</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$1,8B</div>
+      <div class="metric-lbl"><span class="uk">загальний обсяг витрат на MHPSS 2025</span><span class="en">total MHPSS spending 2025</span></div>
+      <div class="metric-src src-g">✓ GREEN · L3_DAT_25</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$5,850</div>
+      <div class="metric-lbl"><span class="uk">/особа/рік — внесок у ВВП від реабілітованої особи</span><span class="en">/person/year — GDP contribution from rehabilitated person</span></div>
+      <div class="metric-src src-g">✓ GREEN · L3_DAT_10</div>
+    </div>
+  </div>
+
+  <div class="callout callout-gl">
+    <div class="callout-title"><span class="uk">Канонічні дані L3</span><span class="en">L3 Canonical Data</span></div>
+    <p><span class="uk"><strong>L3_DAT_01:</strong> 3,9M осіб з клінічними порушеннями (WHO/Lancet 2023)<br><strong>L3_DAT_10:</strong> $5,850 внесок у ВВП на реабілітовану особу/рік<br><strong>L3_DAT_12:</strong> $380M тіньовий ринок/рік (NBU)<br><strong>L3_DAT_22:</strong> $13,94B втрати ВВП/рік<br><strong>L3_DAT_23:</strong> $41,1M HEAL Component 4<br><strong>L3_DAT_25:</strong> $1,8B витрати на MHPSS 2025</span><span class="en"><strong>L3_DAT_01:</strong> 3.9M persons with clinical disorders (WHO/Lancet 2023)<br><strong>L3_DAT_10:</strong> $5,850 GDP contribution per rehabilitated person/year<br><strong>L3_DAT_12:</strong> $380M shadow market/year (NBU)<br><strong>L3_DAT_22:</strong> $13.94B GDP loss/year<br><strong>L3_DAT_23:</strong> $41.1M HEAL Component 4<br><strong>L3_DAT_25:</strong> $1.8B MHPSS spending 2025</span></p>
+  </div>
+
+  <div class="callout callout-res">
+    <div class="callout-title"><span class="uk">Zero State Budget Request</span><span class="en">Zero State Budget Request</span></div>
+    <p><span class="uk">FEEL Again <strong>не вимагає додаткового фінансування з державного бюджету</strong>. Всі витрати покриваються через Blended Finance (ENKIDU) та існуючі програми Світового Банку ($175,1M адресований ринок).</span><span class="en">FEEL Again <strong>does not require additional state budget funding</strong>. All costs are covered through Blended Finance (ENKIDU) and existing World Bank programs ($175.1M addressable market).</span></p>
+  </div>
+</section>
+
+<!-- SECTION II: Structural Invisibility -->
+<section class="section" id="s2">
+  <div class="section-header">
+    <div class="sec-num">II</div>
+    <div class="sec-title-block">
+      <h2><span class="uk">Структурна сліпота</span><span class="en">Structural Invisibility</span></h2>
+      <div class="sec-eng">74% Treatment Gap · 99.59% Invisible · Medical Reductionism</div>
+    </div>
+  </div>
+
+  <div class="chain">
+    <div class="chain-item">
+      <div class="chain-arrow">01</div>
+      <div class="chain-text">
+        <strong><span class="uk">Медичний редукціонізм НСЗУ</span><span class="en">NSZU Medical Reductionism</span></strong>
+        <span class="uk"> НСЗУ звела MHPSS до медичної компетенції, обмеживши доступ до Пакету 51 виключно психіатрами та лікарями-психотерапевтами. 95%+ фахівців — психологи, counselors, соціальні працівники — залишаються поза системою відшкодування.</span>
+        <span class="en"> NSZU has reduced MHPSS to medical competence, restricting Package 51 reimbursement to psychiatrists and licensed psychotherapist-physicians only. 95%+ of practitioners — psychologists, counselors, social workers — remain outside the reimbursement system.</span>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-arrow">↓ 02</div>
+      <div class="chain-text">
+        <strong><span class="uk">99,59% невидимі для НСЗУ</span><span class="en">99.59% Invisible to NSZU</span></strong>
+        <span class="uk"> 99,59% реальної потреби та 95,44% реально наданих послуг перебувають поза ЄСОЗ — поза будь-яким регуляторним інструментарієм НСЗУ. Це структурно блокує масштабування.</span>
+        <span class="en"> 99.59% of actual need and 95.44% of actually delivered services lie outside eHealth — outside any NSZU regulatory instrument. This structurally blocks scaling.</span>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-arrow">↓ 03</div>
+      <div class="chain-text">
+        <strong><span class="uk">74% treatment gap</span><span class="en">74% Treatment Gap</span></strong>
+        <span class="uk"> При поточному підході, 74% осіб з клінічними порушеннями не отримують необхідної допомоги. Це не клінічна проблема — це системна неспроможність.</span>
+        <span class="en"> With the current approach, 74% of persons with clinical disorders do not receive necessary care. This is not a clinical problem — it is a systemic failure.</span>
+      </div>
+    </div>
+    <div class="chain-item">
+      <div class="chain-arrow">↓ 04</div>
+      <div class="chain-text">
+        <strong><span class="uk">Тіньовий ринок росте</span><span class="en">Shadow Market Grows</span></strong>
+        <span class="uk"> $380M тіньового ринку MHPSS вже функціонує паралельно. Він не зникне — він зростатиме з кожним роком конфлікту. Це окремий показник від втрат ВВП ($13,94B).</span>
+        <span class="en"> A $380M MHPSS shadow market already operates in parallel. It will not disappear — it grows with every year of conflict. This is separate from GDP losses ($13.94B).</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-red">
+    <div class="callout-title"><span class="uk">Критична системна неспроможність</span><span class="en">Critical Systemic Failure</span></div>
+    <p><span class="uk"><strong>НСЗУ не може бачити 99,59% реальної потреби.</strong> Без зміни підходу, тіньовий ринок продовжуватиме зростати, а державний бюджет платитиме за виплати по інвалідності ($4,19B/рік), а не за відновлення.</span><span class="en"><strong>NSZU cannot see 99.59% of actual need.</strong> Without a change in approach, the shadow market will continue to grow, and the state budget will pay for disability benefits ($4.19B/year), not recovery.</span></p>
+  </div>
+</section>
+
+<!-- SECTION III: Economic Context -->
+<section class="section" id="s3">
+  <div class="section-header">
+    <div class="sec-num">III</div>
+    <div class="sec-title-block">
+      <h2><span class="uk">Економічний контекст</span><span class="en">Economic Context</span></h2>
+      <div class="sec-eng">$13.94B GDP Loss · $4.19B Disability Payments · $380M Shadow Market</div>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-val svc">$13,94B</div>
+      <div class="metric-lbl"><span class="uk">/рік — втрати ВВП України</span><span class="en">/year — Ukraine GDP losses</span></div>
+      <div class="metric-src src-g">✓ GREEN · L3_DAT_22</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$4,19B</div>
+      <div class="metric-lbl"><span class="uk">/рік — виплати по інвалідності (Base-сценарій)</span><span class="en">/year — disability payments (Base scenario)</span></div>
+      <div class="metric-src src-y">⚠ YELLOW · Compendium 13_GDP_DISABILITY_PROJECTION</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">66%</div>
+      <div class="metric-lbl"><span class="uk">держбюджету охорони здоров'я 2026</span><span class="en">of state health budget 2026</span></div>
+      <div class="metric-src src-y">⚠ YELLOW · Compendium</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$380M</div>
+      <div class="metric-lbl"><span class="uk">/рік — тіньовий ринок MHPSS</span><span class="en">/year — MHPSS shadow market</span></div>
+      <div class="metric-src src-g">✓ GREEN · L3_DAT_12 · NBU</div>
+    </div>
+  </div>
+
+  <div class="callout callout-gl">
+    <div class="callout-title"><span class="uk">Економічний ланцюжок</span><span class="en">Economic Chain</span></div>
+    <p><span class="uk"><strong>Бенефіціар → Клієнт → Пацієнт → Соматизація → Інвалідизація → Колапс бюджету</strong></span><span class="en"><strong>Beneficiary → Client → Patient → Somatization → Invalidization → Budget Collapse</strong></span></p>
+    <p><span class="uk">Нелікований ПТСР → коморбідний тягар (3-5×) → соматизація ($1,200/особа/рік) та інвалідизація ($2,965/особа/рік) → виплати по інвалідності ($4,19B/рік) = <strong>66% держбюджету охорони здоров'я</strong>.</span><span class="en">Untreated PTSD → comorbid burden (3-5×) → somatization ($1,200/person/year) and invalidization ($2,965/person/year) → disability payments ($4.19B/year) = <strong>66% of state health budget</strong>.</span></p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="dtbl">
+      <thead>
+        <tr>
+          <th><span class="uk">Сценарій</span><span class="en">Scenario</span></th>
+          <th><span class="uk">Стандарт</span><span class="en">Standard</span></th>
+          <th><span class="uk">Річна потреба</span><span class="en">Annual Need</span></th>
+          <th><span class="uk">Покриття факт.</span><span class="en">Actual Coverage</span></th>
+          <th><span class="uk">Джерело</span><span class="en">Source</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="uk">Гостра стабілізація</span><span class="en">Acute stabilization</span></td>
+          <td class="mono-cell">3,9M × 5</td>
+          <td class="mono-cell bold-cell">19,5M</td>
+          <td class="mono-cell">29,2%</td>
+          <td><span class="chip chip-d4" style="background:rgba(80,152,122,.1);color:var(--d4);border:1px solid rgba(80,152,122,.3);font-family:'Space Mono',monospace;font-size:.6rem;padding:2px 7px;">GREEN</span></td>
+        </tr>
+        <tr>
+          <td><span class="uk">Середня інтенсивність</span><span class="en">Medium intensity</span></td>
+          <td class="mono-cell">3,9M × 12</td>
+          <td class="mono-cell bold-cell">46,8M</td>
+          <td class="mono-cell">12,2%</td>
+          <td><span class="chip chip-d4" style="background:rgba(80,152,122,.1);color:var(--d4);border:1px solid rgba(80,152,122,.3);font-family:'Space Mono',monospace;font-size:.6rem;padding:2px 7px;">GREEN</span></td>
+        </tr>
+        <tr>
+          <td><strong><span class="uk">WHO медіана (пріоритет)</span><span class="en">WHO median (priority)</span></strong></td>
+          <td class="mono-cell">3,9M × 16</td>
+          <td class="mono-cell bold-cell">64M</td>
+          <td class="mono-cell" style="color:var(--d1);">0,4-1,4%</td>
+          <td><span class="chip chip-d4" style="background:rgba(80,152,122,.1);color:var(--d4);border:1px solid rgba(80,152,122,.3);font-family:'Space Mono',monospace;font-size:.6rem;padding:2px 7px;">GREEN · WHO</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SECTION IV: FEEL Again Solution -->
+<section class="section" id="s4">
+  <div class="section-header">
+    <div class="sec-num">IV</div>
+    <div class="sec-title-block">
+      <h2><span class="uk">Рішення FEEL Again</span><span class="en">FEEL Again Solution</span></h2>
+      <div class="sec-eng">Digital Bus · Trust Bridge · ENKIDU · Unique Beneficiary ID</div>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-val">Digital Bus</div>
+      <div class="metric-lbl"><span class="uk">Автоматизоване відшкодування</span><span class="en">Automated reimbursement</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">Trust Bridge</div>
+      <div class="metric-lbl"><span class="uk">Digital Handshake з ДІЯ</span><span class="en">Digital Handshake with DIIA</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">ENKIDU</div>
+      <div class="metric-lbl"><span class="uk">Blended Finance P2P Gateway</span><span class="en">Blended Finance P2P Gateway</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">Унікальний ID</div>
+      <div class="metric-lbl"><span class="uk">Код бенефіціара (GDPR/HIPAA)</span><span class="en">Beneficiary code (GDPR/HIPAA)</span></div>
+    </div>
+  </div>
+
+  <div class="callout callout-gl">
+    <div class="callout-title"><span class="uk">FEEL Again — це платформа інтеграції</span><span class="en">FEEL Again is an Integration Platform</span></div>
+    <p><span class="uk">FEEL Again — це платформа для інтеграції 50-70K фахівців з ментального здоров'я в систему НСЗУ через:</span><span class="en">FEEL Again is a platform for integrating 50-70K mental health specialists into the NSZU system through:</span></p>
+    <ol style="font-size:.88rem; color:var(--t2); line-height:1.7; padding-left:20px;">
+      <li><strong><span class="uk">Digital Bus:</span><span class="en">Digital Bus:</span></strong> <span class="uk">Автоматизоване відшкодування через інтеграцію з платіжними системами НБУ</span><span class="en">Automated reimbursement through integration with NBU payment systems</span></li>
+      <li><strong><span class="uk">Trust Bridge:</span><span class="en">Trust Bridge:</span></strong> <span class="uk">Digital Handshake з верифікацією ДІЯ (заміна Escrow)</span><span class="en">Digital Handshake with DIIA verification (replaces Escrow)</span></li>
+      <li><strong><span class="uk">ENKIDU:</span><span class="en">ENKIDU:</span></strong> <span class="uk">Blended Finance P2P Gateway для глобального консорціуму партнерів</span><span class="en">Blended Finance P2P Gateway for global consortium of partners</span></li>
+      <li><strong><span class="uk">Унікальний код:</span><span class="en">Unique code:</span></strong> <span class="uk">GDPR/HIPAA compliant ID для відстежування та аудиту</span><span class="en">GDPR/HIPAA compliant ID for tracking and auditing</span></li>
+    </ol>
+  </div>
+
+  <div class="callout callout-d4">
+    <div class="callout-title"><span class="uk">Reverse Waterfall механізм</span><span class="en">Reverse Waterfall Mechanism</span></div>
+    <p><span class="uk"><strong>Соціальний контракт 10-15%</strong> (спільнота) + <strong>Корпоративне співфінансування 15-20%</strong> (роботодавець/фонд) + <strong>Держава/донор до 70-95%</strong> (PforR/SIB облігації/гуманітарні ресурси) = <strong>Покриття 5-35%+ вартості курсу</strong></span><span class="en"><strong>Social contract 10-15%</strong> (community) + <strong>Corporate co-financing 15-20%</strong> (employer/fund) + <strong>State/donor up to 70-95%</strong> (PforR/SIB bonds/humanitarian resources) = <strong>Coverage of 5-35%+ of course cost</strong></span></p>
+  </div>
+
+  <div class="callout callout-res">
+    <div class="callout-title"><span class="uk">Ефект FEEL Again на адміністрування</span><span class="en">FEEL Again Effect on Administration</span></div>
+    <p><span class="uk"><strong>Digital Bus не знижує вартість саму по собі.</strong> Він знижує адміністративний тягар через автоматизацію процесу верифікації та відшкодування. FEEL Again знижує адмінтягар з <strong>30% до 7%</strong> через автоматизацію (вимагає гармонізації законодавства).</span><span class="en"><strong>Digital Bus does not reduce costs by itself.</strong> It reduces administrative burden through automation of verification and reimbursement processes. FEEL Again reduces admin burden from <strong>30% to 7%</strong> through automation (requires legislation harmonization).</span></p>
+  </div>
+
+  <div class="callout callout-svc">
+    <div class="callout-title"><span class="uk">Формалізація витрат</span><span class="en">Formalization Costs</span></div>
+    <p><span class="uk"><strong>Поточна модель:</strong> ~52% (Еквайрінг 2,5% + Платформа 10% + ЄСВ 22% + ПДФО 18% + Адміністрування 13%)<br><strong>Нова модель:</strong> 11-15% (Єдиний податок 5% + Оренда 3-5% + Бухгалтер 2-3% + Військовий збір 1-2% + ЄСВ 0-5%)</span><span class="en"><strong>Current model:</strong> ~52% (Acquirer 2.5% + Platform 10% + ESV 22% + PDFO 18% + Administration 13%)<br><strong>New model:</strong> 11-15% (Single tax 5% + Rent 3-5% + Accountant 2-3% + Military fee 1-2% + ESV 0-5%)</span></p>
+  </div>
+</section>
+
+<!-- SECTION V: Financial Mechanism -->
+<section class="section" id="s5">
+  <div class="section-header">
+    <div class="sec-num">V</div>
+    <div class="sec-title-block">
+      <h2><span class="uk">Фінансовий механізм</span><span class="en">Financial Mechanism</span></h2>
+      <div class="sec-eng">Blended Finance · SIB Bonds · PforR · Trust Bridge</div>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-val">$175,1M</div>
+      <div class="metric-lbl"><span class="uk">адресований ринок FEEL Again</span><span class="en">FEEL Again addressable market</span></div>
+      <div class="metric-src src-g">✓ GREEN · L3_DAT_25</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$41,1M</div>
+      <div class="metric-lbl"><span class="uk">HEAL Component 4</span><span class="en">HEAL Component 4</span></div>
+      <div class="metric-src src-g">✓ GREEN · L3_DAT_23 · WB</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$134M</div>
+      <div class="metric-lbl"><span class="uk">THRIVE доступно</span><span class="en">THRIVE available</span></div>
+      <div class="metric-src src-g">✓ GREEN · WB</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$954M</div>
+      <div class="metric-lbl"><span class="uk">HEAL + THRIVE загалом</span><span class="en">HEAL + THRIVE total</span></div>
+      <div class="metric-src src-g">✓ GREEN · WB Project Portal</div>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="dtbl">
+      <thead>
+        <tr>
+          <th><span class="uk">Інструмент</span><span class="en">Instrument</span></th>
+          <th><span class="uk">Опис</span><span class="en">Description</span></th>
+          <th><span class="uk">Застосування</span><span class="en">Application</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono-cell"><strong>Blended Finance</strong></td>
+          <td><span class="uk">Змішане фінансування через ENKIDU</span><span class="en">Blended Finance via ENKIDU</span></td>
+          <td><span class="uk">Глобальний P2P Gateway</span><span class="en">Global P2P Gateway</span></td>
+        </tr>
+        <tr>
+          <td class="mono-cell"><strong>SIB Bonds</strong></td>
+          <td><span class="uk">Соціальні облігації результату</span><span class="en">Social Impact Bonds</span></td>
+          <td><span class="uk">Фінансування на основі результатів</span><span class="en">Outcome-based financing</span></td>
+        </tr>
+        <tr>
+          <td class="mono-cell"><strong>PforR</strong></td>
+          <td><span class="uk">Оплата за результат</span><span class="en">Payment for Results</span></td>
+          <td><span class="uk">Фінансування на основі результатів</span><span class="en">Results-based financing</span></td>
+        </tr>
+        <tr>
+          <td class="mono-cell"><strong>Trust Bridge</strong></td>
+          <td><span class="uk">Міст довіри з Digital Handshake</span><span class="en">Trust Bridge with Digital Handshake</span></td>
+          <td><span class="uk">Верифікація ДІЯ</span><span class="en">DIIA verification</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-gl">
+    <div class="callout-title"><span class="uk">Фінансування FEEL Again</span><span class="en">FEEL Again Financing</span></div>
+    <p><span class="uk">FEEL Again використовує <strong>Blended Finance</strong> через ENKIDU для об'єднання ресурсів:</span><span class="en">FEEL Again uses <strong>Blended Finance</strong> via ENKIDU to combine resources:</span></p>
+    <ol style="font-size:.88rem; color:var(--t2); line-height:1.7; padding-left:20px;">
+      <li><span class="uk">Кошти Світового Банку (HEAL + THRIVE): $175,1M адресовано</span><span class="en">World Bank funds (HEAL + THRIVE): $175.1M addressable</span></li>
+      <li><span class="uk">Гуманітарне фінансування через Grand Bargain</span><span class="en">Humanitarian financing via Grand Bargain</span></li>
+      <li><span class="uk">Приватні інвестиції через ENKIDU</span><span class="en">Private investments via ENKIDU</span></li>
+      <li><span class="uk">Корпоративне співфінансування (15-20%)</span><span class="en">Corporate co-financing (15-20%)</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- SECTION VI: Legal Reform -->
+<section class="section" id="s6">
+  <div class="section-header">
+    <div class="sec-num">VI</div>
+    <div class="sec-title-block">
+      <h2><span class="uk">Правова реформа</span><span class="en">Legal Reform</span></h2>
+      <div class="sec-eng">MoU-first Approach · Zero State Budget Request · 2026 Window</div>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-phase">Фаза 1</div>
+      <div class="tl-title"><span class="uk">Меморандум про взаєморозуміння</span><span class="en">Memorandum of Understanding</span></div>
+      <div class="tl-desc"><span class="uk">Підписання MoU з НСЗУ, НБУ та Світовим Банком</span><span class="en">Signing MoU with NSZU, NBU, and World Bank</span></div>
+      <div class="tl-actor"><span class="uk">НСЗУ · НБУ · Світовий Банк · FEEL Again</span><span class="en">NSZU · NBU · World Bank · FEEL Again</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Фаза 2</div>
+      <div class="tl-title"><span class="uk">Угода про стандартизацію</span><span class="en">Standardization Agreement</span></div>
+      <div class="tl-desc"><span class="uk">Визначення єдиних стандартів MHEI та верифікації</span><span class="en">Defining unified MHEI and verification standards</span></div>
+      <div class="tl-actor"><span class="uk">НСЗУ · FEEL Again</span><span class="en">NSZU · FEEL Again</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Фаза 3</div>
+      <div class="tl-title"><span class="uk">Запуск розробки</span><span class="en">Development Launch</span></div>
+      <div class="tl-desc"><span class="uk">Розробка технічної інфраструктури Digital Bus</span><span class="en">Development of Digital Bus technical infrastructure</span></div>
+      <div class="tl-actor"><span class="uk">FEEL Again · ENKIDU</span><span class="en">FEEL Again · ENKIDU</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Фаза 4</div>
+      <div class="tl-title"><span class="uk">Одночасна формалізація</span><span class="en">Simultaneous Formalization</span></div>
+      <div class="tl-desc"><span class="uk">Паралельна формалізація фахівців та інтеграція з НСЗУ</span><span class="en">Parallel formalization of practitioners and integration with NSZU</span></div>
+      <div class="tl-actor"><span class="uk">НСЗУ · FEEL Again</span><span class="en">NSZU · FEEL Again</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Фаза 5</div>
+      <div class="tl-title"><span class="uk">Налаштування middleware</span><span class="en">Middleware Setup</span></div>
+      <div class="tl-desc"><span class="uk">Налаштування middleware для інтеграції з існуючими системами НСЗУ</span><span class="en">Middleware setup for integration with existing NSZU systems</span></div>
+      <div class="tl-actor"><span class="uk">FEEL Again · НСЗУ</span><span class="en">FEEL Again · NSZU</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Фаза 6</div>
+      <div class="tl-title"><span class="uk">Запуск Digital Bus</span><span class="en">Digital Bus Launch</span></div>
+      <div class="tl-desc"><span class="uk">Офіційний запуск Digital Bus та Trust Bridge</span><span class="en">Official launch of Digital Bus and Trust Bridge</span></div>
+      <div class="tl-actor"><span class="uk">НСЗУ · НБУ · FEEL Again · ENKIDU</span><span class="en">NSZU · NBU · FEEL Again · ENKIDU</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Фаза 7</div>
+      <div class="tl-title"><span class="uk">Міжгалузевий потік даних</span><span class="en">Interoperable Data Flow</span></div>
+      <div class="tl-desc"><span class="uk">Впровадження міжгалузевого обміну даними з НБУ та МОЗ</span><span class="en">Implementation of interoperable data exchange with NBU and Ministry of Health</span></div>
+      <div class="tl-actor"><span class="uk">НСЗУ · НБУ · МОЗ</span><span class="en">NSZU · NBU · Ministry of Health</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Фаза 8</div>
+      <div class="tl-title"><span class="uk">Множення</span><span class="en">Multiplication</span></div>
+      <div class="tl-desc"><span class="uk">Масштабування рішення на інші сектори охорони здоров'я</span><span class="en">Scaling the solution to other healthcare sectors</span></div>
+      <div class="tl-actor"><span class="uk">FEEL Again · НСЗУ</span><span class="en">FEEL Again · NSZU</span></div>
+    </div>
+  </div>
+
+  <div class="callout callout-gl">
+    <div class="callout-title"><span class="uk">MoU-first підхід</span><span class="en">MoU-first Approach</span></div>
+    <p><span class="uk">Ніякої пілотної фази. Пряме впровадження через MoU з ключовими стейкхолдерами. Це забезпечує швидке прийняття рішень та уникнення "пілотного пастки".</span><span class="en">No pilot phase. Direct implementation via MoU with key stakeholders. This ensures rapid decision-making and avoids the "pilot trap".</span></p>
+  </div>
+
+  <div class="callout callout-res">
+    <div class="callout-title"><span class="uk">Zero State Budget Request</span><span class="en">Zero State Budget Request</span></div>
+    <p><span class="uk">FEEL Again не вимагає додаткового фінансування з державного бюджету. Всі витрати покриваються через Blended Finance (ENKIDU) та існуючі програми.</span><span class="en">FEEL Again does not require additional state budget funding. All costs are covered through Blended Finance (ENKIDU) and existing programs.</span></p>
+  </div>
+</section>
+
+<!-- SECTION VII: Economic Effect -->
+<section class="section" id="s7">
+  <div class="section-header">
+    <div class="sec-num">VII</div>
+    <div class="sec-title-block">
+      <h2><span class="uk">Економічний ефект</span><span class="en">Economic Effect</span></h2>
+      <div class="sec-eng">$3.8-27.7B/year GDP Savings · 15-20% Coverage Target</div>
+    </div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-val">1,3-6,9M</div>
+      <div class="metric-lbl"><span class="uk">осіб/рік — допоможені FEEL Again</span><span class="en">persons/year — helped by FEEL Again</span></div>
+      <div class="metric-src src-g">✓ GREEN · FEEL Again projection</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val res">$3,8-27,7B</div>
+      <div class="metric-lbl"><span class="uk">/рік — економія ВВП</span><span class="en">/year — GDP savings</span></div>
+      <div class="metric-src src-g">✓ GREEN · (1.3-6.9M) × 50-70% × $5,850</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">$1,9-26,3B</div>
+      <div class="metric-lbl"><span class="uk">/рік — заощаджені ресурси</span><span class="en">/year — saved resources</span></div>
+      <div class="metric-src src-g">✓ GREEN · Somatization + Invalidization prevention</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val svc">$5,7-78,9B</div>
+      <div class="metric-lbl"><span class="uk">накопичувальний ефект за 3 роки</span><span class="en">cumulative effect over 3 years</span></div>
+      <div class="metric-src src-g">✓ GREEN · Forecast</div>
+    </div>
+  </div>
+
+  <div class="callout callout-gl">
+    <div class="callout-title"><span class="uk">Формула економічного ефекту</span><span class="en">Economic Effect Formula</span></div>
+    <p><span class="uk"><strong>Прогноз заснований на потоку недіагностованих пацієнтів, а не на статичних "заощадженнях за 3 роки".</strong></span><span class="en"><strong>Forecast based on flow of undiagnosed patients, not static "savings over 3 years".</strong></span></p>
+    <p><span class="uk">(1,3-6,9M осіб) × (50-70% успішного лікування) × $5,850 (внесок у ВВП) = <strong>$3,8-27,7B/рік</strong></span><span class="en">(1.3-6.9M persons) × (50-70% successful treatment) × $5,850 (GDP contribution) = <strong>$3.8-27.7B/year</strong></span></p>
+    <p><span class="uk"><strong>Без FEEL Again:</strong> $5,7-54B/рік втрат від соматизації ($1,200/особа) та інвалідизації ($2,965/особа).</span><span class="en"><strong>Without FEEL Again:</strong> $5.7-54B/year in somatization ($1,200/person) and invalidization ($2,965/person) losses.</span></p>
+  </div>
+
+  <div class="formula">
+    <strong>FEEL Again ціль:</strong> Покриття 15-20% (vs поточні 0,4-1,4%)<br>
+    <span class="uk">15-20% × 19-70M сесій = 2,85-14M сесій/рік</span>
+    <span class="en">15-20% × 19-70M sessions = 2.85-14M sessions/year</span>
+  </div>
+</section>
+
+<!-- SECTION VIII: Proposal -->
+<section class="section" id="s8">
+  <div class="section-header">
+    <div class="sec-num">VIII</div>
+    <div class="sec-title-block">
+      <h2><span class="uk">Пропозиція</span><span class="en">Proposal</span></h2>
+      <div class="sec-eng">Sign MoU · Integrate 50-70K Specialists · Launch Digital Bus · 2026</div>
+    </div>
+  </div>
+
+  <div class="callout callout-gl">
+    <div class="callout-title"><span class="uk">Пропозиція НСЗУ від FEEL Again</span><span class="en">FEEL Again Proposal to NSZU</span></div>
+    <p><span class="uk"><strong>Підписати MoU з FEEL Again для:</strong></span><span class="en"><strong>Sign MoU with FEEL Again to:</strong></span></p>
+    <ol style="font-size:.88rem; color:var(--t2); line-height:1.7; padding-left:20px;">
+      <li><span class="uk">Інтегрувати 50-70K фахівців з ментального здоров'я в систему НСЗУ через Digital Bus</span><span class="en">Integrate 50-70K mental health specialists into NSZU system via Digital Bus</span></li>
+      <li><span class="uk">Впровадити Trust Bridge з Digital Handshake (заміна Escrow)</span><span class="en">Implement Trust Bridge with Digital Handshake (replaces Escrow)</span></li>
+      <li><span class="uk">Запустити Reverse Waterfall механізм фінансування через ENKIDU</span><span class="en">Launch Reverse Waterfall financing mechanism via ENKIDU</span></li>
+      <li><span class="uk">Додати унікальний код бенефіціара (GDPR/HIPAA compliant) для кожного пацієнта</span><span class="en">Add unique beneficiary code (GDPR/HIPAA compliant) for each patient</span></li>
+      <li><span class="uk">Збільшити покриття з 0,4-1,4% до 15-20%</span><span class="en">Increase coverage from 0.4-1.4% to 15-20%</span></li>
+      <li><span class="uk">Знизити адмінтягар з 30% до 7% через автоматизацію</span><span class="en">Reduce admin burden from 30% to 7% through automation</span></li>
+    </ol>
+  </div>
+
+  <div class="callout callout-res">
+    <div class="callout-title"><span class="uk">Ключові переваги для НСЗУ</span><span class="en">Key Benefits for NSZU</span></div>
+    <ol style="font-size:.88rem; color:var(--t2); line-height:1.7; padding-left:20px;">
+      <li><span class="uk"><strong>Zero State Budget Request:</strong> Не вимагає додаткового фінансування з державного бюджету</span><span class="en"><strong>Zero State Budget Request:</strong> Does not require additional state budget funding</span></li>
+      <li><span class="uk"><strong>15-20% покриття:</strong> Збільшення покриття з 0,4-1,4% до 15-20%</span><span class="en"><strong>15-20% coverage:</strong> Increase from 0.4-1.4% to 15-20%</span></li>
+      <li><span class="uk"><strong>7% адмінтягар:</strong> Зниження з 30% до 7% через автоматизацію</span><span class="en"><strong>7% admin burden:</strong> Reduction from 30% to 7% through automation</span></li>
+      <li><span class="uk"><strong>$3,8-27,7B/рік:</strong> Економічний ефект для України</span><span class="en"><strong>$3.8-27.7B/year:</strong> Economic effect for Ukraine</span></li>
+      <li><span class="uk"><strong>50-70K фахівців:</strong> Інтеграція існуючого сектору газелей</span><span class="en"><strong>50-70K specialists:</strong> Integration of existing gazelle sector</span></li>
+    </ol>
+  </div>
+
+  <div class="callout callout-d4">
+    <div class="callout-title"><span class="uk">Контакти</span><span class="en">Contacts</span></div>
+    <p><span class="uk"><strong>Олексій Зволінський</strong><br>FEEL Again · Програмний директор<br><a href="mailto:oleksii.zvolinskyi@feelagain.me" style="color:var(--d4);">oleksii.zvolinskyi@feelagain.me</a></span><span class="en"><strong>Oleksii Zvolinskyi</strong><br>FEEL Again · Programme Director<br><a href="mailto:oleksii.zvolinskyi@feelagain.me" style="color:var(--d4);">oleksii.zvolinskyi@feelagain.me</a></span></p>
+  </div>
+
+  <div class="callout callout-svc">
+    <div class="callout-title"><span class="uk">Додатки</span><span class="en">Appendices</span></div>
+    <p><span class="uk">Радіальна діаграма розподілу $1,8B витрат на MHPSS 2025 (L3_DAT_25) доступна за запитом. Документ містить формальні проекти угод та нормативних актів.</span><span class="en">Radial diagram of $1.8B MHPSS spending distribution 2025 (L3_DAT_25) available upon request. Document includes formal draft agreements and regulatory acts.</span></p>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  localStorage.setItem('lang', lang);
+  document.getElementById('btn-uk').classList.toggle('active', lang === 'uk');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+}
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+  document.getElementById('btn-light').classList.toggle('active', theme === 'light');
+  document.getElementById('btn-dark').classList.toggle('active', theme === 'dark');
+}
+window.addEventListener('DOMContentLoaded', () => {
+  const lang = localStorage.getItem('lang') || 'uk';
+  const theme = localStorage.getItem('theme') || 'light';
+  setLang(lang);
+  setTheme(theme);
+});
+</script>
 
 </body>
 </html>
