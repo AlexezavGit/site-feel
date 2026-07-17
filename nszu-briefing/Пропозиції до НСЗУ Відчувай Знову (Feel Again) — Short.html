@@ -1,12 +1,156 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FEEL Again · Executive Summary для НСЗУ</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FEEL Again · Executive Summary для НСЗУ</title>
+<style>
+body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+.center { text-align: center; }
+h1 { font-size: 2.5em; }
+h2 { font-size: 1.8em; border-bottom: 2px solid #0066cc; padding-bottom: 0.3em; }
+h3 { font-size: 1.4em; }
+table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+th { background: #f8f9fa; }
+pre { background: #f5f5f5; padding: 15px; overflow-x: auto; }
+hr { margin: 40px 0; border: none; border-top: 1px solid #eee; }
+</style>
 </head>
 <body>
-<h1>FEEL Again - NSZU Executive Summary v2.0</h1>
-<p>All corrections applied as per user instructions.</p>
+
+<div class="center">
+<h1><strong>FEEL Again</strong></h1>
+<h2>Цифрове плече для сектору MHPSS України</h2>
+<h3>Executive Summary для НСЗУ</h3>
+<p><em>v2.0 · Липень 2026 · Конфіденційно</em></p>
+</div>
+
+<hr>
+<h2>🎯 Ключове повідомлення</h2>
+<p><strong>FEEL Again</strong> — цифрове плече для сектору MHPSS, з'єднує гуманітарні системи з ЄСОЗ через <strong>Digital Bus</strong> (HL7 FHIR R4). Дозволяє зробити <strong>98.5-99.6%</strong> потреби видимою для НСЗУ, розблокувати <strong>$134M</strong> THRIVE, збільшити покриття з <strong>0.4–1.4%</strong> до критичної маси без витрат бюджету, створити контрольований ринок приватної практики.</p>
+
+<hr>
+<h2>📊 Ключові цифри</h2>
+<h3>Проблема</h3>
+<table>
+<tr><th>Метрика</th><th>Значення</th><th>Джерело</th><th>Статус</th></tr>
+<tr><td>Кількість людей</td><td><strong>3.9M</strong></td><td>L3_DAT_01</td><td>✅</td></tr>
+<tr><td>Потреба в сесіях</td><td><strong>19–70M/рік</strong></td><td>WHO 5-12-20</td><td>✅</td></tr>
+<tr><td>Спроможність НСЗУ</td><td><strong>260K сесій/рік</strong></td><td>НСЗУ</td><td>⚠️ Дефіцит 98.5-99.6%</td></tr>
+<tr><td>Покриття</td><td><strong>0.4–1.4%</strong></td><td>НСЗУ</td><td>❌</td></tr>
+</table>
+
+<h3>Рішення</h3>
+<table>
+<tr><th>Метрика</th><th>Значення</th><th>Статус</th></tr>
+<tr><td>THRIVE</td><td><strong>$134M</strong></td><td>✅ Готовий</td></tr>
+<tr><td>HEAL Component 4</td><td><strong>$41.1M</strong></td><td>⚠️ Дедлайн 23.12.2026</td></tr>
+<tr><td>ВВП-внесок/рік</td><td><strong>$5,850</strong></td><td>✅</td></tr>
+<tr><td>Тіньовий ринок</td><td><strong>$380M/рік</strong></td><td>✅ НБУ</td></tr>
+</table>
+
+<h3>Вікно дій</h3>
+<pre>THRIVE DLI: 23.12.2026
+Шлях: MoU → Стандартизація → Middleware → Формалізація → Digital Bus → Дані → Мультиплікація</pre>
+
+<hr>
+<h2>🏗️ Архітектура</h2>
+<h3>Digital Bus</h3>
+<pre>KoBoToolbox → Digital Bus → Трембіта → ЄСОЗ → НСЗУ
+                |
+            Triple Oracle
+                |
+        DIIA Verification → Провайдер
+                ^
+        ENKIDU (Blended Finance P2P Gateway)</pre>
+
+<h3>Шлях бенефіціара</h3>
+<pre>Звернення → Транскрибація → Діагностика → Допомога → Моніторинг → Верифікація → Виплата (Digital Handshake з DIIA)
+Унікальний код: GDPR/HIPAA compliant</pre>
+
+<hr>
+<h2>📈 Економічний ефект</h2>
+<p><strong>Поточна ситуація:</strong> 19–70M сесій/рік потреба, 260K + 5M = 5.26M доступно, 13.74–64.74M невиконано.</p>
+<p><strong>З FEEL Again:</strong> +13.8M сесій від 13,806 фахівців, загалом ~19M сесій.</p>
+<p><strong>Ефект:</strong> 1.37–12.95M людей отримують допомогу, $1.9–26.3B збережено на рік, кумулятивно $5.7–78.9B за 3 роки.</p>
+<p><em>Примітка: $380M тіньовий ринок — окрема цифра, не пов'язана з втратами ВВП.</em></p>
+
+<hr>
+<h2>🏢 Тіньовий сектор</h2>
+<h3>Вартість формалізації</h3>
+<table>
+<tr><th>Компонент</th><th>Поточна</th><th>Нова модель</th></tr>
+<tr><td>Загалом</td><td>~52% ($380M/рік)</td><td>~11-15%</td></tr>
+</table>
+<p><strong>Рішення:</strong> FEEL Again знижує адмін навантаження з 30% до 7% шляхом автоматизації (за умови гармонізації законодавства). Digital Bus не знижує вартість самостійно.</p>
+
+<h3>8 каналів залучення</h3>
+<table>
+<tr><th>№</th><th>Канал</th><th>Оцінка</th><th>Ставка</th></tr>
+<tr><td>1</td><td>Тіньовий ринок</td><td>~8,000 ФОП</td><td>15–25%</td></tr>
+<tr><td>2</td><td>UPRA</td><td>~2,500</td><td>20–30%</td></tr>
+<tr><td>3</td><td>Ветерани</td><td>500–1,000</td><td>10–15%</td></tr>
+<tr><td>4</td><td>Університети</td><td>~3,000/рік</td><td>5–10%</td></tr>
+<tr><td>5</td><td>Діаспора: репатріація</td><td>1–2,000</td><td>5–10%</td></tr>
+<tr><td>6</td><td>Діаспора: супервізія</td><td>~500</td><td>30–40%</td></tr>
+<tr><td>7</td><td>Гуманітарна трансформація</td><td>2–3,000</td><td>15–20%</td></tr>
+<tr><td>8</td><td>Конверсія психіатрів</td><td>~2,700</td><td>5–10%</td></tr>
+</table>
+<p><strong>Загалом:</strong> ~13,806 фахівців на платформі</p>
+
+<hr>
+<h2>📋 Кроки для НСЗУ</h2>
+<h3>MoU-first підхід</h3>
+<p><strong>Послідовність:</strong> MoU → Угода про стандартизацію → Налаштування middleware → Одночасна формалізація → Налаштування Digital Bus → Інтероперабельний потік → Мультиплікація</p>
+
+<h3>Фази</h3>
+<table>
+<tr><th>Фаза</th><th>Термін</th><th>Дії</th></tr>
+<tr><td>1. Формалізація</td><td>Червень-Липень 2026</td><td>MoU з МОЗ/НБУ/WB, угода про стандартизацію</td></tr>
+<tr><td>2. Налаштування</td><td>Серпень-Вересень 2026</td><td>Middleware, формалізація, технічна інтеграція</td></tr>
+<tr><td>3. Масштабування</td><td>Вересень-Грудень 2026</td><td>Digital Bus, інтероперабельний потік, критична маса</td></tr>
+</table>
+
+<hr>
+<h2>🤝 Роль НСЗУ</h2>
+<table>
+<tr><th>Інституція</th><th>Роль</th><th>Що отримує</th></tr>
+<tr><td><strong>НСЗУ</strong></td><td>Кінцевий бенефіціар</td><td>Якісні дані для DLI</td></tr>
+<tr><td><strong>МОЗ</strong></td><td>API ЄСОЗ/Трембіта</td><td>624K+ послуг в ЄСОЗ</td></tr>
+<tr><td><strong>НБУ</strong></td><td>Regulatory Sandbox, SEP, MHI</td><td>Перший MHI</td></tr>
+<tr><td><strong>WB</strong></td><td>Підтвердження middleware</td><td>Capacity KPI 0→4</td></tr>
+<tr><td><strong>FEEL Again</strong></td><td>Digital Bus, Smart-clearing</td><td>Інфраструктура без витрат</td></tr>
+</table>
+
+<hr>
+<h2>⚠️ Ризики</h2>
+<table>
+<tr><th>№</th><th>Ризик</th><th>Мітигація</th></tr>
+<tr><td>1</td><td>THRIVE дедлайн 23.12.2026</td><td>Прискорення</td></tr>
+<tr><td>2</td><td>MoU затримка</td><td>Паралельні переговори</td></tr>
+<tr><td>3</td><td>Технічні проблеми</td><td>Технічна підтримка</td></tr>
+</table>
+
+<hr>
+<h2>📞 Контакти</h2>
+<table>
+<tr><td><strong>Programme Architect</strong></td><td><strong>Олексій Зволинський</strong></td><td>ГО «Фундація Відкрите Суспільство»</td><td>alexezav@gmail.com</td></tr>
+</table>
+
+<hr>
+<h2>🔗 Додаткові матеріали</h2>
+<ul>
+<li><a href="https://dashboard.feelagain.me">Live Dashboard</a></li>
+<li><a href="https://feelagain.me">Програмний сайт</a></li>
+</ul>
+
+<div class="footer">
+<p><strong>ГО «Фундація „Відкрите суспільство“» — з 2001 р.</strong></p>
+<p><strong>Дані:</strong> L3_DAT_01-25 · НБУ ($380M) · WB ISR #6 · WB HEAL/THRIVE ($175.1M)</p>
+<p><strong>Метрики:</strong> $13.94B ВВП/рік | $1.8B MHPSS 2025 | $175.1M ринок</p>
+<p><strong>Версія:</strong> 2.0 · Липень 2026 · Конфіденційно</p>
+</div>
+
 </body>
 </html>
